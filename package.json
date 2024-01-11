@@ -1,0 +1,23 @@
+{
+  "name": "dashbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/Index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^8.0.4",
+    "passport": "^0.7.0",
+    "passport-discord": "^0.1.4"
+  }
+}

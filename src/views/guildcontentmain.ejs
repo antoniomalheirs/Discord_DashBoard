@@ -1,0 +1,37 @@
+<!-- guildcontentmain.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <title>Guilda <%= info.name %> - Dashboard</title>
+  </head>
+  <body>
+    <h1>Servidor <%= info.name %></h1>
+    <p>ID da Guilda: <%= info.id %></p>
+    <p>Descrição: <%= info.description %></p>
+    <p>Número de Membros: <%= info.memberCount %></p>
+    <p>Canais de Voz: <%= info.voiceChannels %></p>
+    <p>Canais de Texto: <%= info.textChannels %></p>
+
+    <!-- Informações do Bot -->
+    <!-- Informações do Bot -->
+    <h2>Informações do Bot</h2>
+    <div>
+      <!-- Adicione a seguinte linha para exibir o número total de servidores que o bot está em -->
+      <p>Número de Servidores: <%= info.guildCount %></p>
+      <!-- Adicione a seguinte linha para exibir o status do bot -->
+      <p>Status do Bot: <%= info.botStatus %></p>
+      <!-- Adicione a seguinte linha para exibir o tempo de atividade do bot -->
+      <p>Tempo de Atividade: <%= info.uptime %></p>
+    </div>
+
+    <!-- Botão de retorno ao dashboard -->
+    <a href="/dashboard">
+      <button>Voltar ao Dashboard</button>
+    </a>
+    <!-- ... Seu código HTML existente ... -->
+    <!-- ... Outro código HTML ... -->
+  </body>
+</html>

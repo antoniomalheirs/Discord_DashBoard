@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../public/css/style.css" />
+  <title>Discord Bot Dashboard</title>
+</head>
+<body>
+  <h1>Bem-vindo ao seu Dashboard!</h1>
+
+  <p>Usuário: <%= user.username %>#<%= user.discriminator %></p>
+
+  <!-- Caixa de seleção para as guildas -->
+  <form action="/bot/selecionar-guilda" method="post">
+    <label for="guilds">Selecione uma guilda:</label>
+    <select name="guilds" id="guilds" onchange="obterDadosGuilda(this)">
+      <% user.guilds.forEach(guild => { %>
+        <option value="<%= guild.id %>"><%= guild.name %></option>
+      <% }); %>
+    </select>
+    <button type="submit">Selecionar</button>
+  </form>
+  
+  <!-- Botão de logout -->
+  <a href="/bot/logout">
+    <button>Fazer Logout</button>
+  </a>
+  
+  <!-- Adicione um script para chamar a nova rota -->
+  <script>
+    function obterDadosGuilda(select) {
+      const guildId = select.value;
+      window.location.href = `/guildcontentmain/${guildId}`;
+    }
+  </script>
+  <!-- ... Seu código HTML existente ... -->
+  <!-- ... Outro código HTML ... -->
+</body>
+</html>
