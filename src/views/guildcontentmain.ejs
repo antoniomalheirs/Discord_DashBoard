@@ -4,11 +4,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/public/css/style.css" />
-    <title>Guilda <%= info.name %> - Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Discord Bot Dashboard</title>
   </head>
   <body>
-    <h1>Servidor <%= info.name %></h1>
+    <h1>Guilda <%= info.name %></h1>
+    <img src="<%= info.icon %>" alt="Ícone da guilda" />
     <p>ID da Guilda: <%= info.id %></p>
     <p>Descrição: <%= info.description %></p>
     <p>Número de Membros: <%= info.memberCount %></p>
@@ -16,14 +17,10 @@
     <p>Canais de Texto: <%= info.textChannels %></p>
 
     <!-- Informações do Bot -->
-    <!-- Informações do Bot -->
     <h2>Informações do Bot</h2>
     <div>
-      <!-- Adicione a seguinte linha para exibir o número total de servidores que o bot está em -->
       <p>Número de Servidores: <%= info.guildCount %></p>
-      <!-- Adicione a seguinte linha para exibir o status do bot -->
       <p>Status do Bot: <%= info.botStatus %></p>
-      <!-- Adicione a seguinte linha para exibir o tempo de atividade do bot -->
       <p>Tempo de Atividade: <%= info.uptime %></p>
     </div>
 
@@ -31,7 +28,29 @@
     <a href="/dashboard">
       <button>Voltar ao Dashboard</button>
     </a>
-    <!-- ... Seu código HTML existente ... -->
-    <!-- ... Outro código HTML ... -->
+
+    <!-- Botão para recarregar informações da guilda -->
+    <p><button onclick="recarregarGuilda()">Recarregar Guilda</button></p>
+
+    <!-- ... (seu código existente) ... -->
+
+    <script>
+      function recarregarGuilda() {
+        // Obtém o ID da guilda a partir das informações existentes
+        const guildId = "<%= info.id %>";
+
+        // Faz uma solicitação AJAX para recarregar as informações da guilda
+        fetch(`/bot/recarregar-guilda/${guildId}`)
+          .then((response) => response.json())
+          .then((data) => {
+            // Atualiza as informações da guilda na página
+            // (Você precisa implementar essa lógica com base em sua estrutura HTML)
+            console.log("Dados recarregados:", data);
+          })
+          .catch((error) => {
+            console.error("Erro ao recarregar guilda:", error);
+          });
+      }
+    </script>
   </body>
 </html>

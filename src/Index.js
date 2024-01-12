@@ -5,6 +5,13 @@ const DiscordStrategy = require("passport-discord").Strategy;
 const authRoutes = require("./routes/auth");
 const getdata = require("./routes/getData");
 const discordBot = require("./Client");
+const mongoose = require("mongoose");
+const UsersAPIRepository = require("../src/database/mongoose/UsersAPIRepository");
+const UserAPISchema = require("../src/database/schemas/UserAPISchema");
+mongoose.model("APIUsers", UserAPISchema);
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((obj, done) => done(null, obj));
 
 (async () => {
   try {
@@ -18,10 +25,13 @@ const discordBot = require("./Client");
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
+//app.use(express.urlencoded());
 
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
+
+app.use(express.static(__dirname + "/public"));
 
 app.use(
   session({
@@ -47,14 +57,24 @@ passport.use(
       scope: ["identify", "email", "guilds"],
     },
     async (accessToken, refreshToken, profile, done) => {
-      // Salve os detalhes do usuário no banco de dados se necessário
+      const userapischema = new UsersAPIRepository(mongoose, "APIUsers");
+      const user = await userapischema.findOne(profile.id); // Salve os detalhes do usuário no banco de dados se necessário
+
+      if (!user) {
+        const newUser = {
+          codigouser: profile.id,
+          username: profile.username,
+        };
+
+        await userapischema.add(newUser);
+      }
+
       return done(null, profile);
     }
   )
 );
 
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((obj, done) => done(null, obj));
+
 
 app.get("/dashboard", (req, res) => {
   if (req.isAuthenticated()) {
@@ -65,7 +85,7 @@ app.get("/dashboard", (req, res) => {
 });
 
 // Rota para a página de detalhes da guilda
-app.get("/guildcontentmain/:guildId", async (req, res) => {
+app.get("/botinfo/:guildId", async (req, res) => {
   const selectedGuildId = req.params.guildId;
 
   try {
@@ -79,9 +99,7 @@ app.get("/guildcontentmain/:guildId", async (req, res) => {
     res.render("guildcontentmain.ejs", { info: guild });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .render("error.ejs", { error: "Erro ao obter dados da guilda" });
+    res.status(500).render("error.ejs");
   }
 });
 

@@ -24,7 +24,7 @@ module.exports = class MongoDB extends DBWrapper {
       this.guilds = new GuildRepository(m);
       this.users = new UserRepository(m);
       this.videos = new VideoRepository(m);
-      this.usersAPI = new UserAPIRepository(m);
+      this.APIUsers = new UserAPIRepository(m);
     });
   }
 };

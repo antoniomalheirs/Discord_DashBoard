@@ -1,40 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../public/css/style.css" />
-  <title>Discord Bot Dashboard</title>
-</head>
-<body>
-  <h1>Bem-vindo ao seu Dashboard!</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Discord Bot Dashboard</title>
+  </head>
+  <body>
+    <h1>Bem-vindo ao seu Dashboard!</h1>
 
-  <p>Usuário: <%= user.username %>#<%= user.discriminator %></p>
+    <p>Logado como: <%= user.username %></p>
+    <img
+      src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
+      alt="Avatar do usuário"
+    />
 
-  <!-- Caixa de seleção para as guildas -->
-  <form action="/bot/selecionar-guilda" method="post">
-    <label for="guilds">Selecione uma guilda:</label>
-    <select name="guilds" id="guilds" onchange="obterDadosGuilda(this)">
-      <% user.guilds.forEach(guild => { %>
+    <!-- Exibir a imagem da guilda selecionada -->
+    <img
+      id="AguildIcon"
+      src="/res/serverIcon/nonserverimg.jpg"
+      alt="Ícone da guilda"
+    />
+
+    <!-- Caixa de seleção para as guildas -->
+    <form action="/bot/botinfo" method="post">
+      <label for="guilds">Selecione uma guilda:</label>
+      <select name="guilds" id="guilds" onchange="redirecionarParaRota(this)">
+        <option value="default">Selecione um Servidor</option>
+        <% user.guilds.forEach(guild => { %>
         <option value="<%= guild.id %>"><%= guild.name %></option>
-      <% }); %>
-    </select>
-    <button type="submit">Selecionar</button>
-  </form>
-  
-  <!-- Botão de logout -->
-  <a href="/bot/logout">
-    <button>Fazer Logout</button>
-  </a>
-  
-  <!-- Adicione um script para chamar a nova rota -->
-  <script>
-    function obterDadosGuilda(select) {
-      const guildId = select.value;
-      window.location.href = `/guildcontentmain/${guildId}`;
-    }
-  </script>
-  <!-- ... Seu código HTML existente ... -->
-  <!-- ... Outro código HTML ... -->
-</body>
+        <% }); %>
+      </select>
+      <button type="submit">Selecionar</button>
+    </form>
+
+    <!-- Botão de logout -->
+    <a href="/auth/logout">
+      <button>Fazer Logout</button>
+    </a>
+
+    <!-- Adicione um script para chamar a nova rota -->
+    <script>
+      async function redirecionarParaRota(select) {
+        try {
+          const guildId = select.value;
+
+          // Faz uma solicitação AJAX para obter a URL do ícone da guilda
+          const response = await fetch(`/bot/obter-icone-guilda/${guildId}`);
+          const data = await response.json();
+
+          // Atualiza a imagem da guilda com a URL obtida
+          const guildIcon = document.getElementById("AguildIcon");
+
+          if (data.iconURL) {
+            guildIcon.src = data.iconURL;
+            guildIcon.style.backgroundColor = "transparent"; // Garante que a cor de fundo seja transparente
+          } else {
+            guildIcon.src = "/res/serverIcon/nonserverimg.jpg";
+          }
+        } catch (error) {
+          console.error("Erro ao carregar imagem da guilda:", error);
+          // Adicione aqui a lógica para lidar com o erro no cliente
+        }
+      }
+    </script>
+  </body>
 </html>
