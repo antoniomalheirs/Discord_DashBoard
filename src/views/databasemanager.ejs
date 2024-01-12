@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Banco de Dados - Guilda</title>
+  </head>
+  <body>
+    <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+    <p><img src="<%= info.icon %>" alt="Ícone da guilda" /></p>
+    <% } else { %>
+    <!-- Substitua "caminho/para/sua/imagem.png" pelo caminho real da sua imagem padrão -->
+    <p><img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" /></p>
+    <% } %>
+    <p>ID da Guilda: <%= info.id %></p>
+
+    <button onclick="voltarAoDashboard()">Voltar ao Dashboard</button>
+    <script>
+      function voltarAoDashboard() {
+        // Usa o método goBack() para voltar para a página anterior na história do navegador
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

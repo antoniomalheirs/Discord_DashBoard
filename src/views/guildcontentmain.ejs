@@ -9,7 +9,12 @@
   </head>
   <body>
     <h1>Guilda <%= info.name %></h1>
-    <img src="<%= info.icon %>" alt="Ícone da guilda" />
+    <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+    <p><img src="<%= info.icon %>" alt="Ícone da guilda" /></p>
+    <% } else { %>
+    <!-- Substitua "caminho/para/sua/imagem.png" pelo caminho real da sua imagem padrão -->
+    <p><img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" /></p>
+    <% } %>
     <p>ID da Guilda: <%= info.id %></p>
     <p>Descrição: <%= info.description %></p>
     <p>Número de Membros: <%= info.memberCount %></p>
@@ -31,6 +36,10 @@
 
     <!-- Botão para recarregar informações da guilda -->
     <p><button onclick="recarregarGuilda()">Recarregar Guilda</button></p>
+
+    <a href="/bot/database-guilda?guildId=<%= info.id %>">
+      <button>Abrir Banco de Dados</button>
+    </a>
 
     <!-- ... (seu código existente) ... -->
 

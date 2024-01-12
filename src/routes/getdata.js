@@ -88,6 +88,28 @@ router.get("/recarregar-guilda/:guildId", isAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/database-guilda", isAuthenticated, async (req, res) => {
+  try {
+    const guildId = req.query.guildId;
+    const botInfo = await getGuildData(guildId);
+    res.render("databasemanager.ejs", { info: botInfo });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao obter informações da guilda" });
+  }
+});
+
+router.get("/database-guilda/:guildId", isAuthenticated, async (req, res) => {
+  try {
+    const guildId = req.params.guildId;
+    const botInfo = await getGuildData(guildId);
+    
+    //res.render("databasemanager.ejs", { info: botInfo });
+    res.json(botInfo);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao recarregar informações da guilda" });
+  }
+});
+
 router.get(
   "/obter-icone-guilda/:guildId",
   isAuthenticated,
