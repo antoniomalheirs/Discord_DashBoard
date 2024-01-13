@@ -68,4 +68,8 @@ module.exports = class UserRepository extends Repository {
   findAll(projection) {
     return this.model.find({}, projection).then((e) => e.map(this.parse));
   }
+
+  findAllByGuildId(guildId, projection) {
+    return this.model.find({ idguild: guildId }, projection).then((results) => results.map(this.parse));
+  }
 };

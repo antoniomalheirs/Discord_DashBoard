@@ -7,28 +7,66 @@
     <title>Banco de Dados - Guilda</title>
   </head>
   <body>
+    <h1>Guilda <%= info.name %></h1>
+
     <% if (info.icon && info.icon.indexOf('null') === -1) { %>
     <p><img src="<%= info.icon %>" alt="Ícone da guilda" /></p>
     <% } else { %>
     <!-- Substitua "caminho/para/sua/imagem.png" pelo caminho real da sua imagem padrão -->
     <p><img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" /></p>
     <% } %>
+
     <p>ID da Guilda: <%= info.id %></p>
-    
-    
-    <p>Membros da Guilda</p>
-    <ul>
-      <% info1.forEach(item => { %>
-        <li>
-          <p>Código do Usuário: <%= item.codigouser %></p>
-          <p>Nome de Usuário: <%= item.username %></p>
-          <p>Tempo Total em Chamadas de Voz (em minutos): <%= item.voiceTime %></p>
-          <p>Número Total de Mensagens Enviadas: <%= item.totalMessages %></p>
-          <p>Pertence a Guilda: <%= item.idguild %></p>
-        </li>
-      <% }); %>
-    </ul>
-    
+
+    <h2>Informações sobre Membros da Guilda</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Código do Usuário</th>
+          <th>Nome de Usuário</th>
+          <th>Tempo Total em Chamadas de Voz (minutos)</th>
+          <th>Número Total de Mensagens Enviadas</th>
+          <th>ID da Guilda</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% info1.forEach(item => { %>
+        <tr>
+          <td><%= item.codigouser %></td>
+          <td><%= item.username %></td>
+          <td><%= item.voiceTime %></td>
+          <td><%= item.totalMessages %></td>
+          <td><%= item.idguild %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <h2>Canais a Notificar na Guilda</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>YouTube</th>
+          <th>Channel</th>
+          <th>Last Video</th>
+          <th>Last Publish</th>
+          <th>Message</th>
+          <th>Notify Guild</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% info2.forEach(item => { %>
+        <tr>
+          <td><%= item.youtube %></td>
+          <td><%= item.channel %></td>
+          <td><%= item.lastVideo %></td>
+          <td><%= item.lastPublish %></td>
+          <td><%= item.message %></td>
+          <td><%= item.notifyGuild %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
 
     <button onclick="voltarAoDashboard()">Voltar ao Dashboard</button>
     <script>

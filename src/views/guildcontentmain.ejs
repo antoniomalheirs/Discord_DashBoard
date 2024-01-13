@@ -34,32 +34,9 @@
       <button>Voltar ao Dashboard</button>
     </a>
 
-    <!-- Botão para recarregar informações da guilda -->
-    <p><button onclick="recarregarGuilda()">Recarregar Guilda</button></p>
-
     <a href="/bot/database-guilda?guildId=<%= info.id %>">
       <button>Abrir Banco de Dados</button>
     </a>
 
-    <!-- ... (seu código existente) ... -->
-
-    <script>
-      function recarregarGuilda() {
-        // Obtém o ID da guilda a partir das informações existentes
-        const guildId = "<%= info.id %>";
-
-        // Faz uma solicitação AJAX para recarregar as informações da guilda
-        fetch(`/bot/recarregar-guilda/${guildId}`)
-          .then((response) => response.json())
-          .then((data) => {
-            // Atualiza as informações da guilda na página
-            // (Você precisa implementar essa lógica com base em sua estrutura HTML)
-            console.log("Dados recarregados:", data);
-          })
-          .catch((error) => {
-            console.error("Erro ao recarregar guilda:", error);
-          });
-      }
-    </script>
   </body>
 </html>

@@ -12,4 +12,5 @@ module.exports = new Schema({
   },
   lastPublish: { type: String },
   message: { type: String },
+  notifyGuild: { type: String },
 });

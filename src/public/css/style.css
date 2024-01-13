@@ -38,3 +38,19 @@ button:hover {
 img {
   border-radius: 50%;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 2px solid #4a1857;
+}
+
+th {
+  background-color: #17494b;
+}

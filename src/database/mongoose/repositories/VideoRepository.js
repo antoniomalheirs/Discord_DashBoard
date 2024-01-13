@@ -13,6 +13,7 @@ module.exports = class VideoRepository extends VideosRepository {
       lastVideo: null,
       lastPublish: null,
       message: null,
+      notifyGuild: null,
       ...(super.parse(entity) || {}),
     };
   }

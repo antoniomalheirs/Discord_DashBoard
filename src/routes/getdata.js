@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 const usersrepository = require("../database/mongoose/UsersRepository");
 const UserSchema = require("../database/schemas/UserSchema");
 mongoose.model("Users", UserSchema);
+const videosrepository = require("../database/mongoose/VideosRepository");
+const VideoSchema = require("../database/schemas/VideoSchema");
+mongoose.model("Videos", VideoSchema);
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -14,10 +17,21 @@ const isAuthenticated = (req, res, next) => {
   res.redirect("/");
 };
 
-const getDatabase = async () => {
+const getDatabase1 = async (guildId) => {
+  try {
+    const videos = new videosrepository(mongoose, "Videos");
+    const ls = videos.findAllByGuildId(guildId);
+    return ls;
+  } catch (error) {
+    console.error("Erro ao obter dados da guilda:", error);
+    throw error;
+  }
+};
+
+const getDatabase = async (guildId) => {
   try {
     const users = new usersrepository(mongoose, "Users");
-    const ls = users.findAll();
+    const ls = users.findAllByGuildId(guildId);
     return ls;
   } catch (error) {
     console.error("Erro ao obter dados da guilda:", error);
@@ -107,8 +121,13 @@ router.get("/database-guilda", isAuthenticated, async (req, res) => {
   try {
     const guildId = req.query.guildId;
     const botInfo = await getGuildData(guildId);
-    const userinfo = await getDatabase();
-    res.render("databasemanager.ejs", { info: botInfo, info1: userinfo });
+    const userinfo = await getDatabase(guildId);
+    const videoinfo = await getDatabase1(guildId);
+    res.render("databasemanager.ejs", {
+      info: botInfo,
+      info1: userinfo,
+      info2: videoinfo,
+    });
   } catch (error) {
     res.status(500).json({ error: "Erro ao obter informações da guilda" });
   }

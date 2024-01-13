@@ -19,6 +19,7 @@ module.exports = class VideosRepository extends Repository {
         lastVideo: entity.lastVideo,
         lastPublish: entity.lastPublish,
         message: entity.message,
+        notifyGuild: entity.notifyGuild,
         // ... outros campos do vídeo
       };
     } else {
@@ -77,4 +78,9 @@ module.exports = class VideosRepository extends Repository {
   findAll(projection) {
     return this.model.find({}, projection).then((e) => e.map(this.parse));
   }
+
+  findAllByGuildId(guildId, projection) {
+    return this.model.find({ notifyGuild: guildId }, projection).then((results) => results.map(this.parse));
+  }
+
 };
