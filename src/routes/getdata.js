@@ -2,12 +2,27 @@ const express = require("express");
 const router = express.Router();
 const discordBot = require("../Client");
 const { ChannelType } = require("discord.js");
+const mongoose = require("mongoose");
+const usersrepository = require("../database/mongoose/UsersRepository");
+const UserSchema = require("../database/schemas/UserSchema");
+mongoose.model("Users", UserSchema);
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
   res.redirect("/");
+};
+
+const getDatabase = async () => {
+  try {
+    const users = new usersrepository(mongoose, "Users");
+    const ls = users.findAll();
+    return ls;
+  } catch (error) {
+    console.error("Erro ao obter dados da guilda:", error);
+    throw error;
+  }
 };
 
 // Função para obter dados da guilda
@@ -92,7 +107,8 @@ router.get("/database-guilda", isAuthenticated, async (req, res) => {
   try {
     const guildId = req.query.guildId;
     const botInfo = await getGuildData(guildId);
-    res.render("databasemanager.ejs", { info: botInfo });
+    const userinfo = await getDatabase();
+    res.render("databasemanager.ejs", { info: botInfo, info1: userinfo });
   } catch (error) {
     res.status(500).json({ error: "Erro ao obter informações da guilda" });
   }
@@ -102,7 +118,7 @@ router.get("/database-guilda/:guildId", isAuthenticated, async (req, res) => {
   try {
     const guildId = req.params.guildId;
     const botInfo = await getGuildData(guildId);
-    
+
     //res.render("databasemanager.ejs", { info: botInfo });
     res.json(botInfo);
   } catch (error) {

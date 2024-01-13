@@ -14,6 +14,21 @@
     <p><img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" /></p>
     <% } %>
     <p>ID da Guilda: <%= info.id %></p>
+    
+    
+    <p>Membros da Guilda</p>
+    <ul>
+      <% info1.forEach(item => { %>
+        <li>
+          <p>Código do Usuário: <%= item.codigouser %></p>
+          <p>Nome de Usuário: <%= item.username %></p>
+          <p>Tempo Total em Chamadas de Voz (em minutos): <%= item.voiceTime %></p>
+          <p>Número Total de Mensagens Enviadas: <%= item.totalMessages %></p>
+          <p>Pertence a Guilda: <%= item.idguild %></p>
+        </li>
+      <% }); %>
+    </ul>
+    
 
     <button onclick="voltarAoDashboard()">Voltar ao Dashboard</button>
     <script>

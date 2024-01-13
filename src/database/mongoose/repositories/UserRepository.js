@@ -12,6 +12,7 @@ module.exports = class UserRepository extends UsersRepository {
       username: null,
       voiceTime: null,
       totalMessages: null,
+      idguild: null,
       ...(super.parse(entity) || {}),
     };
   }
