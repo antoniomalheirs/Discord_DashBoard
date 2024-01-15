@@ -8,6 +8,8 @@ const UserSchema = require("../database/schemas/UserSchema");
 mongoose.model("Users", UserSchema);
 const videosrepository = require("../database/mongoose/VideosRepository");
 const VideoSchema = require("../database/schemas/VideoSchema");
+const YTBCHANNELTOID = require("../utils/YTBCHANNELTOID.js");
+const RegistradorYTBVideo = require("../utils/RegistradorYTBVideo.js");
 mongoose.model("Videos", VideoSchema);
 
 const isAuthenticated = (req, res, next) => {
@@ -170,5 +172,51 @@ router.get(
     }
   }
 );
+
+router.post("/adicionar-dados", isAuthenticated, async (req, res) => {
+  try {
+    // Adicione lógica para validar e processar os dados conforme necessário
+    const channelInput = req.body.newData;
+    const guildId = req.body.guildId;
+
+    const videoRepository = new videosrepository(mongoose, "Videos");
+
+    if (channelInput != null) {
+      const videoId = channelInput;
+      const projection = {
+        youtube: 1,
+        channel: 1,
+        lastVideo: 1,
+        lastPublish: 1,
+        message: 1,
+        notifyGuild: 1,
+      };
+
+      const noBanco = await videoRepository.findByYoutubeAndGuildId(channelInput,guildId, projection);
+
+      if (noBanco != null) {
+        res.status(200).json({
+          success: false,
+          message: "Canal já existe no banco de dados.",
+        });
+      } else {
+        const result = await YTBCHANNELTOID.bind(this)(videoId);
+        result.notifyGuild = guildId;
+        await RegistradorYTBVideo.bind(this)(result);
+
+        res.status(200).json({
+          success: true,
+          message: "Dados adicionados com sucesso ao banco de dados.",
+        });
+      }
+    }
+  } catch (error) {
+    console.error("Erro ao adicionar dados ao banco de dados:", error);
+    res.status(500).json({
+      success: false,
+      message: "Erro ao adicionar dados ao banco de dados.",
+    });
+  }
+});
 
 module.exports = router;

@@ -67,6 +67,12 @@ module.exports = class VideosRepository extends Repository {
     return this.model.updateOne({ youtube: id }, entity, options);
   }
 
+  updateByYoutubeIdAndGuildId(youtubeId, guildId, options = { new: true }) {
+    return this.model
+      .findOneAndUpdate({ youtube: youtubeId, notifyGuild: guildId }, options)
+      .then(this.parse);
+  }
+
   async verify(id) {
     return (await this.model.findOne({ youtube: id }).then((e) => {
       return e;
@@ -75,12 +81,24 @@ module.exports = class VideosRepository extends Repository {
       : false;
   }
 
+  verifyByYoutubeAndGuildId(youtubeId, guildId) {
+    return this.model.exists({ youtube: youtubeId, notifyGuild: guildId });
+  }
+  
+
   findAll(projection) {
     return this.model.find({}, projection).then((e) => e.map(this.parse));
   }
 
   findAllByGuildId(guildId, projection) {
-    return this.model.find({ notifyGuild: guildId }, projection).then((results) => results.map(this.parse));
+    return this.model
+      .find({ notifyGuild: guildId }, projection)
+      .then((results) => results.map(this.parse));
   }
 
+  findByYoutubeAndGuildId(channelId, guildId, projection) {
+    return this.model
+      .findOne({ channel: channelId, notifyGuild: guildId }, projection)
+      .then(this.parse);
+  }
 };

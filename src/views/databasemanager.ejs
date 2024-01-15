@@ -7,6 +7,9 @@
     <title>Banco de Dados - Guilda</title>
   </head>
   <body>
+    <!-- Adicione esta div no local desejado em seu HTML -->
+    <div id="mensagemPopUp" style="display: none"></div>
+
     <h1>Guilda <%= info.name %></h1>
 
     <% if (info.icon && info.icon.indexOf('null') === -1) { %>
@@ -43,6 +46,29 @@
     </table>
 
     <h2>Canais a Notificar na Guilda</h2>
+
+    <button onclick="abrirModal()">Adicionar Dados</button>
+
+    <!-- Modal para adicionar dados -->
+    <div id="modal" style="display: none">
+      <!-- Conteúdo do modal -->
+      <form id="addDataForm" action="/bot/adicionar-dados" method="post">
+        <label for="channel">Nome do Canal:</label>
+        <input type="text" id="channel" name="newData" required />
+
+        <!-- Inclua o campo guildId no formulário -->
+        <input
+          type="hidden"
+          id="guildId"
+          name="guildId"
+          value="<%= info.id %>"
+        />
+
+        <button type="button" onclick="fecharModal()">Fechar</button>
+        <button type="submit">Adicionar</button>
+      </form>
+    </div>
+
     <table>
       <thead>
         <tr>
@@ -69,9 +95,19 @@
     </table>
 
     <button onclick="voltarAoDashboard()">Voltar ao Dashboard</button>
+
     <script>
+      function abrirModal() {
+        var modal = document.getElementById("modal");
+        modal.style.display = "block";
+      }
+
+      function fecharModal() {
+        var modal = document.getElementById("modal");
+        modal.style.display = "none";
+      }
+
       function voltarAoDashboard() {
-        // Usa o método goBack() para voltar para a página anterior na história do navegador
         window.history.back();
       }
     </script>

@@ -54,3 +54,39 @@ th, td {
 th {
   background-color: #17494b;
 }
+
+/* Adicione estas regras para estilizar as caixas de texto */
+input[type="text"], input[type="password"], input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Adicione estas regras para estilizar as caixas de texto quando estão em foco */
+input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus {
+  outline: none;
+  border: 2px solid #2980b9;
+}
+
+/* Adicione estas regras para estilizar as caixas de texto quando estão em hover */
+input[type="text"]:hover, input[type="password"]:hover, input[type="number"]:hover {
+  border: 2px solid #2980b9;
+}
+
+.success {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.error {
+  background-color: #f44336;
+  color: #fff;
+  padding: 10px;
+  margin-top: 20px;
+}

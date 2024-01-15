@@ -18,7 +18,7 @@ module.exports = class UserRepository extends Repository {
         username: entity.username,
         voiceTime: entity.voiceTime || 0,
         totalMessages: entity.totalMessages || 0,
-        idguild: entity.idguild || "nada encontrado"
+        idguild: entity.idguild || "nada encontrado",
         // ... outros campos do usuário
       };
     } else {
@@ -38,6 +38,12 @@ module.exports = class UserRepository extends Repository {
     return this.model.findOne({ username }, projection).then(this.parse);
   }
 
+  findByGuildId(idguild, projection) {
+    return this.model
+      .findOne({ idguild }, projection)
+      .then((result) => (result ? this.parse(result) : false));
+  }
+
   get size() {
     return this.model.find({}).then((e) => e.length);
   }
@@ -45,7 +51,17 @@ module.exports = class UserRepository extends Repository {
   get(codigouser, projection) {
     return this.model
       .findOne({ codigouser }, projection)
-      .then((entity) => entity ? this.parse(entity) : this.add({ codigouser }));
+      .then((entity) =>
+        entity ? this.parse(entity) : this.add({ codigouser })
+      );
+  }
+
+  getByUserIdAndGuildId(codigouser, idguild, projection) {
+    return this.model
+      .findOne({ codigouser, idguild }, projection)
+      .then((entity) =>
+        entity ? this.parse(entity) : this.add({ codigouser, idguild })
+      );
   }
   
 
@@ -61,6 +77,11 @@ module.exports = class UserRepository extends Repository {
     return this.model.updateOne({ codigouser }, entity, options);
   }
 
+  updateByUserIdAndGuildId(codigouser, idguild, entity, options = { upsert: true }) {
+    return this.model.updateOne({ codigouser, idguild }, entity, options);
+  }
+  
+
   async verify(codigouser) {
     return !!(await this.model.findOne({ codigouser }));
   }
@@ -70,6 +91,8 @@ module.exports = class UserRepository extends Repository {
   }
 
   findAllByGuildId(guildId, projection) {
-    return this.model.find({ idguild: guildId }, projection).then((results) => results.map(this.parse));
+    return this.model
+      .find({ idguild: guildId }, projection)
+      .then((results) => results.map(this.parse));
   }
 };
