@@ -21,6 +21,8 @@
 
     <p>ID da Guilda: <%= info.id %></p>
 
+    <button onclick="voltarAoDashboard()">Voltar ao Dashboard</button>
+
     <h2>Informações sobre Membros da Guilda</h2>
     <table>
       <thead>
@@ -45,14 +47,18 @@
       </tbody>
     </table>
 
-    <h2>Canais a Notificar na Guilda</h2>
+    <h2>Youtube Channels a Notificar na Guilda</h2>
 
     <button onclick="abrirModal()">Adicionar Dados</button>
 
     <!-- Modal para adicionar dados -->
     <div id="modal" style="display: none">
       <!-- Conteúdo do modal -->
-      <form id="addDataForm" action="/bot/adicionar-dados" method="post">
+      <form
+        id="addDataForm"
+        action="/bot/adicionar-dados-youtube"
+        method="post"
+      >
         <label for="channel">Nome do Canal:</label>
         <input type="text" id="channel" name="newData" required />
 
@@ -94,7 +100,50 @@
       </tbody>
     </table>
 
-    <button onclick="voltarAoDashboard()">Voltar ao Dashboard</button>
+    <h2>Twitch Channels a Notificar na Guilda</h2>
+
+    <button onclick="abrirModal1()">Adicionar Dados</button>
+
+    <!-- Modal para adicionar dados -->
+    <div id="modal1" style="display: none">
+      <!-- Conteúdo do modal -->
+      <form id="addDataForm" action="/bot/adicionar-dados-twitch" method="post">
+        <label for="channel">Nome do Canal:</label>
+        <input type="text" id="channel" name="newData" required />
+
+        <!-- Inclua o campo guildId no formulário -->
+        <input
+          type="hidden"
+          id="guildId"
+          name="guildId"
+          value="<%= info.id %>"
+        />
+
+        <button type="button" onclick="fecharModal1()">Fechar</button>
+        <button type="submit">Adicionar</button>
+      </form>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID Twitch</th>
+          <th>Channel</th>
+          <th>Guild</th>
+          <th>Notify Guild</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% info3.forEach(item => { %>
+        <tr>
+          <td><%= item.twitch %></td>
+          <td><%= item.channel %></td>
+          <td><%= item.guildID %></td>
+          <td><%= item.twitchnotify %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
 
     <script>
       function abrirModal() {
@@ -102,8 +151,18 @@
         modal.style.display = "block";
       }
 
+      function abrirModal1() {
+        var modal = document.getElementById("modal1");
+        modal.style.display = "block";
+      }
+
       function fecharModal() {
         var modal = document.getElementById("modal");
+        modal.style.display = "none";
+      }
+
+      function fecharModal1() {
+        var modal = document.getElementById("modal1");
         modal.style.display = "none";
       }
 

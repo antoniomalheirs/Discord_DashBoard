@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Informações das Guildas</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID Do Servidor</th>
+          <th>Nome do Servidor</th>
+          <th>Notificão em Canal YOUTUBE</th>
+          <th>ID do Canal para Notificar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% info.forEach(item => { %>
+        <tr>
+          <td><%= item.guildID %></td>
+          <td><%= item.guildName %></td>
+          <td><%= item.youtubenotify %></td>
+          <td><%= item.channelytb %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <button onclick="voltarAoDashboard()">Voltar ao Dashboard</button>
+
+    <script>
+      function voltarAoDashboard() {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

@@ -6,6 +6,7 @@ const {
   UserRepository,
   VideoRepository,
   UserAPIRepository,
+  TwitchRepository,
 } = require("./repositories");
 
 module.exports = class MongoDB extends DBWrapper {
@@ -15,16 +16,14 @@ module.exports = class MongoDB extends DBWrapper {
   }
 
   async connect() {
-    const OPTIONS = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
+    const OPTIONS = {};
 
     return mongoose.connect(process.env.DATABASE_CONNECT, OPTIONS).then((m) => {
       this.guilds = new GuildRepository(m);
       this.users = new UserRepository(m);
       this.videos = new VideoRepository(m);
       this.APIUsers = new UserAPIRepository(m);
+      this.twitchs = new TwitchRepository(m);
     });
   }
 };

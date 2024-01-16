@@ -1,15 +1,11 @@
 const { Schema } = require("mongoose");
 
 module.exports = new Schema({
-  youtube: {
+  twitch: {
     type: String,
     required: true,
   },
   channel: { type: String },
-  lastVideo: {
-    type: String,
-  },
-  lastPublish: { type: String },
-  message: { type: String },
-  notifyGuild: { type: String },
+  guildID: { type: String },
+  twitchnotify: { type: String },
 });

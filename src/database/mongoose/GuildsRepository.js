@@ -16,6 +16,8 @@ module.exports = class GuildRepository extends Repository {
       return {
         guildID: entity.guildID,
         guildName: entity.guildName,
+        youtubenotify: entity.youtubenotify,
+        channelytb: entity.channelytb,
         // ... outros campos da guilda
       };
     } else {
@@ -45,7 +47,7 @@ module.exports = class GuildRepository extends Repository {
     if (existingGuild) {
       return existingGuild;
     } else {
-      const newGuild = {guildID, projection};
+      const newGuild = { guildID, projection };
       return this.add(newGuild);
     }
   }
@@ -64,6 +66,19 @@ module.exports = class GuildRepository extends Repository {
 
   async verify(guildID) {
     return !!(await this.model.findOne({ guildID }));
+  }
+
+  async verifyYouTubeNotify(query = {}) {
+    // Adiciona a condição de que YOUTUBENOTIFY deve ser verdadeiro
+    const conditions = { ...query, youtubenotify: true };
+    console.log("Condições de Filtragem:", conditions); // Adicione esta linha
+    const guildas = await this.model.find(conditions);
+
+    return guildas.map((guild) => ({
+      youtubenotify: guild.youtubenotify,
+      channelytb: guild.channelytb,
+      guildID: guild.guildID, // Modificado para refletir o nome correto da propriedade
+    }));
   }
 
   findAll(projection) {

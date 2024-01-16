@@ -3,4 +3,5 @@ module.exports = {
   UserSchema: require("./UserSchema.js"),
   UserAPISchema: require("./UserAPISchema.js"),
   GuildShema: require("./GuildShema.js"),
+  TwitchSchema: require("./TwitchSchema.js"),
 };

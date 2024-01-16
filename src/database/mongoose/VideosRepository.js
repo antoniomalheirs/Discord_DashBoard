@@ -96,9 +96,36 @@ module.exports = class VideosRepository extends Repository {
       .then((results) => results.map(this.parse));
   }
 
+  async getChannelsWithVideosByGuildId(guildId) {
+    try {
+      const videos = await this.model.find({ notifyGuild: guildId });
+    
+      // Retorna um array de objetos contendo youtube e lastVideo
+      return videos.map((video) => ({
+        youtube: video.youtube,
+        lastVideo: video.lastVideo,
+      }));
+    } catch (error) {
+      console.error("Erro ao obter canais com vídeos para a guilda:", error);
+      throw error;
+    }
+  }
+  
+
   findByYoutubeAndGuildId(channelId, guildId, projection) {
     return this.model
       .findOne({ channel: channelId, notifyGuild: guildId }, projection)
       .then(this.parse);
   }
+
+  async findByLastVideoAndGuildId(lastVideo, guildId, projection) {
+    try {
+      const video = await this.model.findOne({ lastVideo, notifyGuild: guildId }, projection);
+      return video ? this.parse(video) : null;
+    } catch (error) {
+      console.error("Erro ao consultar dados por lastVideo e guildId:", error);
+      throw error;
+    }
+  }
+  
 };
