@@ -14,6 +14,8 @@
           <th>ID Do Servidor</th>
           <th>Nome do Servidor</th>
           <th>Notificão em Canal YOUTUBE</th>
+          <th>Notificão em Canal TWITCH</th>
+          <th>ID do Canal para Notificar</th>
           <th>ID do Canal para Notificar</th>
         </tr>
       </thead>
@@ -23,7 +25,9 @@
           <td><%= item.guildID %></td>
           <td><%= item.guildName %></td>
           <td><%= item.youtubenotify %></td>
+          <td><%= item.twitchnotify %></td>
           <td><%= item.channelytb %></td>
+          <td><%= item.channeltch %></td>
         </tr>
         <% }); %>
       </tbody>

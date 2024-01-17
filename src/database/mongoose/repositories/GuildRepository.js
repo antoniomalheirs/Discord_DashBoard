@@ -10,6 +10,10 @@ module.exports = class GuildRepository extends GuildsRepository {
     return {
       guildID: null,
       guildName: null,
+      channelytb: null,
+      channeltch: null,
+      youtubenotify: null,
+      twitchnotify: null,
       ...(super.parse(entity) || {}),
     };
   }

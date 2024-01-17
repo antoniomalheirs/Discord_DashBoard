@@ -16,7 +16,7 @@ module.exports = class MongoDB extends DBWrapper {
   }
 
   async connect() {
-    const OPTIONS = {};
+    const OPTIONS = { useNewUrlParser: true, useUnifiedTopology: true };
 
     return mongoose.connect(process.env.DATABASE_CONNECT, OPTIONS).then((m) => {
       this.guilds = new GuildRepository(m);

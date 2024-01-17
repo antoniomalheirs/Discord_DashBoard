@@ -17,7 +17,6 @@ module.exports = class TwitchRepository extends Repository {
         twitch: entity.twitch,
         channel: entity.channel,
         guildID: entity.guildID,
-        twitchnotify: entity.twitchnotify,
         // ... outros campos da guilda
       };
     } else {

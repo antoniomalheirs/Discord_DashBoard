@@ -3,7 +3,7 @@ const TwitchSchema = require("../../schemas/TwitchSchema.js");
 
 module.exports = class TwitchRepository extends TwitchsRepository {
   constructor(mongoose) {
-    super(mongoose, mongoose.model("twitchs", TwitchSchema));
+    super(mongoose, mongoose.model("Twitchs", TwitchSchema));
   }
 
   parse(entity) {
@@ -11,7 +11,6 @@ module.exports = class TwitchRepository extends TwitchsRepository {
       twitch: null,
       channel: null,
       guildID: null,
-      twitchnotify: null,
       ...(super.parse(entity) || {}),
     };
   }

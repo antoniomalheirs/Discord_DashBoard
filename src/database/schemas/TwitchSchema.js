@@ -7,5 +7,4 @@ module.exports = new Schema({
   },
   channel: { type: String },
   guildID: { type: String },
-  twitchnotify: { type: String },
 });

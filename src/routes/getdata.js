@@ -40,7 +40,7 @@ const getDatabase1 = async (guildId) => {
 
 const getDatabase3 = async (guildId) => {
   try {
-    const channels = new twitchsrepository(mongoose, "twitchs");
+    const channels = new twitchsrepository(mongoose, "Twitchs");
     const ls = channels.findAllByGuildId(guildId);
     return ls;
   } catch (error) {
@@ -69,6 +69,8 @@ const getDatabase2 = async () => {
       guildName: 1,
       youtubenotify: 1,
       channelytb: 1,
+      channeltch: 1,
+      twitchnotify: 1,
     };
     const ls = servers.findAll(projection);
     return ls;
@@ -225,6 +227,7 @@ router.post("/adicionar-dados-youtube", isAuthenticated, async (req, res) => {
   try {
     // Adicione lógica para validar e processar os dados conforme necessário
     const channelInput = req.body.newData;
+
     const guildId = req.body.guildId;
 
     const videoRepository = new videosrepository(mongoose, "Videos");
@@ -289,7 +292,6 @@ router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
         twitch: channelId,
         channel: channelInput,
         guildID: guildId,
-        twitchnotify: 1,
       };
 
       const noBanco = await twitchRepository.findByTwitchAndGuildId(
