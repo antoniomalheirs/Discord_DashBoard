@@ -3,141 +3,244 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <title>Banco de Dados - Guilda</title>
   </head>
-  <body>
-    <!-- Adicione esta div no local desejado em seu HTML -->
-    <div id="mensagemPopUp" style="display: none"></div>
+  <body
+    class="bg-yellow-100 min-h-screen flex flex-col items-center justify-center"
+  >
+    <div id="mensagemPopUp" class="hidden"></div>
 
-    <h1>Guilda <%= info.name %></h1>
+    <h1 class="text-3xl font-bold my-4">Banco de Dados do Servidor</h1>
 
-    <% if (info.icon && info.icon.indexOf('null') === -1) { %>
-    <p><img src="<%= info.icon %>" alt="Ícone da guilda" /></p>
-    <% } else { %>
-    <!-- Substitua "caminho/para/sua/imagem.png" pelo caminho real da sua imagem padrão -->
-    <p><img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" /></p>
-    <% } %>
+    <h1 class="text-2xl font-bold my-4">Guilda <%= info.name %></h1>
 
-    <p>ID da Guilda: <%= info.id %></p>
+    <div class="my-4">
+      <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+      <img
+        src="<%= info.icon %>"
+        alt="Ícone da guilda"
+        class="rounded-full max-w-full h-auto"
+      />
+      <% } else { %>
+      <img
+        src="/res/serverIcon/nonserverimg.jpg"
+        alt="Ícone padrão"
+        class="rounded-full max-w-full h-auto"
+      />
+      <% } %>
+    </div>
 
-    <button onclick="voltarAoDashboard()">Voltar ao Dashboard</button>
+    <button
+      onclick="voltarAoDashboard()"
+      class="bg-purple-300 text-white px-4 py-2 rounded-md mt-4"
+    >
+      Voltar ao Dashboard
+    </button>
 
-    <h2>Informações sobre Membros da Guilda</h2>
-    <table>
-      <thead>
+    <!-- Informações sobre Membros da Guilda -->
+    <h2 class="text-2xl font-bold mt-8">Informações sobre Membros da Guilda</h2>
+    <table
+      class="table-auto w-11/12 mt-4 bg-purple-300 border rounded-lg shadow-md overflow-hidden"
+    >
+      <thead class="bg-green-300">
         <tr>
-          <th>Código do Usuário</th>
-          <th>Nome de Usuário</th>
-          <th>Tempo Total em Chamadas de Voz (minutos)</th>
-          <th>Número Total de Mensagens Enviadas</th>
-          <th>ID da Guilda</th>
+          <th class="px-4 py-2">Código do Usuário</th>
+          <th class="px-4 py-2">Nome de Usuário</th>
+          <th class="px-4 py-2">Tempo Total em Chamadas de Voz (minutos)</th>
+          <th class="px-4 py-2">Número Total de Mensagens Enviadas</th>
+          <th class="px-4 py-2">ID da Guilda</th>
         </tr>
       </thead>
       <tbody>
         <% info1.forEach(item => { %>
-        <tr>
-          <td><%= item.codigouser %></td>
-          <td><%= item.username %></td>
-          <td><%= item.voiceTime %></td>
-          <td><%= item.totalMessages %></td>
-          <td><%= item.idguild %></td>
+        <tr class="bg-gray-100">
+          <td class="border border-green-300 px-4 py-2">
+            <%= item.codigouser %>
+          </td>
+          <td class="border border-green-300 px-4 py-2">
+            <%= item.username %>
+          </td>
+          <td class="border border-green-300 px-4 py-2">
+            <%= item.voiceTime %>
+          </td>
+          <td class="border border-green-300 px-4 py-2">
+            <%= item.totalMessages %>
+          </td>
+          <td class="border border-green-300 px-4 py-2"><%= item.idguild %></td>
         </tr>
         <% }); %>
       </tbody>
     </table>
 
-    <h2>Youtube Channels a Notificar na Guilda</h2>
+    <!-- Youtube Channels a Notificar na Guilda -->
+    <h2 class="text-2xl font-bold mt-8">
+      Youtube Channels a Notificar na Guilda
+    </h2>
+    <button
+      onclick="abrirModal()"
+      class="bg-green-400 text-white px-4 py-2 rounded-md mt-4 hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
+    >
+      Adicionar Dados
+    </button>
 
-    <button onclick="abrirModal()">Adicionar Dados</button>
-
-    <!-- Modal para adicionar dados -->
-    <div id="modal" style="display: none">
-      <!-- Conteúdo do modal -->
+    <div
+      id="modal"
+      class="hidden fixed inset-0 w-1/6 h-1/6 mx-auto my-auto items-center justify-center"
+    >
       <form
         id="addDataForm"
         action="/bot/adicionar-dados-youtube"
         method="post"
+        class="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
       >
-        <label for="channel">Nome do Canal:</label>
-        <input type="text" id="channel" name="newData" required />
-
-        <!-- Inclua o campo guildId no formulário -->
+        <label for="channel" class="block text-sm font-medium text-gray-700"
+          >Nome do Canal:</label
+        >
+        <input
+          type="text"
+          id="channel"
+          name="newData"
+          required
+          class="mt-1 p-2 block w-full border rounded-md"
+        />
         <input
           type="hidden"
           id="guildId"
           name="guildId"
           value="<%= info.id %>"
         />
-
-        <button type="button" onclick="fecharModal()">Fechar</button>
-        <button type="submit">Adicionar</button>
+        <div class="mt-4 flex space-x-4">
+          <button
+            type="button"
+            onclick="fecharModal()"
+            class="bg-gray-500 text-white px-4 py-2 rounded-md"
+          >
+            Fechar
+          </button>
+          <button
+            type="submit"
+            class="bg-purple-300 text-white px-4 py-2 rounded-md"
+          >
+            Adicionar
+          </button>
+        </div>
       </form>
     </div>
 
-    <table>
-      <thead>
+    <table
+      class="table-auto w-11/12 mt-4 bg-green-300 border rounded-lg shadow-md overflow-hidden"
+    >
+      <thead class="bg-purple-300">
         <tr>
-          <th>YouTube</th>
-          <th>Channel</th>
-          <th>Last Video</th>
-          <th>Last Publish</th>
-          <th>Message</th>
-          <th>Notify Guild</th>
+          <th class="px-4 py-2">YouTube</th>
+          <th class="px-4 py-2">Channel</th>
+          <th class="px-4 py-2">Last Video</th>
+          <th class="px-4 py-2">Last Publish</th>
+          <th class="px-4 py-2">Message</th>
+          <th class="px-4 py-2">Notify Guild</th>
         </tr>
       </thead>
       <tbody>
         <% info2.forEach(item => { %>
-        <tr>
-          <td><%= item.youtube %></td>
-          <td><%= item.channel %></td>
-          <td><%= item.lastVideo %></td>
-          <td><%= item.lastPublish %></td>
-          <td><%= item.message %></td>
-          <td><%= item.notifyGuild %></td>
+        <tr class="bg-gray-100">
+          <td class="border border-purple-300 px-4 py-2">
+            <%= item.youtube %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2">
+            <%= item.channel %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2">
+            <%= item.lastVideo %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2">
+            <%= item.lastPublish %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2">
+            <%= item.message %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2">
+            <%= item.notifyGuild %>
+          </td>
         </tr>
         <% }); %>
       </tbody>
     </table>
 
-    <h2>Twitch Channels a Notificar na Guilda</h2>
+    <!-- Twitch Channels a Notificar na Guilda -->
+    <h2 class="text-2xl font-bold mt-8">
+      Twitch Channels a Notificar na Guilda
+    </h2>
+    <button
+      onclick="abrirModal1()"
+      class="bg-purple-300 text-white px-4 py-2 rounded-md mt-4 hover:bg-purple-400 focus:outline-none focus:shadow-outline-purple"
+    >
+      Adicionar Dados
+    </button>
 
-    <button onclick="abrirModal1()">Adicionar Dados</button>
-
-    <!-- Modal para adicionar dados -->
-    <div id="modal1" style="display: none">
-      <!-- Conteúdo do modal -->
-      <form id="addDataForm" action="/bot/adicionar-dados-twitch" method="post">
-        <label for="channel">Nome do Canal:</label>
-        <input type="text" id="channel" name="newData" required />
-
-        <!-- Inclua o campo guildId no formulário -->
+    <div
+      id="modal1"
+      class="hidden fixed inset-0 w-1/6 h-1/6 mx-auto my-auto items-center justify-center"
+    >
+      <form
+        id="addDataForm1"
+        action="/bot/adicionar-dados-twitch"
+        method="post"
+        class="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
+      >
+        <label for="channel1" class="block text-sm font-medium text-gray-700"
+          >Nome do Canal:</label
+        >
+        <input
+          type="text"
+          id="channel1"
+          name="newData"
+          required
+          class="mt-1 p-2 block w-full border rounded-md"
+        />
         <input
           type="hidden"
-          id="guildId"
+          id="guildId1"
           name="guildId"
           value="<%= info.id %>"
         />
-
-        <button type="button" onclick="fecharModal1()">Fechar</button>
-        <button type="submit">Adicionar</button>
+        <div class="mt-4 flex space-x-4">
+          <button
+            type="button"
+            onclick="fecharModal1()"
+            class="bg-gray-500 text-white px-4 py-2 rounded-md"
+          >
+            Fechar
+          </button>
+          <button
+            type="submit"
+            class="bg-green-400 text-white px-4 py-2 rounded-md"
+          >
+            Adicionar
+          </button>
+        </div>
       </form>
     </div>
 
-    <table>
-      <thead>
+    <table
+      class="table-auto w-11/12 mt-4 mb-12 bg-purple-300 border rounded-lg shadow-md overflow-hidden"
+    >
+      <thead class="bg-green-300">
         <tr>
-          <th>Twitch</th>
-          <th>Channel</th>
-          <th>Notify Guild</th>
+          <th class="px-4 py-2">Twitch</th>
+          <th class="px-4 py-2">Channel</th>
+          <th class="px-4 py-2">Notify Guild</th>
         </tr>
       </thead>
       <tbody>
         <% info3.forEach(item => { %>
-        <tr>
-          <td><%= item.twitch %></td>
-          <td><%= item.channel %></td>
-          <td><%= item.guildID %></td>
+        <tr class="bg-gray-100">
+          <td class="border border-green-300 px-4 py-2"><%= item.twitch %></td>
+          <td class="border border-green-300 px-4 py-2"><%= item.channel %></td>
+          <td class="border border-green-300 px-4 py-2"><%= item.guildID %></td>
         </tr>
         <% }); %>
       </tbody>

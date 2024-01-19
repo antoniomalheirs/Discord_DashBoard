@@ -3,14 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <title>Discord Bot Dashboard</title>
   </head>
-  <body>
-    <h1>Erro ao obter dados da guilda, você não tem permissão para acessar este Servidor ou o bot talvez não esteja no Servidor!</h1>
-    
-    <a href="/dashboard">
-      <button>Voltar ao Dashboard</button>
-    </a>
+  <body class="mt-96 bg-yellow-100">
+    <div class="text-center">
+      <p class="text-base font-semibold text-indigo-600">404</p>
+      <h1
+        class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl"
+      >
+        Page not found
+      </h1>
+      <p class="mt-6 text-base leading-7 text-gray-600">
+        Erro ao obter dados da guilda, você não tem permissão para acessar este
+        Servidor ou o Bot talvez não esteja no Servidor!.
+      </p>
+      <div class="mt-10 flex items-center justify-center gap-x-6">
+        <a
+          href="/dashboard"
+          class="rounded-md bg-green-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >Go back home</a
+        >
+        <a href="#" class="text-sm font-semibold text-gray-900"
+          >Contact support <span aria-hidden="true">&rarr;</span></a
+        >
+      </div>
+    </div>
   </body>
 </html>

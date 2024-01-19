@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Gerenciador de Funções</title>
+  </head>
+  <body
+    class="bg-yellow-100 min-h-screen flex flex-col items-center justify-center"
+  >
+    <!-- Conteúdo do Pop-up -->
+    <div id="mensagemPopUp" class="hidden"></div>
+
+    <h1 class="text-3xl font-bold my-4">Funções Existentes</h1>
+
+    <h1 class="text-2xl font-bold my-4">Guilda <%= info.name %></h1>
+
+    <div class="my-4">
+      <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+      <img
+        src="<%= info.icon %>"
+        alt="Ícone da guilda"
+        class="rounded-full max-w-full h-auto"
+      />
+      <% } else { %>
+      <img
+        src="/res/serverIcon/nonserverimg.jpg"
+        alt="Ícone padrão"
+        class="rounded-full max-w-full h-auto"
+      />
+      <% } %>
+    </div>
+
+    <button
+      onclick="voltarAoDashboard()"
+      class="bg-purple-300 text-white px-4 py-2 rounded-md mt-4"
+    >
+      Voltar ao Dashboard
+    </button>
+
+    <div
+      id="modal"
+      class="hidden fixed inset-0 w-1/2 h-1/2 mx-auto my-auto items-center justify-center"
+    >
+      <!-- Conteúdo do modal -->
+      <form
+        id="addDataForm"
+        action="/bot/ativarfunc"
+        method="post"
+        class="mt-4 mx-auto w-2/3 bg-white p-8 rounded-lg shadow-md"
+      >
+        <label for="TCH" class="block mb-2">Habilitar Twitch</label>
+        <input type="checkbox" id="TCH" name="newDat4" class="mb-4" />
+
+        <label for="channel" class="block mb-2"
+          >ID do Canal para Notificar as Lives:</label
+        >
+        <input type="text" id="channel" name="newDat6" class="mb-4" required />
+
+        <!-- Inclua o campo guildId no formulário -->
+        <input
+          type="hidden"
+          id="guildId"
+          name="guildId"
+          value="<%= info.id %>"
+        />
+
+        <div class="flex space-x-4">
+          <button
+            type="button"
+            onclick="fecharModal()"
+            class="py-2 px-4 bg-red-500 text-white rounded mr-2"
+          >
+            Fechar
+          </button>
+          <button
+            type="submit"
+            class="py-2 px-4 bg-green-500 text-white rounded"
+          >
+            Adicionar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div
+      id="modal2"
+      class="hidden fixed inset-0 w-1/2 h-1/2 mx-auto my-auto items-center justify-center"
+    >
+      <!-- Conteúdo do modal -->
+      <form
+        id="addDataForm"
+        action="/bot/ativarfunc"
+        method="post"
+        class="mt-4 mx-auto w-2/3 bg-white p-8 rounded-lg shadow-md"
+      >
+        <label for="YTB" class="block mb-2">Habilitar YouTube</label>
+        <input type="checkbox" id="YTB" name="newDat3" class="mb-4" />
+
+        <label for="channel" class="block mb-2"
+          >ID do Canal para Notificar os Vídeos:</label
+        >
+        <input type="text" id="channel" name="newDat5" class="mb-4" required />
+
+        <!-- Inclua o campo guildId no formulário -->
+        <input
+          type="hidden"
+          id="guildId"
+          name="guildId"
+          value="<%= info.id %>"
+        />
+
+        <div class="flex space-x-4">
+          <button
+            type="button"
+            onclick="fecharModal2()"
+            class="py-2 px-4 bg-red-500 text-white rounded mr-2"
+          >
+            Fechar
+          </button>
+          <button
+            type="submit"
+            class="py-2 px-4 bg-green-500 text-white rounded"
+          >
+            Adicionar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tabela 1 -->
+    <h2 class="text-2xl mt-8 text-center">Funções ativas na Guilda</h2>
+    <table
+      class="w-11/12 mt-4 bg-green-300 border rounded-lg shadow-md overflow-hidden"
+    >
+      <!-- ... (código da tabela) ... -->
+
+      <thead>
+        <tr>
+          <th class="py-2 px-4 bg-purple-300">ID</th>
+          <th class="py-2 px-4 bg-purple-300">Name</th>
+          <th class="py-2 px-4 bg-purple-300">Notificar Videos do Youtube</th>
+          <th class="py-2 px-4 bg-purple-300">Notificar Videos da Twitch</th>
+          <th class="py-2 px-4 bg-purple-300">ID para notificar video</th>
+          <th class="py-2 px-4 bg-purple-300">ID para notificar twitch</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-gray-100">
+          <td class="py-2 px-4 border border-purple-300 text-center">
+            <%= info4.guildID %>
+          </td>
+          <td class="py-2 px-4 border border-purple-300 text-center">
+            <%= info4.guildName %>
+          </td>
+          <td class="py-2 px-4 border border-purple-300 text-center">
+            <%= info4.youtubenotify %>
+          </td>
+          <td class="py-2 px-4 border border-purple-300 text-center">
+            <%= info4.twitchnotify %>
+          </td>
+          <td class="py-2 px-4 border border-purple-300 text-center">
+            <%= info4.channelytb %>
+          </td>
+          <td class="py-2 px-4 border border-purple-300 text-center">
+            <%= info4.channeltch %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Tabela 2 -->
+    <h2 class="text-2xl mt-8 text-center">Youtube Channels a Notificar</h2>
+
+    <button
+      onclick="abrirModal2()"
+      class="bg-green-400 text-white px-4 py-2 rounded-md mt-2 hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
+    >
+      Ativar Função YOUTUBE
+    </button>
+
+    <table
+      class="w-11/12 mt-4 bg-purple-300 border rounded-lg shadow-md overflow-hidden"
+    >
+      <!-- ... (código da tabela) ... -->
+
+      <thead>
+        <tr>
+          <th class="py-2 px-4 bg-green-300">YouTube</th>
+          <th class="py-2 px-4 bg-green-300">Channel</th>
+          <th class="py-2 px-4 bg-green-300">Last Video</th>
+          <th class="py-2 px-4 bg-green-300">Last Publish</th>
+          <th class="py-2 px-4 bg-green-300">Message</th>
+          <th class="py-2 px-4 bg-green-300">Notify Guild</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% info2.forEach(item => { %>
+        <tr class="bg-gray-100">
+          <td class="py-2 px-4 border border-green-300 text-center">
+            <%= item.youtube %>
+          </td>
+          <td class="py-2 px-4 border border-green-300 text-center">
+            <%= item.channel %>
+          </td>
+          <td class="py-2 px-4 border border-green-300 text-center">
+            <%= item.lastVideo %>
+          </td>
+          <td class="py-2 px-4 border border-green-300 text-center">
+            <%= item.lastPublish %>
+          </td>
+          <td class="py-2 px-4 border border-green-300 text-center">
+            <%= item.message %>
+          </td>
+          <td class="py-2 px-4 border border-green-300 text-center">
+            <%= item.notifyGuild %>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <!-- Tabela 3 -->
+    <h2 class="text-2xl mt-8 text-center">Twitch Channels a Notificar</h2>
+
+    <button
+    onclick="abrirModal()"
+    class="bg-purple-300 text-white px-4 py-2 rounded-md mt-2 hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
+  >
+    Ativar Função TWITCH
+  </button>
+
+    <table
+      class="w-11/12 mt-4 mb-12 bg-green-300 border rounded-lg shadow-md overflow-hidden"
+    >
+      <!-- ... (código da tabela) ... -->
+
+      <thead>
+        <tr>
+          <th class="py-2 px-4 bg-purple-300">Twitch</th>
+          <th class="py-2 px-4 bg-purple-300">Channel</th>
+          <th class="py-2 px-4 bg-purple-300">Notify Guild</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% info3.forEach(item => { %>
+        <tr class="bg-gray-100">
+          <td class="py-2 px-4 border border-purple-300 text-center">
+            <%= item.twitch %>
+          </td>
+          <td class="py-2 px-4 border border-purple-300 text-center">
+            <%= item.channel %>
+          </td>
+          <td class="py-2 px-4 border border-purple-300 text-center">
+            <%= item.guildID %>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <script>
+      function voltarAoDashboard() {
+        window.history.back();
+      }
+
+      function abrirModal2() {
+        var modal = document.getElementById("modal2");
+        modal.style.display = "block";
+      }
+
+      function fecharModal2() {
+        var modal = document.getElementById("modal2");
+        modal.style.display = "none";
+      }
+
+      function abrirModal() {
+        var modal = document.getElementById("modal");
+        modal.style.display = "block";
+      }
+
+      function fecharModal() {
+        var modal = document.getElementById("modal");
+        modal.style.display = "none";
+      }
+    </script>
+  </body>
+</html>

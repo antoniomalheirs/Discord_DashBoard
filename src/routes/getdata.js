@@ -27,7 +27,7 @@ const isAuthenticated = (req, res, next) => {
   res.redirect("/");
 };
 
-const getDatabase1 = async (guildId) => {
+const getVideos = async (guildId) => {
   try {
     const videos = new videosrepository(mongoose, "Videos");
     const ls = videos.findAllByGuildId(guildId);
@@ -38,7 +38,18 @@ const getDatabase1 = async (guildId) => {
   }
 };
 
-const getDatabase3 = async (guildId) => {
+const getGuilds = async (guildId) => {
+  try {
+    const guilds = new guildsrepository(mongoose, "Guilds");
+    const ls = guilds.findOne(guildId);
+    return ls;
+  } catch (error) {
+    console.error("Erro ao obter dados da guilda:", error);
+    throw error;
+  }
+};
+
+const getTwitch = async (guildId) => {
   try {
     const channels = new twitchsrepository(mongoose, "Twitchs");
     const ls = channels.findAllByGuildId(guildId);
@@ -49,8 +60,7 @@ const getDatabase3 = async (guildId) => {
   }
 };
 
-
-const getDatabase = async (guildId) => {
+const getUsers = async (guildId) => {
   try {
     const users = new usersrepository(mongoose, "Users");
     const ls = users.findAllByGuildId(guildId);
@@ -79,7 +89,6 @@ const getDatabase2 = async () => {
     throw error;
   }
 };
-
 
 // Função para obter dados da guilda
 const getGuildData = async (guildId) => {
@@ -166,13 +175,32 @@ router.get("/recarregar-guilda/:guildId", isAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/functions-guilda", isAuthenticated, async (req, res) => {
+  try {
+    const guildId = req.query.guildId;
+    const botInfo = await getGuildData(guildId);
+    const guildinfo = await getGuilds(guildId);
+    const videoinfo = await getVideos(guildId);
+    const twicthinfo = await getTwitch(guildId);
+
+    res.render("functionmanager.ejs", {
+      info: botInfo,
+      info2: videoinfo,
+      info3: twicthinfo,
+      info4: guildinfo,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao obter informações da guilda" });
+  }
+});
+
 router.get("/database-guilda", isAuthenticated, async (req, res) => {
   try {
     const guildId = req.query.guildId;
     const botInfo = await getGuildData(guildId);
-    const userinfo = await getDatabase(guildId);
-    const videoinfo = await getDatabase1(guildId);
-    const twicthinfo = await getDatabase3(guildId);
+    const userinfo = await getUsers(guildId);
+    const videoinfo = await getVideos(guildId);
+    const twicthinfo = await getTwitch(guildId);
 
     res.render("databasemanager.ejs", {
       info: botInfo,
@@ -185,7 +213,7 @@ router.get("/database-guilda", isAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/database-guilda/:guildId", isAuthenticated, async (req, res) => {
+/*router.get("/database-guilda/:guildId", isAuthenticated, async (req, res) => {
   try {
     const guildId = req.params.guildId;
     const botInfo = await getGuildData(guildId);
@@ -195,7 +223,7 @@ router.get("/database-guilda/:guildId", isAuthenticated, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Erro ao recarregar informações da guilda" });
   }
-});
+});*/
 
 router.get(
   "/obter-icone-guilda/:guildId",
@@ -324,4 +352,10 @@ router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
   }
 });
 
+router.post("/ativarfunc", isAuthenticated, async (req, res) => {
+
+
+
+
+});
 module.exports = router;
