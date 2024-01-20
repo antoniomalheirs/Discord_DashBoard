@@ -3,114 +3,163 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <title>Discord Bot Dashboard</title>
   </head>
   <body class="container max-w-full bg-yellow-100">
-   
+    <nav class="bg-purple-200">
+      <div class="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+          <div class="flex flex-auto items-center justify-center sm:items-stretch sm:justify+-start">
+            <div class="flex flex-shrink-0 items-center">
+              <img
+                class="h-8 w-auto rounded-3xl"
+                src="/res/serverIcon/boticon.jpg"
+                alt="Your Company"
+              />
+            </div>
+            <div class="hidden sm:ml-6 mt-0.5 sm:block">
+              <div class="flex space-x-4">
+                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                <a
+                  class="bg-green-400 text-white rounded-md px-3 py-2 text-sm font-medium"
+                  aria-current="page"
+                  >Guildas</a
+                >
+              </div>
+            </div>
 
-<nav class="bg-purple-200">
-  <div class="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
-    <div class="relative flex h-16 items-center justify-between">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <!-- Mobile menu button-->
-        <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-          <span class="absolute -inset-0.5"></span>
-          <span class="sr-only">Open main menu</span>
-          <!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
-          <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
-          <!--
-            Icon when menu is open.
-
-            Menu open: "block", Menu closed: "hidden"
-          -->
-          <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-      <div class="flex flex-auto items-center justify-center sm:items-stretch sm:justify-start">
-        <div class="flex flex-shrink-0 items-center">
-          <img class="h-8 w-auto rounded-3xl" src="/res/serverIcon/boticon.jpg" alt="Your Company">
-        </div>
-        <div class="hidden sm:ml-6 mt-0.5 sm:block">
-          <div class="flex space-x-4">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a class="bg-green-400 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Guildas</a>
             
-          </div>
-        </div>
-        <div class="hidden sm:ml-80 sm:block items-end justify-end sm:items-stretch sm:justify-end">
-          <div class="flex sm:ml-80 pl-12 pt-1 ">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a class="text-white hover:bg-green-400 hover:text-white rounded-md px-3 py-2 text-sm font-medium">DashBoard</a>
-           
-          </div>
-        </div>
-        <div class="hidden sm:ml-80  sm:block ">
-          <div class="flex sm:ml-80  pt-1 items-end justify-end sm:items-stretch sm:justify-end">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="#" onclick="toggleUserMenu()" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"><%= user.username %></a>
-           
+              <div
+                class="flex flex-auto items-center justify-center sm:items-stretch sm:justify-end"
+              >
+                <a
+                  href="#"
+                  onclick="toggleUserMenu()"
+                  class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  ><%= user.username %></a
+                >
+              </div>
+
+              <!-- Profile dropdown -->
+              
+                <div>
+                  <button
+                    type="button"
+                    class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    id="user-menu-button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    onclick="toggleUserMenu()"
+                  >
+                    <span class="absolute -inset-1.5"></span>
+                    <span class="sr-only">Open user menu</span>
+                    <img
+                      class="h-8 w-8 rounded-full"
+                      src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
+                      alt=""
+                    />
+                  </button>
+                </div>
+
+                <div
+                  id="user-menu"
+                  class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="user-menu-button"
+                  tabindex="-1"
+                >
+                  <!-- Active: "bg-gray-100", Not Active: "" -->
+                  <a
+                    href="/auth/logout"
+                    class="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="user-menu-item-2"
+                    >Desconectar</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      
-        <!-- Profile dropdown -->
-        <div class="relative ml-6">
-          <div>
-            <button type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleUserMenu()">
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">Open user menu</span>
-              <img class="h-8 w-8 rounded-full " src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png" alt="">
-            </button>
-          </div>
 
-          <!--
-            Dropdown menu, show/hide based on menu state.
-
-            Entering: "transition ease-out duration-100"
-              From: "transform opacity-0 scale-95"
-              To: "transform opacity-100 scale-100"
-            Leaving: "transition ease-in duration-75"
-              From: "transform opacity-100 scale-100"
-              To: "transform opacity-0 scale-95"
-          -->
-          <div id="user-menu" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-            <!-- Active: "bg-gray-100", Not Active: "" -->
-            <a href="/auth/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Desconectar</a>
-          </div>
-        </div>
+      <!-- Mobile menu, show/hide based on menu state. -->
+      <div class="sm:hidden" id="mobile-menu">
+        <div class="space-y-1 px-2 pb-3 pt-2">
+          <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+          <a
+            class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+            aria-current="page"
+            >Guildas</a
+          >
+        
+          
         </div>
       </div>
+    </nav>
+    <!-- Exibir a imagem da guilda selecionada -->
+    <div
+      class="select-container mt-4 ml-4 flex flex-auto items-center justify-center"
+    >
+      <!-- Caixa de seleção para as guildas -->
+      <form
+        action="/bot/botinfo"
+        method="post"
+        class="flex items-center space-x-2"
+      >
+        <label for="guilds" class="text-gray-700"></label>
+        <select
+          name="guilds"
+          id="guilds"
+          onchange="redirecionarParaRota(this)"
+          class="border rounded-md p-1 focus:outline-none focus:ring focus:border-blue-300"
+        >
+          <option value="default">Selecione um Servidor</option>
+          <% user.guilds.forEach(guild => { %>
+          <option value="<%= guild.id %>"><%= guild.name %></option>
+          <% }); %>
+        </select>
+        <button
+          type="submit"
+          class="bg-green-400 text-white px-3 py-1 rounded-md hover:bg-purple-300 focus:outline-none focus:ring focus:border-blue-300"
+        >
+          Selecionar
+        </button>
+      </form>
     </div>
-  </div>
 
-  <!-- Mobile menu, show/hide based on menu state. -->
-  <div class="sm:hidden" id="mobile-menu">
-    <div class="space-y-1 px-2 pb-3 pt-2">
-      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
+    <div class="flex items-center justify-center mb-4 mt-4">
+      <img
+        id="AguildIcon"
+        src="/res/serverIcon/nonserverimg.jpg"
+        alt="Ícone da guilda"
+        class="rounded-3xl max-w-full"
+      />
     </div>
-  </div>
-</nav>
 
-<script>
-  async function toggleUserMenu() {
-    const userMenu = document.getElementById('user-menu');
-    userMenu.classList.toggle('hidden');
-  }
+    <div class="mt-8">
+      <!-- Botão de consultar informações das guildas -->
+      <a
+        href="/bot/infoguilds"
+        class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-300 mr-2"
+      >
+        Consultar Info Das Guildas
+      </a>
+    </div>
 
-  async function redirecionarParaRota(select) {
+    <script>
+      async function toggleUserMenu() {
+        const userMenu = document.getElementById("user-menu");
+        userMenu.classList.toggle("hidden");
+      }
+
+      async function redirecionarParaRota(select) {
         try {
           const guildId = select.value;
 
@@ -132,52 +181,6 @@
           // Adicione aqui a lógica para lidar com o erro no cliente
         }
       }
-</script>
-
-<!-- Exibir a imagem da guilda selecionada -->
-
-
-<div class="select-container mt-4 ml-4 flex flex-auto items-center justify-center">
-  <!-- Caixa de seleção para as guildas -->
-  <form action="/bot/botinfo" method="post" class="flex items-center space-x-2">
-    <label for="guilds" class="text-gray-700"></label>
-    <select
-      name="guilds"
-      id="guilds"
-      onchange="redirecionarParaRota(this)"
-      class="border rounded-md p-1 focus:outline-none focus:ring focus:border-blue-300"
-    >
-      <option value="default">Selecione um Servidor</option>
-      <% user.guilds.forEach(guild => { %>
-        <option value="<%= guild.id %>"><%= guild.name %></option>
-      <% }); %>
-    </select>
-    <button
-      type="submit"
-      class="bg-green-400 text-white px-3 py-1 rounded-md hover:bg-purple-300 focus:outline-none focus:ring focus:border-blue-300"
-    >
-      Selecionar
-    </button>
-  </form>
-</div>
-
-<div class="flex items-center justify-center mb-4 mt-4">
-  <img
-    id="AguildIcon"
-    src="/res/serverIcon/nonserverimg.jpg"
-    alt="Ícone da guilda"
-    class="rounded-3xl max-w-full"
-  />
-</div>
-
-<div class="mt-8">
-  <!-- Botão de consultar informações das guildas -->
-  <a href="/bot/infoguilds" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-300 mr-2">
-    Consultar Info Das Guildas
-  </a>
-</div>
-
-
-    
+    </script>
   </body>
 </html>

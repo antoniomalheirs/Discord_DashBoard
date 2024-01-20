@@ -213,18 +213,6 @@ router.get("/database-guilda", isAuthenticated, async (req, res) => {
   }
 });
 
-/*router.get("/database-guilda/:guildId", isAuthenticated, async (req, res) => {
-  try {
-    const guildId = req.params.guildId;
-    const botInfo = await getGuildData(guildId);
-
-    //res.render("databasemanager.ejs", { info: botInfo });
-    res.json(botInfo);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao recarregar informações da guilda" });
-  }
-});*/
-
 router.get(
   "/obter-icone-guilda/:guildId",
   isAuthenticated,
@@ -352,10 +340,81 @@ router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
   }
 });
 
-router.post("/ativarfunc", isAuthenticated, async (req, res) => {
+router.post("/ativar/funcytb", isAuthenticated, async (req, res) => {
+  try {
+    const guildId = req.body.guildId;
+    if (!guildId) {
+      throw new Error("ID da guilda não fornecido.");
+    }
 
+    const guildinfo = await getGuilds(guildId);
+    guildinfo.youtubenotify = req.body.ytb;
+    const channelInput = req.body.newDat5;
+    const chan = req.body.ytb;
 
+    await discordBot.guilds.fetch(guildId);
 
+    const guild = await discordBot.guilds.cache.get(guildId);
 
+    if (!guild) {
+      throw new Error("Guilda não encontrada.");
+    }
+
+    const channel = await guild.channels.fetch(channelInput);
+    const textChannels = guild.channels.cache.filter(
+      (channel) => channel.type === ChannelType.GuildText
+    ).size;
+
+    const message = channel.name;
+    const message2 = channelInput;
+
+    res.render("functionactivated.ejs", {
+      info: message,
+      info2: guild.name,
+      info3: message2,
+    });
+  } catch (error) {
+    console.error("Erro na rota /bot/ativar/funcytb:", error);
+    res.render("error.ejs");
+  }
+});
+
+router.post("/ativar/functch", isAuthenticated, async (req, res) => {
+  try {
+    const guildId = req.body.guildId;
+    if (!guildId) {
+      throw new Error("ID da guilda não fornecido.");
+    }
+
+    const guildinfo = await getGuilds(guildId);
+    guildinfo.youtubenotify = req.body.tch;
+    const channelInput = req.body.newDat6;
+    const chan = req.body.tch;
+
+    await discordBot.guilds.fetch(guildId);
+
+    const guild = await discordBot.guilds.cache.get(guildId);
+
+    if (!guild) {
+      throw new Error("Guilda não encontrada.");
+    }
+
+    const channel = await guild.channels.fetch(channelInput);
+    const textChannels = guild.channels.cache.filter(
+      (channel) => channel.type === ChannelType.GuildText
+    ).size;
+
+    const message = channel.name;
+    const message2 = channelInput;
+
+    res.render("functionactivated.ejs", {
+      info: message,
+      info2: guild.name,
+      info3: message2,
+    });
+  } catch (error) {
+    console.error("Erro na rota /bot/ativar/funcytb:", error);
+    res.render("error.ejs");
+  }
 });
 module.exports = router;

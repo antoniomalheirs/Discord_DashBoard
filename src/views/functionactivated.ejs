@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Gerenciador de Funções</title>
+  </head>
+  <body>
+    <div class="mx-auto mt-24 w-11/12">
+      <div class="px-16 sm:px-0">
+        <h3 class="text-base font-semibold leading-7 text-gray-900">
+          Notificação de Videos do Youtube
+        </h3>
+        <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+          Ativando está função você receberá notificações toda vez que um video
+          novo em um dos canais adicionados na função postar novos videos
+        </p>
+      </div>
+      <div class="mt-6 border-t border-gray-100">
+        <dl class="divide-y divide-gray-100">
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">
+              Nome do Canal para notificações
+            </dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              <%=info%>
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">
+              ID Canal
+            </dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              <%=info3%>
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">
+              Aplicado em
+            </dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              <%=info2%>
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">
+              Estado da Função
+            </dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              Ativa
+            </dd>
+          </div>
+        </dl>
+        <button
+          onclick="voltarAoDashboard()"
+          class="bg-purple-300 text-white px-4 py-2 rounded-md mt-4"
+        >
+          Voltar ao Dashboard
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function voltarAoDashboard() {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const UsersAPIRepository = require("../src/database/mongoose/UsersAPIRepository");
 const UserAPISchema = require("../src/database/schemas/UserAPISchema");
 mongoose.model("APIUsers", UserAPISchema);
+const bodyParser = require('body-parser');
 
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
@@ -24,8 +25,8 @@ passport.deserializeUser((obj, done) => done(null, obj));
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 //app.use(express.urlencoded());
 
 app.set("view engine", "ejs");
@@ -110,5 +111,5 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

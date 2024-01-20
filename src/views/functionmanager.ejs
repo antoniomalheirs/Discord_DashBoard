@@ -49,17 +49,29 @@
       <!-- Conteúdo do modal -->
       <form
         id="addDataForm"
-        action="/bot/ativarfunc"
+        action="/bot/ativar/functch"
         method="post"
         class="mt-4 mx-auto w-2/3 bg-white p-8 rounded-lg shadow-md"
       >
-        <label for="TCH" class="block mb-2">Habilitar Twitch</label>
-        <input type="checkbox" id="TCH" name="newDat4" class="mb-4" />
+        <div class="mb-4">
+          <input type="checkbox" id="tch" name="tch" class="mr-2" required />
+          <label for="tch" class="inline-block">Habilitar Twitch</label>
+        </div>
 
-        <label for="channel" class="block mb-2"
-          >ID do Canal para Notificar as Lives:</label
-        >
-        <input type="text" id="channel" name="newDat6" class="mb-4" required />
+        <div class="mb-4">
+          <label
+            for="newDat6"
+            class="block text-sm font-medium text-gray-600 mb-2"
+            >ID do Canal para Notificar as Lives:</label
+          >
+          <input
+            type="number"
+            id="newDat6"
+            name="newDat6"
+            class="p-2 w-full border rounded-md"
+            required
+          />
+        </div>
 
         <!-- Inclua o campo guildId no formulário -->
         <input
@@ -73,13 +85,13 @@
           <button
             type="button"
             onclick="fecharModal()"
-            class="py-2 px-4 bg-red-500 text-white rounded mr-2"
+            class="py-2 px-4 bg-gray-500 text-white rounded mr-2"
           >
             Fechar
           </button>
           <button
             type="submit"
-            class="py-2 px-4 bg-green-500 text-white rounded"
+            class="py-2 px-4 bg-green-300 text-white rounded"
           >
             Adicionar
           </button>
@@ -94,37 +106,53 @@
       <!-- Conteúdo do modal -->
       <form
         id="addDataForm"
-        action="/bot/ativarfunc"
+        action="/bot/ativar/funcytb"
         method="post"
         class="mt-4 mx-auto w-2/3 bg-white p-8 rounded-lg shadow-md"
       >
-        <label for="YTB" class="block mb-2">Habilitar YouTube</label>
-        <input type="checkbox" id="YTB" name="newDat3" class="mb-4" />
+        <!-- Checkbox para Habilitar YouTube -->
+        <div class="mb-4">
+          <input type="checkbox" id="ytb" name="ytb" class="mr-2" required />
+          <label for="ytb" class="inline-block">Habilitar YouTube</label>
+        </div>
 
-        <label for="channel" class="block mb-2"
-          >ID do Canal para Notificar os Vídeos:</label
-        >
-        <input type="text" id="channel" name="newDat5" class="mb-4" required />
+        <!-- Input para ID do Canal -->
+        <div class="mb-4">
+          <label
+            for="newDat5"
+            class="block text-sm font-medium text-gray-600 mb-2"
+            >ID do Canal para Notificar os Vídeos:</label
+          >
+          <input
+            type="number"
+            id="newDat5"
+            name="newDat5"
+            class="p-2 w-full border rounded-md"
+            required
+          />
 
+          <input
+            type="hidden"
+            id="guildId"
+            name="guildId"
+            value="<%= info.id %>"
+          />
+        </div>
+
+        <!-- Campo Hidden para guildId -->
         <!-- Inclua o campo guildId no formulário -->
-        <input
-          type="hidden"
-          id="guildId"
-          name="guildId"
-          value="<%= info.id %>"
-        />
 
         <div class="flex space-x-4">
           <button
             type="button"
             onclick="fecharModal2()"
-            class="py-2 px-4 bg-red-500 text-white rounded mr-2"
+            class="py-2 px-4 bg-gray-500 text-white rounded mr-2"
           >
             Fechar
           </button>
           <button
             type="submit"
-            class="py-2 px-4 bg-green-500 text-white rounded"
+            class="py-2 px-4 bg-purple-300 text-white rounded"
           >
             Adicionar
           </button>
@@ -228,17 +256,16 @@
     <h2 class="text-2xl mt-8 text-center">Twitch Channels a Notificar</h2>
 
     <button
-    onclick="abrirModal()"
-    class="bg-purple-300 text-white px-4 py-2 rounded-md mt-2 hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
-  >
-    Ativar Função TWITCH
-  </button>
+      onclick="abrirModal()"
+      class="bg-purple-300 text-white px-4 py-2 rounded-md mt-2 hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
+    >
+      Ativar Função TWITCH
+    </button>
 
     <table
       class="w-11/12 mt-4 mb-12 bg-green-300 border rounded-lg shadow-md overflow-hidden"
     >
       <!-- ... (código da tabela) ... -->
-
       <thead>
         <tr>
           <th class="py-2 px-4 bg-purple-300">Twitch</th>
@@ -262,30 +289,58 @@
         <% }); %>
       </tbody>
     </table>
+    <div id="mensagem"></div>
 
     <script>
+      function mostrarMensagem(tipo, mensagem) {
+        var mensagemPopUp = document.getElementById("mensagemPopUp");
+        mensagemPopUp.innerHTML = mensagem;
+
+        if (tipo === "sucesso") {
+          mensagemPopUp.className = "bg-green-500 text-white p-2 rounded-md";
+        } else if (tipo === "erro") {
+          mensagemPopUp.className = "bg-red-500 text-white p-2 rounded-md";
+        }
+
+        mensagemPopUp.style.display = "block";
+
+        // Esconde a mensagem após alguns segundos (opcional)
+        setTimeout(function () {
+          mensagemPopUp.style.display = "none";
+        }, 5000);
+      }
+
       function voltarAoDashboard() {
         window.history.back();
       }
 
+      // Variável para rastrear o modal atualmente aberto
+      var modalAberto = null;
+
       function abrirModal2() {
+        fecharModal(); // Certifica-se de que o outro modal esteja fechado
         var modal = document.getElementById("modal2");
         modal.style.display = "block";
+        modalAberto = modal;
       }
 
       function fecharModal2() {
         var modal = document.getElementById("modal2");
         modal.style.display = "none";
+        modalAberto = null;
       }
 
       function abrirModal() {
+        fecharModal2(); // Certifica-se de que o outro modal esteja fechado
         var modal = document.getElementById("modal");
         modal.style.display = "block";
+        modalAberto = modal;
       }
 
       function fecharModal() {
         var modal = document.getElementById("modal");
         modal.style.display = "none";
+        modalAberto = null;
       }
     </script>
   </body>
