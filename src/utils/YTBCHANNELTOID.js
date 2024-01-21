@@ -30,8 +30,9 @@ module.exports = async function (channelName) {
 
     // Verificar se há resultados para a pesquisa
     if (searchData.items.length === 0) {
-      console.error("Nenhum canal encontrado.");
-      return {};
+      throw new Error(
+        `Erro ao pesquisar canal. Status: ${searchResponse.status}`
+      );
     }
 
     const channelId = searchData.items[0].snippet.channelId;

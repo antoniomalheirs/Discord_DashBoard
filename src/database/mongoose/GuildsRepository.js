@@ -88,7 +88,7 @@ module.exports = class GuildRepository extends Repository {
     return this.model.findOneAndDelete({ guildID }).then(this.parse);
   }
 
-  update(guildID, entity, options = { upsert: true }) {
+  async update(guildID, entity, options = { upsert: true }) {
     return this.model.updateOne({ guildID }, { $set: entity }, options);
   }
 

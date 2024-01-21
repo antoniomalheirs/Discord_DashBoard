@@ -19,6 +19,7 @@ const TwitchSchema = require("../database/schemas/TwitchSchema");
 mongoose.model("Twitchs", TwitchSchema);
 const TwitchToken = require("../utils/TwitchToken.js");
 const TwitchID = require("../utils/TwitchID.js");
+const { Result } = require("postcss");
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -266,26 +267,45 @@ router.post("/adicionar-dados-youtube", isAuthenticated, async (req, res) => {
       );
 
       if (noBanco != null) {
-        res.status(200).json({
-          success: false,
-          message: "Canal já existe no banco de dados.",
+        res.render("dataadderror.ejs", {
+          //info: canal ,
+          //info1: guild.name,
+          //info2: id,
+          //nome: req.body.nome,
         });
       } else {
         const result = await YTBCHANNELTOID.bind(this)(videoId);
-        result.notifyGuild = guildId;
-        await RegistradorYTBVideo.bind(this)(result);
+        console.log(result);
 
-        res.status(200).json({
-          success: true,
-          message: "Dados adicionados com sucesso ao banco de dados.",
-        });
+        if (!result) {
+          res.status(200).json({
+            success: false,
+            message: "Nada encontrado.",
+          });
+        } else {
+          const guildId = req.body.guildId;
+          const guild = await discordBot.guilds.cache.get(guildId);
+
+          result.notifyGuild = guildId;
+          let canal = result.channel;
+          let id = result.youtube;
+          await RegistradorYTBVideo.bind(this)(result);
+          res.render("datafuncadd.ejs", {
+            info: canal ,
+            info1: guild.name,
+            info2: id,
+            nome: req.body.nome,
+          });
+        }
       }
     }
   } catch (error) {
     console.error("Erro ao adicionar dados ao banco de dados:", error);
-    res.status(500).json({
-      success: false,
-      message: "Erro ao adicionar dados ao banco de dados.",
+    res.render("dataadderror.ejs", {
+      //info: canal ,
+      //info1: guild.name,
+      //info2: id,
+      //nome: req.body.nome,
     });
   }
 });
@@ -303,6 +323,7 @@ router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
       const clientSecret = process.env.TWITCH_SECRETID;
       const accessToken = await TwitchToken(clientId, clientSecret);
       const channelId = await TwitchID(accessToken, channelInput, clientId);
+      const guild = await discordBot.guilds.cache.get(guildId);
 
       const projection = {
         twitch: channelId,
@@ -317,25 +338,37 @@ router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
       );
 
       if (noBanco != null) {
-        res.status(200).json({
-          success: false,
-          message:
-            "Canal já existe no banco de dados. Ou Dados não encontrados.",
+        res.render("dataadderror.ejs", {
+          //info: canal ,
+          //info1: guild.name,
+          //info2: id,
+          //nome: req.body.nome,
         });
       } else {
-        await twitchRepository.add(projection);
-
-        res.status(200).json({
-          success: true,
-          message: "Dados adicionados com sucesso ao banco de dados.",
-        });
+        if (channelId == null) {
+          res.status(200).json({
+            success: false,
+            message: "Dados do canal não encontrados.",
+          });
+        } else {
+          await twitchRepository.add(projection);
+          console.log(projection);
+          res.render("datafuncadd.ejs", {
+            info: channelInput ,
+            info1: guild.name,
+            info2: channelId,
+            nome: req.body.nome,
+          });
+        }
       }
     }
   } catch (error) {
     console.error("Erro ao adicionar dados ao banco de dados:", error);
-    res.status(500).json({
-      success: false,
-      message: "Erro ao adicionar dados ao banco de dados.",
+    res.render("dataadderror.ejs", {
+      //info: canal ,
+      //info1: guild.name,
+      //info2: id,
+      //nome: req.body.nome,
     });
   }
 });
@@ -343,78 +376,89 @@ router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
 router.post("/ativar/funcytb", isAuthenticated, async (req, res) => {
   try {
     const guildId = req.body.guildId;
-    if (!guildId) {
-      throw new Error("ID da guilda não fornecido.");
+
+    const guilds = new guildsrepository(mongoose, "Guilds");
+    const ls = guilds.findOne(guildId);
+
+    if (!ls) {
+      throw new Error(
+        "ID da guilda não fornecido ou a Guilda nao gerenciavel."
+      );
     }
 
-    const guildinfo = await getGuilds(guildId);
-    guildinfo.youtubenotify = req.body.ytb;
+    ls.youtubenotify = true;
+
     const channelInput = req.body.newDat5;
     const chan = req.body.ytb;
+    const func = req.body.nome;
 
     await discordBot.guilds.fetch(guildId);
 
     const guild = await discordBot.guilds.cache.get(guildId);
-
-    if (!guild) {
-      throw new Error("Guilda não encontrada.");
-    }
-
     const channel = await guild.channels.fetch(channelInput);
-    const textChannels = guild.channels.cache.filter(
-      (channel) => channel.type === ChannelType.GuildText
-    ).size;
 
+    if (!guild && !channel) {
+      throw new Error("Guilda não encontrada ou Canal não encontrado.");
+    }
+    ls.channelytb = channelInput;
     const message = channel.name;
     const message2 = channelInput;
+
+    guilds.update(guildId, ls);
 
     res.render("functionactivated.ejs", {
       info: message,
       info2: guild.name,
       info3: message2,
+      nome: func,
     });
   } catch (error) {
     console.error("Erro na rota /bot/ativar/funcytb:", error);
-    res.render("error.ejs");
+    res.render("activefuncerror.ejs");
   }
 });
 
 router.post("/ativar/functch", isAuthenticated, async (req, res) => {
   try {
     const guildId = req.body.guildId;
-    if (!guildId) {
-      throw new Error("ID da guilda não fornecido.");
+    const func = req.body.nome;
+    const guilds = new guildsrepository(mongoose, "Guilds");
+    const ls = guilds.findOne(guildId);
+
+    if (!ls) {
+      throw new Error(
+        "ID da guilda não fornecido ou a Guilda nao gerenciavel."
+      );
     }
 
-    const guildinfo = await getGuilds(guildId);
-    guildinfo.youtubenotify = req.body.tch;
+    ls.twitchnotify = true;
+
     const channelInput = req.body.newDat6;
     const chan = req.body.tch;
 
     await discordBot.guilds.fetch(guildId);
 
     const guild = await discordBot.guilds.cache.get(guildId);
-
-    if (!guild) {
-      throw new Error("Guilda não encontrada.");
-    }
-
     const channel = await guild.channels.fetch(channelInput);
-    const textChannels = guild.channels.cache.filter(
-      (channel) => channel.type === ChannelType.GuildText
-    ).size;
 
+    if (!guild && !channel) {
+      throw new Error("Guilda não encontrada ou Canal não encontrado.");
+    }
+    ls.channeltch = channelInput;
     const message = channel.name;
     const message2 = channelInput;
+
+    guilds.update(guildId, ls);
 
     res.render("functionactivated.ejs", {
       info: message,
       info2: guild.name,
       info3: message2,
+      nome: func,
     });
   } catch (error) {
     console.error("Erro na rota /bot/ativar/funcytb:", error);
-    res.render("error.ejs");
+    res.render("activefuncerror.ejs");
   }
 });
 module.exports = router;
