@@ -139,6 +139,32 @@ const getBotUptime = () => {
   return `${hours}h ${minutes}m ${seconds}s`;
 };
 
+router.get(
+  "/obter-icone-guilda/:guildId",
+  isAuthenticated,
+  async (req, res) => {
+    try {
+      const guildId = req.params.guildId;
+      const guild = req.user.guilds.find((guild) => guild.id === guildId);
+
+      if (!guild) {
+        return res.status(404).json({ error: "Guilda não encontrada" });
+      }
+
+      if (!guild.icon) {
+        return res.status(404).json({ error: "O servidor não tem um ícone" });
+      }
+
+      // Retorna diretamente a URL como uma string
+      const iconURL = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
+      res.send({ iconURL });
+    } catch (error) {
+      console.error("Erro ao obter ícone da guilda:", error);
+      res.status(500).json({ error: "Erro ao obter ícone da guilda" });
+    }
+  }
+);
+
 router.post("/botinfo", isAuthenticated, async (req, res) => {
   try {
     const selectedGuildId = req.body.guilds;
@@ -149,31 +175,11 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/botinfo/:guildId", isAuthenticated, async (req, res) => {
-  try {
-    const guildId = req.params.guildId;
-    const botInfo = await getGuildData(guildId);
-    res.render("guildcontentmain.ejs", { info: botInfo });
-  } catch (error) {
-    res.status(500).send("Erro ao obter informações da guilda");
-  }
-});
-
 router.get("/infoguilds", isAuthenticated, async (req, res) => {
   const serversInfo = await getDatabase2();
   res.render("guildsinfo.ejs", {
     info: serversInfo,
   });
-});
-
-router.get("/recarregar-guilda/:guildId", isAuthenticated, async (req, res) => {
-  try {
-    const guildId = req.params.guildId;
-    const guildInfo = await getGuildData(guildId);
-    res.json(guildInfo);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao recarregar informações da guilda" });
-  }
 });
 
 router.get("/functions-guilda", isAuthenticated, async (req, res) => {
@@ -214,32 +220,6 @@ router.get("/database-guilda", isAuthenticated, async (req, res) => {
   }
 });
 
-router.get(
-  "/obter-icone-guilda/:guildId",
-  isAuthenticated,
-  async (req, res) => {
-    try {
-      const guildId = req.params.guildId;
-      const guild = req.user.guilds.find((guild) => guild.id === guildId);
-
-      if (!guild) {
-        return res.status(404).json({ error: "Guilda não encontrada" });
-      }
-
-      if (!guild.icon) {
-        return res.status(404).json({ error: "O servidor não tem um ícone" });
-      }
-
-      // Retorna diretamente a URL como uma string
-      const iconURL = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
-      res.send({ iconURL });
-    } catch (error) {
-      console.error("Erro ao obter ícone da guilda:", error);
-      res.status(500).json({ error: "Erro ao obter ícone da guilda" });
-    }
-  }
-);
-
 router.post("/adicionar-dados-youtube", isAuthenticated, async (req, res) => {
   try {
     // Adicione lógica para validar e processar os dados conforme necessário
@@ -267,12 +247,7 @@ router.post("/adicionar-dados-youtube", isAuthenticated, async (req, res) => {
       );
 
       if (noBanco != null) {
-        res.render("dataadderror.ejs", {
-          //info: canal ,
-          //info1: guild.name,
-          //info2: id,
-          //nome: req.body.nome,
-        });
+        res.render("dataadderror.ejs", {});
       } else {
         const result = await YTBCHANNELTOID.bind(this)(videoId);
         console.log(result);
@@ -291,7 +266,7 @@ router.post("/adicionar-dados-youtube", isAuthenticated, async (req, res) => {
           let id = result.youtube;
           await RegistradorYTBVideo.bind(this)(result);
           res.render("datafuncadd.ejs", {
-            info: canal ,
+            info: canal,
             info1: guild.name,
             info2: id,
             nome: req.body.nome,
@@ -301,12 +276,7 @@ router.post("/adicionar-dados-youtube", isAuthenticated, async (req, res) => {
     }
   } catch (error) {
     console.error("Erro ao adicionar dados ao banco de dados:", error);
-    res.render("dataadderror.ejs", {
-      //info: canal ,
-      //info1: guild.name,
-      //info2: id,
-      //nome: req.body.nome,
-    });
+    res.render("dataadderror.ejs", {});
   }
 });
 
@@ -338,12 +308,7 @@ router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
       );
 
       if (noBanco != null) {
-        res.render("dataadderror.ejs", {
-          //info: canal ,
-          //info1: guild.name,
-          //info2: id,
-          //nome: req.body.nome,
-        });
+        res.render("dataadderror.ejs", {});
       } else {
         if (channelId == null) {
           res.status(200).json({
@@ -354,7 +319,7 @@ router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
           await twitchRepository.add(projection);
           console.log(projection);
           res.render("datafuncadd.ejs", {
-            info: channelInput ,
+            info: channelInput,
             info1: guild.name,
             info2: channelId,
             nome: req.body.nome,
@@ -364,12 +329,7 @@ router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
     }
   } catch (error) {
     console.error("Erro ao adicionar dados ao banco de dados:", error);
-    res.render("dataadderror.ejs", {
-      //info: canal ,
-      //info1: guild.name,
-      //info2: id,
-      //nome: req.body.nome,
-    });
+    res.render("dataadderror.ejs", {});
   }
 });
 
@@ -461,4 +421,5 @@ router.post("/ativar/functch", isAuthenticated, async (req, res) => {
     res.render("activefuncerror.ejs");
   }
 });
+
 module.exports = router;

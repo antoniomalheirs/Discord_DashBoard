@@ -59,48 +59,30 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const userapischema = new UsersAPIRepository(mongoose, "APIUsers");
-      const user = await userapischema.findOne(profile.id); // Salve os detalhes do usuário no banco de dados se necessário
+      const user = await userapischema.findOne( profile.id); // Salve os detalhes do usuário no banco de dados se necessário
 
       if (!user) {
         const newUser = {
           codigouser: profile.id,
           username: profile.username,
+          acesstk: accessToken,
+          refreshtk: refreshToken,
         };
 
         await userapischema.add(newUser);
-      }
 
+        return done(null, profile);
+      }
       return done(null, profile);
     }
   )
 );
-
-
 
 app.get("/dashboard", (req, res) => {
   if (req.isAuthenticated()) {
     res.render("dashboard.ejs", { user: req.user });
   } else {
     res.redirect("/");
-  }
-});
-
-// Rota para a página de detalhes da guilda
-app.get("/botinfo/:guildId", async (req, res) => {
-  const selectedGuildId = req.params.guildId;
-
-  try {
-    // Aguarde a inicialização do cliente Discord.js
-    await discordBot.guilds.fetch(selectedGuildId);
-
-    // Obtenha dados da guilda
-    const guild = discordBot.guilds.cache.get(selectedGuildId);
-
-    // Renderize a página com as informações da guilda
-    res.render("guildcontentmain.ejs", { info: guild });
-  } catch (error) {
-    console.error(error);
-    res.status(500).render("error.ejs");
   }
 });
 
