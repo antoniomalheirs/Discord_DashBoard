@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.5",
     "body-parser": "^1.20.2",
@@ -21,6 +22,7 @@
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
     "express-session": "^1.17.3",
+    "font-awesome": "^4.7.0",
     "googleapis": "^129.0.0",
     "mongoose": "^8.0.4",
     "passport": "^0.7.0",
