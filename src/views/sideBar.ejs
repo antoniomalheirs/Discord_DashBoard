@@ -57,6 +57,18 @@
       .sidebar-icon:hover + .popup {
         display: block;
       }
+
+      .dropdown-selection {
+        transition: background-color 1.5s, color 1.5s; /* Adicione a transição */
+      }
+
+      .dropdown-selection:hover {
+        background-color: rgba(0, 0, 0, 0); /* Altere a cor de fundo no hover */
+      }
+
+      .dropdown-selection-text:hover {
+        color: #db9292; /* Altere a cor do texto no hover */
+      }
     </style>
   </head>
   <body>
@@ -70,7 +82,7 @@
           onclick="handleIconClick('gear')"
         >
           <img
-            src="../public/res/sidebar/gear.png"
+            src="../public/res/sidebar/fire.png"
             alt="Fire Icon"
             class="w-10 h-10 my-auto"
           />
@@ -138,7 +150,7 @@
     </div>
     <div
       id="channel-bar"
-      style="z-index: -10;"
+      style="z-index: -10"
       class="fixed top-0 left-20 h-screen w-52 flex flex-col items-start bg-purple-300 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
     >
       <div class="channel-block mx-4 my-2">
@@ -153,13 +165,18 @@
                 id="topics-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">Funções de notificação +</h5>
-            </div>
-            <div id="topics-dropdown" class="dropdown-content hidden ml-4 text-sm">
-              <div
-                class="dropdown-selection"
-                onclick="selectTopic('youtube')"
+              <h5
+                id="topics-header"
+                class="dropdown-header-text text-sm text-blue-600 ml-2"
               >
+                Funções de notificação +
+              </h5>
+            </div>
+            <div
+              id="topics-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text">Youtube</h5>
               </div>
@@ -179,13 +196,18 @@
                 id="moderation-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="moderation-header" class="dropdown-header-text text-sm ml-2">Adicionar canais +</h5>
-            </div>
-            <div id="moderation-dropdown" class="dropdown-content hidden ml-4 text-sm">
-              <div
-                class="dropdown-selection"
-                onclick="selectTopic('youtube')"
+              <h5
+                id="moderation-header"
+                class="dropdown-header-text text-sm text-blue-600 ml-2"
               >
+                Adicionar canais +
+              </h5>
+            </div>
+            <div
+              id="moderation-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text">Youtube</h5>
               </div>
@@ -196,12 +218,40 @@
               </div>
             </div>
           </div>
-          
 
           <!-- Adicione mais dropdowns conforme necessário -->
         </div>
       </div>
     </div>
+    <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-purple-400 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
+      <div class="flex items-center ml-4">
+        <h5 class="text-xl channel-block-text">Pagina Principal</h5>
+      </div>
+    
+      <div class="flex items-center ml-auto mr-4">
+        
+        <input id="searchInput" class="search-input w-48" type="text" placeholder="Search..." />
+      </div>
+
+      <div class="flex items-center mr-4">
+        
+        <div class="relative group">
+          <div
+            class="flex justify-center sidebar-icon w-8 h-8 bg-purple-400"
+            onclick="handleIconClick('gear')"
+          >
+            <img
+              src="../public/res/sidebar/fire.png"
+              alt="Fire Icon"
+              class="w-7 h-7 my-auto"
+            />
+          </div>
+          <div class="popup absolute" style="top: 150%; left: 50%;">
+            Fire</div>
+        </div>
+      </div>
+    </div>
+    
 
     <script>
       function handleIconClick(icon) {
