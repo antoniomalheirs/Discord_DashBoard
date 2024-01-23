@@ -22,9 +22,31 @@
         border-radius: 0.25rem;
         z-index: 50;
       }
+      .search-input {
+        border-radius: 0.5rem;
+        background-color: rgb(156, 163, 175);
+        color: rgb(0, 0, 0);
+         /* animação de transição para a cor de fundo e transformação */
+      }
+
+      .search-input::placeholder {
+        outline: none;
+        color: rgb(0, 0, 0); /* cor do texto de dica */
+      }
+
+      .search-input:hover {
+        background-color: rgb(
+          134,
+          239,
+          172
+        ); /* cor de fundo ao passar o mouse */
+        transform: scale(1.05);
+        transition: background-color 1.0s cubic-bezier(0.075, 0.82, 1, 1), /* efeito de escala ao passar o mouse */
+        transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
 
       .sidebar-icon {
-        border-radius: 2.5rem;
+        border-radius: 2rem;
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;
         transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
@@ -78,8 +100,9 @@
     >
       <div class="relative group">
         <div
-          class="flex justify-center sidebar-icon w-16 h-16 bg-gray-500"
-          onclick="handleIconClick('inicio')"
+          id="configuration"
+          class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
+          onclick="handleIconClick('configuration')"
         >
           <img
             src="../public/res/sidebar/fire.png"
@@ -87,14 +110,15 @@
             class="w-10 h-10 my-auto"
           />
         </div>
-        <div class="popup absolute">Inicio</div>
+        <div class="popup absolute ml-1">Inicio</div>
       </div>
       <div>
         <!-- Repita o mesmo padrão para outros ícones -->
         <div class="relative group">
           <div
-            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-500"
-            onclick="handleIconClick('funcs')"
+            id="chanels"
+            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
+            onclick="handleIconClick('chanels')"
           >
             <img
               src="../public/res/sidebar/unknow.png"
@@ -102,13 +126,14 @@
               class="w-11 h-11 my-auto"
             />
           </div>
-          <div class="popup absolute">Funções</div>
+          <div class="popup absolute ml-3.5">Funções</div>
         </div>
 
         <div class="relative group">
           <div
-            class="flex justify-center items-center sidebar-icon w-16 h-16 bg-gray-500"
-            onclick="handleIconClick('guildata')"
+            id="guild"
+            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
+            onclick="handleIconClick('guild')"
           >
             <img
               src="../public/res/sidebar/database.png"
@@ -116,13 +141,14 @@
               class="w-10 h-10 my-auto"
             />
           </div>
-          <div class="popup absolute">Dados da Guilda</div>
+          <div class="popup absolute ml-11">Banco de Dados</div>
         </div>
 
         <div class="relative group">
           <div
-            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-500"
-            onclick="handleIconClick('guild')"
+            id="user"
+            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
+            onclick="handleIconClick('user')"
           >
             <img
               src="../public/res/sidebar/gear2.png"
@@ -130,13 +156,14 @@
               class="w-11 h-11 ml-1.5 my-auto"
             />
           </div>
-          <div class="popup absolute">Info da Guilda</div>
+          <div class="popup absolute ml-9">Info da Guilda</div>
         </div>
       </div>
       <div class="relative group">
         <div
-          class="flex justify-center sidebar-icon w-16 h-16 bg-gray-500"
-          onclick="handleIconClick('configs')"
+          id="usage"
+          class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
+          onclick="handleIconClick('usage')"
         >
           <img
             src="../public/res/sidebar/gear.png"
@@ -144,23 +171,23 @@
             class="w-11 h-11 ml-0.5 my-2"
           />
         </div>
-        <div class="popup absolute">Configurações</div>
+        <div class="popup absolute ml-9">Configurações</div>
       </div>
       <!-- Repita para outros ícones -->
     </div>
     <div
       id="channel-bar"
       style="z-index: -10"
-      class="fixed top-0 left-20 h-screen w-52 flex flex-col items-center bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+      class="fixed top-0 left-20 h-screen w-52 flex flex-col items-start bg-gray-600 dark:bg-gray-900 shadow-lg"
     >
-      <div>
-        <h5 class="text-xl my-2">Configurações</h5>
-      </div>
-
-      <div class="channel-block mx-2">
+      <div
+        id="configuration-sidebar"
+        class="configuration-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2">Inicio</h5>
         <div class="channel-bar-container">
           <div
-            class="dropdown border-discord-light mt-4"
+            class="dropdown border-discord-light mt-2"
             onclick="toggleDropdown('topics')"
           >
             <div class="dropdown-header">
@@ -168,10 +195,7 @@
                 id="topics-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5
-                id="topics-header"
-                class="dropdown-header-text text-sm text-blue-600 ml-2"
-              >
+              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
                 Funções de notificação +
               </h5>
             </div>
@@ -181,11 +205,13 @@
             >
               <div class="dropdown-selection" onclick="selectTopic('youtube')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Youtube</h5>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
               </div>
-              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+              <div class="dropdown-selection" onclick="teste('ftest')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Twitch</h5>
+                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
@@ -201,7 +227,7 @@
               ></i>
               <h5
                 id="moderation-header"
-                class="dropdown-header-text text-sm text-blue-600 ml-2"
+                class="dropdown-header-text text-sm ml-2"
               >
                 Adicionar canais +
               </h5>
@@ -212,12 +238,49 @@
             >
               <div class="dropdown-selection" onclick="selectTopic('youtube')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Youtube</h5>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
               </div>
               <div class="dropdown-selection" onclick="selectTopic('twitch')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Twitch</h5>
+                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div
+            id="top-bar"
+            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+          >
+            <div class="flex items-center my-auto ml-4">
+              <h5 class="text-xl channel-block-text font-bold"># Inicio</h5>
+            </div>
+
+            <div class="flex items-center ml-auto mr-4">
+              <input
+                id="searchInput"
+                class="search-input w-48"
+                type="text"
+                placeholder=" Ajuda ?"
+              />
+            </div>
+
+            <div class="flex items-center mr-4">
+              <div class="relative group">
+                <div
+                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
+                  onclick="handleIconClick('gear')"
+                >
+                  <img
+                    src="../public/res/sidebar/fire.png"
+                    alt="Fire Icon"
+                    class="w-7 h-7 my-auto"
+                  />
+                </div>
+                <div class="popup absolute" style="top: 150%; left: 50%">
+                  Logout
+                </div>
               </div>
             </div>
           </div>
@@ -225,44 +288,451 @@
           <!-- Adicione mais dropdowns conforme necessário -->
         </div>
       </div>
-    </div>
-    <div
-      id="top-bar"
-      class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
-    >
-      <div class="flex items-center ml-4">
-        <h5 class="text-xl channel-block-text">Pagina Principal</h5>
-      </div>
 
-      <div class="flex items-center ml-auto mr-4">
-        <input
-          id="searchInput"
-          class="search-input w-48"
-          type="text"
-          placeholder="Search..."
-        />
-      </div>
-
-      <div class="flex items-center mr-4">
-        <div class="relative group">
+      <div
+        id="chanels-sidebar"
+        class="channel-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2">Funções</h5>
+        <div class="channel-bar-container">
           <div
-            class="flex justify-center sidebar-icon w-9 h-9 bg-gray-500"
-            onclick="handleIconClick('gear')"
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('topics')"
           >
-            <img
-              src="../public/res/sidebar/fire.png"
-              alt="Fire Icon"
-              class="w-7 h-7 my-auto"
-            />
+            <div class="dropdown-header">
+              <i
+                id="topics-chevron"
+                class="fas fa-chevron-down text-gray-400"
+              ></i>
+              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
+                Funções de notificação +
+              </h5>
+            </div>
+            <div
+              id="topics-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="teste('ftest')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
           </div>
-          <div class="popup absolute" style="top: 150%; left: 50%">Fire</div>
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('moderation')"
+          >
+            <div class="dropdown-header">
+              <i
+                id="moderation-chevron"
+                class="fas fa-chevron-down text-gray-400"
+              ></i>
+              <h5
+                id="moderation-header"
+                class="dropdown-header-text text-sm ml-2"
+              >
+                Adicionar canais +
+              </h5>
+            </div>
+            <div
+              id="moderation-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div
+            id="top-bar"
+            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+          >
+            <div class="flex items-center my-auto ml-4">
+              <h5 class="text-xl channel-block-text font-bold"># Funções</h5>
+            </div>
+
+            <div class="flex items-center ml-auto mr-4">
+              <input
+                id="searchInput"
+                class="search-input w-48"
+                type="text"
+                placeholder=" Ajuda ?"
+              />
+            </div>
+
+            <div class="flex items-center mr-4">
+              <div class="relative group">
+                <div
+                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
+                  onclick="handleIconClick('gear')"
+                >
+                  <img
+                    src="../public/res/sidebar/fire.png"
+                    alt="Fire Icon"
+                    class="w-7 h-7 my-auto"
+                  />
+                </div>
+                <div class="popup absolute" style="top: 150%; left: 50%">
+                  Logout
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adicione mais dropdowns conforme necessário -->
         </div>
       </div>
+
+      <div
+        id="guild-sidebar"
+        class="guild-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2">
+          Banco de Dados
+        </h5>
+        <div class="channel-bar-container">
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('topics')"
+          >
+            <div class="dropdown-header">
+              <i
+                id="topics-chevron"
+                class="fas fa-chevron-down text-gray-400"
+              ></i>
+              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
+                Funções de notificação +
+              </h5>
+            </div>
+            <div
+              id="topics-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="teste('ftest')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('moderation')"
+          >
+            <div class="dropdown-header">
+              <i
+                id="moderation-chevron"
+                class="fas fa-chevron-down text-gray-400"
+              ></i>
+              <h5
+                id="moderation-header"
+                class="dropdown-header-text text-sm ml-2"
+              >
+                Adicionar canais +
+              </h5>
+            </div>
+            <div
+              id="moderation-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div
+            id="top-bar"
+            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+          >
+            <div class="flex items-center my-auto ml-4">
+              <h5 class="text-xl channel-block-text font-bold">
+                # Banco de Dados
+              </h5>
+            </div>
+
+            <div class="flex items-center ml-auto mr-4">
+              <input
+                id="searchInput"
+                class="search-input w-48"
+                type="text"
+                placeholder=" Ajuda ?"
+              />
+            </div>
+
+            <div class="flex items-center mr-4">
+              <div class="relative group">
+                <div
+                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
+                  onclick="handleIconClick('gear')"
+                >
+                  <img
+                    src="../public/res/sidebar/fire.png"
+                    alt="Fire Icon"
+                    class="w-7 h-7 my-auto"
+                  />
+                </div>
+                <div class="popup absolute" style="top: 150%; left: 50%">
+                  Logout
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adicione mais dropdowns conforme necessário -->
+        </div>
+      </div>
+
+      <div
+        id="user-sidebar"
+        class="user-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2">
+          Info da Guilda
+        </h5>
+        <div class="channel-bar-container">
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('topics')"
+          >
+            <div class="dropdown-header">
+              <i
+                id="topics-chevron"
+                class="fas fa-chevron-down text-gray-400"
+              ></i>
+              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
+                Funções de notificação +
+              </h5>
+            </div>
+            <div
+              id="topics-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="teste('ftest')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+            <div
+              id="moderation-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div
+            id="top-bar"
+            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+          >
+            <div class="flex items-center my-auto ml-4">
+              <h5 class="text-xl channel-block-text font-bold">
+                # Info da Guilda
+              </h5>
+            </div>
+
+            <div class="flex items-center ml-auto mr-4">
+              <input
+                id="searchInput"
+                class="search-input w-48"
+                type="text"
+                placeholder=" Ajuda ?"
+              />
+            </div>
+
+            <div class="flex items-center mr-4">
+              <div class="relative group">
+                <div
+                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
+                  onclick="handleIconClick('gear')"
+                >
+                  <img
+                    src="../public/res/sidebar/fire.png"
+                    alt="Fire Icon"
+                    class="w-7 h-7 my-auto"
+                  />
+                </div>
+                <div class="popup absolute" style="top: 150%; left: 50%">
+                  Logout
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adicione mais dropdowns conforme necessário -->
+        </div>
+      </div>
+
+      <div
+        id="usage-sidebar"
+        class="user-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2">Configurações</h5>
+        <div class="channel-bar-container">
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('topics')"
+          >
+            <div class="dropdown-header">
+              <i
+                id="topics-chevron"
+                class="fas fa-chevron-down text-gray-400"
+              ></i>
+              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
+                Funções de notificação +
+              </h5>
+            </div>
+            <div
+              id="topics-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="teste('ftest')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+            <div
+              id="moderation-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div
+            id="top-bar"
+            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+          >
+            <div class="flex items-center my-auto ml-4">
+              <h5 class="text-xl channel-block-text font-bold">
+                # Configurações
+              </h5>
+            </div>
+
+            <div class="flex items-center ml-auto mr-4">
+              <input
+                id="searchInput"
+                class="search-input w-48"
+                type="text"
+                placeholder=" Ajuda ?"
+              />
+            </div>
+
+            <div class="flex items-center mr-4">
+              <div class="relative group">
+                <div
+                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
+                  onclick="handleIconClick('gear')"
+                >
+                  <img
+                    src="../public/res/sidebar/fire.png"
+                    alt="Fire Icon"
+                    class="w-7 h-7 my-auto"
+                  />
+                </div>
+                <div class="popup absolute" style="top: 150%; left: 50%">
+                  Logout
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adicione mais dropdowns conforme necessário -->
+        </div>
+      </div>
+      <div
+        id="top-bar"
+        style="z-index: -10"
+        class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg"
+      ></div>
     </div>
 
     <script>
-      function handleIconClick(icon) {
-        console.log(`Clicou no ícone: ${icon}`);
+      function handleIconClick(btnId) {
+        const Configuration = document.getElementById(`configuration-sidebar`);
+        const Chanels = document.getElementById(`chanels-sidebar`);
+        const Guild = document.getElementById(`guild-sidebar`);
+        const User = document.getElementById(`user-sidebar`);
+        const Usage = document.getElementById(`usage-sidebar`);
+        const sidebar = document.getElementById(`${btnId}-sidebar`);
+
+        if (!Configuration.classList.contains("hidden")) {
+          Configuration.classList.toggle("hidden");
+        }
+
+        if (!Chanels.classList.contains("hidden")) {
+          Chanels.classList.toggle("hidden");
+        }
+        if (!Guild.classList.contains("hidden")) {
+          Guild.classList.toggle("hidden");
+        }
+        if (!User.classList.contains("hidden")) {
+          User.classList.toggle("hidden");
+        }
+        if (!Usage.classList.contains("hidden")) {
+          Usage.classList.toggle("hidden");
+        }
+        sidebar.classList.toggle("hidden");
       }
 
       function toggleDropdown(type) {
