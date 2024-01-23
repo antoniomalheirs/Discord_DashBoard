@@ -232,7 +232,10 @@
         </div>
       </div>
 
-      <div id="chanels-sidebar" class="channel-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+      <div
+        id="chanels-sidebar"
+        class="channel-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
         <h5 class="text-xl channel-block-text">Canais</h5>
         <div class="channel-bar-container">
           <div
@@ -303,7 +306,10 @@
         </div>
       </div>
 
-      <div id="guild-sidebar" class="guild-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+      <div
+        id="guild-sidebar"
+        class="guild-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
         <h5 class="text-xl channel-block-text">Guilda</h5>
         <div class="channel-bar-container">
           <div
@@ -374,7 +380,11 @@
         </div>
       </div>
 
-      <div id="user-sidebar" class="user-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+
+      <div
+        id="user-sidebar"
+        class="user-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
         <h5 class="text-xl channel-block-text">Usuário</h5>
         <div class="channel-bar-container">
           <div
@@ -406,11 +416,11 @@
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
-            <div id="moderation-dropdown" class="dropdown-content hidden ml-4 text-sm">
-              <div
-                class="dropdown-selection"
-                onclick="selectTopic('youtube')"
-              >
+            <div
+              id="moderation-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Youtube
@@ -423,24 +433,86 @@
               </div>
             </div>
           </div>
-          
+
+          <!-- Adicione mais dropdowns conforme necessário -->
+        </div>
+      </div>
+
+      <div
+        id="usage-sidebar"
+        class="user-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text">Uso</h5>
+        <div class="channel-bar-container">
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('topics')"
+          >
+            <div class="dropdown-header">
+              <i
+                id="topics-chevron"
+                class="fas fa-chevron-down text-gray-400"
+              ></i>
+              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
+                Funções de notificação +
+              </h5>
+            </div>
+            <div
+              id="topics-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="teste('ftest')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+            <div
+              id="moderation-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Youtube
+                </h5>
+              </div>
+              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
+                <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+          </div>
 
           <!-- Adicione mais dropdowns conforme necessário -->
         </div>
       </div>
     </div>
-    <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-purple-400 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
+    <div
+      id="top-bar"
+      class="fixed top-0 left-72 right-0 h-12 flex bg-purple-400 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+    >
       <div class="flex items-center ml-4">
         <h5 class="text-xl channel-block-text">Pagina Principal</h5>
       </div>
-    
+
       <div class="flex items-center ml-auto mr-4">
-        
-        <input id="searchInput" class="search-input w-48" type="text" placeholder="Search..." />
+        <input
+          id="searchInput"
+          class="search-input w-48"
+          type="text"
+          placeholder="Search..."
+        />
       </div>
 
       <div class="flex items-center mr-4">
-        
         <div class="relative group">
           <div
             class="flex justify-center sidebar-icon w-8 h-8 bg-purple-400"
@@ -452,12 +524,10 @@
               class="w-7 h-7 my-auto"
             />
           </div>
-          <div class="popup absolute" style="top: 150%; left: 50%;">
-            Fire</div>
+          <div class="popup absolute" style="top: 150%; left: 50%">Fire</div>
         </div>
       </div>
     </div>
-    
 
     <script>
       function handleIconClick(btnId) {
@@ -467,10 +537,11 @@
         const User = document.getElementById(`user-sidebar`);
         const Usage = document.getElementById(`usage-sidebar`);
         const sidebar = document.getElementById(`${btnId}-sidebar`);
-
+        
         if (!Configuration.classList.contains("hidden")) {
           Configuration.classList.toggle("hidden");
         }
+
         if (!Chanels.classList.contains("hidden")) {
           Chanels.classList.toggle("hidden");
         }
