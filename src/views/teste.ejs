@@ -11,18 +11,27 @@
     />
   </head>
   <body>
-    <!-- Container onde a página2.ejs será carregada -->
-    <div id="conteudo-pagina2"></div>
-    <!-- Script para carregar a página2.ejs -->
+    <!-- Container onde a sidebar será carregada -->
+    <div id="sidebar-container"></div>
+
+    <div id="sidebar-container2" class="justify-center mt-14 ml-80">dasd </div>
+    
     <script>
       $(document).ready(function () {
-        // Use a função load do jQuery para carregar a página2.ejs no contêiner
-        $("#conteudo-pagina2").load("sideBar.ejs");
+        // Use a função load do jQuery para carregar a sidebar
+        $("#sidebar-container").load("/layouts/sideBar.ejs");
+      });
+
+      $(document).ready(function () {
+        // Use a função load do jQuery para carregar a sidebar
+        const guildId = `<%= info.id %>`;
+        console.log(guildId);
+
+        // Carregar o conteúdo da guilda com base no guildId
+        $("#sidebar-container2").load(`/bot/guildcontentmain/${guildId}`);
+
       });
     </script>
-    <div class="pl-2 ml-72 mt-14">
-        <h1>Página 1</h1>
-    </div>
-    
   </body>
+
 </html>

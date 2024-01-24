@@ -169,10 +169,17 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
   try {
     const selectedGuildId = req.body.guilds;
     const botInfo = await getGuildData(selectedGuildId);
-    res.render("guildcontentmain.ejs", { info: botInfo });
+    res.render("teste.ejs", { info: botInfo });
   } catch (error) {
     res.render("error.ejs");
   }
+});
+
+router.get("/guildcontentmain/:guildId", async (req, res) => {
+  const guildId = req.params.guildId;
+  const botInfo = await getGuildData(guildId);
+
+  res.render("guildcontentmain.ejs", { info: botInfo });
 });
 
 router.get("/infoguilds", isAuthenticated, async (req, res) => {
