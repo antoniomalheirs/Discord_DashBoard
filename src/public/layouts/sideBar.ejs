@@ -26,7 +26,7 @@
         border-radius: 0.5rem;
         background-color: rgb(156, 163, 175);
         color: rgb(0, 0, 0);
-         /* animação de transição para a cor de fundo e transformação */
+        /* animação de transição para a cor de fundo e transformação */
       }
 
       .search-input::placeholder {
@@ -41,8 +41,9 @@
           172
         ); /* cor de fundo ao passar o mouse */
         transform: scale(1.05);
-        transition: background-color 1.0s cubic-bezier(0.075, 0.82, 1, 1), /* efeito de escala ao passar o mouse */
-        transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+        transition: background-color 1s cubic-bezier(0.075, 0.82, 1, 1),
+          /* efeito de escala ao passar o mouse */ transform 0.6s
+            cubic-bezier(0.075, 0.82, 0.165, 1);
       }
 
       .sidebar-icon {
@@ -196,23 +197,18 @@
                 class="fas fa-chevron-down text-gray-400"
               ></i>
               <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
-                Funções de notificação +
+                Informações da Guilda +
               </h5>
             </div>
             <div
               id="topics-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+              <div class="dropdown-selection" onclick="selectTopic('server')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
+                  ! Server
                 </h5>
-              </div>
-              <div class="dropdown-selection" onclick="teste('ftest')">
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
           </div>
@@ -229,23 +225,18 @@
                 id="moderation-header"
                 class="dropdown-header-text text-sm ml-2"
               >
-                Adicionar canais +
+                Informações do Bot +
               </h5>
             </div>
             <div
               id="moderation-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+              <div class="dropdown-selection" onclick="selectTopic('status')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
+                  ! Status
                 </h5>
-              </div>
-              <div class="dropdown-selection" onclick="selectTopic('twitch')">
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
           </div>
@@ -270,7 +261,6 @@
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                  onclick="handleIconClick('gear')"
                 >
                   <img
                     src="/res/sidebar/fire.jpg"
@@ -279,7 +269,7 @@
                   />
                 </div>
                 <div class="popup absolute" style="top: 150%; left: 50%">
-                  Logout
+                  Lirica Divina
                 </div>
               </div>
             </div>
@@ -297,19 +287,19 @@
         <div class="channel-bar-container">
           <div
             class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('topics')"
+            onclick="toggleDropdown('funcs')"
           >
             <div class="dropdown-header">
               <i
-                id="topics-chevron"
+                id="funcs-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
+              <h5 id="funcs-header" class="dropdown-header-text text-sm ml-2">
                 Funções de notificação +
               </h5>
             </div>
             <div
-              id="topics-dropdown"
+              id="funcs-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div class="dropdown-selection" onclick="selectTopic('youtube')">
@@ -318,31 +308,31 @@
                   Youtube
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="teste('ftest')">
+              <div class="dropdown-selection" onclick="selectTopic('twitch')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
+                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
           </div>
           <div
             class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('moderation')"
+            onclick="toggleDropdown('addchannels')"
           >
             <div class="dropdown-header">
               <i
-                id="moderation-chevron"
+                id="addchannels-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
               <h5
-                id="moderation-header"
+                id="addchannels-header"
                 class="dropdown-header-text text-sm ml-2"
               >
                 Adicionar canais +
               </h5>
             </div>
             <div
-              id="moderation-dropdown"
+              id="addchannels-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div class="dropdown-selection" onclick="selectTopic('youtube')">
@@ -379,7 +369,6 @@
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                  onclick="handleIconClick('gear')"
                 >
                   <img
                     src="/res/sidebar/fire.jpg"
@@ -388,7 +377,7 @@
                   />
                 </div>
                 <div class="popup absolute" style="top: 150%; left: 50%">
-                  Logout
+                  Lirica Divina
                 </div>
               </div>
             </div>
@@ -408,19 +397,19 @@
         <div class="channel-bar-container">
           <div
             class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('topics')"
+            onclick="toggleDropdown('channels')"
           >
             <div class="dropdown-header">
               <i
-                id="topics-chevron"
+                id="channels-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
-                Funções de notificação +
+              <h5 id="channels-header" class="dropdown-header-text text-sm ml-2">
+                Canais para notificação +
               </h5>
             </div>
             <div
-              id="topics-dropdown"
+              id="channels-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div class="dropdown-selection" onclick="selectTopic('youtube')">
@@ -429,7 +418,7 @@
                   Youtube
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="teste('ftest')">
+              <div class="dropdown-selection" onclick="selectTopic('twitch')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
@@ -438,22 +427,22 @@
           </div>
           <div
             class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('moderation')"
+            onclick="toggleDropdown('videos')"
           >
             <div class="dropdown-header">
               <i
-                id="moderation-chevron"
+                id="videos-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
               <h5
-                id="moderation-header"
+                id="videos-header"
                 class="dropdown-header-text text-sm ml-2"
               >
                 Adicionar canais +
               </h5>
             </div>
             <div
-              id="moderation-dropdown"
+              id="videos-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div class="dropdown-selection" onclick="selectTopic('youtube')">
@@ -492,7 +481,6 @@
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                  onclick="handleIconClick('gear')"
                 >
                   <img
                     src="/res/sidebar/fire.jpg"
@@ -501,7 +489,7 @@
                   />
                 </div>
                 <div class="popup absolute" style="top: 150%; left: 50%">
-                  Logout
+                  Lirica Divina
                 </div>
               </div>
             </div>
@@ -588,7 +576,6 @@
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                  onclick="handleIconClick('gear')"
                 >
                   <img
                     src="/res/sidebar/fire.jpg"
@@ -597,7 +584,7 @@
                   />
                 </div>
                 <div class="popup absolute" style="top: 150%; left: 50%">
-                  Logout
+                  Lirica Divina
                 </div>
               </div>
             </div>
@@ -682,7 +669,6 @@
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                  onclick="handleIconClick('gear')"
                 >
                   <img
                     src="/res/sidebar/fire.jpg"
@@ -691,7 +677,7 @@
                   />
                 </div>
                 <div class="popup absolute" style="top: 150%; left: 50%">
-                  Logout
+                  Lirica Divina
                 </div>
               </div>
             </div>
