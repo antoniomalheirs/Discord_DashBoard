@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html lang=pt">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Página 1</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body class="bg-gray-600">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página 1</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body class="bg-gray-600">
+  <div id="sidebar-container" class="inline-block fixed ">
     
-      <div id="sidebar-container" class="block "></div>
+  </div>
 
-      <div id="sidebar-container2" class="flex mx-auto mt-32 pl-96 ">
-        <!-- Conteúdo da div -->
+  <div id="sidebar-contain" class="fixed top-12 left-72 right-0 h-full flex bg-gray-600 dark:bg-gray-900 shadow-lg">
+    <div class="flex items-center justify-center h-full w-full">
+      <div id="sidebar-container2">
       </div>
-    <!-- Container onde a sidebar será carregada -->
-   
+    </div>
+  </div>
+  
+
+  <!-- Container onde a sidebar será carregada -->
+
+  <script>
+    $(document).ready(function () {
+      // Use a função load do jQuery para carregar a sidebar
+      $("#sidebar-container").load("/layouts/sideBar.ejs");
+    });
+
+    $(document).ready(function () {
+      // Use a função load do jQuery para carregar a sidebar
+      const guildId = `<%= info.id %>`;
+      console.log(guildId);
+
+      // Carregar o conteúdo da guilda com base no guildId
+      $("#sidebar-container2").load(`/bot/guildcontentmain/${guildId}`);
+    });
+
+    function carregarConteudo(component) {
+      $('#sidebar-container2').load(`/bot/pagina/${component}`);
+    }
     
-    <script>
-      $(document).ready(function () {
-        // Use a função load do jQuery para carregar a sidebar
-        $("#sidebar-container").load("/layouts/sideBar.ejs");
-      });
-
-      $(document).ready(function () {
-        // Use a função load do jQuery para carregar a sidebar
-        const guildId = `<%= info.id %>`;
-        console.log(guildId);
-
-        // Carregar o conteúdo da guilda com base no guildId
-        $("#sidebar-container2").load(`/bot/guildcontentmain/${guildId}`);
-
-      });
-    </script>
-  </body>
-
-</html>
+  </script>
+</body>

@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 const router = express.Router();
 const discordBot = require("../Client");
 const { ChannelType } = require("discord.js");
@@ -172,6 +173,33 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
     res.render("teste.ejs", { info: botInfo });
   } catch (error) {
     res.render("error.ejs");
+  }
+});
+
+// Rota que recebe um parâmetro de string chamado 'page'
+router.get('/pagina/:page', (req, res) => {
+  const page = req.params.page;
+  console.log(page);
+  // Use uma estrutura de controle, como um switch, para determinar qual página renderizar
+  switch (page) {
+    case 'server':
+      // Renderize a página 1
+      const errorFilePath = path.join(__dirname, '../views', 'error.ejs');
+      
+      // Renderize a página 1
+      res.sendFile(errorFilePath);
+      break;
+    case 'pagina2':
+      // Renderize a página 2
+      res.render('pagina2.ejs');
+      break;
+    case 'pagina3':
+      // Renderize a página 3
+      res.render('pagina3.ejs');
+      break;
+    default:
+      // Se o parâmetro não corresponder a nenhuma página conhecida, retorne um erro 404
+      res.status(404).send('Página não encontrada');
   }
 });
 

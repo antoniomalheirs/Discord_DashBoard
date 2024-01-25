@@ -204,12 +204,12 @@
               id="topics-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('server')">
+              <a class="dropdown-selection" onclick="selectTopic('server')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   ! Server
                 </h5>
-              </div>
+              </a>
             </div>
           </div>
           <div
@@ -732,6 +732,11 @@
       }
 
       function selectTopic(topic) {
+        if (topic === "server")
+        {
+          parent.carregarConteudo("server");
+          //href ="/bot/pagina/server"
+        }
         console.log(`Selected topic: ${topic}`);
         // Adicione lógica adicional conforme necessário
       }
