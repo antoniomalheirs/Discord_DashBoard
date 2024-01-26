@@ -302,7 +302,7 @@
               id="funcs-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+              <div class="dropdown-selection" onclick="selectTopic('funcyoutube')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Youtube
@@ -735,6 +735,16 @@
         if (topic === "server")
         {
           parent.carregarConteudo("server");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "status")
+        {
+          parent.carregarConteudo("status");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "funcyoutube")
+        {
+          parent.carregarConteudo("funcyoutube");
           //href ="/bot/pagina/server"
         }
         console.log(`Selected topic: ${topic}`);

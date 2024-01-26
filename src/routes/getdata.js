@@ -1,4 +1,5 @@
 const express = require("express");
+const ejs = require('ejs');
 const path = require('path');
 const router = express.Router();
 const discordBot = require("../Client");
@@ -177,25 +178,39 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
 });
 
 // Rota que recebe um parâmetro de string chamado 'page'
-router.get('/pagina/:page', (req, res) => {
+router.get('/pagina/:page/:param2', async (req, res) => {
   const page = req.params.page;
-  console.log(page);
+  const guildId = req.params.param2;
+  const botInfo = await getGuildData(guildId);
+  const videoinfo = await getVideos(guildId);
+  console.log(page, guildId);
+
   // Use uma estrutura de controle, como um switch, para determinar qual página renderizar
   switch (page) {
     case 'server':
-      // Renderize a página 1
-      const errorFilePath = path.join(__dirname, '../views', 'error.ejs');
-      
-      // Renderize a página 1
-      res.sendFile(errorFilePath);
+      // Renderize a página 1 com o segundo parâmetro
+      const server = await ejs.renderFile(
+        path.join(__dirname, '../views/serverinfo.ejs'),
+        { info: botInfo }
+      );
+      res.send(server);
       break;
-    case 'pagina2':
-      // Renderize a página 2
-      res.render('pagina2.ejs');
+    case 'status':
+      // Renderize a página 1 com o segundo parâmetro
+      const status = await ejs.renderFile(
+        path.join(__dirname, '../views/botstatus.ejs'),
+        { info: botInfo }
+      );
+      res.send(status);
       break;
-    case 'pagina3':
-      // Renderize a página 3
-      res.render('pagina3.ejs');
+    case 'funcyoutube':
+      // Renderize a página 1 com o segundo parâmetro
+      const funcyoutube = await ejs.renderFile(
+        path.join(__dirname, '../views/youtubefunc.ejs'),
+        { info: botInfo,
+        info2: videoinfo }
+      );
+      res.send(funcyoutube);
       break;
     default:
       // Se o parâmetro não corresponder a nenhuma página conhecida, retorne um erro 404
@@ -203,11 +218,12 @@ router.get('/pagina/:page', (req, res) => {
   }
 });
 
+
 router.get("/guildcontentmain/:guildId", async (req, res) => {
   const guildId = req.params.guildId;
   const botInfo = await getGuildData(guildId);
 
-  res.render("guildcontentmain.ejs", { info: botInfo });
+  res.render("serverinfo.ejs", { info: botInfo });
 });
 
 router.get("/infoguilds", isAuthenticated, async (req, res) => {
