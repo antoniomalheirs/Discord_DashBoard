@@ -221,21 +221,21 @@ router.get("/pagina/:page/:param2", async (req, res) => {
       );
       res.send(functwitch);
       break;
-      case "addytbchannel":
+      case "ytbchannelupdate":
       // Renderize a página 1 com o segundo parâmetro
-      const addytbchannel = await ejs.renderFile(
+      const ytbchannelupdate = await ejs.renderFile(
         path.join(__dirname, "../views/updatenotytb.ejs"),
         { info: botInfo }
       );
-      res.send(addytbchannel);
+      res.send(ytbchannelupdate);
       break;
-      case "addtchchannel":
+      case "tchchannelupdate":
       // Renderize a página 1 com o segundo parâmetro
-      const addtchchannel = await ejs.renderFile(
+      const tchchannelupdate = await ejs.renderFile(
         path.join(__dirname, "../views/updatenottch.ejs"),
         { info: botInfo }
       );
-      res.send(addtchchannel);
+      res.send(tchchannelupdate);
       break;
       case "statesinfo":
       // Renderize a página 1 com o segundo parâmetro
@@ -244,6 +244,38 @@ router.get("/pagina/:page/:param2", async (req, res) => {
         { info: botInfo, info4:  guildinfo}
       );
       res.send(statesinfo);
+      break;
+      case "viewytbchannels":
+      // Renderize a página 1 com o segundo parâmetro
+      const viewytbchannels = await ejs.renderFile(
+        path.join(__dirname, "../views/ytbviewinfo.ejs"),
+        { info: botInfo, info2:  videoinfo}
+      );
+      res.send(viewytbchannels);
+      break;
+      case "addytbchannel":
+      // Renderize a página 1 com o segundo parâmetro
+      const addytbchannel = await ejs.renderFile(
+        path.join(__dirname, "../views/addytbchannel.ejs"),
+        { info: botInfo}
+      );
+      res.send(addytbchannel);
+      break;
+      case "viewtchchannel":
+      // Renderize a página 1 com o segundo parâmetro
+      const viewtchchannels = await ejs.renderFile(
+        path.join(__dirname, "../views/tchviewinfo.ejs"),
+        { info: botInfo, info3:  lives}
+      );
+      res.send(viewtchchannels);
+      break;
+      case "addtchchannel":
+      // Renderize a página 1 com o segundo parâmetro
+      const addtchchannel = await ejs.renderFile(
+        path.join(__dirname, "../views/addtchchannel.ejs"),
+        { info: botInfo}
+      );
+      res.send(addtchchannel);
       break;
     default:
       // Se o parâmetro não corresponder a nenhuma página conhecida, retorne um erro 404

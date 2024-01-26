@@ -341,13 +341,19 @@
               id="addchannels-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('addytbchannel')">
+              <div
+                class="dropdown-selection"
+                onclick="selectTopic('ytbchannelupdate')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Youtube
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="selectTopic('addtchchannel')">
+              <div
+                class="dropdown-selection"
+                onclick="selectTopic('tchchannelupdate')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
@@ -374,7 +380,10 @@
               id="statefuncs-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('statesinfo')">
+              <div
+                class="dropdown-selection"
+                onclick="selectTopic('statesinfo')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Informações
@@ -442,22 +451,24 @@
                 id="channels-header"
                 class="dropdown-header-text text-sm ml-2"
               >
-                Canais para notificação +
+                Canais do Youtube +
               </h5>
             </div>
             <div
               id="channels-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+              <div class="dropdown-selection" onclick="selectTopic('addytbchannel')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
+                  Adicionar canais
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+              <div class="dropdown-selection" onclick="selectTopic('viewytbchannels')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Visualizar canais
+                </h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
@@ -472,22 +483,22 @@
                 class="fas fa-chevron-down text-gray-400"
               ></i>
               <h5 id="videos-header" class="dropdown-header-text text-sm ml-2">
-                Adicionar canais +
+                Canais da Twitch +
               </h5>
             </div>
             <div
               id="videos-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+              <div class="dropdown-selection" onclick="selectTopic('addtchchannel')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
+                  Adicionar lives
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+              <div class="dropdown-selection" onclick="selectTopic('viewtchchannel')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
+                <h5 class="dropdown-selection-text hover:text-white">Visualizar lives</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
@@ -782,16 +793,32 @@
           parent.carregarConteudo("functwitch");
           //href ="/bot/pagina/server"
         }
-        if (topic === "addytbchannel") {
-          parent.carregarConteudo("addytbchannel");
+        if (topic === "ytbchannelupdate") {
+          parent.carregarConteudo("ytbchannelupdate");
           //href ="/bot/pagina/server"
         }
-        if (topic === "addtchchannel") {
-          parent.carregarConteudo("addtchchannel");
+        if (topic === "tchchannelupdate") {
+          parent.carregarConteudo("tchchannelupdate");
           //href ="/bot/pagina/server"
         }
         if (topic === "statesinfo") {
           parent.carregarConteudo("statesinfo");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "viewytbchannels") {
+          parent.carregarConteudo("viewytbchannels");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "addytbchannel") {
+          parent.carregarConteudo("addytbchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "viewtchchannel") {
+          parent.carregarConteudo("viewtchchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "addtchchannel") {
+          parent.carregarConteudo("addtchchannel");
           //href ="/bot/pagina/server"
         }
         console.log(`Selected topic: ${topic}`);
