@@ -9,157 +9,161 @@
     />
     <title>Gerenciador de Funções</title>
   </head>
-  <body>
-    <!-- Conteúdo do Pop-up -->
-    <div id="mensagemPopUp" class="hidden"></div>
-
-    <div class="flex flex-col items-center">
-      <div class="mb-4">
-        <h1 class="text-3xl font-bold">Função Youtube</h1>
-      </div>
-
-      <div class="mb-4">
-        <h1 class="text-2xl font-bold">Guilda <%= info.name %></h1>
-      </div>
-
-      <div class="mt-4">
-        <% if (info.icon && info.icon.indexOf('null') === -1) { %>
-        <img
-          src="<%= info.icon %>"
-          alt="Ícone da guilda"
-          class="rounded-full max-w-full h-auto"
-        />
-        <% } else { %>
-        <img
-          src="/res/serverIcon/nonserverimg.jpg"
-          alt="Ícone padrão"
-          class="rounded-full max-w-full h-auto"
-        />
-        <% } %>
-      </div>
-    </div>
-
+  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
     <div
-      id="modal2"
-      class="hidden fixed inset-0 w-1/2 h-1/2 mx-auto my-auto items-center justify-center"
+      class="bg-white p-4 rounded-lg shadow-md max-w-8xl flex flex-col justify-between min-h-full"
     >
-      <!-- Conteúdo do modal -->
-      <form
-        id="addDataForm"
-        action="/bot/ativar/funcytb"
-        method="post"
-        class="mt-4 mx-auto w-2/3 bg-white p-8 rounded-lg shadow-md"
-      >
-        <!-- Checkbox para Habilitar YouTube -->
+      <!-- Conteúdo do Pop-up -->
+      <div id="mensagemPopUp" class="hidden"></div>
+
+      <div class="flex flex-col items-center">
         <div class="mb-4">
-          <input type="checkbox" id="ytb" name="ytb" class="mr-2" required />
-          <label for="ytb" class="inline-block">Habilitar YouTube</label>
+          <h1 class="text-3xl font-bold">Função Youtube</h1>
         </div>
 
-        <!-- Input para ID do Canal -->
         <div class="mb-4">
-          <label
-            for="newDat5"
-            class="block text-sm font-medium text-gray-600 mb-2"
-            >ID do Canal para Notificar os Vídeos:</label
-          >
-          <input
-            type="number"
-            id="newDat5"
-            name="newDat5"
-            class="p-2 w-full border rounded-md"
-            required
-          />
-
-          <input
-            type="hidden"
-            id="guildId"
-            name="guildId"
-            value="<%= info.id %>"
-          />
-
-          <input type="hidden" id="nome" name="nome" value="do Youtube" />
+          <h1 class="text-2xl font-bold">Guilda <%= info.name %></h1>
         </div>
 
-        <!-- Campo Hidden para guildId -->
-        <!-- Inclua o campo guildId no formulário -->
-
-        <div class="flex space-x-4">
-          <button
-            type="button"
-            onclick="fecharModal()"
-            class="py-2 px-4 bg-gray-500 text-white rounded mr-2"
-          >
-            Fechar
-          </button>
-          <button
-            type="submit"
-            class="py-2 px-4 bg-purple-300 text-white rounded"
-          >
-            Adicionar
-          </button>
+        <div class="mt-4">
+          <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+          <img
+            src="<%= info.icon %>"
+            alt="Ícone da guilda"
+            class="rounded-full max-w-full h-auto"
+          />
+          <% } else { %>
+          <img
+            src="/res/serverIcon/nonserverimg.jpg"
+            alt="Ícone padrão"
+            class="rounded-full max-w-full h-auto"
+          />
+          <% } %>
         </div>
-      </form>
-    </div>
+      </div>
 
-    <div class="flex items-center justify-center mt-4">
-      <button
-        onclick="abrirModal2()"
-        class="bg-green-400 text-white px-4 py-2 mr-2 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
+      <div
+        id="modal2"
+        class="hidden fixed inset-0 w-1/2 h-1/2 mx-auto my-auto items-center justify-center"
       >
-        Ativar Função YOUTUBE
-      </button>
+        <!-- Conteúdo do modal -->
+        <form
+          id="addDataForm"
+          action="/bot/ativar/funcytb"
+          method="post"
+          class="mt-4 mx-auto w-2/3 bg-white p-8 rounded-lg shadow-md"
+        >
+          <!-- Checkbox para Habilitar YouTube -->
+          <div class="mb-4">
+            <input type="checkbox" id="ytb" name="ytb" class="mr-2" required />
+            <label for="ytb" class="inline-block">Habilitar YouTube</label>
+          </div>
 
-      <button
-        onclick="voltarAoDashboard()"
-        class="bg-purple-300 text-white px-4 py-2 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
-      >
-        Voltar ao Dashboard
-      </button>
-    </div>
+          <!-- Input para ID do Canal -->
+          <div class="mb-4">
+            <label
+              for="newDat5"
+              class="block text-sm font-medium text-gray-600 mb-2"
+              >ID do Canal para Notificar os Vídeos:</label
+            >
+            <input
+              type="number"
+              id="newDat5"
+              name="newDat5"
+              class="p-2 w-full border rounded-md"
+              required
+            />
 
-    <!-- Tabela 2 -->
-    <h2 class="text-2xl mt-8 text-center">Youtube Channels a Notificar</h2>
+            <input
+              type="hidden"
+              id="guildId"
+              name="guildId"
+              value="<%= info.id %>"
+            />
 
-    <div class="flex items-center justify-center mt-4">
-      <table
-        class="w-6/12 bg-purple-300 border rounded-lg shadow-md overflow-hidden mx-auto"
-      >
-        <thead>
-          <tr>
-            <th class="py-2 px-4 bg-green-300">YouTube</th>
-            <th class="py-2 px-4 bg-green-300">Channel</th>
-            <th class="py-2 px-4 bg-green-300">Last Video</th>
-            <th class="py-2 px-4 bg-green-300">Last Publish</th>
-            <th class="py-2 px-4 bg-green-300">Message</th>
-            <th class="py-2 px-4 bg-green-300">Notify Guild</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% info2.forEach(item => { %>
-          <tr class="bg-gray-100">
-            <td class="py-2 px-4 border border-green-300 text-center">
-              <%= item.youtube %>
-            </td>
-            <td class="py-2 px-4 border border-green-300 text-center">
-              <%= item.channel %>
-            </td>
-            <td class="py-2 px-4 border border-green-300 text-center">
-              <%= item.lastVideo %>
-            </td>
-            <td class="py-2 px-4 border border-green-300 text-center">
-              <%= item.lastPublish %>
-            </td>
-            <td class="py-2 px-4 border border-green-300 text-center">
-              <%= item.message %>
-            </td>
-            <td class="py-2 px-4 border border-green-300 text-center">
-              <%= item.notifyGuild %>
-            </td>
-          </tr>
-          <% }); %>
-        </tbody>
-      </table>
+            <input type="hidden" id="nome" name="nome" value="do Youtube" />
+          </div>
+
+          <!-- Campo Hidden para guildId -->
+          <!-- Inclua o campo guildId no formulário -->
+
+          <div class="flex space-x-4">
+            <button
+              type="button"
+              onclick="fecharModal()"
+              class="py-2 px-4 bg-gray-500 text-white rounded mr-2"
+            >
+              Fechar
+            </button>
+            <button
+              type="submit"
+              class="py-2 px-4 bg-purple-300 text-white rounded"
+            >
+              Adicionar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="flex items-center justify-center mt-4">
+        <button
+          onclick="abrirModal2()"
+          class="bg-green-400 text-white px-4 py-2 mr-2 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
+        >
+          Ativar Função YOUTUBE
+        </button>
+
+        <button
+          onclick="voltarAoDashboard()"
+          class="bg-purple-300 text-white px-4 py-2 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
+        >
+          Voltar ao Dashboard
+        </button>
+      </div>
+
+      <!-- Tabela 2 -->
+      <h2 class="text-2xl mt-8 text-center">Youtube Channels a Notificar</h2>
+
+      <div class="flex items-center justify-center mt-4">
+        <table
+          class="w-6/12 bg-purple-300 border rounded-lg shadow-md overflow-hidden mx-auto"
+        >
+          <thead>
+            <tr>
+              <th class="py-2 px-4 bg-green-300">YouTube</th>
+              <th class="py-2 px-4 bg-green-300">Channel</th>
+              <th class="py-2 px-4 bg-green-300">Last Video</th>
+              <th class="py-2 px-4 bg-green-300">Last Publish</th>
+              <th class="py-2 px-4 bg-green-300">Message</th>
+              <th class="py-2 px-4 bg-green-300">Notify Guild</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% info2.forEach(item => { %>
+            <tr class="bg-gray-100">
+              <td class="py-2 px-4 border border-green-300 text-center">
+                <%= item.youtube %>
+              </td>
+              <td class="py-2 px-4 border border-green-300 text-center">
+                <%= item.channel %>
+              </td>
+              <td class="py-2 px-4 border border-green-300 text-center">
+                <%= item.lastVideo %>
+              </td>
+              <td class="py-2 px-4 border border-green-300 text-center">
+                <%= item.lastPublish %>
+              </td>
+              <td class="py-2 px-4 border border-green-300 text-center">
+                <%= item.message %>
+              </td>
+              <td class="py-2 px-4 border border-green-300 text-center">
+                <%= item.notifyGuild %>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <script>
