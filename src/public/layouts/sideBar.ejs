@@ -302,13 +302,19 @@
               id="funcs-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('funcyoutube')">
+              <div
+                class="dropdown-selection"
+                onclick="selectTopic('funcyoutube')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Youtube
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+              <div
+                class="dropdown-selection"
+                onclick="selectTopic('functwitch')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
@@ -328,23 +334,51 @@
                 id="addchannels-header"
                 class="dropdown-header-text text-sm ml-2"
               >
-                Adicionar canais +
+                Alterar canais de noti... +
               </h5>
             </div>
             <div
               id="addchannels-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+              <div class="dropdown-selection" onclick="selectTopic('addytbchannel')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Youtube
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="selectTopic('twitch')">
+              <div class="dropdown-selection" onclick="selectTopic('addtchchannel')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('statefuncs')"
+          >
+            <div class="dropdown-header">
+              <i
+                id="statefuncs-chevron"
+                class="fas fa-chevron-down text-gray-400"
+              ></i>
+              <h5
+                id="statefuncs-header"
+                class="dropdown-header-text text-sm ml-2"
+              >
+                Estado das Funções +
+              </h5>
+            </div>
+            <div
+              id="statefuncs-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div class="dropdown-selection" onclick="selectTopic('statesinfo')">
+                <i class="fas fa-hashtag text-gray-400"></i>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Informações
+                </h5>
               </div>
             </div>
           </div>
@@ -404,7 +438,10 @@
                 id="channels-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="channels-header" class="dropdown-header-text text-sm ml-2">
+              <h5
+                id="channels-header"
+                class="dropdown-header-text text-sm ml-2"
+              >
                 Canais para notificação +
               </h5>
             </div>
@@ -434,10 +471,7 @@
                 id="videos-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5
-                id="videos-header"
-                class="dropdown-header-text text-sm ml-2"
-              >
+              <h5 id="videos-header" class="dropdown-header-text text-sm ml-2">
                 Adicionar canais +
               </h5>
             </div>
@@ -732,19 +766,32 @@
       }
 
       function selectTopic(topic) {
-        if (topic === "server")
-        {
+        if (topic === "server") {
           parent.carregarConteudo("server");
           //href ="/bot/pagina/server"
         }
-        if (topic === "status")
-        {
+        if (topic === "status") {
           parent.carregarConteudo("status");
           //href ="/bot/pagina/server"
         }
-        if (topic === "funcyoutube")
-        {
+        if (topic === "funcyoutube") {
           parent.carregarConteudo("funcyoutube");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "functwitch") {
+          parent.carregarConteudo("functwitch");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "addytbchannel") {
+          parent.carregarConteudo("addytbchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "addtchchannel") {
+          parent.carregarConteudo("addtchchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "statesinfo") {
+          parent.carregarConteudo("statesinfo");
           //href ="/bot/pagina/server"
         }
         console.log(`Selected topic: ${topic}`);

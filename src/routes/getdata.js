@@ -1,6 +1,6 @@
 const express = require("express");
-const ejs = require('ejs');
-const path = require('path');
+const ejs = require("ejs");
+const path = require("path");
 const router = express.Router();
 const discordBot = require("../Client");
 const { ChannelType } = require("discord.js");
@@ -178,46 +178,78 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
 });
 
 // Rota que recebe um parâmetro de string chamado 'page'
-router.get('/pagina/:page/:param2', async (req, res) => {
+router.get("/pagina/:page/:param2", async (req, res) => {
   const page = req.params.page;
   const guildId = req.params.param2;
   const botInfo = await getGuildData(guildId);
   const videoinfo = await getVideos(guildId);
+  const lives = await getTwitch(guildId);
+  const guildinfo = await getGuilds(guildId);
   console.log(page, guildId);
 
   // Use uma estrutura de controle, como um switch, para determinar qual página renderizar
   switch (page) {
-    case 'server':
+    case "server":
       // Renderize a página 1 com o segundo parâmetro
       const server = await ejs.renderFile(
-        path.join(__dirname, '../views/serverinfo.ejs'),
+        path.join(__dirname, "../views/serverinfo.ejs"),
         { info: botInfo }
       );
       res.send(server);
       break;
-    case 'status':
+    case "status":
       // Renderize a página 1 com o segundo parâmetro
       const status = await ejs.renderFile(
-        path.join(__dirname, '../views/botstatus.ejs'),
+        path.join(__dirname, "../views/botstatus.ejs"),
         { info: botInfo }
       );
       res.send(status);
       break;
-    case 'funcyoutube':
+    case "funcyoutube":
       // Renderize a página 1 com o segundo parâmetro
       const funcyoutube = await ejs.renderFile(
-        path.join(__dirname, '../views/youtubefunc.ejs'),
-        { info: botInfo,
-        info2: videoinfo }
+        path.join(__dirname, "../views/youtubefunc.ejs"),
+        { info: botInfo, info2: videoinfo }
       );
       res.send(funcyoutube);
       break;
+    case "functwitch":
+      // Renderize a página 1 com o segundo parâmetro
+      const functwitch = await ejs.renderFile(
+        path.join(__dirname, "../views/twitchfunc.ejs"),
+        { info: botInfo, info3: lives }
+      );
+      res.send(functwitch);
+      break;
+      case "addytbchannel":
+      // Renderize a página 1 com o segundo parâmetro
+      const addytbchannel = await ejs.renderFile(
+        path.join(__dirname, "../views/updatenotytb.ejs"),
+        { info: botInfo }
+      );
+      res.send(addytbchannel);
+      break;
+      case "addtchchannel":
+      // Renderize a página 1 com o segundo parâmetro
+      const addtchchannel = await ejs.renderFile(
+        path.join(__dirname, "../views/updatenottch.ejs"),
+        { info: botInfo }
+      );
+      res.send(addtchchannel);
+      break;
+      case "statesinfo":
+      // Renderize a página 1 com o segundo parâmetro
+      const statesinfo = await ejs.renderFile(
+        path.join(__dirname, "../views/serverfuncstate.ejs"),
+        { info: botInfo, info4:  guildinfo}
+      );
+      res.send(statesinfo);
+      break;
     default:
       // Se o parâmetro não corresponder a nenhuma página conhecida, retorne um erro 404
-      res.status(404).send('Página não encontrada');
+      res.status(404).send("Página não encontrada");
   }
 });
-
 
 router.get("/guildcontentmain/:guildId", async (req, res) => {
   const guildId = req.params.guildId;
