@@ -185,6 +185,7 @@ router.get("/pagina/:page/:param2", async (req, res) => {
   const videoinfo = await getVideos(guildId);
   const lives = await getTwitch(guildId);
   const guildinfo = await getGuilds(guildId);
+  const userinfo = await getUsers(guildId);
   console.log(page, guildId);
 
   // Use uma estrutura de controle, como um switch, para determinar qual página renderizar
@@ -263,11 +264,11 @@ router.get("/pagina/:page/:param2", async (req, res) => {
       break;
       case "viewtchchannel":
       // Renderize a página 1 com o segundo parâmetro
-      const viewtchchannels = await ejs.renderFile(
+      const viewtchchannel = await ejs.renderFile(
         path.join(__dirname, "../views/tchviewinfo.ejs"),
         { info: botInfo, info3:  lives}
       );
-      res.send(viewtchchannels);
+      res.send(viewtchchannel);
       break;
       case "addtchchannel":
       // Renderize a página 1 com o segundo parâmetro
@@ -276,6 +277,14 @@ router.get("/pagina/:page/:param2", async (req, res) => {
         { info: botInfo}
       );
       res.send(addtchchannel);
+      break;
+      case "memberinfo":
+      // Renderize a página 1 com o segundo parâmetro
+      const memberinfo = await ejs.renderFile(
+        path.join(__dirname, "../views/membersinfo.ejs"),
+        { info: botInfo, info1: userinfo}
+      );
+      res.send(memberinfo);
       break;
     default:
       // Se o parâmetro não corresponder a nenhuma página conhecida, retorne um erro 404

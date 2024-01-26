@@ -554,49 +554,29 @@
         <div class="channel-bar-container">
           <div
             class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('topics')"
+            onclick="toggleDropdown('members')"
           >
             <div class="dropdown-header">
               <i
-                id="topics-chevron"
+                id="members-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
-                Funções de notificação +
+              <h5 id="members-header" class="dropdown-header-text text-sm ml-2">
+                Informações de membros do servidor +
               </h5>
             </div>
             <div
-              id="topics-dropdown"
+              id="members-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+              <div class="dropdown-selection" onclick="selectTopic('memberinfo')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
+                  Tempo e Mensagens no servidor
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="teste('ftest')">
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
-              </div>
             </div>
-            <div
-              id="moderation-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
-                </h5>
-              </div>
-              <div class="dropdown-selection" onclick="selectTopic('twitch')">
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
-              </div>
-            </div>
+          
           </div>
           <div
             id="top-bar"
@@ -819,6 +799,10 @@
         }
         if (topic === "addtchchannel") {
           parent.carregarConteudo("addtchchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "memberinfo") {
+          parent.carregarConteudo("memberinfo");
           //href ="/bot/pagina/server"
         }
         console.log(`Selected topic: ${topic}`);
