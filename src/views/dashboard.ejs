@@ -104,15 +104,9 @@
       </div>
     </nav>
     <!-- Exibir a imagem da guilda selecionada -->
-    <div
-      class="select-container mt-4 ml-4 flex flex-auto items-center justify-center"
-    >
+    <div class="select-container mt-4 ml-4 flex flex-auto items-center justify-center">
       <!-- Caixa de seleção para as guildas -->
-      <form
-        action="/bot/botinfo"
-        method="post"
-        class="flex items-center space-x-2"
-      >
+      <form action="/bot/botinfo" method="post" class="flex items-center space-x-2">
         <label for="guilds" class="text-gray-700"></label>
         <select
           name="guilds"
@@ -125,6 +119,10 @@
           <option value="<%= guild.id %>"><%= guild.name %></option>
           <% }); %>
         </select>
+        
+        <!-- Adicionando o ícone do usuário como um campo oculto -->
+        <input type="hidden" id="icon" name="icon" value="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png">
+    
         <button
           type="submit"
           class="bg-green-400 text-white px-3 py-1 rounded-md hover:bg-purple-300 focus:outline-none focus:ring focus:border-blue-300"
@@ -133,6 +131,8 @@
         </button>
       </form>
     </div>
+    
+    
 
     <div class="flex items-center justify-center mb-4 mt-4">
       <img

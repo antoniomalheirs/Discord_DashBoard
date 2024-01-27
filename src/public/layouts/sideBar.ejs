@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link
@@ -9,19 +9,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      .popup {
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: 150%;
-        transform: translate(-50%, -50%);
-        white-space: nowrap;
-        padding: 0.5rem;
+      .tooltip2 {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip-text2 {
+        visibility: hidden;
+        width: 8rem;
         background-color: rgba(0, 0, 0, 0.8);
         color: white;
+        text-align: center;
         border-radius: 0.25rem;
-        z-index: 50;
+        padding: 0.5rem;
+        position: absolute;
+        z-index: 1;
+        top: 18%; /* Posição abaixo do elemento pai */
+        left: 150%;
+        margin-left: -35%; /* Metade da largura */
+        opacity: 0;
+        transition: opacity 0.3s;
       }
+
+      .tooltip2:hover .tooltip-text2 {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip-text {
+        visibility: hidden;
+        width: 8rem;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+        border-radius: 0.25rem;
+        padding: 0.5rem;
+        position: absolute;
+        z-index: 1;
+        top: 115%; /* Posição abaixo do elemento pai */
+        right: 1%;
+        margin-right: -50%; /* Metade da largura */
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
       .search-input {
         border-radius: 0.5rem;
         background-color: rgb(156, 163, 175);
@@ -99,80 +140,89 @@
       id="sidebar"
       class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center bg-gray-700 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
     >
-      <div class="relative group">
-        <div
-          id="configuration"
-          class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
-          onclick="handleIconClick('configuration')"
-        >
-          <img
-            src="/res/sidebar/fire.jpg"
-            alt="Fire Icon"
-            class="w-10 h-10 my-auto"
-          />
-        </div>
-        <div class="popup absolute ml-1">Inicio</div>
-      </div>
-      <div>
-        <!-- Repita o mesmo padrão para outros ícones -->
+      <div class="tooltip2 ">
         <div class="relative group">
           <div
-            id="chanels"
-            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
-            onclick="handleIconClick('chanels')"
+            id="configuration"
+            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+            onclick="handleIconClick('configuration')"
           >
             <img
-              src="/res/sidebar/unknow.jpg"
-              alt="Fire Icon"
-              class="w-11 h-11 my-auto"
-            />
-          </div>
-          <div class="popup absolute ml-3.5">Funções</div>
-        </div>
-
-        <div class="relative group">
-          <div
-            id="guild"
-            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
-            onclick="handleIconClick('guild')"
-          >
-            <img
-              src="/res/sidebar/database.jpg"
+              src="/res/sidebar/fire.jpg"
               alt="Fire Icon"
               class="w-10 h-10 my-auto"
             />
           </div>
-          <div class="popup absolute ml-11">Banco de Dados</div>
-        </div>
-
-        <div class="relative group">
-          <div
-            id="user"
-            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
-            onclick="handleIconClick('user')"
-          >
-            <img
-              src="/res/sidebar/gear2.jpg"
-              alt="Fire Icon"
-              class="w-11 h-11 ml-1.5 my-auto"
-            />
-          </div>
-          <div class="popup absolute ml-9">Info da Guilda</div>
+          <div class="tooltip-text2">Inicio</div>
         </div>
       </div>
-      <div class="relative group">
-        <div
-          id="usage"
-          class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400"
-          onclick="handleIconClick('usage')"
-        >
-          <img
-            src="/res/sidebar/gear.jpg"
-            alt="Fire Icon"
-            class="w-11 h-11 ml-0.5 my-2"
-          />
+      <div>
+        <div class="tooltip2 ml-2">
+          <div class="relative group">
+            <div
+              id="chanels"
+              class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+              onclick="handleIconClick('chanels')"
+            >
+              <img
+                src="/res/sidebar/unknow.jpg"
+                alt="Fire Icon"
+                class="w-11 h-11 my-auto"
+              />
+            </div>
+            <div class="tooltip-text2">Funções</div>
+          </div>
         </div>
-        <div class="popup absolute ml-9">Configurações</div>
+
+        <div class="tooltip2 ml-2">
+          <div class="relative group">
+            <div
+              id="guild"
+              class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+              onclick="handleIconClick('guild')"
+            >
+              <img
+                src="/res/sidebar/database.jpg"
+                alt="Fire Icon"
+                class="w-10 h-10 my-auto"
+              />
+            </div>
+            <div class="tooltip-text2">Banco de Dados</div>
+          </div>
+        </div>
+
+        <div class="tooltip2 ml-2">
+          <div class="relative group">
+            <div
+              id="user"
+              class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+              onclick="handleIconClick('user')"
+            >
+              <img
+                src="/res/sidebar/gear2.jpg"
+                alt="Fire Icon"
+                class="w-11 h-11 ml-1.5 my-auto"
+              />
+            </div>
+            <div class="tooltip-text2">Info da Guilda</div>
+          </div>
+        </div>
+      </div>
+      <div class="tooltip2">
+        <div class="relative group">
+          <div
+            id="usage"
+            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+            onclick="handleIconClick('usage')"
+          >
+            <img
+              src="/res/sidebar/gear.jpg"
+              alt="Fire Icon"
+              class="w-11 h-11 ml-0.5 my-2"
+            />
+          </div>
+          <div class="tooltip-text2">Configurações</div>
+        </div>
       </div>
       <!-- Repita para outros ícones -->
     </div>
@@ -185,7 +235,9 @@
         id="configuration-sidebar"
         class="configuration-block divide-y-2 divide-green-300 mx-4 my-2"
       >
-        <h5 class="text-xl channel-block-text font-bold mb-2">Inicio</h5>
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+          Inicio
+        </h5>
         <div class="channel-bar-container">
           <div
             class="dropdown border-discord-light mt-2"
@@ -196,7 +248,10 @@
                 id="topics-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
+              <h5
+                id="topics-header"
+                class="dropdown-header-text text-sm ml-2 cursor-default"
+              >
                 Informações da Guilda +
               </h5>
             </div>
@@ -204,7 +259,10 @@
               id="topics-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <a class="dropdown-selection" onclick="selectTopic('server')">
+              <a
+                class="dropdown-selection cursor-pointer"
+                onclick="selectTopic('server')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   ! Server
@@ -223,7 +281,7 @@
               ></i>
               <h5
                 id="moderation-header"
-                class="dropdown-header-text text-sm ml-2"
+                class="dropdown-header-text text-sm ml-2 cursor-default"
               >
                 Informações do Bot +
               </h5>
@@ -232,7 +290,10 @@
               id="moderation-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('status')">
+              <div
+                class="dropdown-selection cursor-pointer"
+                onclick="selectTopic('status') "
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   ! Status
@@ -245,7 +306,9 @@
             class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
           >
             <div class="flex items-center my-auto ml-4">
-              <h5 class="text-xl channel-block-text font-bold"># Inicio</h5>
+              <h5 class="text-xl channel-block-text font-bold cursor-default">
+                # Inicio
+              </h5>
             </div>
 
             <div class="flex items-center ml-auto mr-4">
@@ -257,20 +320,18 @@
               />
             </div>
 
-            <div class="flex items-center mr-4">
+            <div class="tooltip mr-4">
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
                 >
                   <img
-                    src="/res/sidebar/fire.jpg"
-                    alt="Fire Icon"
-                    class="w-7 h-7 my-auto"
+                    class="h-8 w-8 my rounded-full"
+                    id="minhaImagem5"
+                    alt="Minha Imagem"
                   />
                 </div>
-                <div class="popup absolute" style="top: 150%; left: 50%">
-                  Lirica Divina
-                </div>
+                <div class="tooltip-text">Alterar servidor</div>
               </div>
             </div>
           </div>
@@ -283,7 +344,9 @@
         id="chanels-sidebar"
         class="channel-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
       >
-        <h5 class="text-xl channel-block-text font-bold mb-2">Funções</h5>
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+          Funções
+        </h5>
         <div class="channel-bar-container">
           <div
             class="dropdown border-discord-light mt-2"
@@ -294,7 +357,10 @@
                 id="funcs-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="funcs-header" class="dropdown-header-text text-sm ml-2">
+              <h5
+                id="funcs-header"
+                class="dropdown-header-text text-sm ml-2 cursor-default"
+              >
                 Funções de notificação +
               </h5>
             </div>
@@ -303,7 +369,7 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection"
+                class="dropdown-selection cursor-pointer"
                 onclick="selectTopic('funcyoutube')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
@@ -312,7 +378,7 @@
                 </h5>
               </div>
               <div
-                class="dropdown-selection"
+                class="dropdown-selection cursor-pointer"
                 onclick="selectTopic('functwitch')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
@@ -322,7 +388,7 @@
             </div>
           </div>
           <div
-            class="dropdown border-discord-light mt-2"
+            class="dropdown border-discord-light mt-2 cursor-default"
             onclick="toggleDropdown('addchannels')"
           >
             <div class="dropdown-header">
@@ -342,7 +408,7 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection"
+                class="dropdown-selection cursor-pointer"
                 onclick="selectTopic('ytbchannelupdate')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
@@ -351,7 +417,7 @@
                 </h5>
               </div>
               <div
-                class="dropdown-selection"
+                class="dropdown-selection cursor-pointer"
                 onclick="selectTopic('tchchannelupdate')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
@@ -371,7 +437,7 @@
               ></i>
               <h5
                 id="statefuncs-header"
-                class="dropdown-header-text text-sm ml-2"
+                class="dropdown-header-text text-sm ml-2 cursor-default"
               >
                 Estado das Funções +
               </h5>
@@ -381,7 +447,7 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection"
+                class="dropdown-selection cursor-pointer"
                 onclick="selectTopic('statesinfo')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
@@ -396,7 +462,9 @@
             class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
           >
             <div class="flex items-center my-auto ml-4">
-              <h5 class="text-xl channel-block-text font-bold"># Funções</h5>
+              <h5 class="text-xl channel-block-text font-bold cursor-default">
+                # Funções
+              </h5>
             </div>
 
             <div class="flex items-center ml-auto mr-4">
@@ -408,20 +476,18 @@
               />
             </div>
 
-            <div class="flex items-center mr-4">
+            <div class="tooltip mr-4">
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
                 >
                   <img
-                    src="/res/sidebar/fire.jpg"
-                    alt="Fire Icon"
-                    class="w-7 h-7 my-auto"
+                    class="h-8 w-8 my rounded-full"
+                    id="minhaImagem4"
+                    alt="Minha Imagem"
                   />
                 </div>
-                <div class="popup absolute" style="top: 150%; left: 50%">
-                  Lirica Divina
-                </div>
+                <div class="tooltip-text">Alterar servidor</div>
               </div>
             </div>
           </div>
@@ -434,7 +500,7 @@
         id="guild-sidebar"
         class="guild-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
       >
-        <h5 class="text-xl channel-block-text font-bold mb-2">
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
           Banco de Dados
         </h5>
         <div class="channel-bar-container">
@@ -449,7 +515,7 @@
               ></i>
               <h5
                 id="channels-header"
-                class="dropdown-header-text text-sm ml-2"
+                class="dropdown-header-text text-sm ml-2 cursor-default"
               >
                 Canais do Youtube +
               </h5>
@@ -458,13 +524,19 @@
               id="channels-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('addytbchannel')">
+              <div
+                class="dropdown-selection cursor-pointer"
+                onclick="selectTopic('addytbchannel')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Adicionar canais
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="selectTopic('viewytbchannels')">
+              <div
+                class="dropdown-selection cursor-pointer"
+                onclick="selectTopic('viewytbchannels')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Visualizar canais
@@ -482,7 +554,10 @@
                 id="videos-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="videos-header" class="dropdown-header-text text-sm ml-2">
+              <h5
+                id="videos-header"
+                class="dropdown-header-text text-sm ml-2 cursor-default"
+              >
                 Canais da Twitch +
               </h5>
             </div>
@@ -490,15 +565,23 @@
               id="videos-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('addtchchannel')">
+              <div
+                class="dropdown-selection cursor-pointer"
+                onclick="selectTopic('addtchchannel')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Adicionar lives
                 </h5>
               </div>
-              <div class="dropdown-selection" onclick="selectTopic('viewtchchannel')">
+              <div
+                class="dropdown-selection cursor-pointer"
+                onclick="selectTopic('viewtchchannel')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">Visualizar lives</h5>
+                <h5 class="dropdown-selection-text hover:text-white">
+                  Visualizar lives
+                </h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
@@ -508,7 +591,7 @@
             class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
           >
             <div class="flex items-center my-auto ml-4">
-              <h5 class="text-xl channel-block-text font-bold">
+              <h5 class="text-xl channel-block-text font-bold cursor-default">
                 # Banco de Dados
               </h5>
             </div>
@@ -522,20 +605,18 @@
               />
             </div>
 
-            <div class="flex items-center mr-4">
+            <div class="tooltip mr-4">
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
                 >
                   <img
-                    src="/res/sidebar/fire.jpg"
-                    alt="Fire Icon"
-                    class="w-7 h-7 my-auto"
+                    class="h-8 w-8 my rounded-full"
+                    id="minhaImagem3"
+                    alt="Minha Imagem"
                   />
                 </div>
-                <div class="popup absolute" style="top: 150%; left: 50%">
-                  Lirica Divina
-                </div>
+                <div class="tooltip-text">Alterar servidor</div>
               </div>
             </div>
           </div>
@@ -548,7 +629,7 @@
         id="user-sidebar"
         class="user-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
       >
-        <h5 class="text-xl channel-block-text font-bold mb-2">
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
           Info da Guilda
         </h5>
         <div class="channel-bar-container">
@@ -561,7 +642,10 @@
                 id="members-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
-              <h5 id="members-header" class="dropdown-header-text text-sm ml-2">
+              <h5
+                id="members-header"
+                class="dropdown-header-text text-sm ml-2 cursor-default"
+              >
                 Informações de membros do servidor +
               </h5>
             </div>
@@ -569,21 +653,23 @@
               id="members-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('memberinfo')">
+              <div
+                class="dropdown-selection cursor-pointer"
+                onclick="selectTopic('memberinfo')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Tempo e Mensagens no servidor
                 </h5>
               </div>
             </div>
-          
           </div>
           <div
             id="top-bar"
             class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
           >
             <div class="flex items-center my-auto ml-4">
-              <h5 class="text-xl channel-block-text font-bold">
+              <h5 class="text-xl channel-block-text font-bold cursor-default">
                 # Info da Guilda
               </h5>
             </div>
@@ -597,20 +683,18 @@
               />
             </div>
 
-            <div class="flex items-center mr-4">
+            <div class="tooltip mr-4">
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
                 >
                   <img
-                    src="/res/sidebar/fire.jpg"
-                    alt="Fire Icon"
-                    class="w-7 h-7 my-auto"
+                    class="h-8 w-8 my rounded-full"
+                    id="minhaImagem2"
+                    alt="Minha Imagem"
                   />
                 </div>
-                <div class="popup absolute" style="top: 150%; left: 50%">
-                  Lirica Divina
-                </div>
+                <div class="tooltip-text">Alterar servidor</div>
               </div>
             </div>
           </div>
@@ -623,7 +707,9 @@
         id="usage-sidebar"
         class="user-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
       >
-        <h5 class="text-xl channel-block-text font-bold mb-2">Configurações</h5>
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+          Configurações
+        </h5>
         <div class="channel-bar-container">
           <div
             class="dropdown border-discord-light mt-2"
@@ -658,12 +744,16 @@
               id="moderation-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
+              <div
+                class="dropdown-selection cursor-pointer"
+                onclick="selectTopic('youtube')"
+              >
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">
                   Youtube
                 </h5>
               </div>
+
               <div class="dropdown-selection" onclick="selectTopic('twitch')">
                 <i class="fas fa-hashtag text-gray-400"></i>
                 <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
@@ -676,7 +766,7 @@
             class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
           >
             <div class="flex items-center my-auto ml-4">
-              <h5 class="text-xl channel-block-text font-bold">
+              <h5 class="text-xl channel-block-text font-bold cursor-default">
                 # Configurações
               </h5>
             </div>
@@ -690,20 +780,18 @@
               />
             </div>
 
-            <div class="flex items-center mr-4">
+            <div class="tooltip mr-4">
               <div class="relative group">
                 <div
                   class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
                 >
                   <img
-                    src="/res/sidebar/fire.jpg"
-                    alt="Fire Icon"
-                    class="w-7 h-7 my-auto"
+                    class="h-8 w-8 my rounded-full"
+                    id="minhaImagem"
+                    alt="Minha Imagem"
                   />
                 </div>
-                <div class="popup absolute" style="top: 150%; left: 50%">
-                  Lirica Divina
-                </div>
+                <div class="tooltip-text">Alterar servidor</div>
               </div>
             </div>
           </div>
@@ -711,14 +799,17 @@
           <!-- Adicione mais dropdowns conforme necessário -->
         </div>
       </div>
-      <div
-        id="top-bar"
-        style="z-index: -10"
-        class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg"
-      ></div>
     </div>
 
     <script>
+      var img = parent.user();
+
+      document.getElementById("minhaImagem").src = img;
+      document.getElementById("minhaImagem2").src = img;
+      document.getElementById("minhaImagem3").src = img;
+      document.getElementById("minhaImagem4").src = img;
+      document.getElementById("minhaImagem5").src = img;
+
       function handleIconClick(btnId) {
         const Configuration = document.getElementById(`configuration-sidebar`);
         const Chanels = document.getElementById(`chanels-sidebar`);

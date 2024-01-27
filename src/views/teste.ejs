@@ -14,7 +14,7 @@
 
   <div id="sidebar-container" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg"></div>
 
-  <div id="sidebar-contain" class="fixed top-12 left-72 right-0 h-full flex bg-gray-600 dark:bg-gray-900 shadow-lg">
+  <div id="sidebar-contain" class="fixed top-12 left-72 right-0 h-full flex bg-gray-600 dark:bg-gray-900 shadow-lg" style="z-index: -5;">
     <div class="flex items-center justify-center w-full">
       <div id="sidebar-container2">
       </div>
@@ -44,5 +44,8 @@
       $('#sidebar-container2').load(`/bot/pagina/${component}/${guildId}`);
     }
     
+    function user() {
+      return "https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png";
+    }
   </script>
 </body>
