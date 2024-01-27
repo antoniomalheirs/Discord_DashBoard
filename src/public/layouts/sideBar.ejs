@@ -16,10 +16,10 @@
 
       .tooltip-text2 {
         visibility: hidden;
-        width: 8rem;
+        width: 9rem;
         background-color: rgba(0, 0, 0, 0.8);
         color: white;
-        text-align: center;
+        text-align: start;
         border-radius: 0.25rem;
         padding: 0.5rem;
         position: absolute;
@@ -28,12 +28,12 @@
         left: 150%;
         margin-left: -35%; /* Metade da largura */
         opacity: 0;
-        transition: opacity 0.3s;
+        transition: opacity 0.5s;
       }
 
       .tooltip2:hover .tooltip-text2 {
         visibility: visible;
-        opacity: 1;
+        opacity: 0.7;
       }
 
       .tooltip {
@@ -123,15 +123,22 @@
       }
 
       .dropdown-selection {
-        transition: background-color 1.5s, color 1.5s; /* Adicione a transição */
+        transition: background-color 0.6s, color 06s;
+        border-radius: 0.5rem;
+        opacity: 0.5; /* Adicione a transição */
       }
 
       .dropdown-selection:hover {
-        background-color: rgba(0, 0, 0, 0); /* Altere a cor de fundo no hover */
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.205
+        ); /* Altere a cor de fundo no hover */
       }
 
       .dropdown-selection-text:hover {
-        color: #db9292; /* Altere a cor do texto no hover */
+        color: #ffffff; /* Altere a cor do texto no hover */
       }
     </style>
   </head>
@@ -140,7 +147,7 @@
       id="sidebar"
       class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center bg-gray-700 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
     >
-      <div class="tooltip2 ">
+      <div class="tooltip2">
         <div class="relative group">
           <div
             id="configuration"
@@ -241,33 +248,31 @@
         <div class="channel-bar-container">
           <div
             class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('topics')"
+            onclick="toggleDropdown('home')"
           >
             <div class="dropdown-header">
               <i
-                id="topics-chevron"
+                id="home-chevron"
                 class="fas fa-chevron-down text-gray-400"
               ></i>
               <h5
-                id="topics-header"
+                id="home-header"
                 class="dropdown-header-text text-sm ml-2 cursor-default"
               >
                 Informações da Guilda +
               </h5>
             </div>
             <div
-              id="topics-dropdown"
+              id="home-dropdown"
               class="dropdown-content hidden ml-4 text-sm"
             >
-              <a
-                class="dropdown-selection cursor-pointer"
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('server')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  ! Server
-                </h5>
-              </a>
+                <h5 class="dropdown-selection-text">! Server</h5>
+              </div>
             </div>
           </div>
           <div
@@ -291,13 +296,11 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('status') "
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  ! Status
-                </h5>
+                <h5 class="dropdown-selection-text">! Status</h5>
               </div>
             </div>
           </div>
@@ -369,26 +372,24 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('funcyoutube')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
-                </h5>
+                <h5 class="dropdown-selection-text">Youtube</h5>
               </div>
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('functwitch')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
+                <h5 class="dropdown-selection-text">Twitch</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
           </div>
           <div
-            class="dropdown border-discord-light mt-2 cursor-default"
+            class="dropdown border-discord-light mt-2 cursor-default no-close-dropdown"
             onclick="toggleDropdown('addchannels')"
           >
             <div class="dropdown-header">
@@ -408,26 +409,24 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('ytbchannelupdate')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
-                </h5>
+                <h5 class="dropdown-selection-text">Youtube</h5>
               </div>
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('tchchannelupdate')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
+                <h5 class="dropdown-selection-text">Twitch</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
           </div>
           <div
-            class="dropdown border-discord-light mt-2"
+            class="dropdown border-discord-light mt-2 no-close-dropdown"
             onclick="toggleDropdown('statefuncs')"
           >
             <div class="dropdown-header">
@@ -447,13 +446,11 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('statesinfo')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Informações
-                </h5>
+                <h5 class="dropdown-selection-text">Informações</h5>
               </div>
             </div>
           </div>
@@ -525,22 +522,18 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('addytbchannel')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Adicionar canais
-                </h5>
+                <h5 class="dropdown-selection-text">Adicionar canais</h5>
               </div>
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('viewytbchannels')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Visualizar canais
-                </h5>
+                <h5 class="dropdown-selection-text">Visualizar canais</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
@@ -566,22 +559,18 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('addtchchannel')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Adicionar lives
-                </h5>
+                <h5 class="dropdown-selection-text">Adicionar lives</h5>
               </div>
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('viewtchchannel')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Visualizar lives
-                </h5>
+                <h5 class="dropdown-selection-text">Visualizar lives</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
@@ -654,11 +643,11 @@
               class="dropdown-content hidden ml-4 text-sm"
             >
               <div
-                class="dropdown-selection cursor-pointer"
+                class="dropdown-selection cursor-pointer no-close-dropdown"
                 onclick="selectTopic('memberinfo')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
+                <h5 class="dropdown-selection-text">
                   Tempo e Mensagens no servidor
                 </h5>
               </div>
@@ -730,13 +719,11 @@
             >
               <div class="dropdown-selection" onclick="selectTopic('youtube')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
-                </h5>
+                <h5 class="dropdown-selection-text">Youtube</h5>
               </div>
               <div class="dropdown-selection" onclick="teste('ftest')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">ftest</h5>
+                <h5 class="dropdown-selection-text">ftest</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
@@ -749,14 +736,12 @@
                 onclick="selectTopic('youtube')"
               >
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">
-                  Youtube
-                </h5>
+                <h5 class="dropdown-selection-text">Youtube</h5>
               </div>
 
               <div class="dropdown-selection" onclick="selectTopic('twitch')">
                 <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text hover:text-white">Twitch</h5>
+                <h5 class="dropdown-selection-text">Twitch</h5>
                 <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
@@ -837,14 +822,20 @@
         sidebar.classList.toggle("hidden");
       }
 
-      function toggleDropdown(type) {
-        const chevron = document.getElementById(`${type}-chevron`);
-        const dropdown = document.getElementById(`${type}-dropdown`);
+      function toggleDropdown(dropdownId) {
+        var dropdown = document.getElementById(dropdownId + "-dropdown");
+        var chevron = document.getElementById(dropdownId + "-chevron");
 
-        dropdown.classList.toggle("hidden");
-        chevron.className = dropdown.classList.contains("hidden")
-          ? "fas fa-chevron-right text-gray-400"
-          : "fas fa-chevron-down text-gray-400";
+        if (
+          dropdown.style.display === "none" ||
+          dropdown.style.display === ""
+        ) {
+          dropdown.style.display = "block";
+          chevron.className = "fas fa-chevron-up text-gray-400"; // adjust class for open state
+        } else {
+          dropdown.style.display = "none";
+          chevron.className = "fas fa-chevron-down text-gray-400"; // adjust class for closed state
+        }
       }
 
       function selectTopic(topic) {
