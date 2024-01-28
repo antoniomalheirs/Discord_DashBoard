@@ -43,13 +43,12 @@
       </div>
 
       <div
-        id="modal2"
+        id="modal"
         class="hidden fixed inset-0 w-1/2 h-1/2 mx-auto my-auto items-center justify-center"
       >
         <!-- Conteúdo do modal -->
         <form
           id="addDataForm"
-          action="/bot/ativar/funcytb"
           method="post"
           class="mt-4 mx-auto w-2/3 bg-white p-8 rounded-lg shadow-md"
         >
@@ -68,8 +67,8 @@
             >
             <input
               type="number"
-              id="newDat5"
-              name="newDat5"
+              id="channelId"
+              name="channelId"
               class="p-2 w-full border rounded-md"
               required
             />
@@ -81,7 +80,13 @@
               value="<%= info.id %>"
             />
 
-            <input type="hidden" id="nome" name="nome" value="do Youtube" />
+            <input
+            type="hidden"
+            id="func"
+            name="func"
+            value="actyoutube"
+            />
+
           </div>
 
           <!-- Campo Hidden para guildId -->
@@ -96,7 +101,8 @@
               Fechar
             </button>
             <button
-              type="submit"
+              type="button"
+              onclick="envdata()"
               class="py-2 px-4 bg-purple-300 text-white rounded"
             >
               Adicionar
@@ -107,17 +113,10 @@
 
       <div class="flex items-center justify-center mt-4">
         <button
-          onclick="abrirModal2()"
-          class="bg-green-400 text-white px-4 py-2 mr-2 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
+          onclick="abrirModal()"
+          class="bg-purple-400 text-white px-4 py-2 mr-2 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
         >
           Ativar Função YOUTUBE
-        </button>
-
-        <button
-          onclick="voltarAoDashboard()"
-          class="bg-purple-300 text-white px-4 py-2 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-green"
-        >
-          Voltar ao Dashboard
         </button>
       </div>
 
@@ -167,19 +166,23 @@
     </div>
 
     <script>
-      function voltarAoDashboard() {
-        window.history.back();
-      }
-
-      // Variável para rastrear o modal atualmente aberto
-      function abrirModal2() {
-        var modal = document.getElementById("modal2");
+      function abrirModal() {
+        var modal = document.getElementById("modal");
         modal.style.display = "block";
       }
 
       function fecharModal() {
-        var modal = document.getElementById("modal2");
+        var modal = document.getElementById("modal");
         modal.style.display = "none";
+      }
+
+      function envdata() {
+        // Obtenha os dados do formulário
+        var dadosFormulario = $("#addDataForm").serializeArray();
+        var modal = document.getElementById("modal");
+        modal.style.display = "none";
+        // Envie os dados para a função na página pai
+        parent.funcsReload(dadosFormulario);
       }
     </script>
   </body>

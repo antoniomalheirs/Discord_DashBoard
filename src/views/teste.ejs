@@ -11,16 +11,20 @@
   />
 </head>
 <body>
+  <div
+    id="sidebar-container"
+    class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg"
+  ></div>
 
-  <div id="sidebar-container" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg"></div>
-
-  <div id="sidebar-contain" class="fixed top-12 left-72 right-0 h-full flex bg-gray-600 dark:bg-gray-900 shadow-lg" style="z-index: -5;">
+  <div
+    id="sidebar-contain"
+    class="fixed top-12 left-72 right-0 h-full flex bg-gray-600 dark:bg-gray-900 shadow-lg"
+    style="z-index: -5"
+  >
     <div class="flex items-center justify-center w-full">
-      <div id="sidebar-container2">
-      </div>
+      <div id="sidebar-container2"></div>
     </div>
   </div>
-  
 
   <!-- Container onde a sidebar será carregada -->
 
@@ -41,11 +45,49 @@
 
     function carregarConteudo(component) {
       const guildId = `<%= info.id %>`;
-      $('#sidebar-container2').load(`/bot/pagina/${component}/${guildId}`);
+      $("#sidebar-container2").load(`/bot/pagina/${component}/${guildId}`);
     }
-    
+
     function user() {
       return "https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png";
+    }
+
+    function funcsReload(dados) {
+      // Obtenha os dados necessários
+      const dadosFormulario = dados;
+      const tipo = dadosFormulario.find((item) => item.name === "func").value;
+
+      const guildId = dadosFormulario.find(
+        (item) => item.name === "guildId"
+      ).value;
+      const channelin = dadosFormulario.find(
+        (item) => item.name === "channelId"
+      ).value;
+
+      // Faça algo com os dados recebidos
+      console.log("Dados recebidos da página filho:", channelin);
+      $("#sidebar-container2").load(
+        `/bot/pagina/funcs/${tipo}/${guildId}/${channelin}`
+      );
+    }
+
+    function dtbaseReload(dados) {
+      // Obtenha os dados necessários
+      const dadosFormulario = dados;
+      const tipo = dadosFormulario.find((item) => item.name === "func").value;
+
+      const guildId = dadosFormulario.find(
+        (item) => item.name === "guildId"
+      ).value;
+      const channelin = dadosFormulario.find(
+        (item) => item.name === "channelId"
+      ).value;
+
+      // Faça algo com os dados recebidos
+      console.log("Dados recebidos da página filho:", channelin);
+      $("#sidebar-container2").load(
+        `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`
+      );
     }
   </script>
 </body>

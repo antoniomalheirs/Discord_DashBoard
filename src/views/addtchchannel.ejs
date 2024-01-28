@@ -42,37 +42,51 @@
 
       
 
-      <form id="channelytb" action="/seu-endereco-de-envio" method="POST">
+      <form id="addtchchannel" method="post">
         <div class="flex flex-col justify-center mt-4">
-          <label for="numero" class="block text-sm font-medium text-gray-600 mb-2">Número:</label>
+          <label for="numero" class="block text-sm font-medium text-gray-600 mb-2">Nome do canal:</label>
           <input
             type="text"
-            id="name"
-            name="name"
+            id="channelId"
+            name="channelId"
             class="p-2 border rounded-md focus:outline-none focus:border-blue-500"
             placeholder="Nome do canal desejado"
           />
+
+          <input
+              type="hidden"
+              id="guildId"
+              name="guildId"
+              value="<%= info.id %>"
+              />
+
+          <input
+            type="hidden"
+            id="func"
+            name="func"
+            value="addtwitchch"
+            />
         </div>
       
         <div class="flex justify-center mt-4">
           <button
             type="button" <!-- Mudamos de 'submit' para 'button' para evitar envio automático do formulário 
-            class="bg-blue-500 text-white py-2 px-4 rounded-md focus:outline-none hover:bg-blue-600"
-            onclick="enviarDados()"
+            class="bg-green-400 text-white py-2 px-4 rounded-md focus:outline-none hover:bg-blue-600"
+            onclick="envdata()"
           >
-            Enviar Dados
+            Adicionar Streamer
           </button>
         </div>
       </form>
-      <div class="flex justify-center mt-4 ">
-        <a href="/dashboard">
-          <button
-            class="bg-green-400 text-white px-2 py-1 rounded-md hover:bg-purple-300 focus:outline-none focus:ring focus:border-blue-300"
-          >
-            Voltar ao Dashboard
-          </button>
-        </a>
-      </div>
+
+      <script>
+        function envdata() {
+          // Obtenha os dados do formulário
+          var dadosFormulario = $("#addtchchannel").serializeArray();
+          // Envie os dados para a função na página pai
+          parent.dtbaseReload(dadosFormulario);
+        }
+      </script>
     </div>
   </body>
 </html>

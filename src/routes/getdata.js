@@ -22,6 +22,7 @@ mongoose.model("Twitchs", TwitchSchema);
 const TwitchToken = require("../utils/TwitchToken.js");
 const TwitchID = require("../utils/TwitchID.js");
 const { Result } = require("postcss");
+const { channel } = require("diagnostics_channel");
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -176,7 +177,6 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
     res.render("error.ejs");
   }
 });
-
 // Rota que recebe um parâmetro de string chamado 'page'
 router.get("/pagina/:page/:param2", async (req, res) => {
   const page = req.params.page;
@@ -222,7 +222,7 @@ router.get("/pagina/:page/:param2", async (req, res) => {
       );
       res.send(functwitch);
       break;
-      case "ytbchannelupdate":
+    case "ytbchannelupdate":
       // Renderize a página 1 com o segundo parâmetro
       const ytbchannelupdate = await ejs.renderFile(
         path.join(__dirname, "../views/updatenotytb.ejs"),
@@ -230,7 +230,7 @@ router.get("/pagina/:page/:param2", async (req, res) => {
       );
       res.send(ytbchannelupdate);
       break;
-      case "tchchannelupdate":
+    case "tchchannelupdate":
       // Renderize a página 1 com o segundo parâmetro
       const tchchannelupdate = await ejs.renderFile(
         path.join(__dirname, "../views/updatenottch.ejs"),
@@ -238,57 +238,256 @@ router.get("/pagina/:page/:param2", async (req, res) => {
       );
       res.send(tchchannelupdate);
       break;
-      case "statesinfo":
+    case "statesinfo":
       // Renderize a página 1 com o segundo parâmetro
       const statesinfo = await ejs.renderFile(
         path.join(__dirname, "../views/serverfuncstate.ejs"),
-        { info: botInfo, info4:  guildinfo}
+        { info: botInfo, info4: guildinfo }
       );
       res.send(statesinfo);
       break;
-      case "viewytbchannels":
+    case "viewytbchannels":
       // Renderize a página 1 com o segundo parâmetro
       const viewytbchannels = await ejs.renderFile(
         path.join(__dirname, "../views/ytbviewinfo.ejs"),
-        { info: botInfo, info2:  videoinfo}
+        { info: botInfo, info2: videoinfo }
       );
       res.send(viewytbchannels);
       break;
-      case "addytbchannel":
+    case "addytbchannel":
       // Renderize a página 1 com o segundo parâmetro
       const addytbchannel = await ejs.renderFile(
         path.join(__dirname, "../views/addytbchannel.ejs"),
-        { info: botInfo}
+        { info: botInfo }
       );
       res.send(addytbchannel);
       break;
-      case "viewtchchannel":
+    case "viewtchchannel":
       // Renderize a página 1 com o segundo parâmetro
       const viewtchchannel = await ejs.renderFile(
         path.join(__dirname, "../views/tchviewinfo.ejs"),
-        { info: botInfo, info3:  lives}
+        { info: botInfo, info3: lives }
       );
       res.send(viewtchchannel);
       break;
-      case "addtchchannel":
+    case "addtchchannel":
       // Renderize a página 1 com o segundo parâmetro
       const addtchchannel = await ejs.renderFile(
         path.join(__dirname, "../views/addtchchannel.ejs"),
-        { info: botInfo}
+        { info: botInfo }
       );
       res.send(addtchchannel);
       break;
-      case "memberinfo":
+    case "memberinfo":
       // Renderize a página 1 com o segundo parâmetro
       const memberinfo = await ejs.renderFile(
         path.join(__dirname, "../views/membersinfo.ejs"),
-        { info: botInfo, info1: userinfo}
+        { info: botInfo, info1: userinfo }
       );
       res.send(memberinfo);
       break;
     default:
       // Se o parâmetro não corresponder a nenhuma página conhecida, retorne um erro 404
       res.status(404).send("Página não encontrada");
+  }
+});
+
+router.get("/pagina/funcs/:page/:guildId/:channelin", async (req, res) => {
+  const page = req.params.page;
+  const guildId = req.params.guildId;
+  const channelin = req.params.channelin;
+
+  try {
+    const guilds = new guildsrepository(mongoose, "Guilds");
+    const ls = guilds.findOne(guildId);
+
+    if (!ls) {
+      throw new Error(
+        "ID da guilda não fornecido ou a Guilda nao gerenciavel."
+      );
+    }
+
+    await discordBot.guilds.fetch(guildId);
+
+    const guild = discordBot.guilds.cache.get(guildId);
+
+    if (!guild) {
+      throw new Error("Guilda não encontrada.");
+    }
+
+    const channel = guild.channels.cache.get(channelin);
+
+    if (!channel) {
+      throw new Error("Canal não encontrado na guilda.");
+    }
+
+    const message = channel.name;
+    const message2 = guild.name;
+
+    // Use um switch case para decidir o que fazer com base no valor de 'page'
+    switch (page) {
+      case "actyoutube":
+        const na = "do Youtube";
+        ls.youtubenotify = true;
+        ls.channelytb = channelin;
+        guilds.update(guildId, ls);
+        // Aqui, você usa sendFile para enviar o arquivo EJS específico para 'youtube'
+        const actfuncytb = await ejs.renderFile(
+          path.join(__dirname, "../views/functionactivated.ejs"),
+          { info: message, info2: message2, info3: channelin, nome: na }
+        );
+        res.send(actfuncytb);
+        break;
+      // Adicione mais casos conforme necessário
+      case "acttwitch":
+        const nan = "da Twitch";
+        ls.twitchnotify = true;
+        ls.channeltch = channelin;
+        guilds.update(guildId, ls);
+        // Aqui, você usa sendFile para enviar o arquivo EJS específico para 'youtube'
+        const actfunctch = await ejs.renderFile(
+          path.join(__dirname, "../views/functionactivated.ejs"),
+          { info: message, info2: message2, info3: channelin, nome: nan }
+        );
+        res.send(actfunctch);
+        break;
+      case "updtyoutube":
+        const nana = "do Youtube";
+        ls.channelytb = channelin;
+        guilds.update(guildId, ls);
+        // Aqui, você usa sendFile para enviar o arquivo EJS específico para 'youtube'
+        const updtfuncytb = await ejs.renderFile(
+          path.join(__dirname, "../views/functionactivated.ejs"),
+          { info: message, info2: message2, info3: channelin, nome: nana }
+        );
+        res.send(updtfuncytb);
+        break;
+      case "updttwitch":
+        const nanan = "da Twitch";
+        ls.channeltch = channelin;
+        guilds.update(guildId, ls);
+        // Aqui, você usa sendFile para enviar o arquivo EJS específico para 'youtube'
+        const updtfunctch = await ejs.renderFile(
+          path.join(__dirname, "../views/functionactivated.ejs"),
+          { info: message, info2: message2, info3: channelin, nome: nanan }
+        );
+        res.send(updtfunctch);
+        break;
+    }
+  } catch (error) {
+    console.error("Erro na rota /pagina/funcs/youtube:", error);
+
+    // Aqui, você usa sendFile para enviar o arquivo EJS de erro
+    const errorView = await ejs.renderFile(
+      path.join(__dirname, "../views/activefuncerror.ejs")
+    );
+    res.send(errorView);
+  }
+});
+
+router.get("/pagina/dtbase/:page/:guildId/:channelin", async (req, res) => {
+  const page = req.params.page;
+  const guildId = req.params.guildId;
+  const channelInput = req.params.channelin;
+
+  try {
+    // Adicione lógica para validar e processar os dados conforme necessário
+    switch (page) {
+      case "addyoutubech":
+        const videoRepository = new videosrepository(mongoose, "Videos");
+
+        if (channelInput != null) {
+          const videoId = channelInput;
+          const projection = {
+            youtube: 1,
+            channel: 1,
+            lastVideo: 1,
+            lastPublish: 1,
+            message: 1,
+            notifyGuild: 1,
+          };
+
+          const noBanco = await videoRepository.findByYoutubeAndGuildId(
+            channelInput,
+            guildId,
+            projection
+          );
+
+          if (noBanco != null) {
+            res.render("dataadderror.ejs", {});
+          } else {
+            const result = await YTBCHANNELTOID.bind(this)(videoId);
+            console.log(result);
+
+            if (!result) {
+              res.status(200).json({
+                success: false,
+                message: "Nada encontrado.",
+              });
+            } else {
+              const guild = await discordBot.guilds.cache.get(guildId);
+
+              result.notifyGuild = guildId;
+              let canal = result.channel;
+              let id = result.youtube;
+              await RegistradorYTBVideo.bind(this)(result);
+              res.render("datafuncadd.ejs", {
+                info: canal,
+                info1: guild.name,
+                info2: id,
+                nome: channelInput,
+              });
+            }
+          }
+        }
+        break;
+      case "addtwitchch":
+        const twitchRepository = new twitchsrepository(mongoose, "Twitchs");
+
+        if (channelInput != null) {
+          const clientId = process.env.TWITCH_CLIENTID;
+          const clientSecret = process.env.TWITCH_SECRETID;
+          const accessToken = await TwitchToken(clientId, clientSecret);
+          const channelId = await TwitchID(accessToken, channelInput, clientId);
+          const guild = await discordBot.guilds.cache.get(guildId);
+
+          const projection = {
+            twitch: channelId,
+            channel: channelInput,
+            guildID: guildId,
+          };
+
+          const noBanco = await twitchRepository.findByTwitchAndGuildId(
+            channelId,
+            guildId,
+            projection
+          );
+
+          if (noBanco != null) {
+            res.render("dataadderror.ejs", {});
+          } else {
+            if (channelId == null) {
+              res.status(200).json({
+                success: false,
+                message: "Dados do canal não encontrados.",
+              });
+            } else {
+              await twitchRepository.add(projection);
+              console.log(projection);
+              res.render("datafuncadd.ejs", {
+                info: channelInput,
+                info1: guild.name,
+                info2: channelId,
+                nome: channelInput,
+              });
+            }
+          }
+        }
+        break;
+    }
+  } catch (error) {
+    console.error("Erro ao adicionar dados ao banco de dados:", error);
+    res.render("dataadderror.ejs", {});
   }
 });
 
@@ -343,207 +542,4 @@ router.get("/database-guilda", isAuthenticated, async (req, res) => {
     res.status(500).json({ error: "Erro ao obter informações da guilda" });
   }
 });
-
-router.post("/adicionar-dados-youtube", isAuthenticated, async (req, res) => {
-  try {
-    // Adicione lógica para validar e processar os dados conforme necessário
-    const channelInput = req.body.newData;
-
-    const guildId = req.body.guildId;
-
-    const videoRepository = new videosrepository(mongoose, "Videos");
-
-    if (channelInput != null) {
-      const videoId = channelInput;
-      const projection = {
-        youtube: 1,
-        channel: 1,
-        lastVideo: 1,
-        lastPublish: 1,
-        message: 1,
-        notifyGuild: 1,
-      };
-
-      const noBanco = await videoRepository.findByYoutubeAndGuildId(
-        channelInput,
-        guildId,
-        projection
-      );
-
-      if (noBanco != null) {
-        res.render("dataadderror.ejs", {});
-      } else {
-        const result = await YTBCHANNELTOID.bind(this)(videoId);
-        console.log(result);
-
-        if (!result) {
-          res.status(200).json({
-            success: false,
-            message: "Nada encontrado.",
-          });
-        } else {
-          const guildId = req.body.guildId;
-          const guild = await discordBot.guilds.cache.get(guildId);
-
-          result.notifyGuild = guildId;
-          let canal = result.channel;
-          let id = result.youtube;
-          await RegistradorYTBVideo.bind(this)(result);
-          res.render("datafuncadd.ejs", {
-            info: canal,
-            info1: guild.name,
-            info2: id,
-            nome: req.body.nome,
-          });
-        }
-      }
-    }
-  } catch (error) {
-    console.error("Erro ao adicionar dados ao banco de dados:", error);
-    res.render("dataadderror.ejs", {});
-  }
-});
-
-router.post("/adicionar-dados-twitch", isAuthenticated, async (req, res) => {
-  try {
-    // Adicione lógica para validar e processar os dados conforme necessário
-    const channelInput = req.body.newData;
-    const guildId = req.body.guildId;
-
-    const twitchRepository = new twitchsrepository(mongoose, "Twitchs");
-
-    if (channelInput != null) {
-      const clientId = process.env.TWITCH_CLIENTID;
-      const clientSecret = process.env.TWITCH_SECRETID;
-      const accessToken = await TwitchToken(clientId, clientSecret);
-      const channelId = await TwitchID(accessToken, channelInput, clientId);
-      const guild = await discordBot.guilds.cache.get(guildId);
-
-      const projection = {
-        twitch: channelId,
-        channel: channelInput,
-        guildID: guildId,
-      };
-
-      const noBanco = await twitchRepository.findByTwitchAndGuildId(
-        channelId,
-        guildId,
-        projection
-      );
-
-      if (noBanco != null) {
-        res.render("dataadderror.ejs", {});
-      } else {
-        if (channelId == null) {
-          res.status(200).json({
-            success: false,
-            message: "Dados do canal não encontrados.",
-          });
-        } else {
-          await twitchRepository.add(projection);
-          console.log(projection);
-          res.render("datafuncadd.ejs", {
-            info: channelInput,
-            info1: guild.name,
-            info2: channelId,
-            nome: req.body.nome,
-          });
-        }
-      }
-    }
-  } catch (error) {
-    console.error("Erro ao adicionar dados ao banco de dados:", error);
-    res.render("dataadderror.ejs", {});
-  }
-});
-
-router.post("/ativar/funcytb", isAuthenticated, async (req, res) => {
-  try {
-    const guildId = req.body.guildId;
-
-    const guilds = new guildsrepository(mongoose, "Guilds");
-    const ls = guilds.findOne(guildId);
-
-    if (!ls) {
-      throw new Error(
-        "ID da guilda não fornecido ou a Guilda nao gerenciavel."
-      );
-    }
-
-    ls.youtubenotify = true;
-
-    const channelInput = req.body.newDat5;
-    const chan = req.body.ytb;
-    const func = req.body.nome;
-
-    await discordBot.guilds.fetch(guildId);
-
-    const guild = await discordBot.guilds.cache.get(guildId);
-    const channel = await guild.channels.fetch(channelInput);
-
-    if (!guild && !channel) {
-      throw new Error("Guilda não encontrada ou Canal não encontrado.");
-    }
-    ls.channelytb = channelInput;
-    const message = channel.name;
-    const message2 = channelInput;
-
-    guilds.update(guildId, ls);
-
-    res.render("functionactivated.ejs", {
-      info: message,
-      info2: guild.name,
-      info3: message2,
-      nome: func,
-    });
-  } catch (error) {
-    console.error("Erro na rota /bot/ativar/funcytb:", error);
-    res.render("activefuncerror.ejs");
-  }
-});
-
-router.post("/ativar/functch", isAuthenticated, async (req, res) => {
-  try {
-    const guildId = req.body.guildId;
-    const func = req.body.nome;
-    const guilds = new guildsrepository(mongoose, "Guilds");
-    const ls = guilds.findOne(guildId);
-
-    if (!ls) {
-      throw new Error(
-        "ID da guilda não fornecido ou a Guilda nao gerenciavel."
-      );
-    }
-
-    ls.twitchnotify = true;
-
-    const channelInput = req.body.newDat6;
-    const chan = req.body.tch;
-
-    await discordBot.guilds.fetch(guildId);
-
-    const guild = await discordBot.guilds.cache.get(guildId);
-    const channel = await guild.channels.fetch(channelInput);
-
-    if (!guild && !channel) {
-      throw new Error("Guilda não encontrada ou Canal não encontrado.");
-    }
-    ls.channeltch = channelInput;
-    const message = channel.name;
-    const message2 = channelInput;
-
-    guilds.update(guildId, ls);
-
-    res.render("functionactivated.ejs", {
-      info: message,
-      info2: guild.name,
-      info3: message2,
-      nome: func,
-    });
-  } catch (error) {
-    console.error("Erro na rota /bot/ativar/funcytb:", error);
-    res.render("activefuncerror.ejs");
-  }
-});
-
 module.exports = router;
