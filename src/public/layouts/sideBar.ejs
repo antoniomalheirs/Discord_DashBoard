@@ -290,21 +290,47 @@
           </div>
         </div>
     
-        <!-- Top Bar -->
         <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
           <div class="flex items-center my-auto ml-4">
-            <h5 class="text-xl channel-block-text font-bold cursor-default"># Inicio</h5>
+              <h5 class="text-xl channel-block-text font-bold cursor-default">
+                  # Configurações
+              </h5>
           </div>
-          <div class="flex items-center ml-auto mr-4">
-            <input id="searchInput" class="search-input w-48" type="text" placeholder=" Ajuda ?" />
-          </div>
-          <div class="tooltip mr-4">
-            <div class="relative group">
-              <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
-                <img class="h-8 w-8 my rounded-full" id="minhaImagem" alt="Minha Imagem" />
+      
+          <div class="flex items-center ml-auto mr-4 relative">
+              <input
+                  id="searchInput"
+                  class="search-input w-48"
+                  type="text"
+                  placeholder=" Ajuda ?"
+              />
+      
+              <div class="tooltip ml-4">
+                  <div class="relative group">
+                      <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
+                          <button id="minhaImagem" data-dropdown-toggle="minhaImagem" onclick="togglebtnDropdown('minhaImagem')" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                              <span class="sr-only">Open user menu</span>
+                              <img class="w-8 h-8 rounded-full" src="" alt="user photo">
+                          </button>
+      
+                          <!-- Dropdown menu -->
+                          <div id="minhaImagem-changeState" class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-full right-0 dark:bg-gray-700 dark:divide-gray-600">
+                              <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                  <div>Bonnie Green</div>
+                                  <div class="font-medium truncate">name@flowbite.com</div>
+                              </div>
+                              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                                  <li>
+                                      <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                  </li>
+                              </ul>
+                              <div class="py-2">
+                                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
               </div>
-              <div class="tooltip-text">Alterar servidor</div>
-            </div>
           </div>
         </div>
       </div>
@@ -397,35 +423,48 @@
         </div>
 
         <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
-            <div class="flex items-center my-auto ml-4">
+          <div class="flex items-center my-auto ml-4">
               <h5 class="text-xl channel-block-text font-bold cursor-default">
-                # Funções
+                  # Configurações
               </h5>
-            </div>
-
-            <div class="flex items-center ml-auto mr-4">
+          </div>
+      
+          <div class="flex items-center ml-auto mr-4 relative">
               <input
-                id="searchInput"
-                class="search-input w-48"
-                type="text"
-                placeholder=" Ajuda ?"
+                  id="searchInput"
+                  class="search-input w-48"
+                  type="text"
+                  placeholder=" Ajuda ?"
               />
-            </div>
-
-            <div class="tooltip mr-4">
-              <div class="relative group">
-                <div
-                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                >
-                  <img
-                    class="h-8 w-8 my rounded-full"
-                    id="minhaImagem2"
-                    alt="Minha Imagem"
-                  />
-                </div>
-                <div class="tooltip-text">Alterar servidor</div>
+      
+              <div class="tooltip ml-4">
+                  <div class="relative group">
+                      <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
+                          <button id="minhaImagem2" data-dropdown-toggle="minhaImagem2" onclick="togglebtnDropdown('minhaImagem2')" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                              <span class="sr-only">Open user menu</span>
+                              <img class="w-8 h-8 rounded-full" src="" alt="user photo">
+                          </button>
+      
+                          <!-- Dropdown menu -->
+                          <div id="minhaImagem2-changeState" class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-full right-0 dark:bg-gray-700 dark:divide-gray-600">
+                              <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                  <div>Bonnie Green</div>
+                                  <div class="font-medium truncate">name@flowbite.com</div>
+                              </div>
+                              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                                  <li>
+                                      <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                  </li>
+                              </ul>
+                              <div class="py-2">
+                                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="tooltip-text">Alterar servidor</div>
+                  </div>
               </div>
-            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -495,35 +534,48 @@
         </div>
 
         <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
-            <div class="flex items-center my-auto ml-4">
+          <div class="flex items-center my-auto ml-4">
               <h5 class="text-xl channel-block-text font-bold cursor-default">
-                # Banco de Dados
+                  # Configurações
               </h5>
-            </div>
-
-            <div class="flex items-center ml-auto mr-4">
+          </div>
+      
+          <div class="flex items-center ml-auto mr-4 relative">
               <input
-                id="searchInput"
-                class="search-input w-48"
-                type="text"
-                placeholder=" Ajuda ?"
+                  id="searchInput"
+                  class="search-input w-48"
+                  type="text"
+                  placeholder=" Ajuda ?"
               />
-            </div>
-
-            <div class="tooltip mr-4">
-              <div class="relative group">
-                <div
-                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                >
-                  <img
-                    class="h-8 w-8 my rounded-full"
-                    id="minhaImagem3"
-                    alt="Minha Imagem"
-                  />
-                </div>
-                <div class="tooltip-text">Alterar servidor</div>
+      
+              <div class="tooltip ml-4">
+                  <div class="relative group">
+                      <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
+                          <button id="minhaImagem3" data-dropdown-toggle="minhaImagem3" onclick="togglebtnDropdown('minhaImagem3')" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                              <span class="sr-only">Open user menu</span>
+                              <img class="w-8 h-8 rounded-full" src="" alt="user photo">
+                          </button>
+      
+                          <!-- Dropdown menu -->
+                          <div id="minhaImagem3-changeState" class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-full right-0 dark:bg-gray-700 dark:divide-gray-600">
+                              <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                  <div>Bonnie Green</div>
+                                  <div class="font-medium truncate">name@flowbite.com</div>
+                              </div>
+                              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                                  <li>
+                                      <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                  </li>
+                              </ul>
+                              <div class="py-2">
+                                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="tooltip-text">Alterar servidor</div>
+                  </div>
               </div>
-            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -555,18 +607,46 @@
         
         <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
           <div class="flex items-center my-auto ml-4">
-            <h5 class="text-xl channel-block-text font-bold cursor-default"># Informações do servidor</h5>
+              <h5 class="text-xl channel-block-text font-bold cursor-default">
+                  # Configurações
+              </h5>
           </div>
-          <div class="flex items-center ml-auto mr-4">
-            <input id="searchInput" class="search-input w-48" type="text" placeholder=" Ajuda ?" />
-          </div>
-          <div class="tooltip mr-4">
-            <div class="relative group">
-              <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
-                <img class="h-8 w-8 my rounded-full" id="minhaImagem4" alt="Minha Imagem" />
+      
+          <div class="flex items-center ml-auto mr-4 relative">
+              <input
+                  id="searchInput"
+                  class="search-input w-48"
+                  type="text"
+                  placeholder=" Ajuda ?"
+              />
+      
+              <div class="tooltip ml-4">
+                  <div class="relative group">
+                      <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
+                          <button id="minhaImagem4" data-dropdown-toggle="minhaImagem4" onclick="togglebtnDropdown('minhaImagem4')" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                              <span class="sr-only">Open user menu</span>
+                              <img class="w-8 h-8 rounded-full" src="" alt="user photo">
+                          </button>
+      
+                          <!-- Dropdown menu -->
+                          <div id="minhaImagem4-changeState" class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-full right-0 dark:bg-gray-700 dark:divide-gray-600">
+                              <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                  <div>Bonnie Green</div>
+                                  <div class="font-medium truncate">name@flowbite.com</div>
+                              </div>
+                              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                                  <li>
+                                      <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                  </li>
+                              </ul>
+                              <div class="py-2">
+                                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="tooltip-text">Alterar servidor</div>
+                  </div>
               </div>
-              <div class="tooltip-text">Alterar servidor</div>
-            </div>
           </div>
         </div>
       </div>
@@ -597,33 +677,45 @@
 
           <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
             <div class="flex items-center my-auto ml-4">
-              <h5 class="text-xl channel-block-text font-bold cursor-default">
-                # Configurações
-              </h5>
+                <h5 class="text-xl channel-block-text font-bold cursor-default">
+                    # Configurações
+                </h5>
             </div>
-
-            <div class="flex items-center ml-auto mr-4">
-              <input
-                id="searchInput"
-                class="search-input w-48"
-                type="text"
-                placeholder=" Ajuda ?"
-              />
-            </div>
-
-            <div class="tooltip mr-4">
-              <div class="relative group">
-                <div
-                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                >
-                  <img
-                    class="h-8 w-8 my rounded-full"
-                    id="minhaImagem5"
-                    alt="Minha Imagem"
-                  />
+        
+            <div class="flex items-center ml-auto mr-4 relative">
+                <input
+                    id="searchInput"
+                    class="search-input w-48"
+                    type="text"
+                    placeholder=" Ajuda ?"
+                />
+        
+                <div class="tooltip ml-4">
+                    <div class="relative group">
+                        <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
+                            <button id="minhaImagem5" data-dropdown-toggle="minhaImagem5" onclick="togglebtnDropdown('minhaImagem5')" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="w-8 h-8 rounded-full" src="" alt="user photo">
+                            </button>
+        
+                            <!-- Dropdown menu -->
+                            <div id="minhaImagem5-changeState" class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-full right-0 dark:bg-gray-700 dark:divide-gray-600">
+                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                    <div>Bonnie Green</div>
+                                    <div class="font-medium truncate">name@flowbite.com</div>
+                                </div>
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                                    <li>
+                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                    </li>
+                                </ul>
+                                <div class="py-2">
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tooltip-text">Alterar servidor</div>
-              </div>
             </div>
           </div>
         </div>
@@ -634,13 +726,31 @@
 
     <!-------------------------------------------------- FUNÇÕES E METODOS  -------------------------------------------------->
     <script>
-      var img = parent.user();
+     var img = parent.user();
 
-      document.getElementById("minhaImagem").src = img;
-      document.getElementById("minhaImagem2").src = img;
-      document.getElementById("minhaImagem3").src = img;
-      document.getElementById("minhaImagem4").src = img;
-      document.getElementById("minhaImagem5").src = img;
+     var buttonId = "minhaImagem";
+      var button = document.getElementById(buttonId);
+
+      if (button) {
+        var userImage = button.querySelector("img");
+
+        if (userImage) {
+            userImage.src = img;
+        }
+      }
+
+      for (var i = 1; i <= 5; i++) {
+          var buttonId = "minhaImagem" + i;
+          var button = document.getElementById(buttonId);
+
+          if (button) {
+              var userImage = button.querySelector("img");
+
+              if (userImage) {
+                  userImage.src = img;
+              }
+          }
+      }
 
       function handleIconClick(btnId) {
         const Configuration = document.getElementById(`configuration-sidebar`);
@@ -684,6 +794,45 @@
           //chevron.className = "fas fa-chevron-down text-gray-400"; // adjust class for closed state
         }
       }
+
+      function togglebtnDropdown(btnId) {
+        var button = document.getElementById(btnId);
+        var dropdown = document.getElementById(`${btnId}-changeState`);
+
+        function toggleDropdown() {
+            console.log("oi");
+            dropdown.classList.toggle('hidden');
+        }
+
+        button.addEventListener('click', function (event) {
+            // Se o dropdown estiver oculto, mostra-o e adiciona um ouvinte de clique ao documento
+            if (dropdown.classList.contains('hidden')) {
+                toggleDropdown();
+                document.addEventListener('click', closeDropdown);
+            }
+
+            // Impede a propagação do clique do botão para o documento
+            event.stopPropagation();
+        });
+
+        function closeDropdown() {
+            // Fecha o dropdown e remove o ouvinte de clique do documento
+            toggleDropdown();
+            document.removeEventListener('click', closeDropdown);
+        }
+
+        // Adiciona um ouvinte de clique ao documento se o dropdown estiver visível
+        document.addEventListener('click', function (event) {
+            if (!dropdown.classList.contains('hidden')) {
+                // Verifica se o clique não ocorreu dentro do dropdown ou do botão
+                if (!dropdown.contains(event.target) && event.target !== button) {
+                    closeDropdown();
+                }
+            }
+        });
+      }
+
+
 
       function selectTopic(topic) {
         if (topic === "server") {
@@ -737,6 +886,10 @@
         console.log(`Selected topic: ${topic}`);
         // Adicione lógica adicional conforme necessário
       }
+
+      
+
+
     </script>
     <!-------------------------------------------------- FUNÇÕES E METODOS  -------------------------------------------------->
   </body>
