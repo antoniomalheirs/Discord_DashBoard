@@ -143,6 +143,8 @@
     </style>
   </head>
   <body>
+
+    <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
     <div
       id="sidebar"
       class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center bg-gray-700 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
@@ -163,7 +165,9 @@
           <div class="tooltip-text2">Inicio</div>
         </div>
       </div>
+
       <div>
+
         <div class="tooltip2 ml-2">
           <div class="relative group">
             <div
@@ -214,7 +218,9 @@
             <div class="tooltip-text2">Info da Guilda</div>
           </div>
         </div>
+
       </div>
+
       <div class="tooltip2">
         <div class="relative group">
           <div
@@ -231,233 +237,170 @@
           <div class="tooltip-text2">Configurações</div>
         </div>
       </div>
-      <!-- Repita para outros ícones -->
+
     </div>
+    <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
+    
+    <!------------------------------------------------------------------------------------------------------------------------>
+    
+    <!----------------------------------------------- MENU LATERAL COM OPÇÕES  ----------------------------------------------->
     <div
       id="channel-bar"
-      style="z-index: -10"
+      style="z-index: -1"
       class="fixed top-0 left-20 h-screen w-52 flex flex-col items-start bg-gray-600 dark:bg-gray-900 shadow-lg"
     >
-      <div
-        id="configuration-sidebar"
-        class="configuration-block divide-y-2 divide-green-300 mx-4 my-2"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
-          Inicio
-        </h5>
-        <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('home')"
-          >
-            <div class="dropdown-header">
-              <i
-                id="home-chevron"
-                class="fas fa-chevron-down text-gray-400"
-              ></i>
-              <h5
-                id="home-header"
-                class="dropdown-header-text text-sm ml-2 cursor-default"
-              >
-                Informações da Guilda +
-              </h5>
-            </div>
-            <div
-              id="home-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('server')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">! Server</h5>
-              </div>
+
+    <div id="configuration-sidebar" class="configuration-block divide-y-2 divide-green-300 mx-4 my-2">
+      <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">Inicio</h5>
+      
+      <div class="channel-bar-container">
+
+        <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('home')">
+          <div class="dropdown-header flex items-center">
+            <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+            <h5 id="home-header" class="dropdown-header-text text-sm ml-2 cursor-pointer">Informações da Guilda</h5>
+          </div>
+          
+          <div id="home-dropdown" class="dropdown-content hidden ml-4 text-sm">
+            <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('server')">
+
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+              <h5 class="dropdown-selection-text">! Server</h5>
             </div>
           </div>
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('moderation')"
-          >
-            <div class="dropdown-header">
-              <i
-                id="moderation-chevron"
-                class="fas fa-chevron-down text-gray-400"
-              ></i>
-              <h5
-                id="moderation-header"
-                class="dropdown-header-text text-sm ml-2 cursor-default"
-              >
-                Informações do Bot +
-              </h5>
-            </div>
-            <div
-              id="moderation-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('status') "
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">! Status</h5>
-              </div>
+        </div>
+        
+        <!-- Dropdown "Informações do Bot" -->
+        <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('moderation')">
+          <div class="dropdown-header flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+            <h5 id="moderation-header" class="dropdown-header-text text-sm ml-2 cursor-pointer">Informações do Bot</h5>
+          </div>
+          <div id="moderation-dropdown" class="dropdown-content hidden ml-4 text-sm">
+            <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('status')">
+              <!-- Substitua o ícone existente pela seta para a direita do Heroicons -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+              <h5 class="dropdown-selection-text">! Status</h5>
             </div>
           </div>
-          <div
-            id="top-bar"
-            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
-          >
-            <div class="flex items-center my-auto ml-4">
-              <h5 class="text-xl channel-block-text font-bold cursor-default">
-                # Inicio
-              </h5>
-            </div>
-
-            <div class="flex items-center ml-auto mr-4">
-              <input
-                id="searchInput"
-                class="search-input w-48"
-                type="text"
-                placeholder=" Ajuda ?"
-              />
-            </div>
-
-            <div class="tooltip mr-4">
-              <div class="relative group">
-                <div
-                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                >
-                  <img
-                    class="h-8 w-8 my rounded-full"
-                    id="minhaImagem5"
-                    alt="Minha Imagem"
-                  />
-                </div>
-                <div class="tooltip-text">Alterar servidor</div>
+        </div>
+    
+        <!-- Top Bar -->
+        <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
+          <div class="flex items-center my-auto ml-4">
+            <h5 class="text-xl channel-block-text font-bold cursor-default"># Inicio</h5>
+          </div>
+          <div class="flex items-center ml-auto mr-4">
+            <input id="searchInput" class="search-input w-48" type="text" placeholder=" Ajuda ?" />
+          </div>
+          <div class="tooltip mr-4">
+            <div class="relative group">
+              <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
+                <img class="h-8 w-8 my rounded-full" id="minhaImagem" alt="Minha Imagem" />
               </div>
+              <div class="tooltip-text">Alterar servidor</div>
             </div>
           </div>
-
-          <!-- Adicione mais dropdowns conforme necessário -->
         </div>
       </div>
+    </div>
 
-      <div
-        id="chanels-sidebar"
-        class="channel-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
-          Funções
-        </h5>
-        <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('funcs')"
-          >
-            <div class="dropdown-header">
-              <i
-                id="funcs-chevron"
-                class="fas fa-chevron-down text-gray-400"
-              ></i>
-              <h5
-                id="funcs-header"
-                class="dropdown-header-text text-sm ml-2 cursor-default"
-              >
-                Funções de notificação +
-              </h5>
-            </div>
-            <div
-              id="funcs-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('funcyoutube')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Youtube</h5>
-              </div>
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('functwitch')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Twitch</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
-              </div>
-            </div>
+    <div id="chanels-sidebar" class="chanels-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+      <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">Funções</h5>
+
+      <div class="channel-bar-container">
+
+        <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('funcs')">
+          <div class="dropdown-header flex items-center">
+            <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+            <h5 id="funcs-header" class="dropdown-header-text text-sm ml-2 cursor-pointer">Funções de notificação</h5>
           </div>
-          <div
-            class="dropdown border-discord-light mt-2 cursor-default no-close-dropdown"
-            onclick="toggleDropdown('addchannels')"
-          >
-            <div class="dropdown-header">
-              <i
-                id="addchannels-chevron"
-                class="fas fa-chevron-down text-gray-400"
-              ></i>
-              <h5
-                id="addchannels-header"
-                class="dropdown-header-text text-sm ml-2"
-              >
-                Alterar canais de noti... +
-              </h5>
+
+          <div id="funcs-dropdown" class="dropdown-content hidden ml-4 text-sm">
+            
+            <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('funcyoutube')">
+
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+              <h5 class="dropdown-selection-text">Youtube</h5>
             </div>
-            <div
-              id="addchannels-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('ytbchannelupdate')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Youtube</h5>
-              </div>
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('tchchannelupdate')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
+            
+            <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('functwitch')">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
                 <h5 class="dropdown-selection-text">Twitch</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
-              </div>
             </div>
+
           </div>
-          <div
-            class="dropdown border-discord-light mt-2 no-close-dropdown"
-            onclick="toggleDropdown('statefuncs')"
-          >
-            <div class="dropdown-header">
-              <i
-                id="statefuncs-chevron"
-                class="fas fa-chevron-down text-gray-400"
-              ></i>
-              <h5
-                id="statefuncs-header"
-                class="dropdown-header-text text-sm ml-2 cursor-default"
-              >
-                Estado das Funções +
-              </h5>
+        </div>
+        
+        <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('addchannels')">
+          <div class="dropdown-header flex items-center">
+            <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+            <h5 id="addchannels-header" class="dropdown-header-text text-sm ml-2 cursor-pointer">Canais para notificação</h5>
+          </div>
+
+          <div id="addchannels-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              
+            <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('ytbchannelupdate')">
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <h5 class="dropdown-selection-text">Youtube</h5>
             </div>
-            <div
-              id="statefuncs-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('statesinfo')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
+
+            <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('tchchannelupdate')">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <h5 class="dropdown-selection-text">Twitch</h5>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="dropdown border-discord-light mt-2 no-close-dropdown" onclick="toggleDropdown('statefuncs')">
+          <div class="dropdown-header flex items-center">
+            <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+            <h5 id="statefuncs-header" class="dropdown-header-text text-sm ml-2 cursor-pointer">Estado das funções</h5>
+          </div>
+
+            <div id="statefuncs-dropdown" class="dropdown-content hidden ml-4 text-sm">
+
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('statesinfo')">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
                 <h5 class="dropdown-selection-text">Informações</h5>
               </div>
+
             </div>
-          </div>
-          <div
-            id="top-bar"
-            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
-          >
+        </div>
+
+        <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
             <div class="flex items-center my-auto ml-4">
               <h5 class="text-xl channel-block-text font-bold cursor-default">
                 # Funções
@@ -480,105 +423,82 @@
                 >
                   <img
                     class="h-8 w-8 my rounded-full"
-                    id="minhaImagem4"
+                    id="minhaImagem2"
                     alt="Minha Imagem"
                   />
                 </div>
                 <div class="tooltip-text">Alterar servidor</div>
               </div>
             </div>
-          </div>
-
-          <!-- Adicione mais dropdowns conforme necessário -->
         </div>
       </div>
+    </div>
 
-      <div
-        id="guild-sidebar"
-        class="guild-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
-          Banco de Dados
-        </h5>
-        <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('channels')"
-          >
-            <div class="dropdown-header">
-              <i
-                id="channels-chevron"
-                class="fas fa-chevron-down text-gray-400"
-              ></i>
-              <h5
-                id="channels-header"
-                class="dropdown-header-text text-sm ml-2 cursor-default"
-              >
-                Canais do Youtube +
-              </h5>
+    <div id="guild-sidebar" class="guild-block divide-y-2 divide-green-300 mx-4 my-2 hidden" >
+      <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">Banco de Dados</h5>
+
+      <div class="channel-bar-container">
+
+        <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('channels')">
+            <div class="dropdown-header flex items-center">
+              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+              <h5 id="statefuncs-header" class="dropdown-header-text text-sm ml-2 cursor-pointer">Youtube channels</h5>
             </div>
-            <div
-              id="channels-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('addytbchannel')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
+
+            <div id="channels-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('addytbchannel')">
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
                 <h5 class="dropdown-selection-text">Adicionar canais</h5>
               </div>
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('viewytbchannels')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
+
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex itens-center" onclick="selectTopic('viewytbchannels')">
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
                 <h5 class="dropdown-selection-text">Visualizar canais</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
-          </div>
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('videos')"
-          >
-            <div class="dropdown-header">
-              <i
-                id="videos-chevron"
-                class="fas fa-chevron-down text-gray-400"
-              ></i>
-              <h5
-                id="videos-header"
-                class="dropdown-header-text text-sm ml-2 cursor-default"
-              >
-                Canais da Twitch +
-              </h5>
+
+        </div>
+
+
+        <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('videos')">
+            <div class="dropdown-header flex items-center">
+              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+              <h5 id="videos-header" class="dropdown-header-text text-sm ml-2 cursor-pointer">Twitch streams</h5>
             </div>
-            <div
-              id="videos-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('addtchchannel')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
+
+            <div id="videos-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('addtchchannel')">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
                 <h5 class="dropdown-selection-text">Adicionar lives</h5>
               </div>
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('viewtchchannel')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
+              
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('viewtchchannel')">
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
                 <h5 class="dropdown-selection-text">Visualizar lives</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
               </div>
             </div>
-          </div>
-          <div
-            id="top-bar"
-            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
-          >
+
+        </div>
+
+        <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
             <div class="flex items-center my-auto ml-4">
               <h5 class="text-xl channel-block-text font-bold cursor-default">
                 # Banco de Dados
@@ -608,148 +528,78 @@
                 <div class="tooltip-text">Alterar servidor</div>
               </div>
             </div>
-          </div>
-
-          <!-- Adicione mais dropdowns conforme necessário -->
         </div>
       </div>
+    </div>
 
-      <div
-        id="user-sidebar"
-        class="user-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
-          Info da Guilda
-        </h5>
-        <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('members')"
-          >
-            <div class="dropdown-header">
-              <i
-                id="members-chevron"
-                class="fas fa-chevron-down text-gray-400"
-              ></i>
-              <h5
-                id="members-header"
-                class="dropdown-header-text text-sm ml-2 cursor-default"
-              >
-                Informações de membros do servidor +
-              </h5>
-            </div>
-            <div
-              id="members-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown"
-                onclick="selectTopic('memberinfo')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">
-                  Tempo e Mensagens no servidor
-                </h5>
-              </div>
+    <div id="user-sidebar" class="configuration-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+      <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">Servidor</h5>
+      
+      <div class="channel-bar-container">
+
+        <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('user')">
+          <div class="dropdown-header flex items-center">
+            <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+            <h5 id="user-header" class="dropdown-header-text text-sm ml-2 cursor-pointer">Membros do servidor</h5>
+          </div>
+          
+          <div id="user-dropdown" class="dropdown-content hidden ml-4 text-sm">
+            <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('memberinfo')">
+              <!-- Substitua o ícone existente pela seta para a direita do Heroicons -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+              <h5 class="dropdown-selection-text">Mensagens e Voz</h5>
             </div>
           </div>
-          <div
-            id="top-bar"
-            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
-          >
-            <div class="flex items-center my-auto ml-4">
-              <h5 class="text-xl channel-block-text font-bold cursor-default">
-                # Info da Guilda
-              </h5>
-            </div>
-
-            <div class="flex items-center ml-auto mr-4">
-              <input
-                id="searchInput"
-                class="search-input w-48"
-                type="text"
-                placeholder=" Ajuda ?"
-              />
-            </div>
-
-            <div class="tooltip mr-4">
-              <div class="relative group">
-                <div
-                  class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400"
-                >
-                  <img
-                    class="h-8 w-8 my rounded-full"
-                    id="minhaImagem2"
-                    alt="Minha Imagem"
-                  />
-                </div>
-                <div class="tooltip-text">Alterar servidor</div>
+        </div>
+        
+        <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
+          <div class="flex items-center my-auto ml-4">
+            <h5 class="text-xl channel-block-text font-bold cursor-default"># Informações do servidor</h5>
+          </div>
+          <div class="flex items-center ml-auto mr-4">
+            <input id="searchInput" class="search-input w-48" type="text" placeholder=" Ajuda ?" />
+          </div>
+          <div class="tooltip mr-4">
+            <div class="relative group">
+              <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
+                <img class="h-8 w-8 my rounded-full" id="minhaImagem4" alt="Minha Imagem" />
               </div>
+              <div class="tooltip-text">Alterar servidor</div>
             </div>
           </div>
-
-          <!-- Adicione mais dropdowns conforme necessário -->
         </div>
       </div>
+    </div>
 
-      <div
-        id="usage-sidebar"
-        class="user-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
-          Configurações
-        </h5>
+    <div id="usage-sidebar" class="usage-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">Configurações</h5>
+
         <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('topics')"
-          >
-            <div class="dropdown-header">
-              <i
-                id="topics-chevron"
-                class="fas fa-chevron-down text-gray-400"
-              ></i>
-              <h5 id="topics-header" class="dropdown-header-text text-sm ml-2">
-                Funções de notificação +
-              </h5>
-            </div>
-            <div
-              id="topics-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div class="dropdown-selection" onclick="selectTopic('youtube')">
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Youtube</h5>
-              </div>
-              <div class="dropdown-selection" onclick="teste('ftest')">
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">ftest</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
-              </div>
-            </div>
-            <div
-              id="moderation-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer"
-                onclick="selectTopic('youtube')"
-              >
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Youtube</h5>
-              </div>
 
-              <div class="dropdown-selection" onclick="selectTopic('twitch')">
-                <i class="fas fa-hashtag text-gray-400"></i>
-                <h5 class="dropdown-selection-text">Twitch</h5>
-                <i class="fas fa-hashtag text-gray-400"></i>
+          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('usage')">
+            <div class="dropdown-header flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+               <h5 id="usage-header" class="dropdown-header-text text-sm ml-2">Funções de notificação</h5>
+            </div>
+
+            <div id="usage-dropdown" class="dropdown-content hidden ml-4 text-sm ">
+              <div class="dropdown-selection flex items-center" onclick="selectTopic('youtube')">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <h5 class="dropdown-selection-text">Youtube</h5>
               </div>
             </div>
           </div>
-          <div
-            id="top-bar"
-            class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
-          >
+
+          <div id="top-bar" class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300">
             <div class="flex items-center my-auto ml-4">
               <h5 class="text-xl channel-block-text font-bold cursor-default">
                 # Configurações
@@ -772,7 +622,7 @@
                 >
                   <img
                     class="h-8 w-8 my rounded-full"
-                    id="minhaImagem"
+                    id="minhaImagem5"
                     alt="Minha Imagem"
                   />
                 </div>
@@ -780,12 +630,13 @@
               </div>
             </div>
           </div>
-
-          <!-- Adicione mais dropdowns conforme necessário -->
         </div>
-      </div>
     </div>
+    <!----------------------------------------------- MENU LATERAL COM OPÇÕES  ----------------------------------------------->
 
+    <!------------------------------------------------------------------------------------------------------------------------>
+
+    <!-------------------------------------------------- FUNÇÕES E METODOS  -------------------------------------------------->
     <script>
       var img = parent.user();
 
@@ -824,17 +675,17 @@
 
       function toggleDropdown(dropdownId) {
         var dropdown = document.getElementById(dropdownId + "-dropdown");
-        var chevron = document.getElementById(dropdownId + "-chevron");
+        //var chevron = document.getElementById(dropdownId + "-chevron");
 
         if (
           dropdown.style.display === "none" ||
           dropdown.style.display === ""
         ) {
           dropdown.style.display = "block";
-          chevron.className = "fas fa-chevron-up text-gray-400"; // adjust class for open state
+          //chevron.className = "fas fa-chevron-up text-gray-400"; // adjust class for open state
         } else {
           dropdown.style.display = "none";
-          chevron.className = "fas fa-chevron-down text-gray-400"; // adjust class for closed state
+          //chevron.className = "fas fa-chevron-down text-gray-400"; // adjust class for closed state
         }
       }
 
@@ -890,8 +741,7 @@
         console.log(`Selected topic: ${topic}`);
         // Adicione lógica adicional conforme necessário
       }
-
-      
     </script>
+    <!-------------------------------------------------- FUNÇÕES E METODOS  -------------------------------------------------->
   </body>
 </html>
