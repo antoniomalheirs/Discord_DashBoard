@@ -76,11 +76,7 @@
       }
 
       .search-input:hover {
-        background-color: rgb(
-          134,
-          239,
-          172
-        ); /* cor de fundo ao passar o mouse */
+        background-color: #bfa374; /* cor de fundo ao passar o mouse */
         transform: scale(1.05);
         transition: background-color 1s cubic-bezier(0.075, 0.82, 1, 1),
           /* efeito de escala ao passar o mouse */ transform 0.6s
@@ -101,11 +97,7 @@
       }
 
       .sidebar-icon:hover {
-        background-color: rgb(
-          134,
-          239,
-          172
-        ); /* Cor de fundo acinzentada ao passar o mouse */
+        background-color: #d5e0b5; /* Cor de fundo acinzentada ao passar o mouse */
         border-radius: 0.75rem; /* Arredondamento de borda */
         transform: scale(1.05); /* Aumenta o tamanho ao passar o mouse */
       }
@@ -136,13 +128,25 @@
       .dropdown-selection-text:hover {
         color: rgb(210, 210, 210); /* Altere a cor do texto no hover */
       }
+
+      .sidebar-color {
+        background-color: #364461;
+      }
+
+      .chanelbar-color {
+        background-color: #4d686f;
+      }
+
+      .topbar-color {
+        background-color: #6d756a;
+      }
     </style>
   </head>
   <body>
     <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
     <div
       id="sidebar"
-      class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center bg-gray-700 dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+      class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center sidebar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
     >
       <div class="tooltip2">
         <div class="relative group">
@@ -239,7 +243,7 @@
     <div
       id="channel-bar"
       style="z-index: -1"
-      class="fixed top-0 left-20 h-screen w-52 flex flex-col items-start bg-gray-600 dark:bg-gray-900 shadow-lg"
+      class="fixed top-0 left-20 h-screen w-52 flex flex-col items-start chanelbar-color dark:bg-gray-900 shadow-lg"
     >
       <div
         id="configuration-sidebar"
@@ -879,7 +883,7 @@
     <!------------------------------------------------------ TOP BAR  -------------------------------------------------------->
     <div
       id="top-bar"
-      class="fixed top-0 left-72 right-0 h-12 flex topbar-bg-color dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+      class="fixed top-0 left-72 right-0 h-12 flex topbar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
     >
       <div class="flex items-center my-auto ml-4">
         <svg
@@ -906,19 +910,19 @@
           id="hashtag-chanels"
           class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
         >
-          Funções
+          Gerenciador de funções
         </h5>
         <h5
           id="hashtag-guild"
           class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
         >
-          Database
+          Gerenciar banco de dados
         </h5>
         <h5
           id="hashtag-user"
           class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
         >
-          Servidor
+          Informações do servidor
         </h5>
         <h5
           id="hashtag-usage"
