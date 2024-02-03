@@ -709,7 +709,7 @@ video {
 
 .custom-table tbody tr:hover {
   background-color: #cbd5e0;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
 }
 
 .custom-button {
@@ -722,4 +722,20 @@ video {
 
 .custom-button:hover {
   background-color: #d53030;
+}
+
+.nav-color {
+  background-color: #4d686f;
+}
+
+.button-color {
+  background-color: #6d756a;
+}
+
+.cont {
+  background-color: #364461;
+}
+
+.hover\:button-color:hover {
+  background-color: #bfa374;
 }

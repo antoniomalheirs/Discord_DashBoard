@@ -140,10 +140,7 @@ const getBotUptime = () => {
   return `${hours}h ${minutes}m ${seconds}s`;
 };
 
-router.get(
-  "/obter-icone-guilda/:guildId",
-  isAuthenticated,
-  async (req, res) => {
+router.get("/obter-icone-guilda/:guildId", isAuthenticated, async (req, res) => {
     try {
       const guildId = req.params.guildId;
       const guild = req.user.guilds.find((guild) => guild.id === guildId);
@@ -163,8 +160,7 @@ router.get(
       console.error("Erro ao obter ícone da guilda:", error);
       res.status(500).json({ error: "Erro ao obter ícone da guilda" });
     }
-  }
-);
+});
 
 router.post("/botinfo", isAuthenticated, async (req, res) => {
   try {

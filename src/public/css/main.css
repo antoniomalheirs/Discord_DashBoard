@@ -175,3 +175,19 @@
 .custom-button:hover {
   background-color: #d53030;
 }
+
+.nav-color {
+  background-color: #4d686f;
+}
+
+.button-color {
+  background-color: #6d756a;
+}
+
+.cont {
+  background-color: #364461;
+}
+
+.hover\:button-color:hover {
+  background-color: #bfa374;
+}
