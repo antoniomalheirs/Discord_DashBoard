@@ -501,7 +501,6 @@ router.get("/pagina/dtbase/:page/:guildId/:channelin", isAuthenticated, async (r
           }
         }
         break;
-      
       case "delyoutubech":
         const videoRepo = new videosrepository(mongoose, "Videos");
         
@@ -529,8 +528,7 @@ router.get("/pagina/dtbase/:page/:guildId/:channelin", isAuthenticated, async (r
             res.render("dataadderror.ejs", {});
           }
         }
-        break;
-      
+        break; 
       case "deltwitchch":
         const twitchRepo = new twitchsrepository(mongoose, "Twitchs");
         
@@ -563,13 +561,6 @@ router.get("/pagina/dtbase/:page/:guildId/:channelin", isAuthenticated, async (r
   }
 });
 
-router.get("/guildcontentmain/:guildId", isAuthenticated, async (req, res) => {
-  const guildId = req.params.guildId;
-  const botInfo = await getGuildData(guildId);
-
-  res.render("serverinfo.ejs", { info: botInfo });
-});
-
 router.get("/infoguilds", isAuthenticated, async (req, res) => {
   const serversInfo = await getDatabase2();
   res.render("guildsinfo.ejs", {
@@ -577,41 +568,4 @@ router.get("/infoguilds", isAuthenticated, async (req, res) => {
   });
 });
 
-router.get("/functions-guilda", isAuthenticated, async (req, res) => {
-  try {
-    const guildId = req.query.guildId;
-    const botInfo = await getGuildData(guildId);
-    const guildinfo = await getGuilds(guildId);
-    const videoinfo = await getVideos(guildId);
-    const twicthinfo = await getTwitch(guildId);
-
-    res.render("functionmanager.ejs", {
-      info: botInfo,
-      info2: videoinfo,
-      info3: twicthinfo,
-      info4: guildinfo,
-    });
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao obter informações da guilda" });
-  }
-});
-
-router.get("/database-guilda", isAuthenticated, async (req, res) => {
-  try {
-    const guildId = req.query.guildId;
-    const botInfo = await getGuildData(guildId);
-    const userinfo = await getUsers(guildId);
-    const videoinfo = await getVideos(guildId);
-    const twicthinfo = await getTwitch(guildId);
-
-    res.render("databasemanager.ejs", {
-      info: botInfo,
-      info1: userinfo,
-      info2: videoinfo,
-      info3: twicthinfo,
-    });
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao obter informações da guilda" });
-  }
-});
 module.exports = router;
