@@ -3,144 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      href="../css/out.css"
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      .tooltip2 {
-        position: relative;
-        display: inline-block;
-      }
-
-      .tooltip-text2 {
-        visibility: hidden;
-        width: 9rem;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        text-align: start;
-        border-radius: 0.25rem;
-        padding: 0.5rem;
-        position: absolute;
-        z-index: 1;
-        top: 18%; /* Posição abaixo do elemento pai */
-        left: 150%;
-        margin-left: -35%; /* Metade da largura */
-        opacity: 0;
-        transition: opacity 0.5s;
-      }
-
-      .tooltip2:hover .tooltip-text2 {
-        visibility: visible;
-        opacity: 0.7;
-      }
-
-      .tooltip {
-        position: relative;
-        display: inline-block;
-      }
-
-      .tooltip-text {
-        visibility: hidden;
-        width: 8rem;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        text-align: center;
-        border-radius: 0.25rem;
-        padding: 0.5rem;
-        position: absolute;
-        z-index: 1;
-        top: 115%; /* Posição abaixo do elemento pai */
-        right: 1%;
-        margin-right: -50%; /* Metade da largura */
-        opacity: 0;
-        transition: opacity 0.3s;
-      }
-
-      .tooltip:hover .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-      }
-
-      .search-input {
-        border-radius: 0.5rem;
-        background-color: rgb(156, 163, 175);
-        color: rgb(0, 0, 0);
-        /* animação de transição para a cor de fundo e transformação */
-      }
-
-      .search-input::placeholder {
-        outline: none;
-        color: rgb(0, 0, 0); /* cor do texto de dica */
-      }
-
-      .search-input:hover {
-        background-color: #bfa374; /* cor de fundo ao passar o mouse */
-        transform: scale(1.05);
-        transition: background-color 1s cubic-bezier(0.075, 0.82, 1, 1),
-          /* efeito de escala ao passar o mouse */ transform 0.6s
-            cubic-bezier(0.075, 0.82, 0.165, 1);
-      }
-
-      .sidebar-icon {
-        border-radius: 2rem;
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-        transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
-          border-radius 1s cubic-bezier(0.075, 0.82, 0.165, 1),
-          transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-      }
-
-      .sidebar-icon:active {
-        border: 1px black solid;
-      }
-
-      .sidebar-icon:hover {
-        background-color: #d5e0b5; /* Cor de fundo acinzentada ao passar o mouse */
-        border-radius: 0.75rem; /* Arredondamento de borda */
-        transform: scale(1.05); /* Aumenta o tamanho ao passar o mouse */
-      }
-
-      .sidebar-icon img {
-        transition: transform 0.3s ease;
-      }
-
-      .sidebar-icon:hover img {
-        transform: scale(1);
-      }
-
-      .sidebar-icon:hover + .popup {
-        display: block;
-      }
-
-      .dropdown-selection {
-        transition: background-color 0.5s, color 0.3s;
-        border-radius: 0.5rem;
-        opacity: 0.85; /* Adicione a transição */
-      }
-
-      .dropdown-selection:hover {
-        background-color: rgba(169, 169, 169, 0.2);
-        color: rgb(255, 255, 255); /* Altere a cor de fundo no hover */
-      }
-
-      .dropdown-selection-text:hover {
-        color: rgb(210, 210, 210); /* Altere a cor do texto no hover */
-      }
-
-      .sidebar-color {
-        background-color: #364461;
-      }
-
-      .chanelbar-color {
-        background-color: #4d686f;
-      }
-
-      .topbar-color {
-        background-color: #6d756a;
-      }
-    </style>
   </head>
   <body>
     <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
@@ -666,6 +533,27 @@
                 </svg>
                 <h5 class="dropdown-selection-text ml-1">Visualizar canais</h5>
               </div>
+
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('deleteytbchannels')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Deletar canais</h5>
+              </div>
             </div>
           </div>
 
@@ -741,6 +629,27 @@
                   ></path>
                 </svg>
                 <h5 class="dropdown-selection-text ml-1">Visualizar lives</h5>
+              </div>
+
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('deletetchchannel')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Deletar streams</h5>
               </div>
             </div>
           </div>
@@ -883,105 +792,107 @@
     <!------------------------------------------------------ TOP BAR  -------------------------------------------------------->
     <div
       id="top-bar"
-      class="fixed top-0 left-72 right-0 h-12 flex topbar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+      class="fixed top-0 left-72 right-0 h-12 flex topbar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-yellow-900"
     >
-      <div class="flex items-center my-auto ml-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6 text-gray-400"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
-          />
-        </svg>
-        <h5
-          id="hashtag-configuration"
-          class="text-xl channel-block-text font-bold cursor-default ml-2"
-        >
-          Pagina inicial
-        </h5>
-        <h5
-          id="hashtag-chanels"
-          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
-        >
-          Gerenciador de funções
-        </h5>
-        <h5
-          id="hashtag-guild"
-          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
-        >
-          Gerenciar banco de dados
-        </h5>
-        <h5
-          id="hashtag-user"
-          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
-        >
-          Informações do servidor
-        </h5>
-        <h5
-          id="hashtag-usage"
-          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
-        >
-          Configurações
-        </h5>
+      <div class="flex items-center ml-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 text-gray-400"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
+            />
+          </svg>
+          <h5
+            id="hashtag-configuration"
+            class="text-xl channel-block-text font-bold cursor-default ml-2"
+          >
+            Pagina inicial
+          </h5>
+          <h5
+            id="hashtag-chanels"
+            class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
+          >
+            Gerenciador de funções
+          </h5>
+          <h5
+            id="hashtag-guild"
+            class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
+          >
+            Gerenciar banco de dados
+          </h5>
+          <h5
+            id="hashtag-user"
+            class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
+          >
+            Informações do servidor
+          </h5>
+          <h5
+            id="hashtag-usage"
+            class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
+          >
+            Configurações
+          </h5>
       </div>
 
-      <div class="flex items-center ml-auto mr-4 relative">
-        <input
-          id="searchInput"
-          class="search-input w-48"
-          type="text"
-          placeholder=" Ajuda ?"
-        />
+      <div class="flex items-center mx-auto mr-4 " >
+        <div class="relative group">
+          <input
+            id="searchInput"
+            class="search-input w-48"
+            type="text"
+            placeholder=" Ajuda ?"
+          />
+        </div>
+      </div>
 
-        <div class="tooltip ml-4">
-          <div class="relative group">
-            <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
-              <button
-                id="minhaImagem"
-                data-dropdown-toggle="minhaImagem"
-                onclick="togglebtnDropdown('minhaImagem')"
-                class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                type="button"
-              >
-                <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="" alt="user photo" />
-              </button>
+      <div class="flex items-center mr-4 " >
+        <div class="relative group">
+          <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
+            <button
+              id="minhaImagem"
+              data-dropdown-toggle="minhaImagem"
+              onclick="togglebtnDropdown('minhaImagem')"
+              class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              type="button"
+            >
+              <span class="sr-only">Open user menu</span>
+              <img class="w-8 h-8 rounded-full" src="" alt="user photo" />
+            </button>
 
-              <!-- Dropdown menu -->
-              <div
-                id="minhaImagem-changeState"
-                class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-11 right-0 dark:bg-gray-700 dark:divide-gray-600"
+            <!-- Dropdown menu -->
+            <div
+              id="minhaImagem-changeState"
+              class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-11 right-0 dark:bg-gray-700 dark:divide-gray-600"
+            >
+              <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                <div>Bonnie Green</div>
+                <div class="font-medium truncate">name@flowbite.com</div>
+              </div>
+              <ul
+                class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdownUserAvatarButton"
               >
-                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                  <div>Bonnie Green</div>
-                  <div class="font-medium truncate">name@flowbite.com</div>
-                </div>
-                <ul
-                  class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                  aria-labelledby="dropdownUserAvatarButton"
-                >
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Dashboard</a
-                    >
-                  </li>
-                </ul>
-                <div class="py-2">
+                <li>
                   <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >Sign out</a
+                    href="/dashboard"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >Dashboard</a
                   >
-                </div>
+                </li>
+              </ul>
+              <div class="py-2">
+                <a
+                  href="/"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  >Sign out</a
+                >
               </div>
             </div>
           </div>
@@ -1104,12 +1015,20 @@
           parent.carregarConteudo("viewytbchannels");
           //href ="/bot/pagina/server"
         }
+        if (topic === "deleteytbchannels") {
+          parent.carregarConteudo("deleteytbchannels");
+          //href ="/bot/pagina/server"
+        }
         if (topic === "addytbchannel") {
           parent.carregarConteudo("addytbchannel");
           //href ="/bot/pagina/server"
         }
         if (topic === "viewtchchannel") {
           parent.carregarConteudo("viewtchchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "deletetchchannel") {
+          parent.carregarConteudo("deletetchchannel");
           //href ="/bot/pagina/server"
         }
         if (topic === "addtchchannel") {

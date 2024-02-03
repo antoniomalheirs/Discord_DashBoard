@@ -22,7 +22,6 @@ mongoose.model("Twitchs", TwitchSchema);
 const TwitchToken = require("../utils/TwitchToken.js");
 const TwitchID = require("../utils/TwitchID.js");
 const { Result } = require("postcss");
-const { channel } = require("diagnostics_channel");
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -94,7 +93,6 @@ const getDatabase2 = async () => {
   }
 };
 
-// Função para obter dados da guilda
 const getGuildData = async (guildId) => {
   try {
     await discordBot.guilds.fetch(guildId);
@@ -177,8 +175,8 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
     res.render("error.ejs");
   }
 });
-// Rota que recebe um parâmetro de string chamado 'page'
-router.get("/pagina/:page/:param2", async (req, res) => {
+
+router.get("/pagina/:page/:param2", isAuthenticated, async (req, res) => {
   const page = req.params.page;
   const guildId = req.params.param2;
   const botInfo = await getGuildData(guildId);
@@ -254,6 +252,14 @@ router.get("/pagina/:page/:param2", async (req, res) => {
       );
       res.send(viewytbchannels);
       break;
+    case "deleteytbchannels":
+      // Renderize a página 1 com o segundo parâmetro
+      const viewytbchanne = await ejs.renderFile(
+        path.join(__dirname, "../views/ytbdeleteinfo.ejs"),
+        { info: botInfo, info2: videoinfo }
+      );
+      res.send(viewytbchanne);
+      break;
     case "addytbchannel":
       // Renderize a página 1 com o segundo parâmetro
       const addytbchannel = await ejs.renderFile(
@@ -269,6 +275,14 @@ router.get("/pagina/:page/:param2", async (req, res) => {
         { info: botInfo, info3: lives }
       );
       res.send(viewtchchannel);
+      break;
+    case "deletetchchannel":
+      // Renderize a página 1 com o segundo parâmetro
+      const viewtchhchanne = await ejs.renderFile(
+        path.join(__dirname, "../views/tchdeleteinfo.ejs"),
+        { info: botInfo, info2: lives }
+      );
+      res.send(viewtchhchanne);
       break;
     case "addtchchannel":
       // Renderize a página 1 com o segundo parâmetro
@@ -292,7 +306,7 @@ router.get("/pagina/:page/:param2", async (req, res) => {
   }
 });
 
-router.get("/pagina/funcs/:page/:guildId/:channelin", async (req, res) => {
+router.get("/pagina/funcs/:page/:guildId/:channelin", isAuthenticated, async (req, res) => {
   const page = req.params.page;
   const guildId = req.params.guildId;
   const channelin = req.params.channelin;
@@ -385,10 +399,13 @@ router.get("/pagina/funcs/:page/:guildId/:channelin", async (req, res) => {
   }
 });
 
-router.get("/pagina/dtbase/:page/:guildId/:channelin", async (req, res) => {
+router.get("/pagina/dtbase/:page/:guildId/:channelin", isAuthenticated, async (req, res) => {
   const page = req.params.page;
   const guildId = req.params.guildId;
   const channelInput = req.params.channelin;
+  const botInfo = await getGuildData(guildId);
+  const videoinfo = await getVideos(guildId);
+  const lives = await getTwitch(guildId);
 
   try {
     // Adicione lógica para validar e processar os dados conforme necessário
@@ -484,14 +501,69 @@ router.get("/pagina/dtbase/:page/:guildId/:channelin", async (req, res) => {
           }
         }
         break;
+      
+      case "delyoutubech":
+        const videoRepo = new videosrepository(mongoose, "Videos");
+        
+        if (channelInput != null) {
+          const videoId = channelInput;
+          const projection = {
+            youtube: 1,
+            channel: 1,
+            lastVideo: 1,
+            lastPublish: 1,
+            message: 1,
+            notifyGuild: 1,
+          };
+  
+          const noBanco = await videoRepo.verifyByYoutubeAndGuildId(
+            channelInput,
+            guildId,
+            projection
+          );
+          
+          if (noBanco != null) {
+            console.log(await videoRepo.deletar(videoId, guildId));
+            res.render("ytbdeleteinfo.ejs", {info: botInfo, info2: videoinfo});
+          } else {
+            res.render("dataadderror.ejs", {});
+          }
+        }
+        break;
+      
+      case "deltwitchch":
+        const twitchRepo = new twitchsrepository(mongoose, "Twitchs");
+        
+        if (channelInput != null) {
+          const videoId = channelInput;
+          const projection = {
+            twitch: 1,
+            channel: 1,
+            guildID: 1,
+          };
+  
+          const noBanco = await twitchRepo.verifyByTwitchAndGuildId(
+            channelInput,
+            guildId,
+            projection
+          );
+          
+          if (noBanco != null) {
+            console.log(await twitchRepo.deletar(videoId, guildId));
+            res.render("tchdeleteinfo.ejs", {info: botInfo, info2: lives});
+          } else {
+            res.render("dataadderror.ejs", {});
+          }
+        }
+        break;
     }
   } catch (error) {
-    console.error("Erro ao adicionar dados ao banco de dados:", error);
+    console.error("Não foi possivel excluir os dados:", error);
     res.render("dataadderror.ejs", {});
   }
 });
 
-router.get("/guildcontentmain/:guildId", async (req, res) => {
+router.get("/guildcontentmain/:guildId", isAuthenticated, async (req, res) => {
   const guildId = req.params.guildId;
   const botInfo = await getGuildData(guildId);
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Banco de Dados - Guilda</title>
+  </head>
+  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
+    <div
+      class="bg-white p-4 rounded-lg shadow-md max-w-8xl flex flex-col justify-between min-h-full items-center"
+    >
+      <div id="mensagemPopUp" class="hidden"></div>
+
+      <h1 class="text-3xl font-bold my-4 text-center">
+        Banco de Dados de Lives
+      </h1>
+
+      <h1 class="text-2xl font-bold my-4 text-center">
+        Guilda <%= info.name %>
+      </h1>
+
+      <div class="my-4">
+        <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+        <img
+          src="<%= info.icon %>"
+          alt="Ícone da guilda"
+          class="rounded-full max-w-full h-auto"
+        />
+        <% } else { %>
+        <img
+          src="/res/serverIcon/nonserverimg.jpg"
+          alt="Ícone padrão"
+          class="rounded-full max-w-full h-auto"
+        />
+        <% } %>
+      </div>
+
+      <!-- Twitch Channels a Notificar na Guilda -->
+      <h2 class="text-2xl font-bold mt-8">
+        Twitch Channels a Notificar na Guilda
+      </h2>
+
+      <form
+        id="deleteForm"
+        style="display: none"
+        method="post"
+        onsubmit="event.preventDefault(); confirmarExclusao();"
+      >
+        <input type="hidden" name="youtube" id="youtubeInput" />
+        <input type="hidden" name="func" value="deltwitchch" />
+        <input type="hidden" name="channelId" id="channelIdInput" />
+
+        <button type="submit">Confirmar Exclusão</button>
+      </form>
+
+      <table
+        class="custom-table w-11/12 mt-4 mb-12 bg-purple-300 border rounded-lg shadow-md overflow-hidden"
+      >
+        <thead class="bg-green-300">
+          <tr>
+            <th class="px-4 py-2">Twitch</th>
+            <th class="px-4 py-2">Channel</th>
+            <th class="px-4 py-2">Deletar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% info2.forEach(item => { %>
+          <tr class="bg-gray-100">
+            <td class="border border-green-300 px-4 py-2">
+              <%= item.twitch %>
+            </td>
+            <td class="border border-green-300 px-4 py-2">
+              <%= item.channel %>
+            </td>
+            <td class="border border-green-300 px-4 py-2">
+              <button
+                class="custom-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                onclick="preencherForm('<%= item.twitch %>', '<%= item.guildID %>')"
+              >
+                Excluir
+              </button>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      function preencherForm(youtube, channelId) {
+        document.getElementById("youtubeInput").value = youtube;
+        document.getElementById("channelIdInput").value = channelId;
+
+        // Exibe o formulário
+        document.getElementById("deleteForm").style.display = "block";
+      }
+
+      function confirmarExclusao() {
+        var dadosFormulario = $("#deleteForm").serializeArray();
+        parent.dtbaseDelete(dadosFormulario);
+
+        // Oculta o formulário após a submissão
+        document.getElementById("deleteForm").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

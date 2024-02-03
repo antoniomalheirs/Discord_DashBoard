@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Banco de Dados - Guilda</title>
+
+    <style>
+      /* styles.css */
+
+      .custom-table {
+        width: 11/12;
+        margin-top: 4rem;
+        background-color: #68d391;
+        border: 1px solid #6b46c1;
+        border-radius: 0.375rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .custom-table thead {
+        background-color: #9f7aea;
+      }
+
+      .custom-table th {
+        padding: 1rem 0.5rem;
+        text-align: center;
+      }
+
+      .custom-table td {
+        border: 1px solid #9f7aea;
+        padding: 1rem 0.5rem;
+        text-align: center;
+      }
+
+      .custom-table tbody tr:hover {
+        background-color: #cbd5e0;
+        transition: background-color 0.6s ease;
+      }
+
+      .custom-button {
+        background-color: #e53e3e;
+        color: #fff;
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+      }
+
+      .custom-button:hover {
+        background-color: #d53030;
+      }
+    </style>
+  </head>
+  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
+    <div
+      class="bg-white p-4 rounded-lg shadow-md max-w-8xl flex flex-col justify-between min-h-full items-center"
+    >
+      <div id="mensagemPopUp" class="hidden"></div>
+
+      <h1 class="text-3xl font-bold my-4 text-center">
+        Deletar Videos do Youtube
+      </h1>
+
+      <h1 class="text-2xl font-bold my-4 text-center">
+        Guilda <%= info.name %>
+      </h1>
+
+      <div class="my-4">
+        <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+        <img
+          src="<%= info.icon %>"
+          alt="Ícone da guilda"
+          class="rounded-full max-w-full h-auto"
+        />
+        <% } else { %>
+        <img
+          src="/res/serverIcon/nonserverimg.jpg"
+          alt="Ícone padrão"
+          class="rounded-full max-w-full h-auto"
+        />
+        <% } %>
+      </div>
+
+      <!-- Youtube Channels a Notificar na Guilda -->
+      <h2 class="text-2xl font-bold mt-8 text-center">
+        Youtube Channels a Notificar na Guilda
+      </h2>
+
+      <form
+        id="deleteForm"
+        style="display: none"
+        method="post"
+        onsubmit="event.preventDefault(); confirmarExclusao();"
+      >
+        <input type="hidden" name="youtube" id="youtubeInput" />
+        <input type="hidden" name="func" value="delyoutubech" />
+        <input type="hidden" name="channelId" id="channelIdInput" />
+
+        <button type="submit">Confirmar Exclusão</button>
+      </form>
+
+      <table
+        class="custom-table w-11/12 mt-4 bg-green-300 border rounded-lg shadow-md overflow-hidden"
+      >
+        <thead class="bg-purple-300">
+          <tr>
+            <th class="px-4 py-2 text-center">YouTube</th>
+            <th class="px-4 py-2 text-center">Channel</th>
+            <th class="px-4 py-2 text-center">Last Video</th>
+            <th class="px-4 py-2 text-center">Last Publish</th>
+            <th class="px-4 py-2 text-center">Message</th>
+            <th class="px-4 py-2 text-center">Deletar</th>
+          </tr>
+        </thead>
+        <% info2.forEach(item => { %>
+        <tr class="bg-gray-100">
+          <td class="border border-purple-300 px-4 py-2 text-center">
+            <%= item.youtube %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2 text-center">
+            <%= item.channel %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2 text-center">
+            <%= item.lastVideo %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2 text-center">
+            <%= item.lastPublish %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2 text-center">
+            <%= item.message %>
+          </td>
+          <td class="border border-purple-300 px-4 py-2 text-center">
+            <button
+              class="custom-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              onclick="preencherForm('<%= item.youtube %>', '<%= item.notifyGuild %>')"
+            >
+              Excluir
+            </button>
+          </td>
+        </tr>
+        <% }); %>
+      </table>
+    </div>
+
+    <script>
+      function preencherForm(youtube, channelId) {
+        document.getElementById("youtubeInput").value = youtube;
+        document.getElementById("channelIdInput").value = channelId;
+
+        // Exibe o formulário
+        document.getElementById("deleteForm").style.display = "block";
+      }
+
+      function confirmarExclusao() {
+        var dadosFormulario = $("#deleteForm").serializeArray();
+        parent.dtbaseDelete(dadosFormulario);
+
+        // Oculta o formulário após a submissão
+        document.getElementById("deleteForm").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

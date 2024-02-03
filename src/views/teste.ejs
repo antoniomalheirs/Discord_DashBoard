@@ -18,11 +18,11 @@
 
   <div
     id="sidebar-contain"
-    class="fixed top-12 left-72 right-0 h-full flex bg-gray-600 dark:bg-gray-900 shadow-lg"
-    style="z-index: -5"
+    class="fixed top-12 left-72 right-0 h-full flex bg-gray-500 dark:bg-gray-900 shadow-lg"
+    style="z-index: -3; overflow-y: auto"
   >
-    <div class="flex items-center justify-center w-full">
-      <div id="sidebar-container2"></div>
+    <div class="flex items-center justify-center w-11/12 mx-auto my-auto">
+      <div id="sidebar-container2" style="margin-bottom: 6rem; margin-top: 2rem;"></div>
     </div>
   </div>
 
@@ -85,6 +85,24 @@
 
       // Faça algo com os dados recebidos
       console.log("Dados recebidos da página filho:", channelin);
+      $("#sidebar-container2").load(
+        `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`
+      );
+    }
+
+    function dtbaseDelete(dados) {
+      // Obtenha os dados necessários
+      const dadosFormulario = dados;
+      const tipo = dadosFormulario.find((item) => item.name === "func").value;
+
+      const guildId = dadosFormulario.find(
+        (item) => item.name === "channelId"
+      ).value;
+      const channelin = dadosFormulario.find(
+        (item) => item.name === "youtube"
+      ).value;
+
+      // Faça algo com os dados recebidos
       $("#sidebar-container2").load(
         `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`
       );
