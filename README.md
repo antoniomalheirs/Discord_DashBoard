@@ -13,7 +13,7 @@ Um site simples para voce se basear e fazer o controle do seu bot do discord usa
 * Embed JavaScript para as Paginas da WebPage
 
 ## Pacotes Node necessarios
-Os comandos a seguir instalaram as versões especificadas no final do comando. 
+### Os comandos a seguir instalaram as versões especificadas no final do comando. 
 Caso precise utilizar outras versões altere a linha apos o "^", ou se quiser instalar a versão mais recente utilize o comando sem o "@^#.##.#" 
 * npm install autoprefixer@^10.4.17
 * npm install axios@^1.6.5
@@ -37,6 +37,6 @@ Caso precise utilizar outras versões altere a linha apos o "^", ou se quiser in
 ## Como iniciar o projeto
 Para que todo funcione corretamente certifique-se de estar no diretorio raiz do projeto "./src" e que o arquivo "Index.js" esteja presente no diretorio. 
 Então use o seguinte comando no terminal do seu VisualStudio.
-* node .
+> node .
 
  
