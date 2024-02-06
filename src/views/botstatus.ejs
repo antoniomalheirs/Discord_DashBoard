@@ -4,11 +4,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../public/css/out.css" rel="stylesheet">
     <title>Discord Bot Dashboard</title>
   </head>
   <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
+    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-lg">
       
       <% if (info.icon && info.icon.indexOf('null') === -1) { %>
         <p class="flex items-center justify-center">
@@ -31,7 +31,7 @@
       
       <!-- Informações do Bot -->
       <h2 class="text-2xl font-bold mt-4 mb-2 text-center">Informações do Bot</h2>
-      <div class="text-gray-700 text-center">
+      <div class="text_page text-center">
         <p>Número de Servidores: <%= info.guildCount %></p>
         <p>Status do Bot: <%= info.botStatus %></p>
         <p>Tempo de Atividade: <%= info.uptime %></p>

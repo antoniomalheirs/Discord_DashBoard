@@ -10,28 +10,31 @@
     <title>Seleção de Servidor</title>
     <style>
       .nav-color {
-        background-color: #4d686f;
+        background-color: #666;
       }
 
       .button-color {
-        background-color: #6d756a;
+        background-color: rgb(74, 222, 128);
       }
 
       .cont {
-        background-color: #364461;
+        background-color: #6d756a;
       }
 
       .hover\:button-color:hover {
-        background-color: #bfa374;
+        background-color: #ccc;
+      }
+
+      #AguildIcon {
+        min-width: 15rem;
       }
     </style>
-    
   </head>
 
   <body class="bg-gray-500">
     <nav class="nav-color">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex  items-center justify-between h-16">
+        <div class="flex items-center justify-between h-16">
           <div class="flex items-center flex-shrink-0">
             <img
               class="h-8 w-8 rounded-2xl"
@@ -61,7 +64,7 @@
             >
             <div
               id="user-menu"
-              class="absolute right-0 z-10 mt-8 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
+              class="absolute right-10 z-10 mt-8 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="user-menu-button"
@@ -107,7 +110,7 @@
       </div>
     </nav>
 
-    <div class="container mx-auto w-5/12 mt-8 p-4 cont rounded-md shadow-md">
+    <div class="container mx-auto w-9/12 mt-8 p-4 cont rounded-md shadow-md">
       <form
         action="/bot/botinfo"
         method="post"
@@ -161,7 +164,7 @@
           id="AguildIcon"
           src="/res/serverIcon/nonserverimg.jpg"
           alt="Ícone da guilda"
-          class="rounded-3xl max-w-full"
+          class="rounded-3xl"
         />
       </div>
       <!-------

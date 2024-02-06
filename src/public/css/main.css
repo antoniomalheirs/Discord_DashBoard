@@ -1,7 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "transition-style";
 
+
+/*  Estilo para Pagina Principal  */
+/*-------------------------------------------------------*/
 .tooltip2 {
   position: relative;
   display: inline-block;
@@ -131,7 +135,7 @@
 }
 
 .topbar-color {
-  background-color: #6d756a;
+  background-color: #666;
 }
 
 .custom-table {
@@ -188,6 +192,55 @@
   background-color: #364461;
 }
 
-.hover\:button-color:hover {
+.button-color:hover {
   background-color: #bfa374;
+}
+/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/
+
+/*  Estilo para os modulos aperto pela pagina principal  */
+/*-------------------------------------------------------*/
+.pages_cont {
+  background-color: #6d756a;
+}
+
+.text_page {
+  color: #ccc;
+}
+
+.page_button-color {
+  background-color: rgb(74, 222, 128);
+  color:#fff;
+}
+
+.page_button-color:hover {
+  background-color: #ccc;
+}
+/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/
+
+
+@keyframes circle-in-hesitate {
+  0% {
+      clip-path: circle(0%);
+  }
+
+  40% {
+      clip-path: circle(40%);
+  }
+
+  100% {
+      clip-path: circle(125%);
+  }
+}
+
+.transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(to bottom right, #364461, #4d686f); /* Gradiente de cores desejado */
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-hesitate both;
 }

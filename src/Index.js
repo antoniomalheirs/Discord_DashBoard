@@ -33,6 +33,7 @@ app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public/css'));
 app.use(express.static(__dirname + '/public/layouts'));
 app.use(express.static(__dirname + '/public/res/sidebar'));
  // Substitua 'public' pelo diretório real
