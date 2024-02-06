@@ -166,7 +166,7 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
   try {
     const selectedGuildId = req.body.guilds;
     const botInfo = await getGuildData(selectedGuildId);
-    res.render("teste.ejs", { info: botInfo, user: req.user });
+    res.render("mainpage.ejs", { info: botInfo, user: req.user });
   } catch (error) {
     res.render("error.ejs");
   }
