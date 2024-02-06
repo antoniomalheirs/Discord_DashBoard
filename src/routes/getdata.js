@@ -50,17 +50,6 @@ const getGuilds = async (guildId) => {
   }
 };
 
-const getGuilds = async (guildId) => {
-  try {
-    const guilds = new guildsrepository(mongoose, "Guilds");
-    const ls = guilds.findOne(guildId);
-    return ls;
-  } catch (error) {
-    console.error("Erro ao obter dados da guilda:", error);
-    throw error;
-  }
-};
-
 const getTwitch = async (guildId) => {
   try {
     const channels = new twitchsrepository(mongoose, "Twitchs");
