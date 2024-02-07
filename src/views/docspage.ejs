@@ -18,7 +18,7 @@
   <body class="bg">
     <div class="transition-overlay_out"></div>
 
-    <div class="mx-auto">
+    <div class="mx-auto my-auto">
       <header id="topbar" class="absolute inset-x-0 top-0 z-50 my-1">
         <nav
           class="flex items-center justify-between p-2 lg:px-6"
@@ -66,7 +66,7 @@
           aria-hidden="true"
         >
           <div
-            class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-40 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
             style="
               clip-path: polygon(
                 74.1% 44.1%,
@@ -102,45 +102,38 @@
           </div>
           <div class="pt-6 text-start">
             <p class="mt-6 text-3xl leading-8 text-gray-800">
-              Secção dedicada a falar sobre o estruturamento do codigo fonte do bot
-            </p>
-
-            <p class="mt-2 ml-4 text-lg leading-8 text-gray-300">    
-                Se você está buscando um bot completo e altamente estruturado, é importante notar que nosso produto ainda está em desenvolvimento e pode não atender totalmente às suas expectativas neste momento.<br><br>
-                
-                Nosso bot foi inicialmente desenvolvido com o propósito de fornecer notificações sobre vídeos e transmissões ao vivo de canais do YouTube e Twitch. Ele tem a capacidade de enviar essas notificações para um canal de texto específico no servidor onde está presente.
-                
-                No entanto, estamos constantemente trabalhando para aprimorar e expandir as funcionalidades do nosso bot, visando oferecer uma experiência mais abrangente e satisfatória aos nossos usuários.<br><br>
-                
-                Agradecemos sua compreensão e interesse em nosso serviço. Se tiver alguma dúvida ou sugestão, não hesite em entrar em contato conosco.<br><br>
-                
-                Atenciosamente,<br>
-                SentinelData
-            </p>            
+              Estruturamento e Definição de Pastas
+            </p>          
           </div>
-          <div class="pt-6 text-start">
+          <div class="pt-2 text-start">
             <p class="mt-6 text-3xl leading-8 text-gray-800">
               Versão 1.0.0
             </p>
-
             <p class="mt-2 ml-4 text-lg leading-8 text-gray-300">
-                <strong>Pastas e Linguagem de desenvolvimento</strong><br>
-                <br>Divisão de Pastas<br>
-                As pastas contidas nos arquivos fonte representam cada secção de funcionalidades do bot.<br>
-                *
-            
-                <br><strong>Notificação de Transmissões Ao Vivo:</strong><br>
-                Além das notificações de vídeos, nosso bot também pode informar os usuários sobre transmissões ao vivo em canais do Twitch. Quando um canal que está sendo monitorado inicia uma transmissão ao vivo, uma notificação é enviada para o canal de texto específico.<br><br>
+                <b>Esquema de Diretórios</b><br>
+                <span class="ml-4">As pastas contidas nos arquivos fonte representam cada secção de modulos do bot.<br></span>
+                <br><b>-<u> Client</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por configurar e estabelecer as funcionalidades do bot no cliente do Discord<br></span>
+                <br><b>-<u> Database</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por configurar, conectar e estabelecer os metodos e dados do banco de dados pra garantir o funcionamento do bot nos servidores do Discord<br></span>
+                <br><b>-<u>Functions</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por definir e configurar o funcionamento das funções do bot<br></span>
+                <br><b>-<u>Loaders</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por definir e carregar os modulos que fazem o bot operar<br></span>
+                <br><b>-<u>Slash</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por definir e estruturar os comandos que poderam ser usados nos servidores do Discord<br></span>
+                <br><b>-<u>Utils</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por definir e estruturar os comandos que poderam ser usados nos servidores do Discord<br></span>
             </p>
                         
           </div>
         </div>
         <div
-          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-60rem)]"
           aria-hidden="true"
         >
           <div
-            class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+            class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-40 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
             style="
               clip-path: polygon(
                 74.1% 44.1%,
@@ -164,6 +157,34 @@
           ></div>
         </div>
       </div>
+      <div
+          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-60rem)]"
+          aria-hidden="true"
+        >
+          <div
+            class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-25 sm:left-0 sm:w-[72.1875rem]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
     </div>
   </body>
 </html>
