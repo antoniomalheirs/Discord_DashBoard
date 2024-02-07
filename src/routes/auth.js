@@ -19,4 +19,8 @@ router.get("/logout", (req, res) => {
   });
 });
 
+router.get("/about", (req, res) => {
+  res.render("aboutpage.ejs");
+});
+
 module.exports = router;

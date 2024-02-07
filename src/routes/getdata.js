@@ -21,7 +21,6 @@ const TwitchSchema = require("../database/schemas/TwitchSchema");
 mongoose.model("Twitchs", TwitchSchema);
 const TwitchToken = require("../utils/TwitchToken.js");
 const TwitchID = require("../utils/TwitchID.js");
-const { Result } = require("postcss");
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
