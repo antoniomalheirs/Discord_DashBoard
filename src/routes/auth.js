@@ -23,4 +23,12 @@ router.get("/about", (req, res) => {
   res.render("aboutpage.ejs");
 });
 
+router.get("/docs", (req, res) => {
+  res.render("docspage.ejs");
+});
+
+router.get("/devs", (req, res) => {
+  res.render("devspage.ejs");
+});
+
 module.exports = router;
