@@ -39,7 +39,10 @@ Para que todo funcione corretamente certifique-se de estar no diretorio raiz do 
 Então use o seguinte comando no terminal do seu VisualStudio.
 > node .
 
-[![Clique para assistir ao vídeo](https://i.vimeocdn.com/video/911635425.jpg)](https://player.vimeo.com/video/911635425?h=5fcde96dc2&autoplay=1&loop=1&byline=0)
+![HOMESCREEN](https://s13.gifyu.com/images/SCf26.gif)
+
+![MAINPAGE](https://s13.gifyu.com/images/SCf28.gif)
+
 
 
 
