@@ -54,9 +54,10 @@ module.exports = class UserRepository extends Repository {
     return this.model.findOneAndDelete({ codigouser }).then(this.parse);
   }
 
-  update(codigouser, entity, options = { upsert: true }) {
-    return this.model.updateOne({ codigouser }, entity, options);
+  update(codigouser, entity) {
+    return this.model.replaceOne({ codigouser }, entity);
   }
+  
 
   async verify(codigouser) {
     return !!(await this.model.findOne({ codigouser }));

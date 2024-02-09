@@ -556,11 +556,4 @@ router.get("/pagina/dtbase/:page/:guildId/:channelin", isAuthenticated, async (r
   }
 });
 
-router.get("/infoguilds", isAuthenticated, async (req, res) => {
-  const serversInfo = await getDatabase2();
-  res.render("guildsinfo.ejs", {
-    info: serversInfo,
-  });
-});
-
 module.exports = router;

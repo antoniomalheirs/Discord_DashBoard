@@ -52,6 +52,14 @@
       return "https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png";
     }
 
+    function email() {
+      return "<%=user.email%>";
+    }
+
+    function username() {
+      return "<%=user.username%>";
+    }
+
     function funcsReload(dados) {
       // Obtenha os dados necessários
       const dadosFormulario = dados;

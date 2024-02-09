@@ -16,13 +16,12 @@ class DiscordBot extends Client {
 
     this.commands = new Collection();
   }
-
+  // Iniciando aplicação e outras funções no Servidor
   async start() {
-    await new DatabaseLoader(this).call(); // Carrega a Database
-    // Adicione outros inicializadores aqui, se necessário
+    await new DatabaseLoader(this).call();
     this.login(process.env.TOKEN);
   }
-
+  // Funções internas da aplicação
   setCommands(commands) {
     this.commands = commands;
   }
