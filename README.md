@@ -14,7 +14,8 @@ Um site simples para voce se basear e fazer o controle do seu bot do discord usa
 * Embed JavaScript para as Paginas da WebPage
   
 ## Demonstração do projeto
-[![SCfLZ.gif](https://s13.gifyu.com/images/SCfLZ.gif)](https://gifyu.com/image/SCfLZ)
+https://github.com/antoniomalheirs/Discord_DashBoard/assets/79883711/b956e75c-92fa-4d3b-8973-f83dddecfb6b
+
 
 ## Pacotes necessarios
 ### Os comandos a seguir instalaram as versões especificadas no final do comando. 
