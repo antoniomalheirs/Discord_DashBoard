@@ -3,7 +3,7 @@ const passport = require("passport");
 const router = express.Router();
 require("dotenv").config();
 
-router.get("/discord", passport.authenticate("discord", { permissions: 8 }));
+router.get("/discord", passport.authenticate("discord"));
 
 router.get(
   "/discord/callback",
@@ -29,6 +29,10 @@ router.get("/docs", (req, res) => {
 
 router.get("/devs", (req, res) => {
   res.render("devspage.ejs");
+});
+
+router.get("/funcutils", (req, res) => {
+  res.render("funcutilspage.ejs");
 });
 
 router.get("/", (req, res) => {

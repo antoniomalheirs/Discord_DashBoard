@@ -3,203 +3,105 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="../css/out.css"
-      rel="stylesheet"
-    />
-    <title>Seleção de Servidor</title>
+    <link href="../css/out.css" rel="stylesheet" />
+
+    <link href="https://unpkg.com/transition-style" rel="stylesheet" />
+    <title>Divina Liricidade - DISCORD DASHBOARD</title>
     <style>
-      .nav-color {
-        background-color: #666;
-      }
-
-      .button-color {
-        background-color: rgb(74, 222, 128);
-      }
-
-      .cont {
-        background-color: #6d756a;
-      }
-
-      .hover\:button-color:hover {
-        background-color: #ccc;
-      }
-
-      #AguildIcon {
-        min-width: 15rem;
+      body {
+        background: #666;
       }
     </style>
   </head>
+  <body class="bg">
+    <div class="transition-overlay_out_2"></div>
 
-  <body class="bg-gray-500">
-    <nav class="nav-color">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-          <div class="flex items-center flex-shrink-0">
-            <img
-              class="h-8 w-8 rounded-2xl"
-              src="/res/serverIcon/boticon.jpg"
-              alt="Bot Icon"
-            />
-          </div>
-          <div class="hidden md:flex flex-auto ml-6">
-            <div class="flex space-x-4">
-              <a
-                href=""
-                class="button-color text-white rounded-md px-3 py-2 text-sm font-medium"
-                aria-current="page"
-                >Guildas</a
-              >
-            </div>
-          </div>
-          <div
-            class="hidden md:flex items-center justify-end md:flex-1 md:justify-end"
-          >
-            <a
-              href="#"
-              onclick="toggleUserMenu()"
-              class="text-white hover:bg-gray-700 hover:text-white rounded-md px-2 py-2 text-sm font-medium"
-            >
-              <%= user.username %></a
-            >
-            <div
-              id="user-menu"
-              class="absolute right-10 z-10 mt-8 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="user-menu-button"
-              tabindex="-1"
-            >
-              <a
-                href="/auth/logout"
-                class="block px-4 py-2 text-sm text-gray-700"
-                role="menuitem"
-                tabindex="-1"
-                id="user-menu-item-2"
-                >Desconectar</a
-              >
-            </div>
-            <button
-              class="relative ml-2 md:ml-0 md:mr-4 rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              id="user-menu-button"
-              aria-expanded="false"
-              aria-haspopup="true"
-              onclick="toggleUserMenu()"
-            >
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">Open user menu</span>
-              <img
-                class="h-8 w-8 rounded-full"
-                src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
-                alt=""
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="md:hidden" id="mobile-menu">
-        <div class="space-y-1 px-2 pb-3 pt-2">
-          <a
-            href="#"
-            class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-            aria-current="page"
-            >Guildas</a
-          >
-        </div>
-      </div>
-    </nav>
-
-    <div class="container mx-auto w-9/12 mt-8 p-4 cont rounded-md shadow-md">
-      <form
-        action="/bot/botinfo"
-        method="post"
-        class="flex flex-col items-center space-y-4"
+    <!-- Seu conteúdo HTML aqui -->
+    <div class="py-24 sm:py-32">
+      <div
+        class="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3"
       >
-        <label for="guilds" class="text-gray-700"></label>
-        <div class="relative inline-block w-64">
-          <select
-            name="guilds"
-            id="guilds"
-            onchange="redirecionarParaRota(this)"
-            class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded-md shadow leading-tight focus:outline-none focus:ring focus:border-blue-300"
+        <div class="max-w-2xl">
+          <h2
+            class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
           >
-            <option value="default">Selecione um Servidor</option>
-            <% user.guilds.forEach(guild => { %>
-            <option value="<%= guild.id %>"><%= guild.name %></option>
-            <% }); %>
-          </select>
-          <div
-            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-          >
-            <svg
-              class="fill-current h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
+            Escolha o servidor desejado para gerenciar
+          </h2>
+          <p class="mt-6 text-lg leading-8 text-gray-400">
+            Para acessar o servidor você deve ter as permissões necessarias para
+            manipular os dados do servidor em questão.
+          </p>
         </div>
-        <input
-          type="hidden"
-          id="icon"
-          name="icon"
-          value="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
-        />
-        <button
-          type="submit"
-          class="button-color text-white px-3 py-2 rounded-md hover:button-color focus:outline-none focus:ring focus:border-blue-300"
+        <% user.guilds.forEach(guild => { %>
+        <ul
+          class="glowing-list topbar-color rounded-md p-4 shadow-lg:bg-green-700"
         >
-          Selecionar
-        </button>
-      </form>
-
-      <div class="flex items-center justify-center mt-4">
-        <img
-          id="AguildIcon"
-          src="/res/serverIcon/nonserverimg.jpg"
-          alt="Ícone da guilda"
-          class="rounded-3xl"
-        />
+          <li class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-800">
+              <%= guild.name %>
+            </h3>
+            <!-- Defina uma imagem padrão para todas as guildas -->
+            <img
+              class="h-24 w-24 rounded-full"
+              src="/res/serverIcon/nonserverimg.jpg"
+              id="AguildIcon<%= guild.id %>"
+            />
+          </li>
+          <li class="text-sm text-gray-600">ID: <%= guild.id %></li>
+          <!-- Adicione mais informações do servidor conforme necessário -->
+          <li class="mt-2">
+            <form
+              action="/bot/botinfo"
+              method="post"
+              class="flex flex-auto items-center space-y-4"
+            >
+              <label for="guilds" class="text-gray-700"></label>
+              <input
+                type="hidden"
+                id="guilds"
+                name="guilds"
+                value="<%= guild.id %>"
+              />
+              <input
+                type="hidden"
+                id="icon"
+                name="icon"
+                value="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
+              />
+              <button
+                type="submit"
+                class="bg-green-300 px-5 py-2 rounded-md  focus:outline-none focus:ring focus:border-blue-300"
+              >
+                Selecionar
+              </button>
+            </form>
+          </li>
+        </ul>
+        <% }); %>
       </div>
-      <!-------
-      <div class="flex items-center justify-center mt-8">
-          <a href="/bot/infoguilds"
-              class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-300 mr-2">Consultar
-              Info Das Guildas</a>
-      </div>
-      
-      
-      
-      -->
     </div>
 
     <script>
-      async function toggleUserMenu() {
-        const userMenu = document.getElementById("user-menu");
-        userMenu.classList.toggle("hidden");
+      async function redirecionarParaRota(guildId) {
+          try {
+              const response = await fetch(`/bot/obter-icone-guilda/${guildId}`);
+              const data = await response.json();
+              const guildIcon = document.getElementById("AguildIcon" + guildId);
+              if (data.iconURL) {
+                  guildIcon.src = data.iconURL;
+                  guildIcon.style.backgroundColor = "transparent";
+              } else {
+                  guildIcon.src = "/res/serverIcon/nonserverimg.jpg";
+              }
+          } catch (error) {
+              console.error("Erro ao carregar imagem da guilda:", error);
+          }
       }
 
-      async function redirecionarParaRota(select) {
-        try {
-          const guildId = select.value;
-          const response = await fetch(`/bot/obter-icone-guilda/${guildId}`);
-          const data = await response.json();
-          const guildIcon = document.getElementById("AguildIcon");
-          if (data.iconURL) {
-            guildIcon.src = data.iconURL;
-            guildIcon.style.backgroundColor = "transparent";
-          } else {
-            guildIcon.src = "/res/serverIcon/nonserverimg.jpg";
-          }
-        } catch (error) {
-          console.error("Erro ao carregar imagem da guilda:", error);
-        }
+      window.onload = function() {
+          <% user.guilds.forEach(guild => { %>
+          redirecionarParaRota('<%= guild.id %>');
+          <% }); %>
       }
     </script>
   </body>

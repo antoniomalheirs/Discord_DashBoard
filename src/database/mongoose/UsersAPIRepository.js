@@ -16,6 +16,8 @@ module.exports = class UserRepository extends Repository {
       return {
         codigouser: entity.codigouser ? String(entity.codigouser) : null,
         username: entity.username,
+        acesstk: entity.acesstk,
+        refreshtk: entity.refreshtk
         // ... outros campos do usuário
       };
     } else {

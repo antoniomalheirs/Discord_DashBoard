@@ -1,8 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
-const DiscordStrategy = require("passport-discord").Strategy,
-  refresh = require("passport-oauth2-refresh");
+const DiscordStrategy = require("passport-discord").Strategy, refresh = require("passport-oauth2-refresh");
 const authRoutes = require("./routes/auth");
 const getdata = require("./routes/getdata");
 const discordBot = require("./Client");
@@ -44,9 +43,10 @@ app.set("trust proxy", 1);
 app.use(
   session({
     secret: process.env.SECRET_KEY,
+    name:"DivinaBot",
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 120000 },
+    cookie: { maxAge: 360000 },
   })
 );
 

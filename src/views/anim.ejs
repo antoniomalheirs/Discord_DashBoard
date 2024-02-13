@@ -7,100 +7,87 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://unpkg.com/transition-style" rel="stylesheet" />
     <title>Divina Liricidade - DISCORD DASHBOARD</title>
-
-    <style>
-        @keyframes circle-in-hesitate {
-            0% {
-                clip-path: circle(0%);
-            }
-
-            40% {
-                clip-path: circle(40%);
-            }
-
-            100% {
-                clip-path: circle(125%);
-            }
-        }
-
-        .transition-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(to bottom right, #4d686f, #8e44ad); /* Gradiente de cores desejado */
-            animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-hesitate both;
-        }
-
-        body {
-            background-color: #323a49; /* Cor de fundo padrão após a transição */
-        }
     </style>
 </head>
 
 <body class="bg">
-    <div class="transition-overlay"></div>
+
 
     <!-- Seu conteúdo HTML aqui -->
-     <div class="container mx-auto">
-         <header class="absolute inset-x-0 top-0 z-50">
-           <nav class="flex items-center justify-between p-2 lg:px-6" aria-label="Global">
-             <div class="flex lg:flex-1">
-               <a href="#" class="px-3 py-1">
-                 <span class="sr-only">Your Company</span>
-                 <img class="h-12 w-auto rounded-3xl" src="/res/serverIcon/boticon.jpg" href="/home">
-               </a>
-             </div>
-             <div class="hidden lg:flex lg:gap-x-12">
-               <a href="#" class="text-sm font-semibold leading-6 text-gray-300">Sobre</a>
-               <a href="#" class="text-sm font-semibold leading-6 text-gray-200">Documentação</a>
-               <a href="#" class="text-sm font-semibold leading-6 text-gray-300">Utilidades & Funções</a>
-               <a href="#" class="text-sm font-semibold leading-6 text-gray-200">Devs</a>
-             </div>
-             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-               <div class="hidden sm:my-4 sm:flex sm:justify-center">
-                 <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-green-400 ring-1 ring-green-200 hover:ring-amber-500">
-                   <body class="container mx-auto bg-white"> <a href="/auth/discord"> <button>Login com Discord</button> </a>
-                 </div>
-               </div>
-             </div>
-           </nav>
-         </header>
+    <div class="bg-white py-24 sm:py-32">
+      <div class="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
+        <div class="max-w-2xl">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Escolha o servidor desejado para gerenciar</h2>
+          <p class="mt-6 text-lg leading-8 text-gray-600">Para acessar o servidor você deve ter as permissões necessarias para manipular os dados do servidor em questão.</p>
+        </div>
+        <% user.guilds.forEach(guild => { %>
+          <ul class="bg-white rounded-md p-4">
+            <li class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-gray-800"><%= guild.name %></h3>
+              <!-- Defina uma imagem padrão para todas as guildas -->
+              <img class="h-8 w-8 rounded-full" src="/res/serverIcon/nonserverimg.jpg" id="AguildIcon<%= guild.id %>">
+            </li>
+            <li class="text-sm text-gray-600">ID: <%= guild.id %></li>
+            <!-- Adicione mais informações do servidor conforme necessário -->
+            <li class="mt-2">
+
+              <form
+              action="/bot/botinfo"
+              method="post"
+              class="flex flex-auto items-center space-y-4"
+            >
+              <label for="guilds" class="text-gray-700"></label>
+              <input
+                type="hidden"
+                id="guilds"
+                name="guilds"
+                value="<%= guild.id %>"
+              />
+              <input
+                type="hidden"
+                id="icon"
+                name="icon"
+                value="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
+              />
+              <button
+                type="submit"
+                class="button-color bg-green-300 px-5 py-2 rounded-md hover:button-color focus:outline-none focus:ring focus:border-blue-300"
+              >
+                Selecionar
+              </button>
+            </form>
+            </li>
+          </ul>
+          <% }); %>
         
-         <div class="relative isolate px-6 pt-20 lg:px-8">
-           <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-             <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-           </div>
-           <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-             <div class="text-center">
-               <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">A Divina Liricidade</h1>
-               <p class="mt-6 text-lg leading-8 text-gray-400">Um bot simples, e OpenSource desennvolvido e mantido por SentinelData.</p>
-               <div class="mt-10 flex items-center justify-center gap-x-6">
-                 <a href="https://discord.com/api/oauth2/authorize?client_id=474709934282375178&permissions=8&scope=bot+applications.commands" class="rounded-md bg-green-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-100">Convidar</a>
-                 <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Documentação <span aria-hidden="true">→</span></a>
-               </div>
-             </div>
-           </div>
-           <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-             <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-           </div>
-         </div>
-     </div>
+      </div>
+    </div>
+
+    <script>
+      async function redirecionarParaRota(guildId) {
+        try {
+          const response = await fetch(`/bot/obter-icone-guilda/${guildId}`);
+          const data = await response.json();
+          const guildIcon = document.getElementById("AguildIcon" + guildId);
+          if (data.iconURL) {
+            guildIcon.src = data.iconURL;
+            guildIcon.style.backgroundColor = "transparent";
+          } else {
+            guildIcon.src = "/res/serverIcon/nonserverimg.jpg";
+          }
+        } catch (error) {
+          console.error("Erro ao carregar imagem da guilda:", error);
+        }
+      }
+
+      // Carregar imagens padrão para todas as guildas no carregamento da página
+      window.onload = function() {
+        <% user.guilds.forEach(guild => { %>
+          redirecionarParaRota('<%= guild.id %>');
+        <% }); %>
+      }
+    </script>
     
-     <div class="max-w-md mx-auto my-10 bg-purple-100 rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-       <div class="md:flex">
-         <div class="md:flex-shrink-0">
-           <img class="h-48 w-full object-cover md:h-full md:w-28" src="/res/serverIcon/boticon.jpg" alt="Man looking at item at a store">
-         </div>
-         <div class="p-6 ">
-           <div class="uppercase tracking-wide text-sm text-green-600 font-semibold">Divina Liricidade</div>
-           <a class="block mt-1 text-lg leading-tight font-medium text-black ">Convide-me para seu servidor!</a>
-           <p class="mt-2 text-gray-600">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
-         </div>
-       </div>
-     </div>
 </body>
 
 </html>
