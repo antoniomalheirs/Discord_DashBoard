@@ -112,7 +112,7 @@ app.get("/", (req, res) => {
 const server = http.createServer(app); // Create a server using Express app
 
 const PORT = process.env.PORT || 80;
-const HOSTNAME = "dashboardsite.onrender.com"; // Your hostname
+const HOSTNAME = "0.0.0.0"; // Your hostname
 
 server.listen(PORT, HOSTNAME, () => {
   console.log(`Servidor rodando em https://${HOSTNAME}:${PORT}`);
