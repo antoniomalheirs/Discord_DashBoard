@@ -109,12 +109,12 @@ app.get("/", (req, res) => {
   res.render("home.ejs");
 });
 
-const server = http.createServer(app); // Create a server using Express app
+const server = http.createServer(app);
 
-const PORT = process.env.PORT || 80;
-const HOSTNAME = "0.0.0.0"; // Your hostname
+const PORT = process.env.PORT;
 
-server.listen(PORT, HOSTNAME, () => {
-  console.log(`Servidor rodando em https://${HOSTNAME}:${PORT}`);
+server.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
+
 
