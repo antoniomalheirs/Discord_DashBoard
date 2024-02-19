@@ -10,6 +10,7 @@ const UsersAPIRepository = require("../src/database/mongoose/UsersAPIRepository"
 const UserAPISchema = require("../src/database/schemas/UserAPISchema");
 mongoose.model("APIUsers", UserAPISchema);
 const bodyParser = require("body-parser");
+const http = require("http");
 require("dotenv").config();
 
 passport.serializeUser((user, done) => done(null, user));
@@ -108,8 +109,10 @@ app.get("/", (req, res) => {
   res.render("home.ejs");
 });
 
-const PORT = process.env.PORT || 3000;
+const server = http.createServer(app); // Create a server using Express app
 
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 80;
+
+server.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

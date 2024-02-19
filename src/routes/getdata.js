@@ -21,10 +21,6 @@ const TwitchSchema = require("../database/schemas/TwitchSchema");
 mongoose.model("Twitchs", TwitchSchema);
 const TwitchToken = require("../utils/TwitchToken.js");
 const TwitchID = require("../utils/TwitchID.js");
-const { profile, error } = require("console");
-const UsersAPIRepository = require("../database/mongoose/UsersAPIRepository");
-const UserAPISchema = require("../database/schemas/UserAPISchema");
-const axios = require("axios");
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
