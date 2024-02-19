@@ -109,12 +109,20 @@ app.get("/", (req, res) => {
   res.render("home.ejs");
 });
 
-const server = http.createServer(app);
+if (process.env.AMBIENT == "developer") {
+  const PORT = process.env.PORT;
 
-const PORT = process.env.PORT;
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+  });
+} else if (process.env.AMBIENT == "production") {
+  const server = http.createServer(app);
 
-server.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+  const PORT = process.env.PORT;
+
+  server.listen(PORT, () => {
+    console.log(`Servidor rodando em Produção na porta ${PORT}`);
+  });
+}
 
 
