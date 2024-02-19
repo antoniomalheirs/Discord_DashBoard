@@ -1,7 +1,8 @@
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
-const DiscordStrategy = require("passport-discord").Strategy, refresh = require("passport-oauth2-refresh");
+const DiscordStrategy = require("passport-discord").Strategy,
+  refresh = require("passport-oauth2-refresh");
 const authRoutes = require("./routes/auth");
 const getdata = require("./routes/getdata");
 const discordBot = require("./Client");
@@ -44,7 +45,7 @@ app.set("trust proxy", 1);
 app.use(
   session({
     secret: process.env.SECRET_KEY,
-    name:"DivinaBot",
+    name: "DivinaBot",
     resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 360000 },
@@ -87,7 +88,7 @@ var disc = new DiscordStrategy(
         refreshtk: refreshToken,
       };
 
-      await userapischema.update(profile.id,uptUser);
+      await userapischema.update(profile.id, uptUser);
 
       return log(null, profile);
     }
@@ -109,12 +110,18 @@ app.get("/", (req, res) => {
   res.render("home.ejs");
 });
 
-const server = http.createServer(app);
+if (process.env.AMBIENT == "developer") {
+  const PORT = process.env.PORT;
 
-const PORT = process.env.PORT;
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+  });
+} else if (process.env.AMBIENT == "production") {
+  const server = http.createServer(app);
 
-server.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+  const PORT = process.env.PORT;
 
-
+  server.listen(PORT, () => {
+    console.log(`Servidor rodando na porta1 ${PORT}`);
+  });
+}
