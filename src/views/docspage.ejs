@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../css/out.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <style>
+      body {
+        background: #666;
+      }
+    </style>
+  </head>
+  <body class="bg">
+    <div class="transition-overlay_out"></div>
+
+    <div class="mx-auto my-auto">
+      <header id="topbar" class="absolute inset-x-0 top-0 z-50 my-1">
+        <nav
+          class="flex items-center justify-between p-2 lg:px-6"
+          aria-label="Global"
+        >
+          <div class="flex lg:flex-1">
+            <a href="/" class="px-3 py-1">
+              <span class="sr-only">Your Company</span>
+              <img
+                class="h-12 w-auto rounded-3xl"
+                src="/res/serverIcon/boticon.jpg"
+              />
+            </a>
+            <p class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="#fff"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                />
+              </svg>
+            </p>
+          </div>
+          <div class="hidden lg:flex lg:gap-x-12">
+            <a
+              href="/auth/docs"
+              class="text-sm font-semibold leading-6 text-gray-300"
+              >Documentação</a
+            >
+          </div>
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end"></div>
+        </nav>
+      </header>
+
+      <div id="content_about" class="isolate px-6 pt-14 lg:px-8">
+        <div
+          class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+          aria-hidden="true"
+        >
+          <div
+            class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-40 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+        <div class="mx-auto max-w-1xl py-32 sm:py-48 lg:py-56">
+          <div class="text-center">
+            <h1
+              class="text-4xl font-bold tracking-tight text-gray-900 sm:text-8xl"
+            >
+              A Divina Liricidade
+            </h1>
+            <p class="mt-6 text-4xl leading-8 text-gray-400">
+                Documentação
+            </p>
+          </div>
+          <div class="pt-6 text-start">
+            <p class="mt-6 text-3xl leading-8 text-gray-800">
+              Estruturamento e Definição de Pastas
+            </p>          
+          </div>
+          <div class="pt-2 text-start">
+            <p class="mt-6 text-3xl leading-8 text-gray-800">
+              Versão 1.0.0
+            </p>
+            <p class="mt-2 ml-4 text-lg leading-8 text-gray-300">
+                <b>Esquema de Diretórios</b><br>
+                <span class="ml-4">As pastas contidas nos arquivos fonte representam cada secção de modulos do bot.<br></span>
+                <br><b>-<u> Client</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por configurar e estabelecer as funcionalidades do bot no cliente do Discord<br></span>
+                <br><b>-<u> Database</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por configurar, conectar e estabelecer os metodos e dados do banco de dados pra garantir o funcionamento do bot nos servidores do Discord<br></span>
+                <br><b>-<u>Functions</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por definir e configurar o funcionamento das funções do bot<br></span>
+                <br><b>-<u>Loaders</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por definir e carregar os modulos que fazem o bot operar<br></span>
+                <br><b>-<u>Slash</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por definir e estruturar os comandos que poderam ser usados nos servidores do Discord<br></span>
+                <br><b>-<u>Utils</u></b><br>
+                <span class="ml-8">Esse diretório é responsavel por definir e estruturar os comandos que poderam ser usados nos servidores do Discord<br></span>
+            </p>
+                        
+          </div>
+        </div>
+        <div
+          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-60rem)]"
+          aria-hidden="true"
+        >
+          <div
+            class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-40 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+      </div>
+      <div
+          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-60rem)]"
+          aria-hidden="true"
+        >
+          <div
+            class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-25 sm:left-0 sm:w-[72.1875rem]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+    </div>
+  </body>
+</html>

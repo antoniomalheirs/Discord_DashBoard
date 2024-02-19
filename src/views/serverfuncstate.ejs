@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="../css/out.css" rel="stylesheet" />
+  <title>Gerenciador de Funções</title>
+</head>
+
+<body class="bg-yellow-100 min-h-screen flex items-center justify-center">
+  <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-6xl flex flex-col justify-between min-h-full">
+    <!-- Conteúdo do Pop-up -->
+    <div id="mensagemPopUp" class="hidden"></div>
+
+    <div class="flex flex-col items-center mb-6">
+      <div class="mb-4">
+        <h1 class="text-3xl font-bold">Funções do Servidor</h1>
+      </div>
+
+      <div class="mb-4">
+        <h1 class="text-2xl font-bold">Guilda <%= info.name %></h1>
+      </div>
+
+      <div class="mt-4">
+        <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+        <img src="<%= info.icon %>" alt="Ícone da guilda" class="rounded-full max-w-full h-auto" />
+        <% } else { %>
+        <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="rounded-full max-w-full h-auto" />
+        <% } %>
+      </div>
+    </div>
+    <!-- Tabela 2 -->
+    <h2 class="text-2xl mt-8 text-center">Funções ativas na Guilda</h2>
+    
+    <div class="flex items-center justify-center mt-4 flex-grow overflow-x-auto">
+      <div class="rounded-xl overflow-hidden w-full bg-green-300 border">
+        <table class="w-full">
+          <!-- ... (código da tabela) ... -->
+          <thead>
+            <tr class="bg-purple-300">
+              <th class="py-2 px-4">ID</th>
+              <th class="py-2 px-4">Name</th>
+              <th class="py-2 px-4">Notificar Videos do Youtube</th>
+              <th class="py-2 px-4">Notificar Videos da Twitch</th>
+              <th class="py-2 px-4">ID para notificar video</th>
+              <th class="py-2 px-4">ID para notificar twitch</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-gray-100">
+              <td class="py-2 px-4 border border-purple-300 text-center"><%= info4.guildID %></td>
+              <td class="py-2 px-4 border border-purple-300 text-center"><%= info4.guildName %></td>
+              <td class="py-2 px-4 border border-purple-300 text-center"><%= info4.youtubenotify %></td>
+              <td class="py-2 px-4 border border-purple-300 text-center"><%= info4.twitchnotify %></td>
+              <td class="py-2 px-4 border border-purple-300 text-center"><%= info4.channelytb %></td>
+              <td class="py-2 px-4 border border-purple-300 text-center"><%= info4.channeltch %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

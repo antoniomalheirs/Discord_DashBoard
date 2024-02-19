@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="../css/out.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #email {
+        font-size: 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
+    <div
+      id="sidebar"
+      class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center sidebar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
+    >
+      <div class="tooltip2">
+        <div class="relative group">
+          <div
+            id="configuration"
+            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+            onclick="handleIconClick('configuration')"
+          >
+            <img
+              src="/res/sidebar/fire.jpg"
+              alt="Fire Icon"
+              class="w-10 h-10 my-auto"
+            />
+          </div>
+          <div class="tooltip-text2">Inicio</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="tooltip2 ml-2">
+          <div class="relative group">
+            <div
+              id="chanels"
+              class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+              onclick="handleIconClick('chanels')"
+            >
+              <img
+                src="/res/sidebar/unknow.jpg"
+                alt="Fire Icon"
+                class="w-11 h-11 my-auto"
+              />
+            </div>
+            <div class="tooltip-text2">Funções</div>
+          </div>
+        </div>
+
+        <div class="tooltip2 ml-2">
+          <div class="relative group">
+            <div
+              id="guild"
+              class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+              onclick="handleIconClick('guild')"
+            >
+              <img
+                src="/res/sidebar/database.jpg"
+                alt="Fire Icon"
+                class="w-10 h-10 my-auto"
+              />
+            </div>
+            <div class="tooltip-text2">Banco de Dados</div>
+          </div>
+        </div>
+
+        <div class="tooltip2 ml-2">
+          <div class="relative group">
+            <div
+              id="user"
+              class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+              onclick="handleIconClick('user')"
+            >
+              <img
+                src="/res/sidebar/gear2.jpg"
+                alt="Fire Icon"
+                class="w-11 h-11 ml-1.5 my-auto"
+              />
+            </div>
+            <div class="tooltip-text2">Info da Guilda</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tooltip2">
+        <div class="relative group">
+          <div
+            id="usage"
+            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+            onclick="handleIconClick('usage')"
+          >
+            <img
+              src="/res/sidebar/gear.jpg"
+              alt="Fire Icon"
+              class="w-11 h-11 ml-0.5 my-2"
+            />
+          </div>
+          <div class="tooltip-text2">Configurações</div>
+        </div>
+      </div>
+    </div>
+    <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
+
+    <!------------------------------------------------------------------------------------------------------------------------>
+
+    <!----------------------------------------------- MENU LATERAL COM OPÇÕES  ----------------------------------------------->
+    <div
+      id="channel-bar"
+      style="z-index: -1"
+      class="fixed top-0 left-20 h-screen w-52 flex flex-col items-start chanelbar-color dark:bg-gray-900 shadow-lg"
+    >
+      <div
+        id="configuration-sidebar"
+        class="configuration-block divide-y-2 divide-green-300 mx-4 my-2"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+          Inicio
+        </h5>
+
+        <div class="channel-bar-container">
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('home')"
+          >
+            <div class="dropdown-header flex items-center">
+              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+              <h5
+                id="home-header"
+                class="dropdown-header-text text-sm ml-2 cursor-pointer"
+              >
+                Informações da Guilda
+              </h5>
+            </div>
+
+            <div
+              id="home-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('server')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Server</h5>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dropdown "Informações do Bot" -->
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('moderation')"
+          >
+            <div class="dropdown-header flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+              <h5
+                id="moderation-header"
+                class="dropdown-header-text text-sm ml-2 cursor-pointer"
+              >
+                Informações do Bot
+              </h5>
+            </div>
+            <div
+              id="moderation-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('status')"
+              >
+                <!-- Substitua o ícone existente pela seta para a direita do Heroicons -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Status</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="chanels-sidebar"
+        class="chanels-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+          Funções
+        </h5>
+
+        <div class="channel-bar-container">
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('funcs')"
+          >
+            <div class="dropdown-header flex items-center">
+              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+              <h5
+                id="funcs-header"
+                class="dropdown-header-text text-sm ml-2 cursor-pointer"
+              >
+                Funções de notificação
+              </h5>
+            </div>
+
+            <div
+              id="funcs-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('funcyoutube')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Youtube</h5>
+              </div>
+
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('functwitch')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Twitch</h5>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('addchannels')"
+          >
+            <div class="dropdown-header flex items-center">
+              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+              <h5
+                id="addchannels-header"
+                class="dropdown-header-text text-sm ml-2 cursor-pointer"
+              >
+                Canais para notificação
+              </h5>
+            </div>
+
+            <div
+              id="addchannels-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('ytbchannelupdate')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Youtube</h5>
+              </div>
+
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('tchchannelupdate')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Twitch</h5>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dropdown border-discord-light mt-2 no-close-dropdown"
+            onclick="toggleDropdown('statefuncs')"
+          >
+            <div class="dropdown-header flex items-center">
+              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+              <h5
+                id="statefuncs-header"
+                class="dropdown-header-text text-sm ml-2 cursor-pointer"
+              >
+                Estado das funções
+              </h5>
+            </div>
+
+            <div
+              id="statefuncs-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('statesinfo')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Informações</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="guild-sidebar"
+        class="guild-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+          Banco de Dados
+        </h5>
+
+        <div class="channel-bar-container">
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('channels')"
+          >
+            <div class="dropdown-header flex items-center">
+              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+              <h5
+                id="statefuncs-header"
+                class="dropdown-header-text text-sm ml-2 cursor-pointer"
+              >
+                Youtube channels
+              </h5>
+            </div>
+
+            <div
+              id="channels-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('addytbchannel')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Adicionar canal</h5>
+              </div>
+
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('viewytbchannels')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Visualizar canais</h5>
+              </div>
+
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('deleteytbchannels')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Deletar canais</h5>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('videos')"
+          >
+            <div class="dropdown-header flex items-center">
+              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+              <h5
+                id="videos-header"
+                class="dropdown-header-text text-sm ml-2 cursor-pointer"
+              >
+                Twitch streams
+              </h5>
+            </div>
+
+            <div
+              id="videos-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('addtchchannel')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Adicionar live</h5>
+              </div>
+
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('viewtchchannel')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Visualizar lives</h5>
+              </div>
+
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('deletetchchannel')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Deletar streams</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="user-sidebar"
+        class="configuration-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+          Servidor
+        </h5>
+
+        <div class="channel-bar-container">
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('user')"
+          >
+            <div class="dropdown-header flex items-center">
+              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+              <h5
+                id="user-header"
+                class="dropdown-header-text text-sm ml-2 cursor-pointer"
+              >
+                Membros do servidor
+              </h5>
+            </div>
+
+            <div
+              id="user-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div
+                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
+                onclick="selectTopic('memberinfo')"
+              >
+                <!-- Substitua o ícone existente pela seta para a direita do Heroicons -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Mensagens e Voz</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="usage-sidebar"
+        class="usage-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
+      >
+        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+          Configurações
+        </h5>
+
+        <div class="channel-bar-container">
+          <div
+            class="dropdown border-discord-light mt-2"
+            onclick="toggleDropdown('usage')"
+          >
+            <div class="dropdown-header flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+              <h5 id="usage-header" class="dropdown-header-text text-sm ml-2">
+                Funções de notificação
+              </h5>
+            </div>
+
+            <div
+              id="usage-dropdown"
+              class="dropdown-content hidden ml-4 text-sm"
+            >
+              <div
+                class="dropdown-selection flex items-center"
+                onclick="selectTopic('youtube')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 w-4 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+                <h5 class="dropdown-selection-text ml-1">Youtube</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!----------------------------------------------- MENU LATERAL COM OPÇÕES  ----------------------------------------------->
+
+    <!------------------------------------------------------------------------------------------------------------------------>
+
+    <!------------------------------------------------------ TOP BAR  -------------------------------------------------------->
+    <div
+      id="top-bar"
+      class="fixed top-0 left-72 right-0 h-12 flex topbar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-yellow-900"
+    >
+      <div class="flex items-center ml-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6 text-gray-400"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
+          />
+        </svg>
+        <h5
+          id="hashtag-configuration"
+          class="text-xl channel-block-text font-bold cursor-default ml-2"
+        >
+          Pagina inicial
+        </h5>
+        <h5
+          id="hashtag-chanels"
+          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
+        >
+          Gerenciador de funções
+        </h5>
+        <h5
+          id="hashtag-guild"
+          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
+        >
+          Gerenciar banco de dados
+        </h5>
+        <h5
+          id="hashtag-user"
+          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
+        >
+          Informações do servidor
+        </h5>
+        <h5
+          id="hashtag-usage"
+          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
+        >
+          Configurações
+        </h5>
+      </div>
+
+      <div class="flex items-center mx-auto mr-4">
+        <div class="relative group">
+          <input
+            id="searchInput"
+            class="search-input w-48"
+            type="text"
+            placeholder=" Ajuda ?"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center mr-4">
+        <div class="relative group">
+          <div class="flex justify-center sidebar-icon w-8 h-8 bg-gray-400">
+            <button
+              id="minhaImagem"
+              data-dropdown-toggle="minhaImagem"
+              onclick="togglebtnDropdown('minhaImagem')"
+              class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              type="button"
+            >
+              <span class="sr-only">Open user menu</span>
+              <img class="w-8 h-8 rounded-full" src="" alt="user photo" />
+            </button>
+
+            <!-- Dropdown menu -->
+            <div
+              id="minhaImagem-changeState"
+              class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-11 right-0 dark:bg-gray-700 dark:divide-gray-600"
+            >
+              <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                <div
+                  id="userpt"
+                  class="font-medium truncate text-lg text-center"
+                ></div>
+                <div
+                  id="email"
+                  class="font-medium truncate font-size-0.7rem text-center text-gray-400"
+                ></div>
+              </div>
+              <ul
+                class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdownUserAvatarButton"
+              >
+                <li>
+                  <a
+                    href="/dashboard"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >Dashboard</a
+                  >
+                </li>
+              </ul>
+              <div class="py-2">
+                <a
+                  href="/"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  >Sign out</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!------------------------------------------------------ TOP BAR  -------------------------------------------------------->
+
+    <!------------------------------------------------------------------------------------------------------------------------>
+
+    <!-------------------------------------------------- FUNÇÕES E METODOS  -------------------------------------------------->
+    <script>
+      var img = parent.user();
+      var email = parent.email();
+      var user = parent.username();
+
+      // Selecione a div pelo ID
+      var divEmail = document.getElementById("email");
+      var divUser = document.getElementById("userpt");
+
+      divEmail.innerHTML = email;
+      divUser.innerHTML = user;
+
+      var buttonId = "minhaImagem";
+      var button = document.getElementById(buttonId);
+
+      if (button) {
+        var userImage = button.querySelector("img");
+
+        if (userImage) {
+          userImage.src = img;
+        }
+      }
+
+      function handleIconClick(btnId) {
+        const Configuration = document.getElementById(`configuration-sidebar`);
+        const Chanels = document.getElementById(`chanels-sidebar`);
+        const Guild = document.getElementById(`guild-sidebar`);
+        const User = document.getElementById(`user-sidebar`);
+        const Usage = document.getElementById(`usage-sidebar`);
+        const ConfigurationHash = document.getElementById(
+          `hashtag-configuration`
+        );
+        const ChanelsHash = document.getElementById(`hashtag-chanels`);
+        const GuildHash = document.getElementById(`hashtag-guild`);
+        const UserHash = document.getElementById(`hashtag-user`);
+        const UsageHash = document.getElementById(`hashtag-usage`);
+        const hashtag = document.getElementById(`hashtag-${btnId}`);
+        const sidebar = document.getElementById(`${btnId}-sidebar`);
+
+        if (!Configuration.classList.contains("hidden")) {
+          Configuration.classList.toggle("hidden");
+          ConfigurationHash.classList.toggle("hidden");
+        }
+
+        if (!Chanels.classList.contains("hidden")) {
+          Chanels.classList.toggle("hidden");
+          ChanelsHash.classList.toggle("hidden");
+        }
+        if (!Guild.classList.contains("hidden")) {
+          Guild.classList.toggle("hidden");
+          GuildHash.classList.toggle("hidden");
+        }
+        if (!User.classList.contains("hidden")) {
+          User.classList.toggle("hidden");
+          UserHash.classList.toggle("hidden");
+        }
+        if (!Usage.classList.contains("hidden")) {
+          Usage.classList.toggle("hidden");
+          UsageHash.classList.toggle("hidden");
+        }
+        sidebar.classList.toggle("hidden");
+        hashtag.classList.toggle("hidden");
+      }
+
+      function toggleDropdown(dropdownId) {
+        var dropdown = document.getElementById(dropdownId + "-dropdown");
+        //var chevron = document.getElementById(dropdownId + "-chevron");
+
+        if (
+          dropdown.style.display === "none" ||
+          dropdown.style.display === ""
+        ) {
+          dropdown.style.display = "block";
+          //chevron.className = "fas fa-chevron-up text-gray-400"; // adjust class for open state
+        } else {
+          dropdown.style.display = "none";
+          //chevron.className = "fas fa-chevron-down text-gray-400"; // adjust class for closed state
+        }
+      }
+
+      function togglebtnDropdown(btnId) {
+        var button = document.getElementById("minhaImagem");
+        var dropdown = document.getElementById("minhaImagem-changeState");
+
+        dropdown.classList.toggle("hidden");
+      }
+
+      function selectTopic(topic) {
+        if (topic === "server") {
+          parent.carregarConteudo("server");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "status") {
+          parent.carregarConteudo("status");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "funcyoutube") {
+          parent.carregarConteudo("funcyoutube");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "functwitch") {
+          parent.carregarConteudo("functwitch");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "ytbchannelupdate") {
+          parent.carregarConteudo("ytbchannelupdate");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "tchchannelupdate") {
+          parent.carregarConteudo("tchchannelupdate");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "statesinfo") {
+          parent.carregarConteudo("statesinfo");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "viewytbchannels") {
+          parent.carregarConteudo("viewytbchannels");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "deleteytbchannels") {
+          parent.carregarConteudo("deleteytbchannels");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "addytbchannel") {
+          parent.carregarConteudo("addytbchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "viewtchchannel") {
+          parent.carregarConteudo("viewtchchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "deletetchchannel") {
+          parent.carregarConteudo("deletetchchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "addtchchannel") {
+          parent.carregarConteudo("addtchchannel");
+          //href ="/bot/pagina/server"
+        }
+        if (topic === "memberinfo") {
+          parent.carregarConteudo("memberinfo");
+          //href ="/bot/pagina/server"
+        }
+        console.log(`Selected topic: ${topic}`);
+        // Adicione lógica adicional conforme necessário
+      }
+    </script>
+    <!-------------------------------------------------- FUNÇÕES E METODOS  -------------------------------------------------->
+  </body>
+</html>

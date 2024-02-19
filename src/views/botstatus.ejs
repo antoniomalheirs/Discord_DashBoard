@@ -1,0 +1,42 @@
+<!-- guildcontentmain.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../css/out.css" rel="stylesheet">
+    <title>Discord Bot Dashboard</title>
+  </head>
+  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
+    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-lg">
+      
+      <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+        <p class="flex items-center justify-center">
+          <img
+            src="<%= info.icon %>"
+            alt="Ícone da guilda"
+            class="mx-auto my-auto rounded-lg max-w-full h-auto mb-4"
+          />
+        </p>
+        <% } else { %>
+        <!-- Substitua "caminho/para/sua/imagem.png" pelo caminho real da sua imagem padrão -->
+        <p>
+          <img
+            src="/res/serverIcon/nonserverimg.jpg"
+            alt="Ícone padrão"
+            class="mx-auto my-auto rounded-lg max-w-full h-auto mb-4"
+          />
+        </p>
+        <% } %>
+      
+      <!-- Informações do Bot -->
+      <h2 class="text-2xl font-bold mt-4 mb-2 text-center">Informações do Bot</h2>
+      <div class="text_page text-center">
+        <p>Número de Servidores: <%= info.guildCount %></p>
+        <p>Status do Bot: <%= info.botStatus %></p>
+        <p>Tempo de Atividade: <%= info.uptime %></p>
+      </div>
+      </div>
+    </div>
+  </body>
+</html>

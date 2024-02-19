@@ -71,6 +71,26 @@ module.exports = class TwitchRepository extends Repository {
     return this.model.find({}, projection).then((e) => e.map(this.parse));
   }
 
+  verifyByTwitchAndGuildId(tchId, guildId) {
+    return this.model.exists({ twitch: tchId, guildID: guildId });
+  }
+
+  deletar(id, guildId) {
+    const query = { twitch: id, guildID: guildId }; // Adicionando a condição do guildId
+    return this.model.deleteOne(query).then(result => {
+      if (result.deletedCount === 1) {
+        // Documento removido com sucesso
+        return { success: true };
+      } else {
+        // Nenhum documento foi removido (possivelmente não encontrado)
+        return { success: false, message: "Documento não encontrado" };
+      }
+    }).catch(error => {
+      console.error("Erro ao deletar:", error);
+      throw error; // Rejeita a promessa com o erro
+    });
+  }
+
   findByTwitchAndGuildId(twitchId, guildId, projection) {
     return this.model
       .findOne({ twitch: twitchId, guildID: guildId }, projection)

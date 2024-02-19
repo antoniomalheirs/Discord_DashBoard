@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../css/out.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <style>
+      body {
+        background: #666;
+      }
+    </style>
+  </head>
+  <body class="bg">
+    <div class="transition-overlay_out"></div>
+
+    <div class="mx-auto">
+      <header id="topbar" class="absolute inset-x-0 top-0 z-50 my-1">
+        <nav
+          class="flex items-center justify-between p-2 lg:px-6"
+          aria-label="Global"
+        >
+          <div class="flex lg:flex-1">
+            <a href="/" class="px-3 py-1">
+              <span class="sr-only">Your Company</span>
+              <img
+                class="h-12 w-auto rounded-3xl"
+                src="/res/serverIcon/boticon.jpg"
+              />
+            </a>
+            <p class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="#fff"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                />
+              </svg>
+            </p>
+          </div>
+          <div class="hidden lg:flex lg:gap-x-12">
+            <a
+              href="/auth/about"
+              class="text-sm font-semibold leading-6 text-gray-300"
+              >Sobre</a
+            >
+          </div>
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end"></div>
+        </nav>
+      </header>
+
+      <div id="content_about" class="isolate px-6 pt-14 lg:px-8">
+        <div
+          class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+          aria-hidden="true"
+        >
+          <div
+            class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+        <div class="mx-auto max-w-1xl py-32 sm:py-48 lg:py-56">
+          <div class="text-center">
+            <h1
+              class="text-4xl font-bold tracking-tight text-gray-900 sm:text-8xl"
+            >
+              A Divina Liricidade V1.0
+            </h1>
+            <p class="mt-6 text-4xl leading-8 text-gray-400">
+              A Divina Liricidade
+            </p>
+          </div>
+          <div class="pt-6 text-start">
+            <p class="mt-6 text-3xl leading-8 text-gray-800">
+              Em Desenvolvimento
+            </p>
+
+            <p class="mt-2 ml-4 text-lg leading-8 text-gray-300">    
+                Se você está buscando um bot completo e altamente estruturado, é importante notar que nosso produto ainda está em desenvolvimento e pode não atender totalmente às suas expectativas neste momento.<br><br>
+                
+                Nosso bot foi inicialmente desenvolvido com o propósito de fornecer notificações sobre vídeos e transmissões ao vivo de canais do YouTube e Twitch. Ele tem a capacidade de enviar essas notificações para um canal de texto específico no servidor onde está presente.
+                
+                No entanto, estamos constantemente trabalhando para aprimorar e expandir as funcionalidades do nosso bot, visando oferecer uma experiência mais abrangente e satisfatória aos nossos usuários.<br><br>
+                
+                Agradecemos sua compreensão e interesse em nosso serviço. Se tiver alguma dúvida ou sugestão, não hesite em entrar em contato conosco.<br><br>
+                
+                Atenciosamente,<br>
+                SentinelData
+            </p>            
+          </div>
+          <div class="pt-6 text-start">
+            <p class="mt-6 text-3xl leading-8 text-gray-800">
+              Versão 1.0.0
+            </p>
+
+            <p class="mt-2 ml-4 text-lg leading-8 text-gray-300">
+                <strong>Notificação de Vídeos:</strong><br>
+                Nosso bot oferece a capacidade de notificar os usuários sobre novos vídeos publicados em canais do YouTube. Assim que um novo vídeo é detectado em um canal monitorado, uma notificação é enviada para o canal de texto designado em seu servidor Discord.<br><br>
+            
+                <strong>Notificação de Transmissões Ao Vivo:</strong><br>
+                Além das notificações de vídeos, nosso bot também pode informar os usuários sobre transmissões ao vivo em canais do Twitch. Quando um canal que está sendo monitorado inicia uma transmissão ao vivo, uma notificação é enviada para o canal de texto específico.<br><br>
+            </p>
+                        
+          </div>
+        </div>
+        <div
+          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+          aria-hidden="true"
+        >
+          <div
+            class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,344 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "transition-style";
+
+
+/*  Estilo para Pagina Principal  */
+/*-------------------------------------------------------*/
+.tooltip2 {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text2 {
+  visibility: hidden;
+  width: 9rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: start;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  position: absolute;
+  z-index: 1;
+  top: 18%; /* Posição abaixo do elemento pai */
+  left: 150%;
+  margin-left: -35%; /* Metade da largura */
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.tooltip2:hover .tooltip-text2 {
+  visibility: visible;
+  opacity: 0.7;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 8rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  position: absolute;
+  z-index: 1;
+  top: 115%; /* Posição abaixo do elemento pai */
+  right: 1%;
+  margin-right: -50%; /* Metade da largura */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.search-input {
+  border-radius: 0.5rem;
+  background-color: rgb(156, 163, 175);
+  color: rgb(0, 0, 0);
+  /* animação de transição para a cor de fundo e transformação */
+}
+
+.search-input::placeholder {
+  outline: none;
+  color: rgb(0, 0, 0); /* cor do texto de dica */
+}
+
+.search-input:hover {
+  background-color: #bfa374; /* cor de fundo ao passar o mouse */
+  transform: scale(1.05);
+  transition: background-color 1s cubic-bezier(0.075, 0.82, 1, 1),
+    /* efeito de escala ao passar o mouse */ transform 0.6s
+      cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.sidebar-icon {
+  border-radius: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+    border-radius 1s cubic-bezier(0.075, 0.82, 0.165, 1),
+    transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.sidebar-icon:active {
+  border: 1px black solid;
+}
+
+.sidebar-icon:hover {
+  background-color: #d5e0b5; /* Cor de fundo acinzentada ao passar o mouse */
+  border-radius: 0.75rem; /* Arredondamento de borda */
+  transform: scale(1.00); /* Aumenta o tamanho ao passar o mouse */
+}
+
+.sidebar-icon img {
+  transition: transform 0.3s ease;
+}
+
+.sidebar-icon:hover img {
+  transform: scale(1);
+}
+
+.sidebar-icon:hover + .popup {
+  display: block;
+}
+
+.dropdown-selection {
+  transition: background-color 0.5s, color 0.3s;
+  border-radius: 0.5rem;
+  opacity: 0.85; /* Adicione a transição */
+}
+
+.dropdown-selection:hover {
+  background-color: rgba(169, 169, 169, 0.2);
+  color: rgb(255, 255, 255); /* Altere a cor de fundo no hover */
+}
+
+.dropdown-selection-text:hover {
+  color: rgb(210, 210, 210); /* Altere a cor do texto no hover */
+}
+
+.sidebar-color {
+  background-color: #364461;
+}
+
+.chanelbar-color {
+  background-color: #4d686f;
+}
+
+.topbar-color {
+  background-color: #666;
+}
+
+.custom-table {
+  width: 11/12;
+  margin-top: 4rem;
+  background-color: #68d391;
+  border: 1px solid #6b46c1;
+  border-radius: 0.375rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.custom-table thead {
+  background-color: #9f7aea;
+}
+
+.custom-table th {
+  padding: 1rem 0.5rem;
+  text-align: center;
+}
+
+.custom-table td {
+  border: 1px solid #9f7aea;
+  padding: 1rem 0.5rem;
+  text-align: center;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #cbd5e0;
+  transition: background-color 0.5s ease;
+}
+
+.custom-button {
+  background-color: #e53e3e;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+}
+
+.custom-button:hover {
+  background-color: #d53030;
+}
+
+.nav-color {
+  background-color: #4d686f;
+}
+
+.button-color {
+  background-color: #6d756a;
+}
+
+.cont {
+  background-color: #364461;
+}
+
+.button-color:hover {
+  background-color: #bfa374;
+}
+/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/
+
+/*  Estilo para os modulos aperto pela pagina principal  */
+/*-------------------------------------------------------*/
+.pages_cont {
+  background-color: #6d756a;
+}
+
+.text_page {
+  color: #ccc;
+}
+
+.page_button-color {
+  background-color: rgb(74, 222, 128);
+  color:#fff;
+}
+
+.page_button-color:hover {
+  background-color: #ccc;
+}
+/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/
+
+
+@keyframes circle-in-hesitate {
+  0% {
+      clip-path: circle(0%);
+  }
+
+  40% {
+      clip-path: circle(40%);
+  }
+
+  100% {
+      clip-path: circle(125%);
+  }
+}
+
+.transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(to bottom right, #364461, #4d686f); /* Gradiente de cores desejado */
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-hesitate both;
+}
+
+@keyframes circle-out-hesitate {
+  0% {
+    clip-path: circle(125%);
+  }
+  40% {
+    clip-path: circle(40%);
+  }
+  100% {
+    clip-path: circle(0%);
+  }
+}
+
+.transition-overlay_out {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(to bottom right, #364461, #4d686f); /* Gradiente de cores desejado */
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-out-hesitate both;
+}
+
+@keyframes circle-out-swoop {
+  from {
+    clip-path: circle(0% at 100% 100%);
+  }
+  to {
+    clip-path: circle(150% at 100% 100%);
+  }
+}
+
+.transition-overlay_out_2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(to bottom right, #364461, #4d686f); /* Gradiente de cores desejado */
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-out-swoop both;
+}
+
+@keyframes wipe-cinematic-out {
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  30%, 70% {
+    clip-path: inset(10% 0 10% 0);
+  }
+  100% {
+    clip-path: inset(100% 0 100% 0);
+  }
+}
+
+.transition-overlay_out_3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(to bottom right, #364461, #4d686f); /* Gradiente de cores desejado */
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) wipe-cinematic-out both;
+}
+
+/* Estilos para a animação de brilho */
+@keyframes glowing {
+  0% {
+      box-shadow: 0 0 35px rgba(0, 104, 130, 0.7);
+  }
+  50% {
+      box-shadow: 0 0 40px rgba(0, 104, 130, 0.9);
+  }
+  100% {
+      box-shadow: 0 0 30px rgba(0, 104, 130, 0.6);
+  }
+}
+
+/* Estilos para a lista sem brilho */
+.glowing-list {
+  list-style-type: none;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #666;
+  box-shadow: 0 0 30px rgba(0, 104, 130, 0.5); /* Sombra inicial */
+  transition: box-shadow 0.3s ease; /* Transição suave para a sombra */
+}
+
+/* Estilos para a lista com brilho ao passar o mouse */
+.glowing-list:hover {
+  animation: glowing 2s infinite; /* Aplica a animação de brilho apenas quando o mouse está sobre a lista */
+  box-shadow: 0 0 30px rgba(0, 104, 130, 0.5); /* Aumenta a sombra ao passar o mouse */
+}
+
+
+

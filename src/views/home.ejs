@@ -1,104 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <title>Divina Liricidade - DISCORD DASHBOARD</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../css/out.css" rel="stylesheet">
+    <link href="https://unpkg.com/transition-style" rel="stylesheet" />
+    <title>Divina Liricidade - DISCORD DASHBOARD</title>
+    <style>
+      body {
+        background: #666;
+      }
+    </style>
 </head>
-<body class="container mx-auto bg-yellow-100">
-  <div class="bg-white">
-    <div class="bg-yellow-100">
-      <header class="absolute inset-x-0 top-0 z-50">
-        <nav class="flex items-center justify-between p-2 lg:px-6" aria-label="Global">
-          <div class="flex lg:flex-1">
-            <a href="#" class="px-3 py-1">
-              <span class="sr-only">Your Company</span>
-              <img class="h-12 w-auto rounded-3xl" src="/res/serverIcon/boticon.jpg" href="/home">
-            </a>
-          </div>
-          <div class="hidden lg:flex lg:gap-x-12">
-            <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Sobre</a>
-            <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Documentação</a>
-            <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Utilidades & Funções</a>
-            <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Devs</a>
-          </div>
-          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <div class="hidden sm:my-4 sm:flex sm:justify-center">
-              <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-green-400 ring-1 ring-purple-200 hover:ring-amber-500">
-                <body class="container mx-auto bg-white"> <a href="/auth/discord"> <button>Login com Discord</button> </a>
-              </div>
-            </div>
-          </div>
-        </nav>
-        <!-- Mobile menu, show/hide based on menu open state. -->
-        <div class="lg:hidden" role="dialog" aria-modal="true">
-          <!-- Background backdrop, show/hide based on slide-over state. -->
-          <div class="fixed inset-0 z-50"></div>
-          <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div class="flex items-center justify-between">
-              <a href="#" class="-m-1.5 p-1.5">
-                <span class="sr-only">Your Company</span>
-                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
-              </a>
-              <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-                <span class="sr-only">Close menu</span>
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div class="mt-6 flow-root">
-              <div class="-my-6 divide-y divide-gray-500/10">
-                <div class="space-y-2 py-6">
-                  <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sobre</a>
-                  <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Documentação</a>
-                  <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Utilidades & Funções</a>
-                  <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Devs</a>
-                </div>
-                <div class="py-6">
-                  <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+
+<body class="bg">
+    <div class="transition-overlay"></div>
+
+    <!-- Seu conteúdo HTML aqui -->
+     <div class="container mx-auto">
+         <header class="absolute inset-x-0 top-0 z-50">
+           <nav class="flex items-center justify-between p-2 lg:px-6" aria-label="Global">
+             <div class="flex lg:flex-1">
+               <a href="#" class="px-3 py-1">
+                 <span class="sr-only">Your Company</span>
+                 <img class="h-12 w-auto rounded-3xl" src="/res/serverIcon/boticon.jpg" href="/home">
+               </a>
+             </div>
+             <div class="hidden lg:flex lg:gap-x-12">
+               <a href="/auth/about" class="text-sm font-semibold leading-6 text-gray-300">Sobre</a>
+               <a href="/auth/docs" class="text-sm font-semibold leading-6 text-gray-200">Documentação</a>
+               <a href="/auth/funcutils" class="text-sm font-semibold leading-6 text-gray-300">Utilidades & Funções</a>
+               <a href="/auth/devs" class="text-sm font-semibold leading-6 text-gray-200">Devs</a>
+             </div>
+             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+               <div class="hidden sm:my-4 sm:flex sm:justify-center">
+                 <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-green-400 ring-1 ring-green-200 hover:ring-amber-500">
+                   <body class="container mx-auto bg-white"> <a href="/auth/discord"> <button>Login com Discord</button> </a>
+                 </div>
+               </div>
+             </div>
+           </nav>
+         </header>
+        
+         <div class="relative isolate px-6 pt-20 lg:px-8">
+           <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+             <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+           </div>
+           <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+             <div class="text-center">
+               <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">A Divina Liricidade</h1>
+               <p class="mt-6 text-lg leading-8 text-gray-400">Um bot simples, e OpenSource desennvolvido e mantido por SentinelData.</p>
+               <div class="mt-10 flex items-center justify-center gap-x-6">
+                 <a href="https://discord.com/api/oauth2/authorize?client_id=474709934282375178&permissions=8&scope=bot+applications.commands" class="rounded-md bg-green-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-100">Convidar</a>
+                 <a href="/auth/docs" class="text-sm font-semibold leading-6 text-gray-900">Documentação <span aria-hidden="true">→</span></a>
+               </div>
+             </div>
+           </div>
+           <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
+             <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+           </div>
+         </div>
+     
     
-      <div class="relative isolate px-6 pt-20 lg:px-8">
-        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-          <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-        </div>
-        <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div class="text-center">
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">A Divina Liricidade</h1>
-            <p class="mt-6 text-lg leading-8 text-gray-600">Um bot simples, e OpenSource desennvolvido e mantido por SentinelData.</p>
-            <div class="mt-10 flex items-center justify-center gap-x-6">
-              <a href="https://discord.com/api/oauth2/authorize?client_id=474709934282375178&permissions=8&scope=bot+applications.commands" class="rounded-md bg-green-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-100">Convidar</a>
-              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Documentação <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-          <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-        </div>
-      </div>
+     <div class="max-w-md mx-auto my-10 bg-purple-100 rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+       <div class="md:flex">
+         <div class="md:flex-shrink-0">
+           <img class="h-48 w-full object-cover md:h-full md:w-28" src="/res/serverIcon/boticon.jpg" alt="Man looking at item at a store">
+         </div>
+         <div class="p-6 ">
+           <div class="uppercase tracking-wide text-sm text-green-600 font-semibold">Divina Liricidade</div>
+           <a class="block mt-1 text-lg leading-tight font-medium text-black ">Convide-me para seu servidor!</a>
+           <p class="mt-2 text-gray-600">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
+         </div>
+       </div>
+     </div>
     </div>
-  </div>
-
-  <div class="max-w-md mx-auto my-10 bg-purple-200 rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-    <div class="md:flex">
-      <div class="md:flex-shrink-0">
-        <img class="h-48 w-full object-cover md:h-full md:w-28" src="/res/serverIcon/boticon.jpg" alt="Man looking at item at a store">
-      </div>
-      <div class="p-6 ">
-        <div class="uppercase tracking-wide text-sm text-green-600 font-semibold">Divina Liricidade</div>
-        <a class="block mt-1 text-lg leading-tight font-medium text-black ">Convide-me para seu servidor!</a>
-        <p class="mt-2 text-gray-500">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
-      </div>
-    </div>
-  </div>
-  
-
 </body>
+
 </html>

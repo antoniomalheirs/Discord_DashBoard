@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="../css/out.css"
+      rel="stylesheet"
+    />
+    <title>Banco de Dados - Guilda</title>
+  </head>
+  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
+    <div
+      class="pages_cont p-4 rounded-lg shadow-md max-w-8xl flex flex-col justify-between min-h-full items-center"
+    >
+      <div id="mensagemPopUp" class="hidden"></div>
+
+      <h1 class="text-3xl font-bold my-4 text-center">
+        Banco de Dados de Lives
+      </h1>
+
+      <h1 class="text-2xl font-bold my-4 text-center">
+        Guilda <%= info.name %>
+      </h1>
+
+      <div class="my-4">
+        <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+        <img
+          src="<%= info.icon %>"
+          alt="Ícone da guilda"
+          class="rounded-full max-w-full h-auto"
+        />
+        <% } else { %>
+        <img
+          src="/res/serverIcon/nonserverimg.jpg"
+          alt="Ícone padrão"
+          class="rounded-full max-w-full h-auto"
+        />
+        <% } %>
+      </div>
+
+      <!-- Informações sobre Membros da Guilda -->
+      <h2 class="text-2xl font-bold mt-8">
+        Informações sobre Membros da Guilda
+      </h2>
+      <table
+        class="table-auto w-11/12 mt-4 bg-purple-300 border rounded-lg shadow-md overflow-hidden"
+      >
+        <thead class="bg-green-300">
+          <tr>
+            <th class="px-4 py-2">Código do Usuário</th>
+            <th class="px-4 py-2">Nome de Usuário</th>
+            <th class="px-4 py-2">Tempo Total em Chamadas de Voz (minutos)</th>
+            <th class="px-4 py-2">Número Total de Mensagens Enviadas</th>
+            <th class="px-4 py-2">ID da Guilda</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% info1.forEach(item => { %>
+          <tr class="bg-gray-100">
+            <td class="border border-green-300 px-4 py-2">
+              <%= item.codigouser %>
+            </td>
+            <td class="border border-green-300 px-4 py-2">
+              <%= item.username %>
+            </td>
+            <td class="border border-green-300 px-4 py-2">
+              <%= item.voiceTime %>
+            </td>
+            <td class="border border-green-300 px-4 py-2">
+              <%= item.totalMessages %>
+            </td>
+            <td class="border border-green-300 px-4 py-2">
+              <%= item.idguild %>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

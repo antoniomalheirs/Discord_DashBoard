@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang=pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel de Configurações do Servidor</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link
+    href="../css/out.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <div
+    id="sidebar-container"
+    class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg"
+  ></div>
+
+  <div
+    id="sidebar-contain"
+    class="fixed top-12 left-72 right-0 h-full flex bg-gray-500 dark:bg-gray-900 shadow-lg"
+    style="z-index: -3; overflow-y: auto"
+  >
+    <div class="flex items-center justify-center w-11/12 mx-auto my-auto">
+      <div id="sidebar-container2" style="margin-bottom: 6rem; margin-top: 2rem;"></div>
+    </div>
+  </div>
+
+  <!-- Container onde a sidebar será carregada -->
+
+  <script>
+    $(document).ready(function () {
+      // Use a função load do jQuery para carregar a sidebar
+      $("#sidebar-container").load("/layouts/sideBar.ejs");
+    });
+
+    $(document).ready(function () {
+      // Use a função load do jQuery para carregar a sidebar
+      const guildId = `<%= info.id %>`;
+      console.log(guildId);
+
+      // Carregar o conteúdo da guilda com base no guildId
+      $("#sidebar-container2").load(`/bot/guildcontentmain/${guildId}`);
+    });
+
+    function carregarConteudo(component) {
+      const guildId = `<%= info.id %>`;
+      $("#sidebar-container2").load(`/bot/pagina/${component}/${guildId}`);
+    }
+
+    function user() {
+      return "https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png";
+    }
+
+    function email() {
+      return "<%=user.email%>";
+    }
+
+    function username() {
+      return "<%=user.username%>";
+    }
+
+    function funcsReload(dados) {
+      // Obtenha os dados necessários
+      const dadosFormulario = dados;
+      const tipo = dadosFormulario.find((item) => item.name === "func").value;
+
+      const guildId = dadosFormulario.find(
+        (item) => item.name === "guildId"
+      ).value;
+      const channelin = dadosFormulario.find(
+        (item) => item.name === "channelId"
+      ).value;
+
+      // Faça algo com os dados recebidos
+      console.log("Dados recebidos da página filho:", channelin);
+      $("#sidebar-container2").load(
+        `/bot/pagina/funcs/${tipo}/${guildId}/${channelin}`
+      );
+    }
+
+    function dtbaseReload(dados) {
+      // Obtenha os dados necessários
+      const dadosFormulario = dados;
+      const tipo = dadosFormulario.find((item) => item.name === "func").value;
+
+      const guildId = dadosFormulario.find(
+        (item) => item.name === "guildId"
+      ).value;
+      const channelin = dadosFormulario.find(
+        (item) => item.name === "channelId"
+      ).value;
+
+      // Faça algo com os dados recebidos
+      console.log("Dados recebidos da página filho:", channelin);
+      $("#sidebar-container2").load(
+        `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`
+      );
+    }
+
+    function dtbaseDelete(dados) {
+      // Obtenha os dados necessários
+      const dadosFormulario = dados;
+      const tipo = dadosFormulario.find((item) => item.name === "func").value;
+
+      const guildId = dadosFormulario.find(
+        (item) => item.name === "channelId"
+      ).value;
+      const channelin = dadosFormulario.find(
+        (item) => item.name === "youtube"
+      ).value;
+
+      // Faça algo com os dados recebidos
+      $("#sidebar-container2").load(
+        `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`
+      );
+    }
+  </script>
+</body>

@@ -16,6 +16,8 @@ module.exports = class UserRepository extends Repository {
       return {
         codigouser: entity.codigouser ? String(entity.codigouser) : null,
         username: entity.username,
+        acesstk: entity.acesstk,
+        refreshtk: entity.refreshtk
         // ... outros campos do usuário
       };
     } else {
@@ -54,9 +56,10 @@ module.exports = class UserRepository extends Repository {
     return this.model.findOneAndDelete({ codigouser }).then(this.parse);
   }
 
-  update(codigouser, entity, options = { upsert: true }) {
-    return this.model.updateOne({ codigouser }, entity, options);
+  update(codigouser, entity) {
+    return this.model.replaceOne({ codigouser }, entity);
   }
+  
 
   async verify(codigouser) {
     return !!(await this.model.findOne({ codigouser }));

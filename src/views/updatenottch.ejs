@@ -1,0 +1,92 @@
+<!-- guildcontentmain.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="../css/out.css"
+      rel="stylesheet"
+    />
+    <title>Discord Bot Dashboard</title>
+  </head>
+  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
+    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-lg">
+      <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+      <p class="flex items-center justify-center">
+        <img
+          src="<%= info.icon %>"
+          alt="Ícone da guilda"
+          class="mx-auto my-auto rounded-lg max-w-full h-auto mb-4"
+        />
+      </p>
+      <% } else { %>
+      <!-- Substitua "caminho/para/sua/imagem.png" pelo caminho real da sua imagem padrão -->
+      <p>
+        <img
+          src="/res/serverIcon/nonserverimg.jpg"
+          alt="Ícone padrão"
+          class="mx-auto my-auto rounded-lg max-w-full h-auto mb-4"
+        />
+      </p>
+      <% } %>
+
+      <h1 class="text-3xl font-bold mb-4 text-center">
+        Guilda <%= info.name %>
+      </h1>
+
+      <p class="text_page text-center">ID da Guilda: <%= info.id %></p>
+      <p class="text_page text-center">
+        Número de Membros: <%= info.memberCount %>
+      </p>
+
+      
+
+      <form id="updtfunctch" method="post">
+        <div class="flex flex-col justify-center mt-4">
+          <label for="channelId" class="block text-sm font-medium text_page mb-2">ID do canal desejado:</label>
+          <input
+            type="number"
+            id="channelId"
+            name="channelId"
+            class="p-2 border rounded-md focus:outline-none focus:border-blue-500"
+            placeholder="Cole o ID de um canal de texto do seu servidor aqui"
+          />
+
+          <input
+            type="hidden"
+            id="guildId"
+            name="guildId"
+            value="<%= info.id %>"
+          />
+
+          <input
+            type="hidden"
+            id="func"
+            name="func"
+            value="updttwitch"
+          />
+        </div>
+      
+        <div class="flex justify-center mt-4">
+          <button
+            type="button" <!-- Mudamos de 'submit' para 'button' para evitar envio automático do formulário 
+            class="page_button-color text_page py-2 px-4 rounded-md focus:outline-none page_button-color"
+            onclick="envdata()"
+          >
+            Atualizar canal
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function envdata() {
+        // Obtenha os dados do formulário
+        var dadosFormulario = $("#updtfunctch").serializeArray();
+        // Envie os dados para a função na página pai
+        parent.funcsReload(dadosFormulario);
+      }
+    </script>
+  </body>
+</html>

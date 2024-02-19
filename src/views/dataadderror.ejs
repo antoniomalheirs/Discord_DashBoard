@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      href="../css/out.css"
       rel="stylesheet"
     />
     <title>Discord Bot Dashboard</title>
@@ -25,11 +25,6 @@
           Erro ao adicionar o canal a lista, canal incluso na lista
         </p>
         <div class="mt-10 flex items-center justify-center gap-x-6">
-          <a
-            onclick="voltarAoDashboard()"
-            class="rounded-md bg-green-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >Go back manager</a
-          >
           <a href="#" class="text-sm font-semibold text-gray-900"
             >Contact support <span aria-hidden="true">&rarr;</span></a
           >
@@ -37,11 +32,5 @@
       </div>
  
     </div>
-
-    <script>
-      function voltarAoDashboard() {
-        window.history.back();
-      }
-    </script>
   </body>
 </html>
