@@ -23,6 +23,9 @@
 .top-\[calc\(100\%-13rem\)\] {
   top: calc(100% - 13rem);
 }
+.left-\[334px\] {
+  left: 334px;
+}
 .left-\[calc\(50\%\+3rem\)\] {
   left: calc(50% + 3rem);
 }
@@ -258,12 +261,6 @@
   &:focus {
     --tw-outline-style: none;
     outline-style: none;
-  }
-}
-.focus-visible\:outline {
-  &:focus-visible {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
   }
 }
 .focus-visible\:outline-2 {
@@ -1676,13 +1673,14 @@
   border-radius: 2rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  background-color: #4a4a53;
   transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1), border-radius 1s cubic-bezier(0.075, 0.82, 0.165, 1), transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .sidebar-icon:active {
   border: 1px black solid;
 }
 .sidebar-icon:hover {
-  background-color: #d5e0b5;
+  background-color: #7c71f3;
   border-radius: 0.75rem;
   transform: scale(1);
 }
@@ -1708,13 +1706,13 @@
   color: rgb(210, 210, 210);
 }
 .sidebar-color {
-  background-color: #364461;
+  background-color: #2b2b30;
 }
 .chanelbar-color {
-  background-color: #4d686f;
+  background-color: #313136;
 }
 .topbar-color {
-  background-color: #666;
+  background-color: #313136;
 }
 .custom-table {
   width: 11/12;

@@ -136,6 +136,7 @@
   border-radius: 2rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  background-color: #4a4a53;
   transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
     border-radius 1s cubic-bezier(0.075, 0.82, 0.165, 1),
     transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -146,7 +147,7 @@
 }
 
 .sidebar-icon:hover {
-  background-color: #d5e0b5; /* Cor de fundo acinzentada ao passar o mouse */
+  background-color: #7c71f3; /* Cor de fundo acinzentada ao passar o mouse */
   border-radius: 0.75rem; /* Arredondamento de borda */
   transform: scale(1); /* Aumenta o tamanho ao passar o mouse */
 }
@@ -179,15 +180,15 @@
 }
 
 .sidebar-color {
-  background-color: #364461;
+  background-color: #2b2b30;
 }
 
 .chanelbar-color {
-  background-color: #4d686f;
+  background-color: #313136;
 }
 
 .topbar-color {
-  background-color: #666;
+  background-color: #313136;
 }
 
 .custom-table {

@@ -11,18 +11,16 @@
       }
     </style>
   </head>
-  <body>
+  <body class="colorTextMainNOHOVER">
+      <!------------------------------------------------------------------------------------------------------------------------>
     <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
-    <div
-      id="sidebar"
-      class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center sidebar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-green-300"
-    >
+    <div id="sidebar" class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center sidebar-color divide-y-2 divide-green-300 gap-4">
       <div class="tooltip2">
         <div class="relative group">
           <div
-            id="configuration"
-            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
-            onclick="handleIconClick('configuration')"
+            id="home"
+            class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
+            onclick="handleIconClick('home')"
           >
             <img
               src="/res/sidebar/fire.jpg"
@@ -39,8 +37,8 @@
           <div class="relative group">
             <div
               id="chanels"
-              class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
-              onclick="handleIconClick('chanels')"
+              class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
+              onclick="handleIconClick('functions')"
             >
               <img
                 src="/res/sidebar/unknow.jpg"
@@ -56,7 +54,7 @@
           <div class="relative group">
             <div
               id="guild"
-              class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+              class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
               onclick="handleIconClick('guild')"
             >
               <img
@@ -73,7 +71,7 @@
           <div class="relative group">
             <div
               id="user"
-              class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+              class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
               onclick="handleIconClick('user')"
             >
               <img
@@ -91,7 +89,7 @@
         <div class="relative group">
           <div
             id="usage"
-            class="flex justify-center sidebar-icon w-16 h-16 bg-gray-400 cursor-pointer"
+            class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
             onclick="handleIconClick('usage')"
           >
             <img
@@ -105,30 +103,19 @@
       </div>
     </div>
     <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
-
     <!------------------------------------------------------------------------------------------------------------------------>
-
+    <!------------------------------------------------------------------------------------------------------------------------>
     <!----------------------------------------------- MENU LATERAL COM OPÇÕES  ----------------------------------------------->
-    <div
-      id="channel-bar"
-      style="z-index: -1"
-      class="fixed top-0 left-20 h-screen w-52 flex flex-col items-start chanelbar-color dark:bg-gray-900 shadow-lg"
-    >
-      <div
-        id="configuration-sidebar"
-        class="configuration-block divide-y-2 divide-green-300 mx-4 my-2"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+    <div id="server-bar" style="z-index: -1" class="fixed top-0 left-20 h-screen w-64 flex flex-col items-start chanelbar-color dark:bg-gray-900 shadow-lg">
+      
+      <!--1. Session Home--> 
+      <div id="home-sidebar" class="configuration-block divide-y-2 divide-green-300 mx-4 my-2">
+        <h5 class="text-xl channel-block-text colorTextMainNOHOVER font-bold mb-2 cursor-default">
           Inicio
         </h5>
-
-        <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('home')"
-          >
+        <div class="server-bar-container">
+          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('guild')">
             <div class="dropdown-header flex items-center">
-              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -143,22 +130,13 @@
                   d="M4 6h16M4 12h16m-7 6h7"
                 ></path>
               </svg>
-              <h5
-                id="home-header"
-                class="dropdown-header-text text-sm ml-2 cursor-pointer"
-              >
+              <h5 id="guild-header" class="dropdown-header-text colorTextMain text-lg ml-2 cursor-pointer">
                 Informações da Guilda
               </h5>
             </div>
 
-            <div
-              id="home-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('server')"
-              >
+            <div id="guild-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('server')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -173,16 +151,14 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Server</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">
+                  Server
+                </h5>
               </div>
             </div>
           </div>
 
-          <!-- Dropdown "Informações do Bot" -->
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('moderation')"
-          >
+          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('botinfo')">
             <div class="dropdown-header flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -198,22 +174,12 @@
                   d="M4 6h16M4 12h16m-7 6h7"
                 ></path>
               </svg>
-              <h5
-                id="moderation-header"
-                class="dropdown-header-text text-sm ml-2 cursor-pointer"
-              >
+              <h5 id="botinfo-header" class="dropdown-header-text colorTextMain text-lg ml-2 cursor-pointer">
                 Informações do Bot
               </h5>
             </div>
-            <div
-              id="moderation-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('status')"
-              >
-                <!-- Substitua o ícone existente pela seta para a direita do Heroicons -->
+            <div id="botinfo-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('status')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -228,28 +194,23 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Status</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">
+                  Status
+                </h5>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div
-        id="chanels-sidebar"
-        class="chanels-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+      <div id="functions-sidebar" class="chanels-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+        <h5 class="text-xl channel-block-text colorTextMainNOHOVER font-bold mb-2 cursor-default">
           Funções
         </h5>
 
-        <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('funcs')"
-          >
-            <div class="dropdown-header flex items-center">
-              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+        <div class="functions-bar-container">
+          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('funcs')">
+            <div class="dropdown-header flex items-center">              
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -264,22 +225,13 @@
                   d="M4 6h16M4 12h16m-7 6h7"
                 ></path>
               </svg>
-              <h5
-                id="funcs-header"
-                class="dropdown-header-text text-sm ml-2 cursor-pointer"
-              >
+              <h5 id="funcs-header" class="dropdown-header-text text-lg colorTextMain ml-2 cursor-pointer">
                 Funções de notificação
               </h5>
             </div>
 
-            <div
-              id="funcs-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('funcyoutube')"
-              >
+            <div id="funcs-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('funcyoutube')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -294,13 +246,10 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Youtube</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg  ml-1">Youtube</h5>
               </div>
 
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('functwitch')"
-              >
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('functwitch')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -315,17 +264,13 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Twitch</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">Twitch</h5>
               </div>
             </div>
           </div>
 
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('addchannels')"
-          >
+          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('addchannels')">
             <div class="dropdown-header flex items-center">
-              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -340,22 +285,13 @@
                   d="M4 6h16M4 12h16m-7 6h7"
                 ></path>
               </svg>
-              <h5
-                id="addchannels-header"
-                class="dropdown-header-text text-sm ml-2 cursor-pointer"
-              >
+              <h5 id="addchannels-header" class="dropdown-header-text text-lg colorTextMain ml-2 cursor-pointer">
                 Canais para notificação
               </h5>
             </div>
 
-            <div
-              id="addchannels-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('ytbchannelupdate')"
-              >
+            <div id="addchannels-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('ytbchannelupdate')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -370,13 +306,10 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Youtube</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">Youtube</h5>
               </div>
 
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('tchchannelupdate')"
-              >
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('tchchannelupdate')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -391,17 +324,13 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Twitch</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">Twitch</h5>
               </div>
             </div>
           </div>
 
-          <div
-            class="dropdown border-discord-light mt-2 no-close-dropdown"
-            onclick="toggleDropdown('statefuncs')"
-          >
+          <div class="dropdown border-discord-light mt-2 no-close-dropdown" onclick="toggleDropdown('statefuncs')">
             <div class="dropdown-header flex items-center">
-              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -418,20 +347,14 @@
               </svg>
               <h5
                 id="statefuncs-header"
-                class="dropdown-header-text text-sm ml-2 cursor-pointer"
+                class="dropdown-header-text text-lg colorTextMain  ml-2 cursor-pointer"
               >
                 Estado das funções
               </h5>
             </div>
 
-            <div
-              id="statefuncs-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('statesinfo')"
-              >
+            <div id="statefuncs-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('statesinfo')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -446,7 +369,7 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Informações</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">Informações</h5>
               </div>
             </div>
           </div>
@@ -786,6 +709,7 @@
           </div>
         </div>
       </div>
+
     </div>
     <!----------------------------------------------- MENU LATERAL COM OPÇÕES  ----------------------------------------------->
 
@@ -794,7 +718,7 @@
     <!------------------------------------------------------ TOP BAR  -------------------------------------------------------->
     <div
       id="top-bar"
-      class="fixed top-0 left-72 right-0 h-12 flex topbar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-yellow-900"
+      class="fixed top-0 left-[334px] right-0 h-12 flex topbar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-yellow-900"
     >
       <div class="flex items-center ml-4">
         <svg
@@ -811,16 +735,10 @@
             d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
           />
         </svg>
-        <h5
-          id="hashtag-configuration"
-          class="text-xl channel-block-text font-bold cursor-default ml-2"
-        >
+        <h5 id="hashtag-home" class="text-xl channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2">
           Pagina inicial
         </h5>
-        <h5
-          id="hashtag-chanels"
-          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
-        >
+        <h5 id="hashtag-functions" class=" channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
           Gerenciador de funções
         </h5>
         <h5
@@ -936,15 +854,13 @@
       }
 
       function handleIconClick(btnId) {
-        const Configuration = document.getElementById(`configuration-sidebar`);
-        const Chanels = document.getElementById(`chanels-sidebar`);
+        const Configuration = document.getElementById(`home-sidebar`);
+        const Chanels = document.getElementById(`functions-sidebar`);
         const Guild = document.getElementById(`guild-sidebar`);
         const User = document.getElementById(`user-sidebar`);
         const Usage = document.getElementById(`usage-sidebar`);
-        const ConfigurationHash = document.getElementById(
-          `hashtag-configuration`
-        );
-        const ChanelsHash = document.getElementById(`hashtag-chanels`);
+        const ConfigurationHash = document.getElementById(`hashtag-home`);
+        const ChanelsHash = document.getElementById(`hashtag-functions`);
         const GuildHash = document.getElementById(`hashtag-guild`);
         const UserHash = document.getElementById(`hashtag-user`);
         const UsageHash = document.getElementById(`hashtag-usage`);
