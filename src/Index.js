@@ -37,6 +37,7 @@ app.set("views", __dirname + "/views");
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/public/css"));
+app.use(express.static(__dirname + "/public/css/cssdir"));
 app.use(express.static(__dirname + "/public/layouts"));
 app.use(express.static(__dirname + "/public/res/sidebar"));
 
@@ -44,10 +45,10 @@ app.set("trust proxy", 1);
 app.use(
   session({
     secret: process.env.SECRET_KEY,
-    name:"DivinaBot",
+    name:"ManagerBot",
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 360000 },
+    /*cookie: { maxAge: 3600000 },*/
   })
 );
 

@@ -4,9 +4,9 @@
   "description": "",
   "main": "./src/Index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:css": "npx tailwindcss -i ./src/public/css/main.css -o ./src/public/results/out.css --watch",
-    "build:css": "npx tailwindcss -i ./src/public/css/main.css -o ./src/public/results/out.css --watch"
+    "start": "node ./src/Index.js",
+    "build": "npx @tailwindcss/cli -i ./src/public/css/main.css -o ./src/public/css/cssdir/out.css --watch",
+    "dev": "concurrently \"npm:build\" \"nodemon ./src/Index.js\""
   },
   "keywords": [],
   "author": "",
@@ -32,6 +32,8 @@
     "watch": "^0.13.0"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10",
     "tailwindcss": "^4.1.12"
   }
 }

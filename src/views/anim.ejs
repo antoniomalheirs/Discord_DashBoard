@@ -79,13 +79,6 @@
           console.error("Erro ao carregar imagem da guilda:", error);
         }
       }
-
-      // Carregar imagens padrão para todas as guildas no carregamento da página
-      window.onload = function() {
-        <% user.guilds.forEach(guild => { %>
-          redirecionarParaRota('<%= guild.id %>');
-        <% }); %>
-      }
     </script>
     
 </body>

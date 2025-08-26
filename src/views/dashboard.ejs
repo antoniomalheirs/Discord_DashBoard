@@ -3,83 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../css/out.css" rel="stylesheet" />
-
-    <link href="https://unpkg.com/transition-style" rel="stylesheet" />
-    <title>Manager Bot - DashBoard</title>
-    <style>
-      body {
-        background: #666;
-      }
-    </style>
+    <link href="../css/cssdir/out.css" rel="stylesheet" />
+    <title>Server Select - Manager Bot</title>
   </head>
-  <body class="bg">
-    <div class="transition-overlay_out_2"></div>
-
-    <!-- Seu conteúdo HTML aqui -->
-    <div class="py-24 sm:py-32">
-      <div
-        class="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3"
-      >
-        <div class="max-w-2xl">
-          <h2
-            class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
-          >
-            Escolha o servidor desejado para gerenciar
-          </h2>
-          <p class="mt-6 text-lg leading-8 text-gray-400">
-            Para acessar o servidor você deve ter as permissões necessarias para
-            manipular os dados do servidor em questão.
-          </p>
-        </div>
+  <body class="backgroundMain grid grid-cols-2 gap-4 w-auto h-auto ">
+    <div class="w-auto h-auto text-center content-center">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl colorTextMain">
+        Escolha o servidor desejado para gerenciar
+      </h2>
+      <p class="mt-6 text-lg leading-8 colorTextMainNOHOVER">
+        Para acessar o servidor você deve ter as permissões necessarias para
+        manipular os dados do servidor em questão.
+      </p>
+    </div>
+    <div class="w-auto h-auto text-center">
+      <div class="grid grid-cols-2 gap-[18px] ">
         <% user.guilds.forEach(guild => { %>
-        <ul
-          class="glowing-list topbar-color rounded-md p-4 shadow-lg:bg-green-700"
-        >
-          <li class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-gray-800">
-              <%= guild.name %>
-            </h3>
-            <!-- Defina uma imagem padrão para todas as guildas -->
-            <img
-              class="h-24 w-24 rounded-full"
-              src="/res/serverIcon/nonserverimg.jpg"
-              id="AguildIcon<%= guild.id %>"
-            />
-          </li>
-          <li class="text-sm text-gray-600">ID: <%= guild.id %></li>
-          <!-- Adicione mais informações do servidor conforme necessário -->
-          <li class="mt-2">
-            <form
-              action="/bot/botinfo"
-              method="post"
-              class="flex flex-auto items-center space-y-4"
-            >
-              <input
-                type="hidden"
-                id="guilds"
-                name="guilds"
-                value="<%= guild.id %>"
-              />
-              <input
-                type="hidden"
-                id="icon"
-                name="icon"
-                value="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
-              />
-              <button
-                type="submit"
-                class="bg-green-300 px-5 py-2 rounded-md  focus:outline-none focus:ring focus:border-blue-300"
-              >
-                Selecionar
-              </button>
-            </form>
-          </li>
-        </ul>
+          <ul class="glowing-list rounded-md grid grid-cols-2">
+            <div class="grid grid-rows-2 ">
+              <div>
+                <li>
+                  <h3 class="text-lg font-semibold colorTextMain">
+                    <%= guild.name %>
+                  </h3>
+                </li>
+              </div>  
+              <div> 
+                <li>
+                  <p class="text-sm mb-[18px] colorTextMainNOHOVER">
+                    <%= guild.id %>
+                  </p>
+                  <form action="/bot/botinfo" method="post" class="flex flex-auto justify-center space-y-4 mt-[8px]">
+                    <input type="hidden" id="guilds" name="guilds" value="<%= guild.id %>"/>
+                    <input type="hidden" id="icon" name="icon" value="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"/>
+                    <button class="selectButton bg-indigo-500 type="submit"  ">
+                      Selecionar
+                    </button>
+                  </form>
+                </li>
+              </div>
+            </div>
+            <div class="grid  content-center">
+              <li>
+                <img class="h-64 w-64 rounded-full " src="/res/serverIcon/nonserverimg.jpg" id="AguildIcon<%= guild.id %>"/>
+              </li>
+            </div>
+          </ul>
         <% }); %>
       </div>
     </div>
-
     <script>
       async function redirecionarParaRota(guildId) {
           try {
@@ -103,5 +75,6 @@
           <% }); %>
       }
     </script>
+    <div class="transition-overlay_out_2 w-full h-full"></div>
   </body>
 </html>

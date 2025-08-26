@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     "./src/public/css/*.css",
+    "./src/public/css/cssdir*.css",
     "./src/public/layouts/*.ejs",
     "./src/views/*.ejs"
      // Corrected path and added wildcard
