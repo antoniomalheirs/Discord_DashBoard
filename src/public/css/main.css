@@ -1,5 +1,4 @@
-@tailwind base;
-@tailwind components;
+
 @tailwind utilities;
 @import "transition-style";
 
@@ -395,7 +394,7 @@
 /* Estilos para a lista sem brilho */
 .glowing-list {
   list-style-type: none;
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
   background-color: rgba(41, 42, 46, 0.6);
   box-shadow: 0 0 30px rgba(35, 35, 82, 0.3); /* Sombra inicial */

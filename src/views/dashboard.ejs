@@ -69,10 +69,12 @@
           }
       }
 
+      // Replace EJS block with plain JS loop using EJS-rendered array
       window.onload = function() {
-          <% user.guilds.forEach(guild => { %>
-          redirecionarParaRota('<%= guild.id %>');
-          <% }); %>
+          const guilds = JSON.parse('<%- JSON.stringify(user.guilds) %>');
+          guilds.forEach(guild => {
+              redirecionarParaRota(guild.id);
+          });
       }
     </script>
     <div class="transition-overlay_out_2 w-full h-full"></div>
