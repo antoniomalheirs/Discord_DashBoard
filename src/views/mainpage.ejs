@@ -6,27 +6,19 @@
   <title>Server Config - Manager Bot</title>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <link
-    href="../css/out.css"
+    href="../css/cssdir/out.css"
     rel="stylesheet"
   />
 </head>
-<body>
-  <div
-    id="sidebar-container"
-    class="fixed top-0 left-72 right-0 h-12 flex bg-gray-600 dark:bg-gray-900 shadow-lg"
-  ></div>
+<body class="colorbody">
+  <div id="sidebar-container" class="fixed top-0 left-72 right-0 h-12 flex "></div>
 
-  <div
-    id="sidebar-contain"
-    class="fixed top-12 left-72 right-0 h-full flex bg-gray-500 dark:bg-gray-900 shadow-lg"
-    style="z-index: -3; overflow-y: auto"
-  >
-    <div class="flex items-center justify-center w-11/12 mx-auto my-auto">
-      <div id="sidebar-container2" style="margin-bottom: 6rem; margin-top: 2rem;"></div>
+  <div id="sidebar-contain" class="fixed top-12 left-[330px] right-0 h-full flex"  ">
+
+  <div class="flex items-center justify-center w-11/12 mx-auto my-auto">
+    <div id="sidebar-container2" style="margin-bottom: 6rem; margin-top: 2rem;"></div>
     </div>
   </div>
-
-  <!-- Container onde a sidebar será carregada -->
 
   <script>
     $(document).ready(function () {
@@ -59,7 +51,10 @@
     function username() {
       return "<%=user.username%>";
     }
-
+    
+    function guildName() {
+      return "<%- guildName %>";
+    }
     function funcsReload(dados) {
       // Obtenha os dados necessários
       const dadosFormulario = dados;

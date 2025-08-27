@@ -35,6 +35,7 @@
                   </p>
                   <form action="/bot/botinfo" method="post" class="flex flex-auto justify-center space-y-4 mt-[8px]">
                     <input type="hidden" id="guilds" name="guilds" value="<%= guild.id %>"/>
+                    <input type="hidden" id="nameofGuild" name="nameofGuild" value="<%= guild.name %>"/>
                     <input type="hidden" id="icon" name="icon" value="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"/>
                     <button class="selectButton bg-indigo-500 type="submit"  ">
                       Selecionar
@@ -45,7 +46,7 @@
             </div>
             <div class="grid  content-center">
               <li>
-                <img class="h-64 w-64 rounded-full " src="/res/serverIcon/nonserverimg.jpg" id="AguildIcon<%= guild.id %>"/>
+                <img class="h-44 w-44 rounded-full " src="/res/serverIcon/nonserverimg.jpg" id="AguildIcon<%= guild.id %>"/>
               </li>
             </div>
           </ul>

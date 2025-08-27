@@ -173,6 +173,7 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
   try {
     const selectedGuildId = req.body.guilds;
     const user = req.user;
+    const guildName = req.body.nameofGuild ;
     const botInfo = await getGuildData(selectedGuildId);
     const permissions = await permissionsacess(user, selectedGuildId);
 
@@ -183,7 +184,7 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
         error: "Erro ao obter informações do banco de dados.",
       });
     } else {
-      res.render("mainpage.ejs", { info: botInfo, user: req.user });
+      res.render("mainpage.ejs", { info: botInfo, user: req.user, guildName: guildName});
     }
   } catch (error) {
     res.render("error.ejs", { error: error.message });

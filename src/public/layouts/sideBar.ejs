@@ -14,92 +14,81 @@
   <body class="colorTextMainNOHOVER">
     <!------------------------------------------------------------------------------------------------------------------------>
     <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
-    <div id="sidebar" class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center sidebar-color divide-y-2 divide-sky-300 gap-4">
-      <div class="tooltip2">
-        <div class="relative group">
-          <div
-            id="home"
-            class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
-            onclick="handleIconClick('home')"
-          >
-            <img
-              src="/res/sidebar/fire.jpg"
-              alt="Fire Icon"
-              class="w-10 h-10 my-auto"
-            />
+    <div id="sidebar" class="fixed top-0 left-0 h-screen w-20 sidebar-color content-start" style="z-index: 1;">
+      <div class=" gap-[6px] grid grid-col justify-items-center">
+        <div class="border-t-3 mt-4 diviveColor w-3/4 h-3/4 "></div>
+        <!--1. Session Home-->
+        <div class="tooltip2">
+          <div class="relative group">
+            <div id="home" class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer" onclick="handleIconClick('home')">
+                <img src="/res/sidebar/fire.jpg" alt="Fire Icon" class="w-10 h-10 my-auto"/>
+            </div>
+            <div class="tooltip-text2">Inicio</div>
           </div>
-          <div class="tooltip-text2">Inicio</div>
         </div>
-      </div>
-
-      <div>
-        <div class="tooltip2 ml-2">
+        <div class="border-b-3 diviveColor w-3/4 h-3/4 "></div>
+        <!--1. Session Functions, GuildDB, serverInfos-->
+        <div>
+          <div class="tooltip2 ml-2">
+            <div class="relative group">
+              <div id="functions" class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer" onclick="handleIconClick('functions')">
+                <img src="/res/sidebar/unknow.jpg" alt="Fire Icon" class="w-11 h-11 my-auto"/>
+              </div>
+              <div class="tooltip-text2">Funções</div>
+            </div>
+          </div>
+          <div class="tooltip2 ml-2">
+            <div class="relative group">
+              <div
+                id="guildDB"
+                class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
+                onclick="handleIconClick('guildDB')"
+              >
+                <img
+                  src="/res/sidebar/database.jpg"
+                  alt="Fire Icon"
+                  class="w-10 h-10 my-auto"
+                />
+              </div>
+              <div class="tooltip-text2">Banco de Dados</div>
+            </div>
+          </div>
+          <div class="tooltip2 ml-2">
+            <div class="relative group">
+              <div
+                id="serverInfos"
+                class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
+                onclick="handleIconClick('serverInfos')"
+              >
+                <img
+                  src="/res/sidebar/gear2.jpg"
+                  alt="Fire Icon"
+                  class="w-11 h-11 ml-1.5 my-auto"
+                />
+              </div>
+              <div class="tooltip-text2">Info da Guilda</div>
+            </div>
+          </div>
+        </div>
+        <div class="border-b-3 diviveColor w-3/4 h-3/4 "></div>
+        <!--1. Session Config-->
+        <div class="tooltip2">
           <div class="relative group">
             <div
-              id="functions"
+              id="config"
               class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
-              onclick="handleIconClick('functions')"
+              onclick="handleIconClick('config')"
             >
               <img
-                src="/res/sidebar/unknow.jpg"
+                src="/res/sidebar/gear.jpg"
                 alt="Fire Icon"
-                class="w-11 h-11 my-auto"
+                class="w-11 h-11 ml-0.5 my-2"
               />
             </div>
-            <div class="tooltip-text2">Funções</div>
+            <div class="tooltip-text2">Configurações</div>
           </div>
         </div>
-
-        <div class="tooltip2 ml-2">
-          <div class="relative group">
-            <div
-              id="guildDB"
-              class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
-              onclick="handleIconClick('guildDB')"
-            >
-              <img
-                src="/res/sidebar/database.jpg"
-                alt="Fire Icon"
-                class="w-10 h-10 my-auto"
-              />
-            </div>
-            <div class="tooltip-text2">Banco de Dados</div>
-          </div>
-        </div>
-
-        <div class="tooltip2 ml-2">
-          <div class="relative group">
-            <div
-              id="serverInfos"
-              class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
-              onclick="handleIconClick('serverInfos')"
-            >
-              <img
-                src="/res/sidebar/gear2.jpg"
-                alt="Fire Icon"
-                class="w-11 h-11 ml-1.5 my-auto"
-              />
-            </div>
-            <div class="tooltip-text2">Info da Guilda</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="tooltip2">
-        <div class="relative group">
-          <div
-            id="config"
-            class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
-            onclick="handleIconClick('config')"
-          >
-            <img
-              src="/res/sidebar/gear.jpg"
-              alt="Fire Icon"
-              class="w-11 h-11 ml-0.5 my-2"
-            />
-          </div>
-          <div class="tooltip-text2">Configurações</div>
-        </div>
+        <div class="border-t-3 diviveColor w-3/4 h-3/4 "></div>
       </div>
     </div>
     <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
@@ -108,28 +97,25 @@
     <!----------------------------------------------- MENU LATERAL COM OPÇÕES  ----------------------------------------------->
     <div id="server-bar" class="fixed top-0 left-20 h-screen w-64 flex flex-col items-start chanelbar-color">
       
+      <div class="mx-4 mt-2 w-10/12">
+        <div class="border-b-4 diviveColor">
+          <h5 id="server-name" class="text-lg channel-block-text colorTextMainNOHOVER font-bold mb-2 cursor-default ">
+            LoadNameServer
+          </h5>
+        </div>
+      </div>
+
       <!--1. Session Home--> 
-      <div id="home-sidebar" class="home-block divide-y-2 divide-green-300 mx-4 my-2">
+      <div id="home-sidebar" class="home-block mx-4 my-2">
         <h5 class="text-xl channel-block-text colorTextMainNOHOVER font-bold mb-2 cursor-default">
           Inicio
+          <div class="border-b-3 diviveColor w-10/10 h-10/10 mt-2"></div>
         </h5>
+        
         <div class="home-bar-container">
           <div class="dropdown mt-2" onclick="toggleDropdown('guild')">
             <div class="dropdown-header flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 w-4 text-gray-400"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler colorTextMain icons-tabler-outline icon-tabler-clock-bolt"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20.984 12.53a9 9 0 1 0 -7.552 8.355" /><path d="M12 7v5l3 3" /><path d="M19 16l-2 3h4l-2 3" /></svg>
               <h5 id="guild-header" class="dropdown-header-text colorTextMain text-lg ml-2 cursor-pointer">
                 Informações da Guilda
               </h5>
@@ -160,20 +146,7 @@
 
           <div class="dropdown mt-2" onclick="toggleDropdown('botinfo')">
             <div class="dropdown-header flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 w-4 text-gray-400"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler colorTextMain icons-tabler-outline icon-tabler-world-bolt"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20.985 12.52a9 9 0 1 0 -7.52 8.36" /><path d="M3.6 9h16.8" /><path d="M3.6 15h10.9" /><path d="M11.5 3a17 17 0 0 0 0 18" /><path d="M12.5 3c2.313 3.706 3.07 7.856 2.27 12" /><path d="M19 16l-2 3h4l-2 3" /></svg>
               <h5 id="botinfo-header" class="dropdown-header-text colorTextMain text-lg ml-2 cursor-pointer">
                 Informações do Bot
               </h5>
@@ -202,29 +175,17 @@
           </div>
         </div>
       </div>
-
-      <div id="functions-sidebar" class="functions-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+      <!--1. Session Functions--> 
+      <div id="functions-sidebar" class="functions-block mx-4 my-2 hidden">
         <h5 class="text-xl channel-block-text colorTextMainNOHOVER font-bold mb-2 cursor-default">
           Funções
+          <div class="border-b-3 diviveColor w-10/10 h-10/10 mt-2"></div>
         </h5>
 
         <div class="functions-bar-container">
           <div class="dropdown mt-2" onclick="toggleDropdown('funcs')">
             <div class="dropdown-header flex items-center">              
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 w-4 text-gray-400"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler colorTextMain icons-tabler-outline icon-tabler-message-bolt"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9h8" /><path d="M8 13h6" /><path d="M13 18l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5" /><path d="M19 16l-2 3h4l-2 3" /></svg>
               <h5 id="funcs-header" class="dropdown-header-text text-lg colorTextMain ml-2 cursor-pointer">
                 Funções de notificação
               </h5>
@@ -271,20 +232,7 @@
 
           <div class="dropdown mt-2" onclick="toggleDropdown('addchannels')">
             <div class="dropdown-header flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 w-4 text-gray-400"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler colorTextMain icons-tabler-outline icon-tabler-devices-bolt"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 19v-10a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v3.5" /><path d="M18 8v-3a1 1 0 0 0 -1 -1h-13a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h9" /><path d="M19 16l-2 3h4l-2 3" /><path d="M16 9h2" /></svg>
               <h5 id="addchannels-header" class="dropdown-header-text text-lg colorTextMain ml-2 cursor-pointer">
                 Canais para notificação
               </h5>
@@ -331,20 +279,7 @@
 
           <div class="dropdown mt-2 " onclick="toggleDropdown('statefuncs')">
             <div class="dropdown-header flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 w-4 text-gray-400"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler colorTextMain icons-tabler-outline icon-tabler-bell-exclamation"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 17h-11a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6a2 2 0 1 1 4 0a7 7 0 0 1 4 6v1.5" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /><path d="M19 16v3" /><path d="M19 22v.01" /></svg>
               <h5
                 id="statefuncs-header"
                 class="dropdown-header-text text-lg colorTextMain  ml-2 cursor-pointer"
@@ -375,29 +310,17 @@
           </div>
         </div>
       </div>
-
-      <div id="guildDB-sidebar" class="guildDB-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+      <!--1. Session GuildDB--> 
+      <div id="guildDB-sidebar" class="guildDB-block mx-4 my-2 hidden">
         <h5 class="text-xl channel-block-text colorTextMainNOHOVER font-bold mb-2 cursor-default">
           Banco de Dados
+          <div class="border-b-3 diviveColor w-10/10 h-10/10 mt-2"></div>
         </h5>
 
         <div class="guildDB-bar-container">
           <div class="dropdown mt-2" onclick="toggleDropdown('guilddbyt')">
             <div class="dropdown-header flex items-center">              
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 w-4 text-gray-400"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler colorTextMain icons-tabler-outline icon-tabler-device-imac-exclamation"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 17h-11a1 1 0 0 1 -1 -1v-12a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v8.5" /><path d="M3 13h13" /><path d="M8 21h7" /><path d="M10 17l-.5 4" /><path d="M14 17l.5 4" /><path d="M19 16v3" /><path d="M19 22v.01" /></svg>
               <h5 id="guilddbtyt-header" class="dropdown-header-text colorTextMain text-lg ml-2 cursor-pointer">
                 Youtube channels
               </h5>
@@ -462,20 +385,7 @@
 
           <div class="dropdown mt-2" onclick="toggleDropdown('guilddbtwh')">
             <div class="dropdown-header flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 w-4 text-gray-400"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler colorTextMain icons-tabler-outline icon-tabler-cash-banknote"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M3 8a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M18 12h.01" /><path d="M6 12h.01" /></svg>
               <h5 id="guilddbtwh-header" class="dropdown-header-text colorTextMain text-lg ml-2 cursor-pointer">
                 Twitch streams
               </h5>
@@ -539,29 +449,17 @@
           </div>
         </div>
       </div>
-
-      <div id="serverInfos-sidebar" class="serverInfos-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+      <!--1. Session ServerInfos-->
+      <div id="serverInfos-sidebar" class="serverInfos-block mx-4 my-2 hidden">
         <h5 class="text-xl channel-block-text font-bold colorTextMainNOHOVER mb-2 cursor-default">
           Servidor
+          <div class="border-b-3 diviveColor w-10/10 h-10/10 mt-2"></div>
         </h5>
 
         <div class="serverInfos-bar-container">
           <div class="dropdown mt-2" onclick="toggleDropdown('users')">
             <div class="dropdown-header flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 w-4 text-gray-400"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler colorTextMain icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
               <h5 id="users-header" class="dropdown-header-text text-lg colorTextMain ml-2 cursor-pointer">
                 Membros do servidor
               </h5>
@@ -589,29 +487,17 @@
           </div>
         </div>
       </div>
-
-      <div id="config-sidebar" class="config-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+      <!--1. Session Config-->
+      <div id="config-sidebar" class="config-block mx-4 my-2 hidden">
         <h5 class="text-xl channel-block-text font-bold colorTextMainNOHOVER mb-2 cursor-default">
           Configurações
+          <div class="border-b-3 diviveColor w-10/10 h-10/10 mt-2"></div>
         </h5>
 
         <div class="config-bar-container">
           <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('config')">
             <div class="dropdown-header flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 w-4 text-gray-400"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler colorTextMain icons-tabler-filled icon-tabler-brand-tabler"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 2a5 5 0 0 1 5 5v10a5 5 0 0 1 -5 5h-10a5 5 0 0 1 -5 -5v-10a5 5 0 0 1 5 -5zm-1 12h-3a1 1 0 0 0 0 2h3a1 1 0 0 0 0 -2m-7.293 -5.707a1 1 0 0 0 -1.414 0l-.083 .094a1 1 0 0 0 .083 1.32l2.292 2.293l-2.292 2.293a1 1 0 0 0 1.414 1.414l3 -3a1 1 0 0 0 0 -1.414z" /></svg>
               <h5 id="config-header" class="dropdown-header-text text-lg colorTextMain colorTextMain ml-2">
                 Funções de notificação
               </h5>
@@ -645,34 +531,26 @@
     <!------------------------------------------------------------------------------------------------------------------------>
     <!------------------------------------------------------------------------------------------------------------------------>
     <!------------------------------------------------------ TOP BAR  -------------------------------------------------------->
-    <div id="top-bar" class="fixed top-0 left-[334px] h-12 right-0 flex flex-row-3 topbar-color divide-y-2 divide-yellow-900 gap-4">
+    <div id="top-bar" class="fixed top-0 left-[336px] h-12 right-0 flex flex-row-3 topbar-color divide-y divide-yellow-900 gap-4">
       <div class="flex items-center ml-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6 text-gray-400"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
-          />
-        </svg>
+        <svg  xmlns="http://www.w3.org/2000/svg"  width="32"  height="32"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler colorTextMain icons-tabler-outline icon-tabler-hash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+        <!--1. Session Home--> 
         <h5 id="hashtag-home" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2">
           Pagina inicial
         </h5>
+        <!--1. Session Functions--> 
         <h5 id="hashtag-functions" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
           Gerenciador de funções
         </h5>
+        <!--1. Session GuildDB--> 
         <h5 id="hashtag-guildDB" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
           Gerenciar banco de dados
         </h5>
+        <!--1. Session ServerInfos-->
         <h5 id="hashtag-serverInfos" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
           Informações do servidor
         </h5>
+        <!--1. Session Config-->
         <h5 id="hashtag-config" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
           Configurações
         </h5>
@@ -750,7 +628,9 @@
       var img = parent.user();
       var email = parent.email();
       var user = parent.username();
-
+      const serverName = parent.guildName(); 
+      const serverNameElement = document.getElementById("server-name");
+      
       // Selecione a div pelo ID
       var divEmail = document.getElementById("email");
       var divUser = document.getElementById("userpt");
@@ -767,6 +647,10 @@
         if (userImage) {
           userImage.src = img;
         }
+      }
+
+      if (serverName && serverNameElement) {
+        serverNameElement.textContent = serverName;
       }
 
       function handleIconClick(btnId) {
