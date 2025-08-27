@@ -12,9 +12,9 @@
     </style>
   </head>
   <body class="colorTextMainNOHOVER">
-      <!------------------------------------------------------------------------------------------------------------------------>
+    <!------------------------------------------------------------------------------------------------------------------------>
     <!----------------------------------------------- BARRA LATERAL COM BOTÕES ----------------------------------------------->
-    <div id="sidebar" class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center sidebar-color divide-y-2 divide-green-300 gap-4">
+    <div id="sidebar" class="fixed top-0 left-0 h-screen w-20 flex flex-col items-center sidebar-color divide-y-2 divide-sky-300 gap-4">
       <div class="tooltip2">
         <div class="relative group">
           <div
@@ -36,7 +36,7 @@
         <div class="tooltip2 ml-2">
           <div class="relative group">
             <div
-              id="chanels"
+              id="functions"
               class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
               onclick="handleIconClick('functions')"
             >
@@ -53,9 +53,9 @@
         <div class="tooltip2 ml-2">
           <div class="relative group">
             <div
-              id="guild"
+              id="guildDB"
               class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
-              onclick="handleIconClick('guild')"
+              onclick="handleIconClick('guildDB')"
             >
               <img
                 src="/res/sidebar/database.jpg"
@@ -70,9 +70,9 @@
         <div class="tooltip2 ml-2">
           <div class="relative group">
             <div
-              id="user"
+              id="serverInfos"
               class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
-              onclick="handleIconClick('user')"
+              onclick="handleIconClick('serverInfos')"
             >
               <img
                 src="/res/sidebar/gear2.jpg"
@@ -88,9 +88,9 @@
       <div class="tooltip2">
         <div class="relative group">
           <div
-            id="usage"
+            id="config"
             class="flex justify-center sidebar-icon w-16 h-16 cursor-pointer"
-            onclick="handleIconClick('usage')"
+            onclick="handleIconClick('config')"
           >
             <img
               src="/res/sidebar/gear.jpg"
@@ -106,15 +106,15 @@
     <!------------------------------------------------------------------------------------------------------------------------>
     <!------------------------------------------------------------------------------------------------------------------------>
     <!----------------------------------------------- MENU LATERAL COM OPÇÕES  ----------------------------------------------->
-    <div id="server-bar" style="z-index: -1" class="fixed top-0 left-20 h-screen w-64 flex flex-col items-start chanelbar-color dark:bg-gray-900 shadow-lg">
+    <div id="server-bar" class="fixed top-0 left-20 h-screen w-64 flex flex-col items-start chanelbar-color">
       
       <!--1. Session Home--> 
-      <div id="home-sidebar" class="configuration-block divide-y-2 divide-green-300 mx-4 my-2">
+      <div id="home-sidebar" class="home-block divide-y-2 divide-green-300 mx-4 my-2">
         <h5 class="text-xl channel-block-text colorTextMainNOHOVER font-bold mb-2 cursor-default">
           Inicio
         </h5>
-        <div class="server-bar-container">
-          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('guild')">
+        <div class="home-bar-container">
+          <div class="dropdown mt-2" onclick="toggleDropdown('guild')">
             <div class="dropdown-header flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -151,14 +151,14 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">
                   Server
                 </h5>
               </div>
             </div>
           </div>
 
-          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('botinfo')">
+          <div class="dropdown mt-2" onclick="toggleDropdown('botinfo')">
             <div class="dropdown-header flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +194,7 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">
                   Status
                 </h5>
               </div>
@@ -203,13 +203,13 @@
         </div>
       </div>
 
-      <div id="functions-sidebar" class="chanels-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+      <div id="functions-sidebar" class="functions-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
         <h5 class="text-xl channel-block-text colorTextMainNOHOVER font-bold mb-2 cursor-default">
           Funções
         </h5>
 
         <div class="functions-bar-container">
-          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('funcs')">
+          <div class="dropdown mt-2" onclick="toggleDropdown('funcs')">
             <div class="dropdown-header flex items-center">              
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +246,7 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg  ml-1">Youtube</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base  ml-1">Youtube</h5>
               </div>
 
               <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('functwitch')">
@@ -264,12 +264,12 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">Twitch</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Twitch</h5>
               </div>
             </div>
           </div>
 
-          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('addchannels')">
+          <div class="dropdown mt-2" onclick="toggleDropdown('addchannels')">
             <div class="dropdown-header flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -306,7 +306,7 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">Youtube</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Youtube</h5>
               </div>
 
               <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('tchchannelupdate')">
@@ -324,12 +324,12 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">Twitch</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Twitch</h5>
               </div>
             </div>
           </div>
 
-          <div class="dropdown border-discord-light mt-2 no-close-dropdown" onclick="toggleDropdown('statefuncs')">
+          <div class="dropdown mt-2 " onclick="toggleDropdown('statefuncs')">
             <div class="dropdown-header flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -369,28 +369,21 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-lg ml-1">Informações</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Informações</h5>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div
-        id="guild-sidebar"
-        class="guild-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+      <div id="guildDB-sidebar" class="guildDB-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+        <h5 class="text-xl channel-block-text colorTextMainNOHOVER font-bold mb-2 cursor-default">
           Banco de Dados
         </h5>
 
-        <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('channels')"
-          >
-            <div class="dropdown-header flex items-center">
-              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
+        <div class="guildDB-bar-container">
+          <div class="dropdown mt-2" onclick="toggleDropdown('guilddbyt')">
+            <div class="dropdown-header flex items-center">              
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -405,22 +398,13 @@
                   d="M4 6h16M4 12h16m-7 6h7"
                 ></path>
               </svg>
-              <h5
-                id="statefuncs-header"
-                class="dropdown-header-text text-sm ml-2 cursor-pointer"
-              >
+              <h5 id="guilddbtyt-header" class="dropdown-header-text colorTextMain text-lg ml-2 cursor-pointer">
                 Youtube channels
               </h5>
             </div>
 
-            <div
-              id="channels-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('addytbchannel')"
-              >
+            <div id="guilddbyt-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('addytbchannel')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -435,13 +419,10 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Adicionar canal</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Adicionar canal</h5>
               </div>
 
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('viewytbchannels')"
-              >
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('viewytbchannels')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -456,13 +437,10 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Visualizar canais</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Visualizar canais</h5>
               </div>
 
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('deleteytbchannels')"
-              >
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('deleteytbchannels')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -477,17 +455,13 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Deletar canais</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Deletar canais</h5>
               </div>
             </div>
           </div>
 
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('videos')"
-          >
+          <div class="dropdown mt-2" onclick="toggleDropdown('guilddbtwh')">
             <div class="dropdown-header flex items-center">
-              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -502,22 +476,13 @@
                   d="M4 6h16M4 12h16m-7 6h7"
                 ></path>
               </svg>
-              <h5
-                id="videos-header"
-                class="dropdown-header-text text-sm ml-2 cursor-pointer"
-              >
+              <h5 id="guilddbtwh-header" class="dropdown-header-text colorTextMain text-lg ml-2 cursor-pointer">
                 Twitch streams
               </h5>
             </div>
 
-            <div
-              id="videos-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('addtchchannel')"
-              >
+            <div id="guilddbtwh-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('addtchchannel')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -532,13 +497,10 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Adicionar live</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Adicionar live</h5>
               </div>
 
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('viewtchchannel')"
-              >
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('viewtchchannel')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -553,13 +515,10 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Visualizar lives</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Visualizar lives</h5>
               </div>
 
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('deletetchchannel')"
-              >
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('deletetchchannel')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -574,28 +533,21 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Deletar streams</h5>
+                <h5 class="dropdown-selection-text colorTextMainNOHOVER text-base ml-1">Deletar streams</h5>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div
-        id="user-sidebar"
-        class="configuration-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+      <div id="serverInfos-sidebar" class="serverInfos-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+        <h5 class="text-xl channel-block-text font-bold colorTextMainNOHOVER mb-2 cursor-default">
           Servidor
         </h5>
 
-        <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('user')"
-          >
+        <div class="serverInfos-bar-container">
+          <div class="dropdown mt-2" onclick="toggleDropdown('users')">
             <div class="dropdown-header flex items-center">
-              <!-- Substitua o ícone existente pelo ícone de jogo da velha do Heroicons -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -610,23 +562,13 @@
                   d="M4 6h16M4 12h16m-7 6h7"
                 ></path>
               </svg>
-              <h5
-                id="user-header"
-                class="dropdown-header-text text-sm ml-2 cursor-pointer"
-              >
+              <h5 id="users-header" class="dropdown-header-text text-lg colorTextMain ml-2 cursor-pointer">
                 Membros do servidor
               </h5>
             </div>
 
-            <div
-              id="user-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection cursor-pointer no-close-dropdown flex items-center"
-                onclick="selectTopic('memberinfo')"
-              >
-                <!-- Substitua o ícone existente pela seta para a direita do Heroicons -->
+            <div id="users-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection cursor-pointer no-close-dropdown flex items-center" onclick="selectTopic('memberinfo')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -641,26 +583,20 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Mensagens e Voz</h5>
+                <h5 class="dropdown-selection-text text-base colorTextMainNOHOVER ml-1">Mensagens e Voz</h5>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div
-        id="usage-sidebar"
-        class="usage-block divide-y-2 divide-green-300 mx-4 my-2 hidden"
-      >
-        <h5 class="text-xl channel-block-text font-bold mb-2 cursor-default">
+      <div id="config-sidebar" class="config-block divide-y-2 divide-green-300 mx-4 my-2 hidden">
+        <h5 class="text-xl channel-block-text font-bold colorTextMainNOHOVER mb-2 cursor-default">
           Configurações
         </h5>
 
-        <div class="channel-bar-container">
-          <div
-            class="dropdown border-discord-light mt-2"
-            onclick="toggleDropdown('usage')"
-          >
+        <div class="config-bar-container">
+          <div class="dropdown border-discord-light mt-2" onclick="toggleDropdown('config')">
             <div class="dropdown-header flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -676,19 +612,13 @@
                   d="M4 6h16M4 12h16m-7 6h7"
                 ></path>
               </svg>
-              <h5 id="usage-header" class="dropdown-header-text text-sm ml-2">
+              <h5 id="config-header" class="dropdown-header-text text-lg colorTextMain colorTextMain ml-2">
                 Funções de notificação
               </h5>
             </div>
 
-            <div
-              id="usage-dropdown"
-              class="dropdown-content hidden ml-4 text-sm"
-            >
-              <div
-                class="dropdown-selection flex items-center"
-                onclick="selectTopic('youtube')"
-              >
+            <div id="config-dropdown" class="dropdown-content hidden ml-4 text-sm">
+              <div class="dropdown-selection flex items-center" onclick="selectTopic('youtube')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -703,7 +633,7 @@
                     d="M9 5l7 7-7 7"
                   ></path>
                 </svg>
-                <h5 class="dropdown-selection-text ml-1">Youtube</h5>
+                <h5 class="dropdown-selection-text text-base colorTextMainNOHOVER ml-1">Youtube</h5>
               </div>
             </div>
           </div>
@@ -712,14 +642,10 @@
 
     </div>
     <!----------------------------------------------- MENU LATERAL COM OPÇÕES  ----------------------------------------------->
-
     <!------------------------------------------------------------------------------------------------------------------------>
-
+    <!------------------------------------------------------------------------------------------------------------------------>
     <!------------------------------------------------------ TOP BAR  -------------------------------------------------------->
-    <div
-      id="top-bar"
-      class="fixed top-0 left-[334px] right-0 h-12 flex topbar-color dark:bg-gray-900 shadow-lg divide-y-2 divide-yellow-900"
-    >
+    <div id="top-bar" class="fixed top-0 left-[334px] h-12 right-0 flex flex-row-3 topbar-color divide-y-2 divide-yellow-900 gap-4">
       <div class="flex items-center ml-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -735,28 +661,19 @@
             d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
           />
         </svg>
-        <h5 id="hashtag-home" class="text-xl channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2">
+        <h5 id="hashtag-home" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2">
           Pagina inicial
         </h5>
-        <h5 id="hashtag-functions" class=" channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
+        <h5 id="hashtag-functions" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
           Gerenciador de funções
         </h5>
-        <h5
-          id="hashtag-guild"
-          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
-        >
+        <h5 id="hashtag-guildDB" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
           Gerenciar banco de dados
         </h5>
-        <h5
-          id="hashtag-user"
-          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
-        >
+        <h5 id="hashtag-serverInfos" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
           Informações do servidor
         </h5>
-        <h5
-          id="hashtag-usage"
-          class="text-xl channel-block-text font-bold cursor-default ml-2 hidden"
-        >
+        <h5 id="hashtag-config" class="channel-block-text text-lg colorTextMainNOHOVER font-bold cursor-default ml-2 hidden">
           Configurações
         </h5>
       </div>
@@ -826,10 +743,9 @@
       </div>
     </div>
     <!------------------------------------------------------ TOP BAR  -------------------------------------------------------->
-
     <!------------------------------------------------------------------------------------------------------------------------>
-
     <!-------------------------------------------------- FUNÇÕES E METODOS  -------------------------------------------------->
+    <!------------------------------------------------------------------------------------------------------------------------>
     <script>
       var img = parent.user();
       var email = parent.email();
@@ -856,14 +772,14 @@
       function handleIconClick(btnId) {
         const Configuration = document.getElementById(`home-sidebar`);
         const Chanels = document.getElementById(`functions-sidebar`);
-        const Guild = document.getElementById(`guild-sidebar`);
-        const User = document.getElementById(`user-sidebar`);
-        const Usage = document.getElementById(`usage-sidebar`);
+        const Guild = document.getElementById(`guildDB-sidebar`);
+        const User = document.getElementById(`serverInfos-sidebar`);
+        const Usage = document.getElementById(`config-sidebar`);
         const ConfigurationHash = document.getElementById(`hashtag-home`);
         const ChanelsHash = document.getElementById(`hashtag-functions`);
-        const GuildHash = document.getElementById(`hashtag-guild`);
-        const UserHash = document.getElementById(`hashtag-user`);
-        const UsageHash = document.getElementById(`hashtag-usage`);
+        const GuildHash = document.getElementById(`hashtag-guildDB`);
+        const UserHash = document.getElementById(`hashtag-serverInfos`);
+        const UsageHash = document.getElementById(`hashtag-config`);
         const hashtag = document.getElementById(`hashtag-${btnId}`);
         const sidebar = document.getElementById(`${btnId}-sidebar`);
 
@@ -977,5 +893,6 @@
       }
     </script>
     <!-------------------------------------------------- FUNÇÕES E METODOS  -------------------------------------------------->
+    <!------------------------------------------------------------------------------------------------------------------------>
   </body>
 </html>
