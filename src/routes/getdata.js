@@ -134,6 +134,32 @@ const getGuildData = async (guildId) => {
   }
 };
 
+/**
+ * Busca o nome de um canal do Discord a partir do seu ID.
+ * @param {Number} channelId - O ID do canal que você deseja encontrar.
+ * @returns {Promise<number|null>} O nome do canal ou null se não for encontrado ou ocorrer um erro.
+ */
+const getChannelName = async (channelId) => {
+  try {
+    // 1. Verifica se um ID foi fornecido para evitar erros.
+    if (!channelId) {
+      console.warn("A função getChannelName foi chamada sem um ID de canal.");
+      return null;
+    }
+
+    // 2. Usa o client do bot para buscar o canal diretamente pelo ID do canal.
+    const channel = await discordBot.channels.fetch(channelId);
+
+    // 3. Retorna o nome se o canal for encontrado.
+    return channel ? channel.name : null;
+    
+  } catch (error) {
+    // O erro mais comum aqui é "Unknown Channel" se o ID for inválido.
+    console.error(`Erro ao obter o nome do canal com ID ${channelId}:`, error.message);
+    return null; // Retorna null para que a aplicação não quebre se o canal não existir.
+  }
+};
+
 const getBotUptime = () => {
   const uptimeMilliseconds = discordBot.uptime;
   const uptimeSeconds = Math.floor(uptimeMilliseconds / 1000);
@@ -199,6 +225,8 @@ router.get("/pagina/:page/:param2", isAuthenticated, async (req, res) => {
   const lives = await getTwitch(guildId);
   const guildinfo = await getGuilds(guildId);
   const userinfo = await getUsers(guildId);
+  let chanelytb ="";
+  let chaneltch="";
   console.log(page, guildId);
 
   // Use uma estrutura de controle, como um switch, para determinar qual página renderizar
@@ -237,17 +265,19 @@ router.get("/pagina/:page/:param2", isAuthenticated, async (req, res) => {
       break;
     case "ytbchannelupdate":
       // Renderize a página 1 com o segundo parâmetro
+      chanelytb = await getChannelName(guildinfo.channelytb); 
       const ytbchannelupdate = await ejs.renderFile(
         path.join(__dirname, "../views/updatenotytb.ejs"),
-        { info: botInfo }
+        { info: botInfo, info5: guildinfo, channelytb: chanelytb }
       );
       res.send(ytbchannelupdate);
       break;
     case "tchchannelupdate":
       // Renderize a página 1 com o segundo parâmetro
+      chaneltch = await getChannelName(guildinfo.channeltch); 
       const tchchannelupdate = await ejs.renderFile(
         path.join(__dirname, "../views/updatenottch.ejs"),
-        { info: botInfo }
+        { info: botInfo, info5: guildinfo,  channeltch: chaneltch }
       );
       res.send(tchchannelupdate);
       break;
@@ -320,6 +350,7 @@ router.get("/pagina/:page/:param2", isAuthenticated, async (req, res) => {
       res.status(404).send("Página não encontrada");
   }
 });
+
 
 router.get(
   "/pagina/funcs/:page/:guildId/:channelin",

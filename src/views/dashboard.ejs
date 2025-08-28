@@ -16,7 +16,7 @@
         manipular os dados do servidor em questão.
       </p>
     </div>
-    <div class="w-auto h-auto text-center">
+    <div class="w-11/12 h-auto mt-10 text-center">
       <div class="grid grid-cols-2 gap-[18px] ">
         <% user.guilds.forEach(guild => { %>
           <ul class="glowing-list rounded-md grid grid-cols-2">
@@ -44,9 +44,9 @@
                 </li>
               </div>
             </div>
-            <div class="grid  content-center">
+            <div class="grid content-center justify-end">
               <li>
-                <img class="h-44 w-44 rounded-full " src="/res/serverIcon/nonserverimg.jpg" id="AguildIcon<%= guild.id %>"/>
+                <img class="h-40 w-40 rounded-4xl" src="/res/serverIcon/nonserverimg.jpg" id="AguildIcon<%= guild.id %>"/>
               </li>
             </div>
           </ul>

@@ -5,49 +5,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="../css/cssdir/out.css" rel="stylesheet">
-    <title>Discord Bot Dashboard</title>
     <style>
       
     </style>
   </head>
-  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
-    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-lg">
-      
-      <% if (info.icon && info.icon.indexOf('null') === -1) { %>
-        <p class="flex items-center justify-center">
-          <img
-            src="<%= info.icon %>"
-            alt="Ícone da guilda"
-            class="mx-auto my-auto rounded-lg max-w-full h-auto mb-4"
-          />
-        </p>
-        <% } else { %>
-        <!-- Substitua "caminho/para/sua/imagem.png" pelo caminho real da sua imagem padrão -->
-        <p>
-          <img
-            src="/res/serverIcon/nonserverimg.jpg"
-            alt="Ícone padrão"
-            class="mx-auto my-auto rounded-lg max-w-full h-auto mb-4"
-          />
-        </p>
-        <% } %>
-      
-      <h1 class="text-3xl font-bold mb-4 text-center">Guilda <%= info.name %></h1>
-      
-      <p class="text_page text-center">ID da Guilda: <%= info.id %></p>
-      <p class="text_page text-center">Descrição: <%= info.description %></p>
-      <p class="text_page text-center">Número de Membros: <%= info.memberCount %></p>
-      <p class="text_page text-center">Canais de Voz: <%= info.voiceChannels %></p>
-      <p class="text_page text-center">Canais de Texto: <%= info.textChannels %></p>
+  <body class=" min-h-screen flex items-center justify-center">
+    <div class="pages_cont p-8 rounded-lg shadow-md w-full h-full max-w-lg">
+        <div class="flex items-center gap-5 px-4 sm:px-0">
+            <div class="flex-shrink-0"> <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+                <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-24 h-24 rounded-lg object-cover"/>
+              <% } else { %>
+                <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-24 h-24 rounded-lg object-cover" />
+              <% } %>
+            </div>
 
-      <!-- Informações do Bot -->
-      <h2 class="text-2xl font-bold mt-4 mb-2 text-center">Informações do Bot</h2>
-      <div class="text_page text-center">
-        <p>Número de Servidores: <%= info.guildCount %></p>
-        <p>Status do Bot: <%= info.botStatus %></p>
-        <p>Tempo de Atividade: <%= info.uptime %></p>
+            <div>
+              <h3 class="text-base/7 font-semibold text-white">Informações do Servidor</h3>
+              <p class="mt-1 max-w-2xl text-sm/6 text-gray-400">Dados do Servidor e Configurações</p>
+            </div>
+        </div>
+        <div class="mt-6 border-t border-white/10">
+          <dl class="divide-y divide-white/10">
+            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt class="text-sm/6 font-medium text-gray-100">Nome do Servidor</dt>
+              <dd class="mt-1 text-sm/6 sm:col-span-2 text-gray-400 sm:mt-0"><%= info.name %></dd>
+            </div>
+            <div class="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-2 sm:px-0">
+              <dt class="text-sm/6 sm:col-span-2 font-medium text-gray-100">Gerenciando atualmente</dt>
+              <dd class="mt-1 text-sm/6 text-gray-400 sm:mt-0"><%= info.id %></dd>
+            </div>
+            <div class="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-2 sm:px-0">
+              <dt class="text-sm/6 sm:col-span-2 font-medium text-gray-100">Total de Membros</dt>
+              <dd class="mt-1 text-sm/6 text-gray-400 sm:mt-0"><%= info.memberCount %></dd>
+            </div>
+            <div class="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-2 sm:px-0">
+              <dt class="text-sm/6 font-medium sm:col-span-2 text-gray-100">Total de Canais de Voz</dt>
+              <dd class="mt-1 text-sm/6 text-gray-400  sm:mt-0"><%= info.voiceChannels %></dd>
+            </div>
+            <div class="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
+              <dt class="text-sm/6 sm:col-span-2 font-medium text-gray-100">Total de Canis de Texto</dt>
+              <dd class="mt-1 text-sm/6 text-gray-400 sm:mt-0"><%= info.textChannels %></dd>
+            </div>
+          </dl>
+        </div>
       </div>
-      </div>
-    </div>
+    <div>
   </body>
 </html>
