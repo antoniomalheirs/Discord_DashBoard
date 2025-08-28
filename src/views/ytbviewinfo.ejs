@@ -3,85 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="../css/cssdir/out.css"
-      rel="stylesheet"
-    />
+    <link href="../css/cssdir/out.css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <title>Banco de Dados - Guilda</title>
   </head>
-  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
-    <div
-      class="pages_cont p-4 rounded-lg shadow-md max-w-8xl flex flex-col justify-between min-h-full items-center"
-    >
-      <div id="mensagemPopUp" class="hidden"></div>
-
-      <h1 class="text-3xl font-bold my-4 text-center">
-        Banco de Dados de Videos do Youtube
-      </h1>
-
-      <h1 class="text-2xl font-bold my-4 text-center">
-        Guilda <%= info.name %>
-      </h1>
-
-      <div class="my-4">
-        <% if (info.icon && info.icon.indexOf('null') === -1) { %>
-        <img
-          src="<%= info.icon %>"
-          alt="Ícone da guilda"
-          class="rounded-full max-w-full h-auto"
-        />
-        <% } else { %>
-        <img
-          src="/res/serverIcon/nonserverimg.jpg"
-          alt="Ícone padrão"
-          class="rounded-full max-w-full h-auto"
-        />
-        <% } %>
+  <body class="min-h-screen flex items-center justify-center bg-slate-900">
+    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-7xl">
+      
+      <!-- Header da guilda -->
+      <div class="flex items-center gap-5 px-4 sm:px-0">
+        <div class="flex-shrink-0">
+          <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+            <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-24 h-24 rounded-lg object-cover" />
+          <% } else { %>
+            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-24 h-24 rounded-lg object-cover" />
+          <% } %>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-xl font-semibold text-white">Banco de Dados de Vídeos</h3>
+          <p class="mt-1 max-w-2xl text-sm text-gray-400">Guilda: <%= info.name %></p>
+        </div>
       </div>
 
-      <!-- Youtube Channels a Notificar na Guilda -->
-      <h2 class="text-2xl font-bold mt-8 text-center">
-        Youtube Channels a Notificar na Guilda
-      </h2>
-
-      <table
-        class="table-auto w-11/12 mt-4 bg-green-300 border rounded-lg shadow-md overflow-hidden"
-      >
-        <thead class="bg-purple-300">
-          <tr>
-            <th class="px-4 py-2 text-center">YouTube</th>
-            <th class="px-4 py-2 text-center">Channel</th>
-            <th class="px-4 py-2 text-center">Last Video</th>
-            <th class="px-4 py-2 text-center">Last Publish</th>
-            <th class="px-4 py-2 text-center">Message</th>
-            <th class="px-4 py-2 text-center">Notify Guild</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% info2.forEach(item => { %>
-          <tr class="bg-gray-100">
-            <td class="border border-purple-300 px-4 py-2 text-center">
-              <%= item.youtube %>
-            </td>
-            <td class="border border-purple-300 px-4 py-2 text-center">
-              <%= item.channel %>
-            </td>
-            <td class="border border-purple-300 px-4 py-2 text-center">
-              <%= item.lastVideo %>
-            </td>
-            <td class="border border-purple-300 px-4 py-2 text-center">
-              <%= item.lastPublish %>
-            </td>
-            <td class="border border-purple-300 px-4 py-2 text-center">
-              <%= item.message %>
-            </td>
-            <td class="border border-purple-300 px-4 py-2 text-center">
-              <%= item.notifyGuild %>
-            </td>
-          </tr>
-          <% }); %>
-        </tbody>
-      </table>
+      <!-- Tabela de dados -->
+      <div class="flex max-w-7xl mt-8">
+        <table class="w-full table-fixed divide-y divide-white-700">
+          <thead>
+            <tr>
+              <th class="w-[15%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">YouTube</th>
+              <th class="w-[12%] px-3 py-3.5 text-left text-sm font-semibold text-white">Channel</th>
+              <th class="w-[30%] px-3 py-3.5 text-left text-sm font-semibold text-white">Last Video</th>
+              <th class="w-[13%] px-3 py-3.5 text-left text-sm font-semibold text-white">Last Publish</th>
+              <th class="w-[18%] px-3 py-3.5 text-left text-sm font-semibold text-white">Message</th>
+              <th class="w-[12%] px-3 py-3.5 text-left text-sm font-semibold text-white">Notify Guild</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white-700">
+            <% info2.forEach(item => { %>
+              <tr>
+                <td class="truncate py-4 pl-4 pr-3 text-sm font-medium text-gray-300 sm:pl-0"><%= item.youtube %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.channel %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.lastVideo %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.lastPublish %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.message %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.notifyGuild %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>

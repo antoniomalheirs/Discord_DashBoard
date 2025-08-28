@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard: <%= info.name %></title>
-    <script src="https://cdn.tailwindcss.com"></script>
         <link href="../css/cssdir/out.css" rel="stylesheet" />
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
   </head>
   <body class=" min-h-screen flex items-center justify-center">
@@ -24,7 +24,7 @@
             <p>Membros: <%= info.memberCount %></p>
         </div>
 
-        <div class="mt-6 border-t border-gray-700 pt-4 text-sm">
+        <div class="mt-6 border-t border-gray-300 pt-4 text-sm">
             <p class="text-gray-300 flex justify-between">
                 <span>Notificações Twitch:</span>
                 <span class="font-mono px-2 py-1 rounded <%= info5.twitchnotify ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400' %>">
@@ -52,7 +52,7 @@
           <input type="hidden" id="guildId" name="guildId" value="<%= info.id %>" />
           <input type="hidden" id="func" name="func" value="updttwitch" />
           <div>
-            <button type="button" onclick="envdata()" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+            <button type="button" onclick="envdata()" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
               Atualizar Canal
             </button>
           </div>

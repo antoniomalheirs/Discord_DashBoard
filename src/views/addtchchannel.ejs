@@ -1,92 +1,93 @@
 <!-- guildcontentmain.ejs -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br" class="h-full bg-gray-900">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="../css/cssdir/out.css"
-      rel="stylesheet"
-    />
-    <title>Discord Bot Dashboard</title>
+    <title>Dashboard: <%= info.name %></title>
+    <link href="../css/cssdir/out.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   </head>
-  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
-    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-lg">
-      <% if (info.icon && info.icon.indexOf('null') === -1) { %>
-      <p class="flex items-center justify-center">
-        <img
-          src="<%= info.icon %>"
-          alt="Ícone da guilda"
-          class="mx-auto my-auto rounded-lg max-w-full h-auto mb-4"
-        />
-      </p>
-      <% } else { %>
-      <!-- Substitua "caminho/para/sua/imagem.png" pelo caminho real da sua imagem padrão -->
-      <p>
-        <img
-          src="/res/serverIcon/nonserverimg.jpg"
-          alt="Ícone padrão"
-          class="mx-auto my-auto rounded-lg max-w-full h-auto mb-4"
-        />
-      </p>
-      <% } %>
+  <body class="min-h-screen flex items-center justify-center">
+    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-7xl">
+      <!-- Popup de mensagens -->
+      <div id="mensagemPopUp" class="hidden fixed top-15 right-5 z-50"></div>
 
-      <h1 class="text-3xl font-bold mb-4 text-center">
-        Guilda <%= info.name %>
-      </h1>
+      <!-- Bloco de informações da guilda -->
+      <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <% if (info.icon && info.icon.indexOf('null') === -1) { %>
+          <img src="<%= info.icon %>" alt="Ícone da guilda" class="mx-auto h-20 w-20 rounded-full" />
+        <% } else { %>
+          <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="mx-auto h-20 w-20 rounded-full" />
+        <% } %>
 
-      <p class="text_page text-center">ID da Guilda: <%= info.id %></p>
-      <p class="text_page text-center">
-        Número de Membros: <%= info.memberCount %>
-      </p>
+        <h1 class="mt-6 text-center text-3xl font-bold tracking-tight text-white">Guilda <%= info.name %></h1>
+        <div class="mt-2 text-center text-sm text-gray-400">
+          <p>ID da Guilda: <%= info.id %></p>
+          <p>Membros: <%= info.memberCount %></p>
+        </div>
+      </div>
 
-      
-
-      <form id="addtchchannel" method="post">
-        <div class="flex flex-col justify-center mt-4">
-          <label for="numero" class="block text-sm font-medium text_page mb-2">Nome do canal:</label>
-          <input
-            type="text"
-            id="channelId"
-            name="channelId"
-            class="p-2 border rounded-md focus:outline-none focus:border-blue-500"
-            placeholder="Nome do canal desejado"
-          />
-
-          <input
-              type="hidden"
-              id="guildId"
-              name="guildId"
-              value="<%= info.id %>"
+      <!-- Formulário Twitch -->
+      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form id="addtchchannel" method="post" class="space-y-6">
+          <div>
+            <label for="channelId" class="block text-sm font-medium leading-6 text-gray-100">Nome do Streamer</label>
+            <div class="mt-2">
+              <input 
+                type="text" 
+                id="channelId" 
+                name="channelId" 
+                required
+                placeholder="Nome do streamer na Twitch"
+                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white 
+                       outline-1 -outline-offset-1 outline-white/10 
+                       placeholder:text-gray-500 
+                       focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
               />
+            </div>
+          </div>
 
-          <input
-            type="hidden"
-            id="func"
-            name="func"
-            value="addtwitchch"
-            />
-        </div>
-      
-        <div class="flex justify-center mt-4">
-          <button
-            type="button" <!-- Mudamos de 'submit' para 'button' para evitar envio automático do formulário 
-            class="page_button-color text_page py-2 px-4 rounded-md focus:outline-none page_button-color"
-            onclick="envdata()"
-          >
-            Adicionar Streamer
-          </button>
-        </div>
-      </form>
+          <input type="hidden" id="guildId" name="guildId" value="<%= info.id %>" />
+          <input type="hidden" id="func" name="func" value="addtwitchch" />
 
-      <script>
-        function envdata() {
-          // Obtenha os dados do formulário
-          var dadosFormulario = $("#addtchchannel").serializeArray();
-          // Envie os dados para a função na página pai
-          parent.dtbaseReload(dadosFormulario);
-        }
-      </script>
+          <div>
+            <button 
+              type="button" 
+              onclick="envdata()" 
+              class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 
+                     text-sm font-semibold leading-6 text-white hover:bg-indigo-400 
+                     focus-visible:outline 
+                     focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+              Adicionar Streamer
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+
+    <!-- Scripts -->
+    <script>
+      function exibirMensagemErro(mensagem) {
+        const popUp = document.getElementById('mensagemPopUp');
+        popUp.innerHTML = `
+          <div class="bg-red-500 text-white font-bold rounded-lg px-4 py-3 shadow-xl" role="alert">
+            <p>${mensagem}</p>
+          </div>
+        `;
+        popUp.classList.remove('hidden');
+        setTimeout(() => { popUp.classList.add('hidden'); }, 3000);
+      }
+
+      function envdata() {
+        var form = document.getElementById('addtchchannel');
+        if (!form.checkValidity()) {
+          exibirMensagemErro('Por favor, preencha todos os campos obrigatórios.');
+          return;
+        }
+        var dadosFormulario = $("#addtchchannel").serializeArray();
+        parent.dtbaseReload(dadosFormulario);
+      }
+    </script>
   </body>
 </html>

@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="../css/cssdir/out.css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <title>Gerenciador de Funções - YouTube</title>
   </head>
-  <body class="bg-slate-900 text-white min-h-screen flex items-center justify-center">
+  <body class=" min-h-screen flex items-center justify-center">
 
     <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-7xl">
       <div id="mensagemPopUp" class="hidden fixed top-15 right-3 z-50"></div>
 
-      <div class="flex items-center gap-5 px-4 sm:px-0">
+      <div class="flex items-end gap-5 px-4 sm:px-0">
         <div class="flex-shrink-0">
           <% if (info.icon && info.icon.indexOf('null') === -1) { %>
             <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-24 h-24 rounded-lg object-cover" />
@@ -50,7 +51,7 @@
       </div>
 
       <div class="flex max-w-7xl mt-8">
-        <table class="w-full table-fixed divide-y divide-white-700">
+        <table class="w-full table-fixed divide-y ">
           <thead>
             <tr>
               <th scope="col" class="w-[15%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">YouTube</th>
@@ -61,15 +62,15 @@
               <th scope="col" class="w-[12%] px-3 py-3.5 text-left text-sm font-semibold text-white">Notify Guild</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-800">
+          <tbody class="divide-y ">
             <% info2.forEach(item => { %>
               <tr>
-                <td class="truncate py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0"><%= item.youtube %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-300"><%= item.channel %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-300"><%= item.lastVideo %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-300"><%= item.lastPublish %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-300"><%= item.message %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-300"><%= item.notifyGuild %></td>
+                <td class="truncate py-4 pl-4 pr-3 text-sm font-medium text-gray-300 sm:pl-0"><%= item.youtube %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.channel %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.lastVideo %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.lastPublish %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.message %></td>
+                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.notifyGuild %></td>
               </tr>
             <% }); %>
           </tbody>
