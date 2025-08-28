@@ -1,9 +1,9 @@
 # Dashboard Web para Bot do Discord
 
-![Node.js](https://img.shields.io/badge/Node.js-16.x+-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-4.x-000000?style=for-the-badge&logo=express&logoColor=white)
-![EJS](https://img.shields.io/badge/EJS-3.1.9-A91E50?style=for-the-badge&logo=javascript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-22.x+-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-5.1.x-000000?style=for-the-badge&logo=express&logoColor=white)
+![EJS](https://img.shields.io/badge/EJS-3.1.10-A91E50?style=for-the-badge&logo=javascript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 Uma interface web completa para gerenciar e configurar seu bot do Discord diretamente pelo navegador. Permite que administradores de servidores configurem funcionalidades como notificações, visualizem estatísticas e muito mais, sem a necessidade de usar comandos de texto.
 
