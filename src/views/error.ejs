@@ -52,8 +52,7 @@
             Page not found
           </h1>
           <p class="mt-6 text-base  text-gray-300">
-            Erro ao obter dados da guilda, você não tem permissão para acessar
-            este servidor ou o bot talvez não esta neste Servidor!.
+            <%= (typeof error !== 'undefined' && error) ? error : "Erro ao obter dados da guilda, você não tem permissão para acessar este servidor ou o bot talvez não esta neste Servidor!." %>
           </p>
           <div class="mt-10 flex items-center justify-center gap-x-6">
             <a

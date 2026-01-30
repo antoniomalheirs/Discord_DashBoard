@@ -12,6 +12,8 @@ mongoose.model("APIUsers", UserAPISchema);
 const bodyParser = require("body-parser");
 const http = require("http");
 require("dotenv").config();
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
@@ -28,6 +30,12 @@ passport.deserializeUser((obj, done) => done(null, obj));
 const app = express();
 app.disable("x-powered-by");
 
+// Debug logging
+app.use((req, res, next) => {
+  console.log(`[DEBUG] Request: ${req.method} ${req.url}`);
+  next();
+});
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //app.use(express.urlencoded());
@@ -37,18 +45,35 @@ app.set("views", __dirname + "/views");
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/public/css"));
-app.use(express.static(__dirname + "/public/css/cssdir"));
-app.use(express.static(__dirname + "/public/layouts"));
 app.use(express.static(__dirname + "/public/res/sidebar"));
+
+app.use(helmet({
+  contentSecurityPolicy: false, // Disabled to avoid breaking external scripts (jQuery, FontAwesome) temporarily
+}));
+
+// Rate Limiting: 100 requests per 15 minutes
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: "Muitas requisições deste IP, por favor tente novamente mais tarde."
+});
+app.use(limiter);
 
 app.set("trust proxy", 1);
 app.use(
   session({
     secret: process.env.SECRET_KEY,
-    name:"ManagerBot",
-    resave: true,
-    saveUninitialized: true,
-    /*cookie: { maxAge: 3600000 },*/
+    name: "ManagerBot",
+    resave: false, // Changed to false (optimization)
+    saveUninitialized: false, // Changed to false (security: don't save empty sessions)
+    cookie: {
+      httpOnly: true, // Prevents JS access to cookie (XSS protection)
+      secure: process.env.AMBIENT === 'production', // Secure only in production (HTTPS)
+      sameSite: 'lax', // CSRF protection
+      maxAge: 3600000 // 1 hour
+    },
   })
 );
 
@@ -88,7 +113,7 @@ var disc = new DiscordStrategy(
         refreshtk: refreshToken,
       };
 
-      await userapischema.update(profile.id,uptUser);
+      await userapischema.update(profile.id, uptUser);
 
       return log(null, profile);
     }
@@ -107,7 +132,14 @@ app.get("/dashboard", (req, res) => {
 });
 
 app.get("/", (req, res) => {
+  console.log("[DEBUG] Root route hit");
   res.render("home.ejs");
+});
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error("[ERROR] Unhandled Exception:", err);
+  res.status(500).send("Something broke!");
 });
 
 if (process.env.AMBIENT == "developer") {

@@ -16,8 +16,8 @@ module.exports = class MongoDB extends DBWrapper {
   }
 
   async connect() {
-    
-    return mongoose.connect(process.env.DATABASE_CONNECT).then((m) => {
+
+    return mongoose.connect(process.env.MONGODB_URI).then((m) => {
       this.guilds = new GuildRepository(m);
       this.users = new UserRepository(m);
       this.videos = new VideoRepository(m);

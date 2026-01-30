@@ -20,6 +20,8 @@ module.exports = class GuildRepository extends Repository {
         channelytb: entity.channelytb,
         channeltch: entity.channeltch,
         twitchnotify: entity.twitchnotify,
+        logging: entity.logging,
+        poker: entity.poker,
         // ... outros campos da guilda
       };
     } else {

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/cssdir/out.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>Admin - Economia</title>
+</head>
+
+<body class="bg-transparent min-h-full flex items-start justify-center pt-10">
+    <div
+        class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
+
+        <!-- Header -->
+        <div class="flex items-center gap-5 px-4 sm:px-0 mb-8">
+            <div class="flex-1">
+                <h3 class="text-xl font-semibold text-white">💰 Gestão Financeira</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-400">Gerencie o saldo e banco dos membros da guilda: <%=
+                        info.name %>
+                </p>
+            </div>
+        </div>
+
+        <!-- Tabela -->
+        <div class="flex max-w-6xl overflow-x-auto">
+            <table class="w-full table-auto divide-y divide-white-700">
+                <thead>
+                    <tr>
+                        <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white">Usuário</th>
+                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-green-400">Saldo (Carteira)</th>
+                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-blue-400">Banco</th>
+                        <th class="px-3 py-3.5 text-right text-sm font-semibold text-white">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white-700">
+                    <% info1.forEach(item=> { %>
+                        <tr class="hover:bg-gray-700/50 transition-colors">
+                            <td class="py-4 pl-4 pr-3 text-sm text-gray-300">
+                                <div class="font-medium">
+                                    <%= item.username %>
+                                </div>
+                                <div class="text-xs text-gray-500">
+                                    <%= item.codigouser %>
+                                </div>
+                            </td>
+                            <td class="px-3 py-4 text-sm font-mono text-green-300">
+                                $<%= (item.money || 0).toLocaleString() %>
+                            </td>
+                            <td class="px-3 py-4 text-sm font-mono text-blue-300">
+                                $<%= (item.bank || 0).toLocaleString() %>
+                            </td>
+                            <td class="px-3 py-4 text-right text-sm">
+                                <button
+                                    onclick="openEditModal('<%= item.codigouser %>', '<%= item.username %>', '<%= item.money || 0 %>', '<%= item.bank || 0 %>')"
+                                    class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded text-xs transition-colors">
+                                    ✏️ Editar
+                                </button>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="editModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div class="bg-gray-800 border border-gray-600 p-6 rounded-lg w-96 shadow-2xl">
+            <h3 class="text-lg font-bold text-white mb-4">Editar Saldo: <span id="modalUsername"
+                    class="text-indigo-400"></span></h3>
+
+            <form action="/bot/update-economy" method="POST">
+                <input type="hidden" name="guildId" value="<%= info.id %>">
+                <input type="hidden" name="userId" id="modalUserId">
+
+                <div class="mb-4">
+                    <label class="block text-gray-400 text-sm mb-2">Carteira ($)</label>
+                    <input type="number" name="money" id="modalMoney"
+                        class="w-full bg-gray-900 border border-gray-600 rounded p-2 text-white focus:border-indigo-500 outline-none">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-gray-400 text-sm mb-2">Banco ($)</label>
+                    <input type="number" name="bank" id="modalBank"
+                        class="w-full bg-gray-900 border border-gray-600 rounded p-2 text-white focus:border-indigo-500 outline-none">
+                </div>
+
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="closeEditModal()"
+                        class="px-4 py-2 text-gray-300 hover:text-white">Cancelar</button>
+                    <button type="submit"
+                        class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded shadow-lg">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openEditModal(id, username, money, bank) {
+            document.getElementById('modalUserId').value = id;
+            document.getElementById('modalUsername').textContent = username;
+            document.getElementById('modalMoney').value = money;
+            document.getElementById('modalBank').value = bank;
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.add('hidden');
+        }
+    </script>
+</body>
+
+</html>

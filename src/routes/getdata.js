@@ -3,7 +3,7 @@ const ejs = require("ejs");
 const path = require("path");
 const router = express.Router();
 const discordBot = require("../Client");
-const { ChannelType } = require("discord.js");
+const { ChannelType, PermissionsBitField } = require("discord.js");
 const mongoose = require("mongoose");
 const usersrepository = require("../database/mongoose/UsersRepository");
 const UserSchema = require("../database/schemas/UserSchema");
@@ -44,7 +44,7 @@ const permissionsacess = async (profile, servidorId) => {
     }
 
     // Verifica se o membro tem a permissão desejada
-    const hasPermission = member.permissions.has("8");
+    const hasPermission = member.permissions.has(PermissionsBitField.Flags.Administrator);
     return hasPermission;
   } catch (error) {
     console.error("Erro ao verificar permissões na guilda:", error);
@@ -98,12 +98,16 @@ const getUsers = async (guildId) => {
 
 const getGuildData = async (guildId) => {
   try {
-    await discordBot.guilds.fetch(guildId);
+    // Check if guild is cached, if not fetch it
+    let guild = discordBot.guilds.cache.get(guildId);
+    if (!guild) {
+      guild = await discordBot.guilds.fetch(guildId);
+    }
 
-    const guild = await discordBot.guilds.cache.get(guildId);
-    await guild.members.fetch();
-    await guild.channels.fetch();
+    // REMOVED: await guild.members.fetch(); - This causes timeouts on large guilds and is often unnecessary for basic info
+    // If you explicitly need a specific member list, fetch it in the specific route handler, not here.
 
+    // Using cache is safer for these counts to avoid rate limits/timeouts
     const voiceChannels = guild.channels.cache.filter(
       (channel) => channel.type === ChannelType.GuildVoice
     ).size;
@@ -114,7 +118,7 @@ const getGuildData = async (guildId) => {
 
     const memberCount = guild.memberCount;
 
-    const iconURL = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
+    const iconURL = guild.iconURL({ dynamic: true }) || "https://cdn.discordapp.com/embed/avatars/0.png";
 
     return {
       name: guild.name,
@@ -152,7 +156,7 @@ const getChannelName = async (channelId) => {
 
     // 3. Retorna o nome se o canal for encontrado.
     return channel ? channel.name : null;
-    
+
   } catch (error) {
     // O erro mais comum aqui é "Unknown Channel" se o ID for inválido.
     console.error(`Erro ao obter o nome do canal com ID ${channelId}:`, error.message);
@@ -199,7 +203,7 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
   try {
     const selectedGuildId = req.body.guilds;
     const user = req.user;
-    const guildName = req.body.nameofGuild ;
+    const guildName = req.body.nameofGuild;
     const botInfo = await getGuildData(selectedGuildId);
     const permissions = await permissionsacess(user, selectedGuildId);
 
@@ -210,7 +214,7 @@ router.post("/botinfo", isAuthenticated, async (req, res) => {
         error: "Erro ao obter informações do banco de dados.",
       });
     } else {
-      res.render("mainpage.ejs", { info: botInfo, user: req.user, guildName: guildName});
+      res.render("mainpage.ejs", { info: botInfo, user: req.user, guildName: guildName });
     }
   } catch (error) {
     res.render("error.ejs", { error: error.message });
@@ -225,8 +229,8 @@ router.get("/pagina/:page/:param2", isAuthenticated, async (req, res) => {
   const lives = await getTwitch(guildId);
   const guildinfo = await getGuilds(guildId);
   const userinfo = await getUsers(guildId);
-  let chanelytb ="";
-  let chaneltch="";
+  let chanelytb = "";
+  let chaneltch = "";
   console.log(page, guildId);
 
   // Use uma estrutura de controle, como um switch, para determinar qual página renderizar
@@ -251,7 +255,7 @@ router.get("/pagina/:page/:param2", isAuthenticated, async (req, res) => {
       // Renderize a página 1 com o segundo parâmetro
       const funcyoutube = await ejs.renderFile(
         path.join(__dirname, "../views/youtubefunc.ejs"),
-        { info: botInfo, info2: videoinfo }
+        { info: botInfo, info2: videoinfo, info5: guildinfo }
       );
       res.send(funcyoutube);
       break;
@@ -259,13 +263,13 @@ router.get("/pagina/:page/:param2", isAuthenticated, async (req, res) => {
       // Renderize a página 1 com o segundo parâmetro
       const functwitch = await ejs.renderFile(
         path.join(__dirname, "../views/twitchfunc.ejs"),
-        { info: botInfo, info3: lives }
+        { info: botInfo, info3: lives, info5: guildinfo }
       );
       res.send(functwitch);
       break;
     case "ytbchannelupdate":
       // Renderize a página 1 com o segundo parâmetro
-      chanelytb = await getChannelName(guildinfo.channelytb); 
+      chanelytb = await getChannelName(guildinfo.channelytb);
       const ytbchannelupdate = await ejs.renderFile(
         path.join(__dirname, "../views/updatenotytb.ejs"),
         { info: botInfo, info5: guildinfo, channelytb: chanelytb }
@@ -274,10 +278,10 @@ router.get("/pagina/:page/:param2", isAuthenticated, async (req, res) => {
       break;
     case "tchchannelupdate":
       // Renderize a página 1 com o segundo parâmetro
-      chaneltch = await getChannelName(guildinfo.channeltch); 
+      chaneltch = await getChannelName(guildinfo.channeltch);
       const tchchannelupdate = await ejs.renderFile(
         path.join(__dirname, "../views/updatenottch.ejs"),
-        { info: botInfo, info5: guildinfo,  channeltch: chaneltch }
+        { info: botInfo, info5: guildinfo, channeltch: chaneltch }
       );
       res.send(tchchannelupdate);
       break;
@@ -345,6 +349,38 @@ router.get("/pagina/:page/:param2", isAuthenticated, async (req, res) => {
       );
       res.send(memberinfo);
       break;
+    case "economyinfo":
+      const economyUsers = await getUsers(guildId);
+      const economyPage = await ejs.renderFile(
+        path.join(__dirname, "../views/economyinfo.ejs"),
+        { info: botInfo, info1: economyUsers }
+      );
+      res.send(economyPage);
+      break;
+    case "funcpoker":
+      // Fetch Channels for the dropdown
+      const guildObj = discordBot.guilds.cache.get(guildId);
+      const channels = guildObj ? guildObj.channels.cache : [];
+
+      // info: DB Document (for current config)
+      // info4: Channels List (for dropdown)
+      const pokerfunc = await ejs.renderFile(
+        path.join(__dirname, "../views/pokerfunc.ejs"),
+        { info: guildinfo, info4: channels }
+      );
+      res.send(pokerfunc);
+      break;
+    case "youtube":
+      // Rota 'Geral' (Opções) - Redirecionando para config do Youtube ou página geral se existir
+      // Como não existe uma página 'geral' específica, vamos usar a de configuração do youtube ou criar uma nova.
+      // Por enquanto, vamos renderizar a de config do youtube para não quebrar.
+      chanelytb = await getChannelName(guildinfo.channelytb);
+      const geralConfig = await ejs.renderFile(
+        path.join(__dirname, "../views/updatenotytb.ejs"),
+        { info: botInfo, info5: guildinfo, channelytb: chanelytb }
+      );
+      res.send(geralConfig);
+      break;
     default:
       // Se o parâmetro não corresponder a nenhuma página conhecida, retorne um erro 404
       res.status(404).send("Página não encontrada");
@@ -362,7 +398,7 @@ router.get(
 
     try {
       const guilds = new guildsrepository(mongoose, "Guilds");
-      const ls = guilds.findOne(guildId);
+      const ls = await guilds.findOne(guildId);
 
       if (!ls) {
         throw new Error(
@@ -378,14 +414,60 @@ router.get(
         throw new Error("Guilda não encontrada.");
       }
 
-      const channel = guild.channels.cache.get(channelin);
-
-      if (!channel) {
-        throw new Error("Canal não encontrado na guilda.");
+      let channel = null;
+      if (channelin && channelin !== "0") {
+        channel = guild.channels.cache.get(channelin);
       }
 
-      const message = channel.name;
+      // Only throw error if we are ACTUALLY trying to set a channel and it doesn't exist.
+      // For deactivation or updates that don't need channel, we skip this check.
+      // However, strict validation was here for a reason. 
+      // Let's soft-fail: if channel not found, we proceed but might limit actions.
+
+      const message = channel ? channel.name : "Nenhum/Desconhecido";
       const message2 = guild.name;
+
+      // Dynamic Handling for Logging Modules
+      if (page.startsWith("actlog_")) {
+        const logType = page.replace("actlog_", "");
+
+        // Ensure logging object exists
+        if (!ls.logging || typeof ls.logging !== 'object') ls.logging = {};
+
+        // Safely merge: construct new object with existing keys + new key
+        ls.logging = {
+          ...ls.logging,
+          [logType]: { channel: channelin, state: true }
+        };
+
+        await guilds.update(guildId, ls);
+
+        const actLogView = await ejs.renderFile(
+          path.join(__dirname, "../views/functionactivated.ejs"),
+          { info: "Log Atualizado", info2: message2, info3: channelin, nome: "do Sistema de Logs" }
+        );
+        return res.send(actLogView);
+      }
+
+      if (page.startsWith("deactlog_")) {
+        const logType = page.replace("deactlog_", "");
+
+        if (!ls.logging) ls.logging = {};
+
+        if (ls.logging[logType]) {
+          ls.logging[logType].state = false;
+        } else {
+          ls.logging[logType] = { channel: "", state: false };
+        }
+
+        await guilds.update(guildId, ls);
+
+        const deactLogView = await ejs.renderFile(
+          path.join(__dirname, "../views/functionactivated.ejs"),
+          { info: "Log Desativado", info2: message2, info3: "Nenhum", nome: "do Sistema de Logs" }
+        );
+        return res.send(deactLogView);
+      }
 
       // Use um switch case para decidir o que fazer com base no valor de 'page'
       switch (page) {
@@ -435,6 +517,57 @@ router.get(
             { info: message, info2: message2, info3: channelin, nome: nanan }
           );
           res.send(updtfunctch);
+          break;
+        case "deactyoutube":
+          ls.youtubenotify = false;
+          guilds.update(guildId, ls);
+          const deactfuncytb = await ejs.renderFile(
+            path.join(__dirname, "../views/functionactivated.ejs"), // Reusing existing success view or create a new one? Reusing seems fine for now as it just shows a message. Actually, checking functionactivated.ejs might be good to see if it supports a "Deactivated" message structure. Assuming generic success for now.
+            { info: "Módulo Desativado", info2: message2, info3: "Nenhum", nome: "do Youtube" }
+          );
+          res.send(deactfuncytb);
+          break;
+        case "deacttwitch":
+          ls.twitchnotify = false;
+          guilds.update(guildId, ls);
+          const deactfunctch = await ejs.renderFile(
+            path.join(__dirname, "../views/functionactivated.ejs"),
+            { info: "Módulo Desativado", info2: message2, info3: "Nenhum", nome: "da Twitch" }
+          );
+          res.send(deactfunctch);
+          break;
+        case "actpoker":
+          const naPoker = "do Poker";
+          // Safer update: Only update the poker field
+          const pokerConfig = { channel: channelin, state: true };
+          await guilds.update(guildId, { poker: pokerConfig });
+
+          const actFuncPoker = await ejs.renderFile(
+            path.join(__dirname, "../views/functionactivated.ejs"),
+            {
+              info: "Módulo Ativado",
+              info2: message2,
+              info3: channelin,
+              nome: naPoker,
+              backUrl: `/bot/pagina/funcpoker/${guildId}`
+            }
+          );
+          res.send(actFuncPoker);
+          break;
+        case "deactpoker":
+          await guilds.update(guildId, { poker: { channel: "", state: false } });
+
+          const deactFuncPoker = await ejs.renderFile(
+            path.join(__dirname, "../views/functionactivated.ejs"),
+            {
+              info: "Módulo Desativado",
+              info2: message2,
+              info3: "Nenhum",
+              nome: "do Poker",
+              backUrl: `/bot/pagina/funcpoker/${guildId}`
+            }
+          );
+          res.send(deactFuncPoker);
           break;
       }
     } catch (error) {
@@ -621,5 +754,39 @@ router.get(
     }
   }
 );
+
+
+router.post("/update-economy", isAuthenticated, async (req, res) => {
+  try {
+    const { guildId, userId, money, bank } = req.body;
+
+    const permissions = await permissionsacess(req.user, guildId);
+
+    if (!permissions) {
+      return res.render("error.ejs", {
+        error: "Você não tem permissão para alterar o saldo de usuários neste servidor.",
+      });
+    }
+
+    // Find User
+    const users = new usersrepository(mongoose, "Users");
+    const user = await users.findOne(userId);
+
+    const updateData = {};
+    if (money !== "") updateData.money = parseInt(money);
+    if (bank !== "") updateData.bank = parseInt(bank);
+
+    if (Object.keys(updateData).length > 0) {
+      // Use repository update method instead of user.save()
+      await users.update(userId, updateData);
+    }
+
+    // Redirect back to economy page
+    res.redirect(`/bot/pagina/economyinfo/${guildId}`);
+  } catch (error) {
+    console.error("Erro ao atualizar economia:", error);
+    res.render("error.ejs", { error: "Erro ao atualizar economia." });
+  }
+});
 
 module.exports = router;

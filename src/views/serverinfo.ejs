@@ -1,55 +1,104 @@
 <!-- guildcontentmain.ejs -->
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../css/cssdir/out.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <style>
-      
-    </style>
-  </head>
-  <body class=" min-h-screen flex items-center justify-center">
-    <div class="pages_cont p-8 rounded-lg shadow-md w-full h-full max-w-lg">
-        <div class="flex items-center gap-5 px-4 sm:px-0">
-            <div class="flex-shrink-0"> <% if (info.icon && info.icon.indexOf('null') === -1) { %>
-                <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-24 h-24 rounded-lg object-cover"/>
-              <% } else { %>
-                <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-24 h-24 rounded-lg object-cover" />
-              <% } %>
-            </div>
+<html lang="pt-BR">
 
-            <div>
-              <h3 class="text-base/7 font-semibold text-white">Informações do Servidor</h3>
-              <p class="mt-1 max-w-2xl text-sm/6 text-gray-400">Dados do Servidor e Configurações</p>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="../css/cssdir/out.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-transparent min-h-full flex items-start justify-center pt-10">
+  <div
+    class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
+    <div class="flex items-center gap-6 mb-8">
+      <div class="relative group">
+        <div
+          class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
         </div>
-        <div class="mt-6 border-t border-white/10">
-          <dl class="divide-y divide-white/10">
-            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt class="text-sm/6 font-medium text-gray-100">Nome do Servidor</dt>
-              <dd class="mt-1 text-sm/6 sm:col-span-2 text-gray-400 sm:mt-0"><%= info.name %></dd>
-            </div>
-            <div class="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-2 sm:px-0">
-              <dt class="text-sm/6 sm:col-span-2 font-medium text-gray-100">Gerenciando atualmente</dt>
-              <dd class="mt-1 text-sm/6 text-gray-400 sm:mt-0"><%= info.id %></dd>
-            </div>
-            <div class="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-2 sm:px-0">
-              <dt class="text-sm/6 sm:col-span-2 font-medium text-gray-100">Total de Membros</dt>
-              <dd class="mt-1 text-sm/6 text-gray-400 sm:mt-0"><%= info.memberCount %></dd>
-            </div>
-            <div class="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-2 sm:px-0">
-              <dt class="text-sm/6 font-medium sm:col-span-2 text-gray-100">Total de Canais de Voz</dt>
-              <dd class="mt-1 text-sm/6 text-gray-400  sm:mt-0"><%= info.voiceChannels %></dd>
-            </div>
-            <div class="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
-              <dt class="text-sm/6 sm:col-span-2 font-medium text-gray-100">Total de Canis de Texto</dt>
-              <dd class="mt-1 text-sm/6 text-gray-400 sm:mt-0"><%= info.textChannels %></dd>
-            </div>
-          </dl>
+        <div class="relative">
+          <% if (info.icon && info.icon.indexOf('null')===-1) { %>
+            <img src="<%= info.icon %>" alt="Ícone da guilda"
+              class="w-24 h-24 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
+            <% } else { %>
+              <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão"
+                class="w-24 h-24 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
+              <% } %>
         </div>
       </div>
-    <div>
-  </body>
+
+      <div>
+        <h3 class="text-2xl font-bold text-white mb-1">Informações do Servidor</h3>
+        <p class="text-indigo-400 font-medium text-sm flex items-center gap-2">
+          <i class="fa-solid fa-server"></i>
+          Dados e Estatísticas
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Server Name -->
+      <div class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors">
+        <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Nome do Servidor</dt>
+        <dd class="text-white font-medium text-lg truncate" title="<%= info.name %>">
+          <%= info.name %>
+        </dd>
+      </div>
+
+      <!-- Server ID -->
+      <div class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors">
+        <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">ID do Servidor</dt>
+        <dd class="text-gray-300 font-mono text-sm break-all pt-1">
+          <%= info.id %>
+        </dd>
+      </div>
+
+      <!-- Members -->
+      <div
+        class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors flex items-center justify-between">
+        <div>
+          <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Membros</dt>
+          <dd class="text-white font-bold text-2xl">
+            <%= info.memberCount %>
+          </dd>
+        </div>
+        <div class="bg-indigo-500/20 p-3 rounded-lg text-indigo-400">
+          <i class="fa-solid fa-users text-xl"></i>
+        </div>
+      </div>
+
+      <!-- Voice Channels -->
+      <div
+        class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors flex items-center justify-between">
+        <div>
+          <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Canais de Voz</dt>
+          <dd class="text-white font-bold text-2xl">
+            <%= info.voiceChannels %>
+          </dd>
+        </div>
+        <div class="bg-green-500/20 p-3 rounded-lg text-green-400">
+          <i class="fa-solid fa-microphone text-xl"></i>
+        </div>
+      </div>
+
+      <!-- Text Channels -->
+      <div
+        class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors flex items-center justify-between md:col-span-2">
+        <div>
+          <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Canais de Texto</dt>
+          <dd class="text-white font-bold text-2xl">
+            <%= info.textChannels %>
+          </dd>
+        </div>
+        <div class="bg-blue-500/20 p-3 rounded-lg text-blue-400">
+          <i class="fa-solid fa-hashtag text-xl"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
 </html>

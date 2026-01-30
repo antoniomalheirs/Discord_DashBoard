@@ -1,77 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="../css/cssdir/out.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <title>Server Select - Manager Bot</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>Selecionar Servidor - Dashboard</title>
   </head>
-  <body class="backgroundMain grid grid-cols-2 gap-4 w-auto h-auto ">
-    <div class="w-auto h-auto text-center content-center">
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl colorTextMain">
-        Escolha o servidor desejado para gerenciar
-      </h2>
-      <p class="mt-6 text-lg leading-8 colorTextMainNOHOVER">
-        Para acessar o servidor você deve ter as permissões necessarias para
-        manipular os dados do servidor em questão.
-      </p>
+  <body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-start pt-10 px-4 sm:px-6 lg:px-8 font-sans selection:bg-indigo-500 selection:text-white">
+    
+    <!-- Background Overlay -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 opacity-90"></div>
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent"></div>
     </div>
-    <div class="w-11/12 h-auto mt-10 text-center">
-      <div class="grid grid-cols-2 gap-[18px] ">
-        <% user.guilds.forEach(guild => { %>
-          <ul class="glowing-list rounded-md grid grid-cols-2">
-            <div class="grid grid-rows-2 ">
-              <div>
-                <li>
-                  <h3 class="text-lg font-semibold colorTextMain">
-                    <%= guild.name %>
-                  </h3>
-                </li>
-              </div>  
-              <div> 
-                <li>
-                  <p class="text-sm mb-[18px] colorTextMainNOHOVER">
-                    <%= guild.id %>
-                  </p>
-                  <form action="/bot/botinfo" method="post" class="flex flex-auto justify-center space-y-4 mt-[8px]">
-                    <input type="hidden" id="guilds" name="guilds" value="<%= guild.id %>"/>
-                    <input type="hidden" id="nameofGuild" name="nameofGuild" value="<%= guild.name %>"/>
-                    <input type="hidden" id="icon" name="icon" value="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"/>
-                    <button class="selectButton bg-indigo-500 type="submit"  ">
-                      Selecionar
-                    </button>
-                  </form>
-                </li>
-              </div>
-            </div>
-            <div class="grid content-center justify-end">
-              <li>
-                <img class="h-40 w-40 rounded-4xl" src="/res/serverIcon/nonserverimg.jpg" id="AguildIcon<%= guild.id %>"/>
-              </li>
-            </div>
-          </ul>
-        <% }); %>
-      </div>
+
+    <!-- Content Container -->
+    <div class="z-10 w-full max-w-7xl animate-fade-in-down">
+        
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 mb-4 drop-shadow-md">
+                Gerencie seus Servidores
+            </h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Selecione um servidor abaixo para configurar o bot, visualizar estatísticas e gerenciar notificações.
+                Você precisa de permissões de administrador.
+            </p>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 pb-10">
+            <% user.guilds.forEach(guild => { %>
+                <div class="group bg-gray-800/60 backdrop-blur-md rounded-2xl border border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-indigo-500/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col overflow-hidden relative">
+                    
+                    <!-- Decorative Top Bar -->
+                    <div class="h-2 w-full bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+
+                    <div class="p-6 flex flex-col items-center flex-grow relative z-10">
+                        <!-- Icon -->
+                        <div class="relative mb-6">
+                            <div class="absolute inset-0 bg-indigo-500 rounded-full blur-lg opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
+                            <img 
+                                class="h-24 w-24 rounded-full object-cover border-4 border-gray-700 shadow-md group-hover:border-gray-600 transition-colors duration-300" 
+                                src="/res/serverIcon/nonserverimg.jpg" 
+                                id="AguildIcon<%= guild.id %>"
+                                alt="<%= guild.name %> icon"
+                            />
+                        </div>
+
+                        <!-- Info -->
+                        <h3 class="text-xl font-bold text-white mb-1 text-center truncate w-full px-2" title="<%= guild.name %>">
+                            <%= guild.name %>
+                        </h3>
+                        <p class="text-xs text-gray-500 font-mono mb-6 bg-gray-900/50 px-2 py-1 rounded">
+                            ID: <%= guild.id %>
+                        </p>
+
+                        <!-- Action -->
+                        <form action="/bot/botinfo" method="post" class="w-full mt-auto">
+                            <input type="hidden" id="guilds" name="guilds" value="<%= guild.id %>"/>
+                            <input type="hidden" id="nameofGuild" name="nameofGuild" value="<%= guild.name %>"/>
+                            <input type="hidden" id="icon" name="icon" value="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"/>
+                            
+                            <button type="submit" class="w-full py-2.5 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-indigo-500/30 transition-all duration-200 flex items-center justify-center gap-2 group-hover:scale-[1.02]">
+                                <span>Acessar Painel</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
     </div>
+
     <script>
       async function redirecionarParaRota(guildId) {
           try {
+              // Fetch icon logic preserved
               const response = await fetch(`/bot/obter-icone-guilda/${guildId}`);
+              if (!response.ok) {
+                  // Handle non-200 responses if needed, though the original didn't
+                  return;
+              }
               const data = await response.json();
               const guildIcon = document.getElementById("AguildIcon" + guildId);
-              if (data.iconURL) {
+              if (guildIcon && data.iconURL) {
                   guildIcon.src = data.iconURL;
-                  guildIcon.style.backgroundColor = "transparent";
-              } else {
-                  guildIcon.src = "/res/serverIcon/nonserverimg.jpg";
               }
           } catch (error) {
               console.error("Erro ao carregar imagem da guilda:", error);
           }
       }
 
-      // Replace EJS block with plain JS loop using EJS-rendered array
       window.onload = function() {
           const guilds = JSON.parse('<%- JSON.stringify(user.guilds) %>');
           guilds.forEach(guild => {
@@ -79,6 +102,5 @@
           });
       }
     </script>
-    <div class="transition-overlay_out_2 w-full h-full"></div>
   </body>
 </html>

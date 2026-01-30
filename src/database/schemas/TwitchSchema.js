@@ -7,4 +7,5 @@ module.exports = new Schema({
   },
   channel: { type: String },
   guildID: { type: String },
+  isLive: { type: Boolean, default: false }, // Rastreia o estado da ultima verificação
 });

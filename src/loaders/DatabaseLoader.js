@@ -22,10 +22,11 @@ module.exports = class DatabaseLoader {
     this.client.database = new DBWrapper(options, this.client);
 
     return this.client.database.connect().catch((err) => {
-      throw console.log(
+      console.log(
         `\x1b[1m\x1b[33m[BANCO DE DADOS]\x1b[0m`,
         `Erro ao conectar o Banco de Dados.\n${err}`
       );
+      process.exit(1);
     });
   }
 };

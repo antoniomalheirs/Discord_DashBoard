@@ -9,6 +9,9 @@
     "dev": "concurrently \"npm:build\" \"nodemon ./src/Index.js\""
   },
   "keywords": [],
+  "overrides": {
+    "undici": "^6.23.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -16,14 +19,16 @@
     "autoprefixer": "^10.4.21",
     "axios": "^1.11.0",
     "body-parser": "^2.2.0",
-    "discord.js": "^14.22.1",
+    "discord.js": "^14.25.1",
     "dotenv": "^17.2.1",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3",
+    "express-rate-limit": "^8.2.1",
     "express-session": "^1.18.2",
     "font-awesome": "^4.7.0",
     "googleapis": "^157.0.0",
+    "helmet": "^8.1.0",
     "mongoose": "^8.18.0",
     "passport": "^0.7.0",
     "passport-discord": "^0.1.4",

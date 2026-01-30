@@ -1,72 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="../css/cssdir/out.css"
-      rel="stylesheet"
-    />
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <title>Gerenciador de Funções</title>
-  </head>
-  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
-    <div class="bg-purple-300 p-8 rounded-lg shadow-md w-full max-w-lg">
-      
-      <div class="px-16 sm:px-0">
-        <h3 class="text-base font-semibold leading-7 text-gray-900">
-          Notificação de Videos <%=nome%>
-        </h3>
-        <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-          Ativando está função você receberá notificações toda vez que um
-          video novo em um dos canais adicionados na função postar novos
-          videos
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/css/cssdir/out.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Sucesso | Configuração</title>
+</head>
+
+<body class="bg-[#0b0c10] min-h-screen flex items-center justify-center relative overflow-hidden">
+
+  <!-- Animated Background -->
+  <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-green-600/10 rounded-full blur-[120px] animate-pulse"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] animate-pulse"
+      style="animation-delay: 1s;"></div>
+  </div>
+
+  <!-- Main Card -->
+  <div class="relative z-10 w-full max-w-lg px-4">
+    <div
+      class="bg-gray-900/60 backdrop-blur-xl border border-gray-700/50 rounded-3xl p-8 shadow-2xl transform transition-all hover:scale-[1.01] duration-500">
+
+      <!-- Success Icon -->
+      <div
+        class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-700 shadow-lg shadow-green-900/30 mb-6">
+        <i class="fa-solid fa-check text-3xl text-white drop-shadow-md"></i>
+      </div>
+
+      <!-- Title -->
+      <div class="text-center mb-8">
+        <h3 class="text-3xl font-black text-white mb-2 tracking-tight">Sucesso!</h3>
+        <p class="text-gray-400">
+          A configuração do módulo <strong
+            class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-400">
+            <%=nome%>
+          </strong> foi atualizada.
         </p>
       </div>
-      <div class="mt-6 border-t border-purple-300">
-        <dl class="divide-y divide-green-400">
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-sm font-medium leading-6 text-gray-900">
-              Nome do Canal para notificações
-            </dt>
-            <dd
-              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
-            >
-              <%=info%>
-            </dd>
+
+      <!-- Details Grid -->
+      <div class="bg-gray-800/40 rounded-2xl p-6 border border-gray-700/30 mb-8 space-y-4">
+
+        <div class="flex items-center justify-between border-b border-gray-700/30 pb-3">
+          <span class="text-sm font-medium text-gray-400">Status</span>
+          <span
+            class="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wider">
+            <%=info%>
+          </span>
+        </div>
+
+        <div class="flex items-center justify-between border-b border-gray-700/30 pb-3">
+          <span class="text-sm font-medium text-gray-400">Servidor</span>
+          <span class="text-sm font-bold text-gray-200">
+            <%=info2%>
+          </span>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium text-gray-400">Canal Alvo</span>
+          <div
+            class="flex items-center gap-2 text-gray-300 font-mono text-xs bg-gray-900 py-1.5 px-3 rounded-lg border border-gray-800">
+            <i class="fa-solid fa-hashtag text-gray-600"></i>
+            <%=info3%>
           </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-sm font-medium leading-6 text-gray-900">
-              ID Canal
-            </dt>
-            <dd
-              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
-            >
-              <%=info3%>
-            </dd>
-          </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-sm font-medium leading-6 text-gray-900">
-              Aplicado em
-            </dt>
-            <dd
-              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
-            >
-              <%=info2%>
-            </dd>
-          </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-sm font-medium leading-6 text-gray-900">
-              Estado da Função
-            </dt>
-            <dd
-              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
-            >
-              Ativa
-            </dd>
-          </div>
-        </dl>        
+        </div>
+
       </div>
+
+      <!-- Actions -->
+      <div class="flex justify-center">
+        <button
+          onclick="<%= (typeof backUrl !== 'undefined' && backUrl) ? `window.location.href='${backUrl}'` : 'window.history.back()' %>"
+          class="group flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-8 rounded-xl transition-all border border-gray-700 hover:border-gray-600 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+          <i class="fa-solid fa-arrow-left text-gray-400 group-hover:text-white transition-colors"></i>
+          <span>Voltar ao Painel</span>
+        </button>
+      </div>
+
     </div>
-  </body>
+
+    <!-- Footer Decor -->
+    <div class="mt-8 text-center">
+      <p class="text-xs text-gray-600 font-medium tracking-widest uppercase">Discord Manager Bot • System</p>
+    </div>
+  </div>
+
+</body>
+
 </html>

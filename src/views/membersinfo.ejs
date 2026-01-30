@@ -1,55 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../css/cssdir/out.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <title>Banco de Dados - Guilda</title>
-  </head>
-  <body class="min-h-screen flex items-center justify-center bg-slate-900">
-    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-6xl">
-      
-      <!-- Header da guilda -->
-      <div class="flex items-center gap-5 px-4 sm:px-0">
-        <div class="flex-shrink-0">
-          <% if (info.icon && info.icon.indexOf('null') === -1) { %>
-            <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-24 h-24 rounded-lg object-cover" />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="../css/cssdir/out.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <title>Banco de Dados - Guilda</title>
+</head>
+
+<body class="bg-transparent min-h-full flex items-start justify-center pt-10">
+  <div
+    class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
+
+    <!-- Header da guilda -->
+    <div class="flex items-center gap-5 px-4 sm:px-0">
+      <div class="flex-shrink-0">
+        <% if (info.icon && info.icon.indexOf('null')===-1) { %>
+          <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-24 h-24 rounded-lg object-cover" />
           <% } else { %>
             <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-24 h-24 rounded-lg object-cover" />
-          <% } %>
-        </div>
-        <div class="flex-1">
-          <h3 class="text-xl font-semibold text-white">Banco de Dados de Membros</h3>
-          <p class="mt-1 max-w-2xl text-sm text-gray-400">Guilda: <%= info.name %></p>
-        </div>
+            <% } %>
       </div>
-
-      <!-- Tabela de dados -->
-      <div class="flex max-w-6xl mt-8">
-        <table class="w-full table-fixed divide-y divide-white-700">
-          <thead>
-            <tr>
-              <th class="w-[20%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">Código do Usuário</th>
-              <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">Nome de Usuário</th>
-              <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">Tempo em Voz (min)</th>
-              <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">Mensagens Enviadas</th>
-              <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">ID da Guilda</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-white-700">
-            <% info1.forEach(item => { %>
-              <tr>
-                <td class="truncate py-4 pl-4 pr-3 text-sm font-medium text-gray-300 sm:pl-0"><%= item.codigouser %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.username %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.voiceTime %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.totalMessages %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.idguild %></td>
-              </tr>
-            <% }); %>
-          </tbody>
-        </table>
+      <div class="flex-1">
+        <h3 class="text-xl font-semibold text-white">Banco de Dados de Membros</h3>
+        <p class="mt-1 max-w-2xl text-sm text-gray-400">Guilda: <%= info.name %>
+        </p>
       </div>
     </div>
-  </body>
+
+    <!-- Tabela de dados -->
+    <div class="flex max-w-6xl mt-8">
+      <table class="w-full table-fixed divide-y divide-white-700">
+        <thead>
+          <tr>
+            <th class="w-[20%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">Código do Usuário
+            </th>
+            <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">Nome de Usuário</th>
+            <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">Tempo em Voz (min)</th>
+            <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">Mensagens Enviadas</th>
+            <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">ID da Guilda</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-white-700">
+          <% info1.forEach(item=> { %>
+            <tr>
+              <td class="truncate py-4 pl-4 pr-3 text-sm font-medium text-gray-300 sm:pl-0">
+                <%= item.codigouser %>
+              </td>
+              <td class="truncate px-3 py-4 text-sm text-gray-400">
+                <%= item.username %>
+              </td>
+              <td class="truncate px-3 py-4 text-sm text-gray-400">
+                <%= item.voiceTime %>
+              </td>
+              <td class="truncate px-3 py-4 text-sm text-gray-400">
+                <%= item.totalMessages %>
+              </td>
+              <td class="truncate px-3 py-4 text-sm text-gray-400">
+                <%= item.idguild %>
+              </td>
+            </tr>
+            <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
 </html>

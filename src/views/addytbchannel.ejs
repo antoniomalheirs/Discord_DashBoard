@@ -1,93 +1,123 @@
 <!-- guildcontentmain.ejs -->
 <!DOCTYPE html>
-<html lang="pt-br" class="h-full bg-gray-900">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard: <%= info.name %></title>
-    <link href="../css/cssdir/out.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  </head>
-  <body class="min-h-screen flex items-center justify-center">
-    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-7xl">
-      <!-- Popup de mensagens -->
-      <div id="mensagemPopUp" class="hidden fixed top-15 right-5 z-50"></div>
+<html lang="pt-br">
 
-      <!-- Bloco de informações da guilda -->
-      <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <% if (info.icon && info.icon.indexOf('null') === -1) { %>
-          <img src="<%= info.icon %>" alt="Ícone da guilda" class="mx-auto h-20 w-20 rounded-full" />
-        <% } else { %>
-          <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="mx-auto h-20 w-20 rounded-full" />
-        <% } %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adicionar Canal YouTube</title>
+  <link href="../css/cssdir/out.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
 
-        <h1 class="mt-6 text-center text-3xl font-bold tracking-tight text-white">Guilda <%= info.name %></h1>
-        <div class="mt-2 text-center text-sm text-gray-400">
-          <p>ID da Guilda: <%= info.id %></p>
-          <p>Membros: <%= info.memberCount %></p>
+<body class="bg-transparent min-h-full flex items-start justify-center pt-10">
+
+  <div
+    class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
+    <div id="mensagemPopUp"
+      class="hidden fixed top-5 right-5 z-50 transition-all duration-300 transform translate-y-[-10px] opacity-0"></div>
+
+    <!-- Header -->
+    <div class="flex items-center gap-6 mb-8 border-b border-gray-700/50 pb-6">
+      <div class="relative group">
+        <div
+          class="absolute -inset-1 bg-red-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
         </div>
+        <% if (info.icon && info.icon.indexOf('null')===-1) { %>
+          <img src="<%= info.icon %>" alt="Ícone da guilda"
+            class="relative w-16 h-16 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
+          <% } else { %>
+            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão"
+              class="relative w-16 h-16 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
+            <% } %>
       </div>
-
-      <!-- Formulário -->
-      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form id="addytbchannel" method="post" class="space-y-6">
-          <div>
-            <label for="channelId" class="block text-sm font-medium leading-6 text-gray-100">Nome do canal</label>
-            <div class="mt-2">
-              <input 
-                type="text" 
-                id="channelId" 
-                name="channelId" 
-                required
-                placeholder="Nome do canal no Youtube"
-                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white 
-                       outline-1 -outline-offset-1 outline-white/10 
-                       placeholder:text-gray-500 
-                       focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-              />
-            </div>
-          </div>
-
-          <input type="hidden" id="guildId" name="guildId" value="<%= info.id %>" />
-          <input type="hidden" id="func" name="func" value="addyoutubech" />
-
-          <div>
-            <button 
-              type="button" 
-              onclick="envdata()" 
-              class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 
-                     text-sm font-semibold leading-6 text-white hover:bg-indigo-400 
-                     focus-visible:outline 
-                     focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-              Adicionar Canal
-            </button>
-          </div>
-        </form>
+      <div class="flex-1">
+        <h3 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+          <i class="fa-brands fa-youtube text-red-500"></i>
+          Adicionar Canal
+        </h3>
+        <p class="text-gray-400 text-sm">Cadastre um novo canal do YouTube para receber notificações.</p>
       </div>
     </div>
 
-    <!-- Scripts -->
-    <script>
-      function exibirMensagemErro(mensagem) {
-        const popUp = document.getElementById('mensagemPopUp');
-        popUp.innerHTML = `
-          <div class="bg-red-500 text-white font-bold rounded-lg px-4 py-3 shadow-xl" role="alert">
-            <p>${mensagem}</p>
+    <!-- Form -->
+    <form id="addytbchannel" method="post" class="space-y-6">
+      <div class="bg-gray-700/20 border border-gray-600/30 rounded-xl p-6">
+        <div>
+          <label for="channelId" class="block text-sm font-medium leading-6 text-gray-300 mb-2">ID do Canal
+            YouTube</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-id-badge text-gray-500"></i>
+            </div>
+            <input type="text" id="channelId" name="channelId" required placeholder="UC_x5XG1OV2P6uZZ5FSM9Ttw"
+              class="block w-full rounded-lg bg-gray-800 border-gray-600 pl-10 py-3 text-white placeholder-gray-500 focus:ring-red-500 focus:border-red-500 sm:text-sm transition-all shadow-inner" />
+          </div>
+          <p class="mt-2 text-xs text-gray-500">Insira o ID do canal (começa com UC...), não o nome de usuário.</p>
+        </div>
+
+        <div class="mt-4 flex items-center">
+          <input type="checkbox" id="ytb" name="ytb"
+            class="h-5 w-5 rounded bg-gray-700 border-gray-500 text-red-600 focus:ring-red-500 focus:ring-offset-gray-800 transition cursor-pointer"
+            required />
+          <label for="ytb" class="ml-3 block text-sm font-medium text-gray-200 cursor-pointer">
+            Confirmar cadastro
+          </label>
+        </div>
+      </div>
+
+      <input type="hidden" id="guildId" name="guildId" value="<%= info.id %>" />
+      <input type="hidden" id="func" name="func" value="actyoutube" />
+
+      <div class="flex justify-end pt-2">
+        <button type="button" onclick="envdata()"
+          class="flex items-center gap-2 justify-center rounded-lg bg-red-600 px-8 py-3 text-sm font-bold text-white shadow-lg hover:bg-red-500 hover:shadow-red-500/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 transition-all transform hover:-translate-y-0.5">
+          <i class="fa-solid fa-plus"></i>
+          Adicionar Canal
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+  <script>
+    function exibirMensagemErro(mensagem) {
+      const popUp = document.getElementById('mensagemPopUp');
+
+      popUp.innerHTML = `
+          <div class="flex items-center bg-red-500/90 text-white px-4 py-3 rounded-lg shadow-lg border border-red-400 backdrop-blur-sm">
+            <i class="fas fa-exclamation-circle mr-3"></i>
+            <p class="font-medium text-sm">${mensagem}</p>
           </div>
         `;
-        popUp.classList.remove('hidden');
-        setTimeout(() => { popUp.classList.add('hidden'); }, 3000);
+
+      popUp.classList.remove('hidden', 'translate-y-[-10px]', 'opacity-0');
+
+      setTimeout(() => {
+        popUp.classList.add('translate-y-[-10px]', 'opacity-0');
+        setTimeout(() => popUp.classList.add('hidden'), 300);
+      }, 3000);
+    }
+
+    function envdata() {
+      var form = document.getElementById('addytbchannel');
+
+      if (!form.checkValidity()) {
+        exibirMensagemErro('Por favor, preencha todos os campos obrigatórios.');
+        return;
       }
 
-      function envdata() {
-        var form = document.getElementById('addytbchannel');
-        if (!form.checkValidity()) {
-          exibirMensagemErro('Por favor, preencha todos os campos obrigatórios.');
-          return;
-        }
-        var dadosFormulario = $("#addytbchannel").serializeArray();
-        parent.dtbaseReload(dadosFormulario);
+      var formData = new FormData(form);
+      var dadosFormulario = $("#addytbchannel").serializeArray();
+
+      if (parent && typeof parent.funcsReload === 'function') {
+        parent.funcsReload(dadosFormulario);
+      } else {
+        console.error("Function parent.funcsReload not found");
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>

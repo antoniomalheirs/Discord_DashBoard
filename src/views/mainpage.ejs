@@ -1,42 +1,43 @@
 <!DOCTYPE html>
-<html lang=pt">
+<html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Server Config - Manager Bot</title>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <link href="../css/cssdir/out.css" rel="stylesheet"/>
+  <link href="../css/cssdir/out.css" rel="stylesheet" />
 </head>
-<body class="colorbodya">
-  
-  <div id="sidebar-container" class="fixed top-0 left-72 right-0 h-12 flex "></div>
 
-  <div id="sidebar-contain" style="z-index: -1" class=" colorbody fixed top-12 left-[330px] right-0 h-full  flex">
-    <div class="flex items-center justify-center w-11/12 mx-auto my-auto">
-      <div id="sidebar-container2" style="margin-bottom: 6rem; margin-top: 2rem;"></div>
+<body class="bg-gray-900 overflow-hidden h-screen w-screen">
+
+  <!-- Sidebar Container (Fixed Left) -->
+  <div id="sidebar-container" class="fixed top-0 left-0 z-50 h-full"></div>
+
+  <!-- Main Content Area -->
+  <!-- Margin Left = 20 (Primary Sidebar) + 64 (Secondary Sidebar) = 84 units (approx 336px) -->
+  <div class="ml-[336px] w-[calc(100%-336px)] h-full overflow-y-auto bg-gray-900 relative">
+
+    <!-- Top Spacer for Header -->
+    <div class="h-20 w-full"></div>
+
+    <!-- Dynamic Content Injection Point -->
+    <div id="sidebar-container2" class="p-6 w-full min-h-[calc(100vh-5rem)]">
+      <!-- Content loaded via jQuery will appear here -->
+      <div class="flex flex-col items-center justify-center h-[50vh] text-gray-500 animate-pulse">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4 opacity-50" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+        </svg>
+        <p>Selecione uma opção no menu lateral</p>
+      </div>
     </div>
+
   </div>
 
   <script>
-    $(document).ready(function () {
-      // Use a função load do jQuery para carregar a sidebar
-      $("#sidebar-container").load("/layouts/sideBar.ejs");
-    });
-
-    $(document).ready(function () {
-      // Use a função load do jQuery para carregar a sidebar
-      const guildId = `<%= info.id %>`;
-      console.log(guildId);
-
-      // Carregar o conteúdo da guilda com base no guildId
-      $("#sidebar-container2").load(`/bot/guildcontentmain/${guildId}`);
-    });
-
-    function carregarConteudo(component) {
-      const guildId = `<%= info.id %>`;
-      $("#sidebar-container2").load(`/bot/pagina/${component}/${guildId}`);
-    }
-
+    // Functions exposed to child iframes/scripts
     function user() {
       return "https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png";
     }
@@ -48,64 +49,100 @@
     function username() {
       return "<%=user.username%>";
     }
-    
+
     function guildName() {
       return "<%- guildName %>";
     }
+
+    function carregarConteudo(component) {
+      const guildId = `<%= info.id %>`;
+      console.log(`[ContentLoader] Attempting to load: /bot/pagina/${component}/${guildId}`);
+
+      // Fade out effect
+      $("#sidebar-container2").fadeOut(150, function () {
+        $(this).load(`/bot/pagina/${component}/${guildId}`, function (response, status, xhr) {
+          console.log(`[ContentLoader] Load Status: ${status}`);
+          if (status == "error") {
+            console.error(`[ContentLoader] Error: ${xhr.status} ${xhr.statusText}`);
+            $(this).html(`<div class="text-red-500 p-10 text-center">
+                    <h3 class="text-xl font-bold">Erro ao carregar</h3>
+                    <p>${xhr.status} ${xhr.statusText}</p>
+                    <p class="text-sm mt-2">Rota: /bot/pagina/${component}/${guildId}</p>
+                  </div>`);
+          }
+          // Fade in effect
+          $(this).fadeIn(150);
+        });
+      });
+    }
+
+    $(document).ready(function () {
+      // Load Sidebar
+      $("#sidebar-container").load("/layouts/sideBar.ejs", function () {
+        console.log("[Sidebar] Loaded successfully");
+        // Auto-load the dashboard default page
+        carregarConteudo('server');
+      });
+    });
+
+    // ... (Existing Functions for other reload logics preserved below for compatibility) ...
     function funcsReload(dados) {
-      // Obtenha os dados necessários
+      console.log("[FuncsReload] Reloading...");
       const dadosFormulario = dados;
       const tipo = dadosFormulario.find((item) => item.name === "func").value;
+      const guildId = dadosFormulario.find((item) => item.name === "guildId").value;
+      const channelin = dadosFormulario.find((item) => item.name === "channelId").value;
 
-      const guildId = dadosFormulario.find(
-        (item) => item.name === "guildId"
-      ).value;
-      const channelin = dadosFormulario.find(
-        (item) => item.name === "channelId"
-      ).value;
+      const url = `/bot/pagina/funcs/${tipo}/${guildId}/${channelin}`;
 
-      // Faça algo com os dados recebidos
-      console.log("Dados recebidos da página filho:", channelin);
-      $("#sidebar-container2").load(
-        `/bot/pagina/funcs/${tipo}/${guildId}/${channelin}`
-      );
+      $("#sidebar-container2").fadeOut(150, function () {
+        $(this).load(url, function (response, status, xhr) {
+          if (status == "error") {
+            $(this).html(`<div class="text-red-500 p-8 border border-red-500/20 bg-red-500/10 rounded-lg text-center"><h3 class="font-bold">Erro ao processar</h3><p class="text-sm">${xhr.statusText}</p></div>`);
+          }
+          $(this).fadeIn(150);
+        });
+      });
     }
 
     function dtbaseReload(dados) {
-      // Obtenha os dados necessários
+      console.log("[DtbaseReload] Reloading...");
       const dadosFormulario = dados;
       const tipo = dadosFormulario.find((item) => item.name === "func").value;
+      const guildId = dadosFormulario.find((item) => item.name === "guildId").value;
+      const channelin = dadosFormulario.find((item) => item.name === "channelId").value;
 
-      const guildId = dadosFormulario.find(
-        (item) => item.name === "guildId"
-      ).value;
-      const channelin = dadosFormulario.find(
-        (item) => item.name === "channelId"
-      ).value;
+      const url = `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`;
 
-      // Faça algo com os dados recebidos
-      console.log("Dados recebidos da página filho:", channelin);
-      $("#sidebar-container2").load(
-        `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`
-      );
+      $("#sidebar-container2").fadeOut(150, function () {
+        $(this).load(url, function (response, status, xhr) {
+          if (status == "error") {
+            $(this).html(`<div class="text-red-500 p-8 border border-red-500/20 bg-red-500/10 rounded-lg text-center"><h3 class="font-bold">Erro ao processar</h3><p class="text-sm">${xhr.statusText}</p></div>`);
+          }
+          $(this).fadeIn(150);
+        });
+      });
     }
 
     function dtbaseDelete(dados) {
-      // Obtenha os dados necessários
+      console.log("[DtbaseDelete] Reloading...");
       const dadosFormulario = dados;
       const tipo = dadosFormulario.find((item) => item.name === "func").value;
+      const guildId = dadosFormulario.find((item) => item.name === "channelId").value;
+      const channelin = dadosFormulario.find((item) => item.name === "youtube").value;
 
-      const guildId = dadosFormulario.find(
-        (item) => item.name === "channelId"
-      ).value;
-      const channelin = dadosFormulario.find(
-        (item) => item.name === "youtube"
-      ).value;
+      const url = `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`;
 
-      // Faça algo com os dados recebidos
-      $("#sidebar-container2").load(
-        `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`
-      );
+      $("#sidebar-container2").fadeOut(150, function () {
+        $(this).load(url, function (response, status, xhr) {
+          if (status == "error") {
+            $(this).html(`<div class="text-red-500 p-8 border border-red-500/20 bg-red-500/10 rounded-lg text-center"><h3 class="font-bold">Erro ao processar</h3><p class="text-sm">${xhr.statusText}</p></div>`);
+          }
+          $(this).fadeIn(150);
+        });
+      });
     }
   </script>
 </body>
+
+</html>

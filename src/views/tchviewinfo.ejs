@@ -1,51 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../css/cssdir/out.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <title>Banco de Dados - Guilda</title>
-  </head>
-  <body class="min-h-screen flex items-center justify-center bg-slate-900">
-    <div class="pages_cont p-8 rounded-lg shadow-md w-full max-w-5xl">
-      
-      <!-- Header da guilda -->
-      <div class="flex items-center gap-5 px-4 sm:px-0">
-        <div class="flex-shrink-0">
-          <% if (info.icon && info.icon.indexOf('null') === -1) { %>
-            <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-24 h-24 rounded-lg object-cover" />
-          <% } else { %>
-            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-24 h-24 rounded-lg object-cover" />
-          <% } %>
-        </div>
-        <div class="flex-1">
-          <h3 class="text-xl font-semibold text-white">Banco de Dados de Lives</h3>
-          <p class="mt-1 max-w-2xl text-sm text-gray-400">Guilda: <%= info.name %></p>
-        </div>
-      </div>
+<html lang="pt-br">
 
-      <!-- Tabela de dados -->
-      <div class="flex max-w-5xl mt-8">
-        <table class="w-full table-fixed divide-y divide-white-700">
-          <thead>
-            <tr>
-              <th class="w-[33%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">Twitch</th>
-              <th class="w-[34%] px-3 py-3.5 text-left text-sm font-semibold text-white">Channel</th>
-              <th class="w-[33%] px-3 py-3.5 text-left text-sm font-semibold text-white">Notify Guild</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-white-700">
-            <% info3.forEach(item => { %>
-              <tr>
-                <td class="truncate py-4 pl-4 pr-3 text-sm font-medium text-gray-300 sm:pl-0"><%= item.twitch %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.channel %></td>
-                <td class="truncate px-3 py-4 text-sm text-gray-400"><%= item.guildID %></td>
-              </tr>
-            <% }); %>
-          </tbody>
-        </table>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banco de Dados - Guilda</title>
+  <link href="../css/cssdir/out.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-transparent min-h-full flex items-start justify-center pt-10">
+  <div
+    class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
+
+    <!-- Header da guilda -->
+    <div class="flex items-center gap-6 mb-8 border-b border-gray-700/50 pb-6">
+      <div class="relative group">
+        <div
+          class="absolute -inset-1 bg-purple-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+        </div>
+        <% if (info.icon && info.icon.indexOf('null')===-1) { %>
+          <img src="<%= info.icon %>" alt="Ícone da guilda"
+            class="relative w-20 h-20 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
+          <% } else { %>
+            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão"
+              class="relative w-20 h-20 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
+            <% } %>
+      </div>
+      <div class="flex-1">
+        <h3 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+          <i class="fa-solid fa-server text-purple-500"></i>
+          Banco de Dados de Lives
+        </h3>
+        <p class="text-gray-400 text-sm max-w-2xl">Visualização bruta dos dados armazenados para a guilda <strong>
+            <%= info.name %>
+          </strong>.</p>
       </div>
     </div>
-  </body>
+
+    <!-- Tabela de dados -->
+    <div class="overflow-hidden rounded-xl border border-gray-700/50 bg-gray-800/40">
+      <table class="min-w-full divide-y divide-gray-700">
+        <thead class="bg-gray-700/50">
+          <tr>
+            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Twitch
+              ID</th>
+            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Canal
+            </th>
+            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
+              Servidor ID</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-700/50">
+          <% info3.forEach(item=> { %>
+            <tr class="hover:bg-gray-700/30 transition-colors">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-xs text-purple-400">
+                <%= item.twitch %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
+                <%= item.channel %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400 font-mono">
+                <%= item.guildID %>
+              </td>
+            </tr>
+            <% }); %>
+
+              <% if (info3.length===0) { %>
+                <tr>
+                  <td colspan="3" class="px-6 py-10 text-center text-gray-500">
+                    <div class="flex flex-col items-center justify-center">
+                      <i class="fa-solid fa-database text-4xl mb-3 opacity-30"></i>
+                      <p>Nenhum dado encontrado no banco.</p>
+                    </div>
+                  </td>
+                </tr>
+                <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
 </html>

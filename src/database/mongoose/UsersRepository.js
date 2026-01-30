@@ -19,7 +19,8 @@ module.exports = class UserRepository extends Repository {
         voiceTime: entity.voiceTime || 0,
         totalMessages: entity.totalMessages || 0,
         idguild: entity.idguild || "nada encontrado",
-        // ... outros campos do usuário
+        money: entity.money || 0,
+        bank: entity.bank || 0,
       };
     } else {
       return null; // ou um objeto vazio, dependendo da preferência
@@ -63,7 +64,7 @@ module.exports = class UserRepository extends Repository {
         entity ? this.parse(entity) : this.add({ codigouser, idguild })
       );
   }
-  
+
 
   getAllUniqueYoutubeAttributes() {
     return this.model.distinct("codigouser").exec();
@@ -80,7 +81,7 @@ module.exports = class UserRepository extends Repository {
   updateByUserIdAndGuildId(codigouser, idguild, entity, options = { upsert: true }) {
     return this.model.updateOne({ codigouser, idguild }, entity, options);
   }
-  
+
 
   async verify(codigouser) {
     return !!(await this.model.findOne({ codigouser }));
