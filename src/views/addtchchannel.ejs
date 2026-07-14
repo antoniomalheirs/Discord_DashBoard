@@ -1,3 +1,4 @@
+<!-- guildcontentmain.ejs -->
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -10,59 +11,63 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-transparent min-h-full flex items-start justify-center pt-10">
+<body class="bg-transparent min-h-full flex items-start justify-center pt-10 px-4">
 
-  <div
-    class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
+  <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
+    
+    <!-- Decorators -->
+    <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+
     <div id="mensagemPopUp"
       class="hidden fixed top-5 right-5 z-50 transition-all duration-300 transform translate-y-[-10px] opacity-0"></div>
 
     <!-- Header -->
-    <div class="flex items-center gap-6 mb-8 border-b border-gray-700/50 pb-6">
-      <div class="relative group">
-        <div
-          class="absolute -inset-1 bg-purple-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
-        </div>
+    <div class="flex flex-col md:flex-row items-center gap-6 mb-10 border-b border-white/5 pb-8 relative z-10">
+      <div class="relative group mx-auto md:mx-0">
+        <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-500 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
         <% if (info.icon && info.icon.indexOf('null')===-1) { %>
-          <img src="<%= info.icon %>" alt="Ícone da guilda"
-            class="relative w-16 h-16 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
-          <% } else { %>
-            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão"
-              class="relative w-16 h-16 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
-            <% } %>
+          <img src="<%= info.icon %>" alt="Ícone da guilda" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
+        <% } else { %>
+          <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
+        <% } %>
       </div>
-      <div class="flex-1">
-        <h3 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+      <div class="flex-1 text-center md:text-left">
+        <h3 class="text-3xl font-extrabold text-white mb-2 flex items-center justify-center md:justify-start gap-3 tracking-tight">
           <i class="fa-brands fa-twitch text-purple-500"></i>
           Adicionar Streamer
         </h3>
-        <p class="text-gray-400 text-sm">Cadastre um novo streamer da Twitch para receber notificações de lives.</p>
+        <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
+          Cadastre um novo streamer da Twitch para receber notificações de lives na guilda.
+        </p>
       </div>
     </div>
 
     <!-- Form -->
-    <form id="addtchchannel" method="post" class="space-y-6">
-      <div class="bg-gray-700/20 border border-gray-600/30 rounded-xl p-6">
+    <form id="addtchchannel" method="post" class="space-y-6 relative z-10">
+      <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-6 shadow-inner">
         <div>
-          <label for="channelId" class="block text-sm font-medium leading-6 text-gray-300 mb-2">Nome do Streamer</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <i class="fa-solid fa-user-tag text-gray-500"></i>
+          <label for="channelId" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Nome do Streamer</label>
+          <div class="relative group/input">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within/input:text-purple-500">
+              <i class="fa-solid fa-user-tag text-slate-500 group-focus-within/input:text-purple-500 transition-colors"></i>
             </div>
             <input type="text" id="channelId" name="channelId" required placeholder="Ex: alanzoka"
-              class="block w-full rounded-lg bg-gray-800 border-gray-600 pl-10 py-3 text-white placeholder-gray-500 focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-all shadow-inner" />
+              class="bg-black/40 border border-white/10 text-white text-sm rounded-xl focus:ring-1 focus:ring-purple-500 focus:border-purple-500 block w-full pl-11 py-3 transition-all shadow-inner font-mono placeholder-slate-600 outline-none" />
           </div>
-          <p class="mt-2 text-xs text-gray-500">Insira o nome de usuário exato do canal na Twitch.</p>
+          <p class="mt-2 text-[11px] text-slate-500 flex items-center gap-1.5 font-medium">
+            <i class="fa-solid fa-circle-info text-blue-400"></i>
+            Insira o nome de usuário exato do canal na Twitch.
+          </p>
         </div>
       </div>
 
       <input type="hidden" id="guildId" name="guildId" value="<%= info.id %>" />
       <input type="hidden" id="func" name="func" value="addtwitchch" />
 
-      <div class="flex justify-end pt-2">
+      <div class="flex justify-end pt-4">
         <button type="button" onclick="envdata()"
-          class="flex items-center gap-2 justify-center rounded-lg bg-purple-600 px-8 py-3 text-sm font-bold text-white shadow-lg hover:bg-purple-500 hover:shadow-purple-500/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-all transform hover:-translate-y-0.5">
-          <i class="fa-solid fa-plus"></i>
+          class="flex items-center gap-2 justify-center rounded-xl bg-purple-600 px-8 py-3.5 text-sm font-bold text-white shadow-lg hover:bg-purple-500 hover:shadow-purple-500/30 transition-all transform hover:-translate-y-0.5 border border-purple-500/50">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
           Adicionar Streamer
         </button>
       </div>
@@ -70,15 +75,23 @@
 
   </div>
 
-  <!-- Scripts -->
+  <style>
+      @keyframes fade-in-up {
+          0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .animate-fade-in-up {
+          animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+  </style>
+
   <script>
     function exibirMensagemErro(mensagem) {
       const popUp = document.getElementById('mensagemPopUp');
-
       popUp.innerHTML = `
-          <div class="flex items-center bg-red-500/90 text-white px-4 py-3 rounded-lg shadow-lg border border-red-400 backdrop-blur-sm">
-            <i class="fas fa-exclamation-circle mr-3"></i>
-            <p class="font-medium text-sm">${mensagem}</p>
+          <div class="flex items-center bg-red-500/90 text-white px-5 py-3.5 rounded-xl shadow-[0_10px_30px_rgba(239,68,68,0.3)] border border-red-400 backdrop-blur-md">
+            <i class="fas fa-exclamation-circle mr-3 text-lg"></i>
+            <p class="font-bold text-sm tracking-wide">${mensagem}</p>
           </div>
         `;
 
@@ -87,13 +100,13 @@
       setTimeout(() => {
         popUp.classList.add('translate-y-[-10px]', 'opacity-0');
         setTimeout(() => popUp.classList.add('hidden'), 300);
-      }, 3000);
+      }, 4000);
     }
 
     function envdata() {
       var form = document.getElementById('addtchchannel');
       if (!form.checkValidity()) {
-        exibirMensagemErro('Por favor, preencha todos os campos obrigatórios.');
+        exibirMensagemErro('Por favor, preencha o nome do streamer corretamente.');
         return;
       }
       var formData = new FormData(form);
@@ -109,5 +122,4 @@
     }
   </script>
 </body>
-
 </html>

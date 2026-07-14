@@ -10,95 +10,103 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-transparent min-h-full flex items-start justify-center pt-10">
-  <div
-    class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
-    <div class="flex items-center gap-6 mb-8">
-      <div class="relative group">
-        <div
-          class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
-        </div>
-        <div class="relative">
+<body class="bg-transparent min-h-full flex items-start justify-center pt-10 px-4">
+  <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
+    
+    <!-- Decorators -->
+    <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="flex flex-col md:flex-row md:items-center gap-8 mb-12 border-b border-white/5 pb-8 relative z-10">
+      <div class="relative group mx-auto md:mx-0">
+        <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
+        <div class="relative w-28 h-28 md:w-32 md:h-32 rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
           <% if (info.icon && info.icon.indexOf('null')===-1) { %>
-            <img src="<%= info.icon %>" alt="Ícone da guilda"
-              class="w-24 h-24 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
-            <% } else { %>
-              <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão"
-                class="w-24 h-24 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
-              <% } %>
+            <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-full h-full object-cover" />
+          <% } else { %>
+            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-full h-full object-cover" />
+          <% } %>
         </div>
       </div>
 
-      <div>
-        <h3 class="text-2xl font-bold text-white mb-1">Informações do Servidor</h3>
-        <p class="text-indigo-400 font-medium text-sm flex items-center gap-2">
+      <div class="text-center md:text-left flex-1">
+        <h3 class="text-4xl font-extrabold text-white mb-3 bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent tracking-tight"><%= info.name %></h3>
+        <p class="text-indigo-400 font-semibold text-sm flex items-center justify-center md:justify-start gap-2">
           <i class="fa-solid fa-server"></i>
-          Dados e Estatísticas
+          Painel de Visão Geral
         </p>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Server Name -->
-      <div class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors">
-        <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Nome do Servidor</dt>
-        <dd class="text-white font-medium text-lg truncate" title="<%= info.name %>">
-          <%= info.name %>
-        </dd>
-      </div>
-
+    <!-- Estatísticas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+      
       <!-- Server ID -->
-      <div class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors">
-        <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">ID do Servidor</dt>
-        <dd class="text-gray-300 font-mono text-sm break-all pt-1">
+      <div class="bg-white/[0.03] p-6 rounded-3xl border border-white/[0.05] hover:border-indigo-500/30 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500 group col-span-1 md:col-span-2 lg:col-span-1 flex flex-col justify-between">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 group-hover:scale-110 transition-transform duration-500">
+            <i class="fa-solid fa-fingerprint text-indigo-400"></i>
+          </div>
+          <dt class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">ID do Servidor</dt>
+        </div>
+        <dd class="text-slate-300 font-mono text-sm break-all bg-black/30 p-3 rounded-xl border border-white/5 shadow-inner">
           <%= info.id %>
         </dd>
       </div>
 
       <!-- Members -->
-      <div
-        class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors flex items-center justify-between">
-        <div>
-          <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Membros</dt>
-          <dd class="text-white font-bold text-2xl">
-            <%= info.memberCount %>
-          </dd>
+      <div class="bg-white/[0.03] p-6 rounded-3xl border border-white/[0.05] hover:border-cyan-500/30 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-500 group relative overflow-hidden flex flex-col justify-between">
+        <div class="absolute -right-4 -top-4 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all duration-700"></div>
+        <div class="relative z-10 flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 group-hover:scale-110 transition-transform duration-500">
+            <i class="fa-solid fa-users text-cyan-400"></i>
+          </div>
+          <dt class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Membros</dt>
         </div>
-        <div class="bg-indigo-500/20 p-3 rounded-lg text-indigo-400">
-          <i class="fa-solid fa-users text-xl"></i>
-        </div>
+        <dd class="relative z-10 text-white font-extrabold text-4xl mt-2 tracking-tight">
+          <%= info.memberCount %>
+        </dd>
       </div>
 
       <!-- Voice Channels -->
-      <div
-        class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors flex items-center justify-between">
-        <div>
-          <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Canais de Voz</dt>
-          <dd class="text-white font-bold text-2xl">
-            <%= info.voiceChannels %>
-          </dd>
+      <div class="bg-white/[0.03] p-6 rounded-3xl border border-white/[0.05] hover:border-emerald-500/30 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-500 group relative overflow-hidden flex flex-col justify-between">
+        <div class="absolute -right-4 -top-4 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all duration-700"></div>
+        <div class="relative z-10 flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 group-hover:scale-110 transition-transform duration-500">
+            <i class="fa-solid fa-microphone text-emerald-400"></i>
+          </div>
+          <dt class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Canais de Voz</dt>
         </div>
-        <div class="bg-green-500/20 p-3 rounded-lg text-green-400">
-          <i class="fa-solid fa-microphone text-xl"></i>
-        </div>
+        <dd class="relative z-10 text-white font-extrabold text-4xl mt-2 tracking-tight">
+          <%= info.voiceChannels %>
+        </dd>
       </div>
 
       <!-- Text Channels -->
-      <div
-        class="bg-gray-700/50 p-4 rounded-xl border border-gray-600/50 hover:border-gray-500 transition-colors flex items-center justify-between md:col-span-2">
-        <div>
-          <dt class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Canais de Texto</dt>
-          <dd class="text-white font-bold text-2xl">
-            <%= info.textChannels %>
-          </dd>
+      <div class="bg-white/[0.03] p-6 rounded-3xl border border-white/[0.05] hover:border-blue-500/30 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] transition-all duration-500 group relative overflow-hidden flex flex-col justify-between">
+        <div class="absolute -right-4 -top-4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-700"></div>
+        <div class="relative z-10 flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 group-hover:scale-110 transition-transform duration-500">
+            <i class="fa-solid fa-hashtag text-blue-400"></i>
+          </div>
+          <dt class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Canais de Texto</dt>
         </div>
-        <div class="bg-blue-500/20 p-3 rounded-lg text-blue-400">
-          <i class="fa-solid fa-hashtag text-xl"></i>
-        </div>
+        <dd class="relative z-10 text-white font-extrabold text-4xl mt-2 tracking-tight">
+          <%= info.textChannels %>
+        </dd>
       </div>
 
     </div>
   </div>
-</body>
 
+  <style>
+      @keyframes fade-in-up {
+          0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .animate-fade-in-up {
+          animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+  </style>
+</body>
 </html>

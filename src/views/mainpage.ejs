@@ -7,142 +7,179 @@
   <title>Server Config - Manager Bot</title>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <link href="../css/cssdir/out.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-900 overflow-hidden h-screen w-screen">
+<body class="bg-[#0b0c10] text-slate-200 overflow-hidden h-screen w-screen selection:bg-indigo-500 selection:text-white antialiased">
+    
+  <!-- Background Decorators -->
+  <div class="fixed inset-0 z-0 pointer-events-none">
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/10 via-[#0b0c10] to-[#0b0c10]"></div>
+      <div class="absolute top-[10%] left-[20%] w-[40%] h-[40%] rounded-full bg-indigo-600/5 blur-[120px]"></div>
+      <div class="absolute bottom-[10%] right-[20%] w-[40%] h-[40%] rounded-full bg-purple-600/5 blur-[120px]"></div>
+  </div>
 
   <!-- Sidebar Container (Fixed Left) -->
   <div id="sidebar-container" class="fixed top-0 left-0 z-50 h-full"></div>
 
   <!-- Main Content Area -->
-  <!-- Margin Left = 20 (Primary Sidebar) + 64 (Secondary Sidebar) = 84 units (approx 336px) -->
-  <div class="ml-[336px] w-[calc(100%-336px)] h-full overflow-y-auto bg-gray-900 relative">
+  <div class="ml-[336px] w-[calc(100%-336px)] h-full overflow-y-auto relative z-10 scroll-smooth">
 
-    <!-- Top Spacer for Header -->
-    <div class="h-20 w-full"></div>
-
-    <!-- Dynamic Content Injection Point -->
-    <div id="sidebar-container2" class="p-6 w-full min-h-[calc(100vh-5rem)]">
-      <!-- Content loaded via jQuery will appear here -->
-      <div class="flex flex-col items-center justify-center h-[50vh] text-gray-500 animate-pulse">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4 opacity-50" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
-        </svg>
-        <p>Selecione uma opção no menu lateral</p>
-      </div>
+    <!-- Top Header -->
+    <div class="h-20 w-full sticky top-0 bg-[#0b0c10]/70 backdrop-blur-xl border-b border-white/5 z-40 flex items-center px-10 transition-all shadow-sm">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+                <i class="fa-solid fa-server text-indigo-400"></i>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Painel do Servidor</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i>
+                    <span class="text-sm font-bold text-white tracking-wide truncate max-w-[200px]" id="current-page-title"><%- guildName %></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ml-auto flex items-center gap-6">
+            <a href="/dashboard" class="group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-sm font-semibold text-slate-300 hover:text-white">
+                <i class="fa-solid fa-layer-group text-indigo-400 group-hover:scale-110 transition-transform"></i>
+                Trocar Servidor
+            </a>
+            <div class="h-8 w-px bg-white/10"></div>
+            <div class="flex items-center gap-3">
+                <div class="text-right hidden md:block">
+                    <p class="text-sm font-bold text-white"><%=user.username%></p>
+                    <p class="text-xs text-slate-500 font-mono"><%=user.id%></p>
+                </div>
+                <div class="w-10 h-10 rounded-xl border border-white/10 overflow-hidden shadow-lg p-0.5 bg-gradient-to-br from-indigo-500 to-purple-500">
+                    <img src="https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png" alt="Avatar" class="w-full h-full rounded-lg object-cover">
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Dynamic Content Injection Point -->
+    <div id="sidebar-container2" class="p-8 md:p-12 w-full min-h-[calc(100vh-5rem)] max-w-[1600px] mx-auto animate-fade-in-up">
+      <!-- Premium Loading State -->
+      <div class="flex flex-col items-center justify-center h-[60vh]">
+        <div class="relative w-24 h-24 mb-8">
+            <!-- Pulsing background -->
+            <div class="absolute inset-0 bg-indigo-500/20 rounded-full animate-ping"></div>
+            <!-- Spinning rings -->
+            <div class="absolute inset-0 border-4 border-transparent border-t-indigo-500 rounded-full animate-spin"></div>
+            <div class="absolute inset-2 border-4 border-transparent border-b-purple-500 rounded-full animate-spin" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
+            <!-- Center Icon -->
+            <div class="absolute inset-0 flex items-center justify-center">
+                <i class="fa-solid fa-cube text-2xl text-white animate-pulse"></i>
+            </div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 tracking-wide">Carregando Módulos</h3>
+        <p class="text-slate-500 text-sm font-medium">Estabelecendo conexão segura com o servidor...</p>
+      </div>
+    </div>
   </div>
+
+  <style>
+      @keyframes fade-in-up {
+          0% { opacity: 0; transform: translateY(15px); }
+          100% { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+          animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      
+      /* Premium Scrollbar */
+      ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+          background: #0b0c10;
+          border-left: 1px solid rgba(255,255,255,0.02);
+      }
+      ::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+          background: rgba(99, 102, 241, 0.8);
+      }
+  </style>
 
   <script>
     // Functions exposed to child iframes/scripts
-    function user() {
-      return "https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png";
-    }
-
-    function email() {
-      return "<%=user.email%>";
-    }
-
-    function username() {
-      return "<%=user.username%>";
-    }
-
-    function guildName() {
-      return "<%- guildName %>";
-    }
+    function user() { return "https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png"; }
+    function email() { return "<%=user.email%>"; }
+    function username() { return "<%=user.username%>"; }
+    function guildName() { return "<%- guildName %>"; }
 
     function carregarConteudo(component) {
       const guildId = `<%= info.id %>`;
-      console.log(`[ContentLoader] Attempting to load: /bot/pagina/${component}/${guildId}`);
+      console.log(`[ContentLoader] Loading: /bot/pagina/${component}/${guildId}`);
 
-      // Fade out effect
-      $("#sidebar-container2").fadeOut(150, function () {
+      $("#sidebar-container2").fadeOut(250, function () {
         $(this).load(`/bot/pagina/${component}/${guildId}`, function (response, status, xhr) {
-          console.log(`[ContentLoader] Load Status: ${status}`);
           if (status == "error") {
-            console.error(`[ContentLoader] Error: ${xhr.status} ${xhr.statusText}`);
-            $(this).html(`<div class="text-red-500 p-10 text-center">
-                    <h3 class="text-xl font-bold">Erro ao carregar</h3>
-                    <p>${xhr.status} ${xhr.statusText}</p>
-                    <p class="text-sm mt-2">Rota: /bot/pagina/${component}/${guildId}</p>
-                  </div>`);
+            $(this).html(`
+                <div class="text-red-400 p-10 text-center bg-red-500/10 border border-red-500/20 rounded-[2rem] backdrop-blur-md mt-10 max-w-2xl mx-auto shadow-[0_10px_40px_rgba(239,68,68,0.2)]">
+                    <div class="w-20 h-20 bg-red-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-red-500/30">
+                        <i class="fa-solid fa-triangle-exclamation text-4xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Falha na Comunicação</h3>
+                    <p class="text-red-200/70 mb-6">Não foi possível carregar o módulo solicitado. O servidor retornou o seguinte código de erro:</p>
+                    <div class="bg-black/50 p-4 rounded-xl font-mono text-sm border border-red-500/30">
+                        Error ${xhr.status}: ${xhr.statusText}
+                    </div>
+                </div>`);
           }
-          // Fade in effect
-          $(this).fadeIn(150);
+          $(this).fadeIn(300);
         });
       });
     }
 
     $(document).ready(function () {
-      // Load Sidebar
       $("#sidebar-container").load("/layouts/sideBar.ejs", function () {
-        console.log("[Sidebar] Loaded successfully");
-        // Auto-load the dashboard default page
         carregarConteudo('server');
       });
     });
 
-    // ... (Existing Functions for other reload logics preserved below for compatibility) ...
+    // Sub-functions for Modules
     function funcsReload(dados) {
-      console.log("[FuncsReload] Reloading...");
-      const dadosFormulario = dados;
-      const tipo = dadosFormulario.find((item) => item.name === "func").value;
-      const guildId = dadosFormulario.find((item) => item.name === "guildId").value;
-      const channelin = dadosFormulario.find((item) => item.name === "channelId").value;
-
-      const url = `/bot/pagina/funcs/${tipo}/${guildId}/${channelin}`;
-
-      $("#sidebar-container2").fadeOut(150, function () {
-        $(this).load(url, function (response, status, xhr) {
-          if (status == "error") {
-            $(this).html(`<div class="text-red-500 p-8 border border-red-500/20 bg-red-500/10 rounded-lg text-center"><h3 class="font-bold">Erro ao processar</h3><p class="text-sm">${xhr.statusText}</p></div>`);
-          }
-          $(this).fadeIn(150);
-        });
-      });
+      const tipo = dados.find((item) => item.name === "func").value;
+      const guildId = dados.find((item) => item.name === "guildId").value;
+      const channelin = dados.find((item) => item.name === "channelId").value;
+      loadPanelUrl(`/bot/pagina/funcs/${tipo}/${guildId}/${channelin}`);
     }
 
     function dtbaseReload(dados) {
-      console.log("[DtbaseReload] Reloading...");
-      const dadosFormulario = dados;
-      const tipo = dadosFormulario.find((item) => item.name === "func").value;
-      const guildId = dadosFormulario.find((item) => item.name === "guildId").value;
-      const channelin = dadosFormulario.find((item) => item.name === "channelId").value;
-
-      const url = `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`;
-
-      $("#sidebar-container2").fadeOut(150, function () {
-        $(this).load(url, function (response, status, xhr) {
-          if (status == "error") {
-            $(this).html(`<div class="text-red-500 p-8 border border-red-500/20 bg-red-500/10 rounded-lg text-center"><h3 class="font-bold">Erro ao processar</h3><p class="text-sm">${xhr.statusText}</p></div>`);
-          }
-          $(this).fadeIn(150);
-        });
-      });
+      const tipo = dados.find((item) => item.name === "func").value;
+      const guildId = dados.find((item) => item.name === "guildId").value;
+      const channelin = dados.find((item) => item.name === "channelId").value;
+      loadPanelUrl(`/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`);
     }
 
     function dtbaseDelete(dados) {
-      console.log("[DtbaseDelete] Reloading...");
-      const dadosFormulario = dados;
-      const tipo = dadosFormulario.find((item) => item.name === "func").value;
-      const guildId = dadosFormulario.find((item) => item.name === "channelId").value;
-      const channelin = dadosFormulario.find((item) => item.name === "youtube").value;
+      const tipo = dados.find((item) => item.name === "func").value;
+      const guildId = dados.find((item) => item.name === "channelId").value; // channelId is actually the guild in context sometimes, keep original logic
+      const channelin = dados.find((item) => item.name === "youtube")?.value || dados.find((item) => item.name === "twitch")?.value;
+      loadPanelUrl(`/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`);
+    }
 
-      const url = `/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`;
-
-      $("#sidebar-container2").fadeOut(150, function () {
+    function loadPanelUrl(url) {
+      $("#sidebar-container2").fadeOut(250, function () {
         $(this).load(url, function (response, status, xhr) {
           if (status == "error") {
-            $(this).html(`<div class="text-red-500 p-8 border border-red-500/20 bg-red-500/10 rounded-lg text-center"><h3 class="font-bold">Erro ao processar</h3><p class="text-sm">${xhr.statusText}</p></div>`);
+            $(this).html(`
+                <div class="text-red-400 p-8 border border-red-500/20 bg-red-500/10 rounded-[2rem] text-center mt-10 max-w-xl mx-auto shadow-lg">
+                    <i class="fa-solid fa-bug text-3xl mb-4 text-red-500"></i>
+                    <h3 class="font-bold text-xl text-white mb-2">Falha na Requisição</h3>
+                    <p class="text-sm opacity-80">${xhr.statusText}</p>
+                </div>`);
           }
-          $(this).fadeIn(150);
+          $(this).fadeIn(300);
         });
       });
     }
   </script>
 </body>
-
 </html>

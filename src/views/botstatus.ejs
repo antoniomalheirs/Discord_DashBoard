@@ -11,70 +11,106 @@
   <title>Discord Bot Dashboard</title>
 </head>
 
-<body class="bg-transparent min-h-screen flex items-start justify-center pt-10">
-  <div
-    class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
+<body class="bg-transparent min-h-screen flex items-start justify-center pt-10 px-4">
+  <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
+    
+    <!-- Decorators -->
+    <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-emerald-600/10 rounded-full blur-[100px] pointer-events-none"></div>
 
-    <div class="flex items-center gap-6 mb-8">
-      <div class="relative">
-        <div
-          class="absolute -inset-1 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+    <div class="flex flex-col md:flex-row items-center gap-8 mb-12 border-b border-white/5 pb-10 relative z-10">
+      <div class="relative group">
+        <div class="absolute -inset-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl blur-xl opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
+        <div class="relative w-28 h-28 rounded-3xl overflow-hidden shadow-2xl border border-white/20 p-1 bg-gradient-to-br from-emerald-400 to-teal-600">
+            <img src="/res/serverIcon/boticon.jpg" alt="Bot Icon" class="w-full h-full rounded-2xl object-cover" />
         </div>
-        <img src="/res/serverIcon/boticon.jpg" alt="Bot Icon"
-          class="relative w-24 h-24 rounded-lg object-cover shadow-lg ring-2 ring-gray-700 border-2 border-yellow-500/50" />
       </div>
-      <div>
-        <h3 class="text-2xl font-bold text-white mb-1">Manager Bot Status</h3>
-        <p class="text-yellow-500 font-medium text-sm flex items-center gap-2">
-          <i class="fa-solid fa-bolt"></i>
-          Monitoramento em Tempo Real
+      <div class="text-center md:text-left">
+        <h3 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 mb-2">
+            Manager Bot Status
+        </h3>
+        <p class="text-emerald-400 font-bold text-sm flex items-center justify-center md:justify-start gap-2 tracking-widest uppercase mt-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></span>
+          Sistemas Operacionais
         </p>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
 
       <!-- Service Status -->
-      <div
-        class="group bg-gray-700/50 p-5 rounded-xl border border-gray-600/50 hover:bg-gray-700 hover:border-yellow-500/50 transition-all duration-300">
-        <div class="flex items-center justify-between mb-2">
-          <dt class="text-xs font-bold text-gray-400 uppercase tracking-widest">Status do Serviço</dt>
-          <i class="fa-solid fa-signal text-green-500 animate-pulse"></i>
+      <div class="group bg-white/[0.03] p-8 rounded-3xl border border-white/5 hover:bg-white/[0.06] hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-500 relative overflow-hidden">
+        <div class="absolute -right-4 -top-4 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all duration-700"></div>
+        
+        <div class="flex items-center justify-between mb-6 relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 group-hover:scale-110 transition-transform">
+             <i class="fa-solid fa-server text-xl text-emerald-400"></i>
+          </div>
+          <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 text-[10px] font-bold tracking-widest rounded-full uppercase border border-emerald-500/30">
+            Online
+          </span>
         </div>
-        <dd class="text-white font-bold text-xl capitalize">
-          <%= info.botStatus %>
-        </dd>
+        
+        <div class="relative z-10">
+            <dt class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Status da API</dt>
+            <dd class="text-white font-black text-2xl capitalize">
+              <%= info.botStatus %>
+            </dd>
+        </div>
       </div>
 
       <!-- Total Servers -->
-      <div
-        class="group bg-gray-700/50 p-5 rounded-xl border border-gray-600/50 hover:bg-gray-700 hover:border-blue-500/50 transition-all duration-300">
-        <div class="flex items-center justify-between mb-2">
-          <dt class="text-xs font-bold text-gray-400 uppercase tracking-widest">Servidores Conectados</dt>
-          <i class="fa-solid fa-earth-americas text-blue-500"></i>
+      <div class="group bg-white/[0.03] p-8 rounded-3xl border border-white/5 hover:bg-white/[0.06] hover:border-indigo-500/50 hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500 relative overflow-hidden">
+        <div class="absolute -right-4 -top-4 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all duration-700"></div>
+        
+        <div class="flex items-center justify-between mb-6 relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 group-hover:scale-110 transition-transform">
+             <i class="fa-solid fa-earth-americas text-xl text-indigo-400"></i>
+          </div>
         </div>
-        <dd class="text-white font-bold text-3xl font-mono">
-          <%= info.guildCount %>
-        </dd>
+        
+        <div class="relative z-10">
+            <dt class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Guildas Alcançadas</dt>
+            <dd class="text-white font-black text-4xl font-mono tracking-tighter">
+              <%= info.guildCount %>
+            </dd>
+        </div>
       </div>
 
       <!-- Uptime -->
-      <div
-        class="group bg-gray-700/50 p-5 rounded-xl border border-gray-600/50 hover:bg-gray-700 hover:border-purple-500/50 transition-all duration-300">
-        <div class="flex items-center justify-between mb-2">
-          <dt class="text-xs font-bold text-gray-400 uppercase tracking-widest">Tempo de Atividade</dt>
-          <i class="fa-solid fa-clock text-purple-500"></i>
+      <div class="group bg-white/[0.03] p-8 rounded-3xl border border-white/5 hover:bg-white/[0.06] hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-500 relative overflow-hidden">
+        <div class="absolute -right-4 -top-4 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all duration-700"></div>
+        
+        <div class="flex items-center justify-between mb-6 relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 group-hover:scale-110 transition-transform">
+             <i class="fa-solid fa-stopwatch text-xl text-purple-400"></i>
+          </div>
         </div>
-        <div class="w-full bg-gray-600/50 rounded-full h-1.5 mb-3 mt-1">
-          <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-1.5 rounded-full" style="width: 100%"></div>
+        
+        <div class="relative z-10">
+            <dt class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Tempo de Atividade</dt>
+            <dd class="text-white font-bold text-xl font-mono truncate max-w-[200px]" title="<%= info.uptime %>">
+              <%= info.uptime %>
+            </dd>
         </div>
-        <dd class="text-white font-medium text-lg font-mono">
-          <%= info.uptime %>
-        </dd>
+        
+        <div class="w-full bg-black/40 rounded-full h-1.5 mt-4 border border-white/5 relative z-10 overflow-hidden">
+          <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full shadow-[0_0_10px_rgba(168,85,247,0.8)] relative">
+              <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+          </div>
+        </div>
       </div>
 
     </div>
   </div>
-</body>
 
+  <style>
+      @keyframes fade-in-up {
+          0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .animate-fade-in-up {
+          animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+  </style>
+</body>
 </html>

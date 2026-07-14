@@ -1,132 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="../css/cssdir/out.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <title>Document</title>
-  <style>
-    body {
-      background: #666;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../css/cssdir/out.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Desenvolvedores - Manager Bot</title>
 </head>
 
-<body class="bg">
-  <div class="transition-overlay_out"></div>
+<body class="bg-[#0f1115] text-slate-200 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white antialiased overflow-x-hidden">
+    
+    <!-- Background Decorators -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-[#0f1115] to-[#0f1115]"></div>
+        <div class="absolute -top-[40%] -right-[10%] w-[70%] h-[70%] rounded-full bg-indigo-600/10 blur-[120px]"></div>
+        <div class="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-purple-600/10 blur-[100px]"></div>
+    </div>
 
-  <div class="mx-auto">
-    <header id="topbar" class="absolute inset-x-0 top-0 z-50 my-1">
-      <nav class="flex items-center justify-between p-2 lg:px-6" aria-label="Global">
-        <div class="flex lg:flex-1">
-          <a href="/" class="px-3 py-1">
-            <span class="sr-only">Your Company</span>
-            <img class="h-12 w-auto rounded-3xl" src="/res/serverIcon/boticon.jpg" />
-          </a>
-          <p class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff"
-              class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-            </svg>
-          </p>
-        </div>
-        <div class="hidden lg:flex lg:gap-x-12">
-          <a href="/auth/devs" class="text-sm font-semibold leading-6 text-gray-300">Desenvoldores</a>
-        </div>
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end"></div>
-      </nav>
+    <!-- Navigation -->
+    <header class="fixed inset-x-0 top-0 z-50 bg-[#0f1115]/50 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+        <nav class="container mx-auto flex items-center justify-between p-4 lg:px-8" aria-label="Global">
+            <div class="flex items-center gap-3">
+                <a href="/" class="relative group">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-500"></div>
+                    <img class="relative h-10 w-10 rounded-2xl object-cover shadow-2xl" src="/res/serverIcon/boticon.jpg" alt="Bot Icon">
+                </a>
+                <span class="font-bold text-xl tracking-tight text-white/90">Manager Bot</span>
+            </div>
+            
+            <div class="hidden lg:flex lg:gap-x-10">
+                <a href="/auth/about" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 pb-1">Sobre</a>
+                <a href="/auth/docs" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 pb-1">Documentação</a>
+                <a href="/auth/funcutils" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 pb-1">Utilidades & Funções</a>
+                <a href="/auth/devs" class="text-sm font-semibold text-white transition-colors duration-200 border-b-2 border-indigo-500 pb-1">Devs</a>
+            </div>
+
+            <div class="flex flex-1 justify-end">
+                <a href="/auth/discord" class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white transition-all duration-200 bg-indigo-600/80 border border-indigo-500/50 rounded-full hover:bg-indigo-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#0f1115]">
+                    <span>Painel</span>
+                </a>
+            </div>
+        </nav>
     </header>
 
-    <div id="content_about" class="isolate px-6 pt-14 lg:px-8">
-      <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-        aria-hidden="true">
-        <div
-          class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-          style="
-              clip-path: polygon(
-                74.1% 44.1%,
-                100% 61.6%,
-                97.5% 26.9%,
-                85.5% 0.1%,
-                80.7% 2%,
-                72.5% 32.5%,
-                60.2% 62.4%,
-                52.4% 68.1%,
-                47.5% 58.3%,
-                45.2% 34.5%,
-                27.5% 76.7%,
-                0.1% 64.9%,
-                17.9% 100%,
-                27.6% 76.8%,
-                76.1% 97.7%,
-                74.1% 44.1%
-              );
-            "></div>
-      </div>
-      <div class="mx-auto w-full max-w-full py-32 sm:py-48 lg:py-56">
-        <div class="text-center">
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-8xl">
-            A Divina Liricidade
-          </h1>
-          <p class="mt-6 text-4xl leading-8 text-gray-400">
-            Desenvolvedores
-          </p>
+    <!-- Content -->
+    <main class="relative z-10 flex-grow pt-32 pb-20 px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl animate-fade-in-up">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-widest mb-6">
+                    A Divina Liricidade
+                </div>
+                <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 mb-6">
+                    Desenvolvedores
+                </h1>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+                    Conheça quem constrói o nosso ecossistema
+                </p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Card 1 -->
+                <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-8 md:p-10 backdrop-blur-md shadow-2xl relative overflow-hidden group hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500">
+                    <div class="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
+                        <i class="fa-solid fa-users text-9xl"></i>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-code text-indigo-400"></i> Sobre Nós
+                    </h2>
+                    
+                    <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed text-lg space-y-6">
+                        <p>
+                            Se você está buscando um bot completo e altamente estruturado, saiba que nosso time de desenvolvimento é apaixonado por criar as melhores experiências possíveis, mas é importante notar que o produto final segue em constante maturação.
+                        </p>
+                        <p>
+                            Nosso bot foi inicialmente desenvolvido com o propósito simples de fornecer notificações sobre vídeos e transmissões ao vivo de canais do YouTube e Twitch, enviando alertas rápidos e customizáveis.
+                        </p>
+                        <p>
+                            No entanto, a equipe <strong>SentinelData</strong> está constantemente trabalhando para aprimorar, polir e expandir as funcionalidades da plataforma, visando oferecer uma suíte abrangente para administração e moderação.
+                        </p>
+                        <div class="bg-indigo-500/10 border border-indigo-500/20 p-6 rounded-2xl mt-8">
+                            <p class="m-0 text-indigo-200">
+                                Agradecemos seu interesse na construção do nosso projeto. Cada linha de código foi pensada para entregar valor para sua comunidade do Discord.<br><br>
+                                <strong class="text-indigo-400">Atenciosamente, SentinelData Team</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="pt-6 text-start">
-          <p class="mt-6 text-3xl leading-8 text-gray-800">
-            About Us
-          </p>
+    </main>
 
-          <p class="mt-2 ml-4 text-lg leading-8 text-gray-300">
-            Se você está buscando um bot completo e altamente estruturado, é importante notar que nosso produto ainda
-            está em desenvolvimento e pode não atender totalmente às suas expectativas neste momento.<br><br>
-
-            Nosso bot foi inicialmente desenvolvido com o propósito de fornecer notificações sobre vídeos e transmissões
-            ao vivo de canais do YouTube e Twitch. Ele tem a capacidade de enviar essas notificações para um canal de
-            texto específico no servidor onde está presente.
-
-            No entanto, estamos constantemente trabalhando para aprimorar e expandir as funcionalidades do nosso bot,
-            visando oferecer uma experiência mais abrangente e satisfatória aos nossos usuários.<br><br>
-
-            Agradecemos sua compreensão e interesse em nosso serviço. Se tiver alguma dúvida ou sugestão, não hesite em
-            entrar em contato conosco.<br><br>
-
-            Atenciosamente,<br>
-            SentinelData
-          </p>
-        </div>
-
-      </div>
-      <div
-        class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-        aria-hidden="true">
-        <div
-          class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-          style="
-              clip-path: polygon(
-                74.1% 44.1%,
-                100% 61.6%,
-                97.5% 26.9%,
-                85.5% 0.1%,
-                80.7% 2%,
-                72.5% 32.5%,
-                60.2% 62.4%,
-                52.4% 68.1%,
-                47.5% 58.3%,
-                45.2% 34.5%,
-                27.5% 76.7%,
-                0.1% 64.9%,
-                17.9% 100%,
-                27.6% 76.8%,
-                76.1% 97.7%,
-                74.1% 44.1%
-              );
-            "></div>
-      </div>
-    </div>
-  </div>
+    <style>
+        @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+    </style>
 </body>
-
 </html>

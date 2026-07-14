@@ -4,105 +4,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard: <%= info.name %>
-  </title>
+  <title>Dashboard: <%= info.name %></title>
   <link href="../css/cssdir/out.css" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-transparent min-h-full flex items-start justify-center pt-10">
+<body class="bg-transparent min-h-full flex items-start justify-center pt-10 px-4">
 
-  <div
-    class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
+  <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
+    
+    <!-- Decorators -->
+    <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+
     <div id="mensagemPopUp"
       class="hidden fixed top-5 right-5 z-50 transition-all duration-300 transform translate-y-[-10px] opacity-0"></div>
 
     <!-- Header -->
-    <div class="flex items-center gap-6 mb-8 border-b border-gray-700/50 pb-6">
-      <div class="relative group">
-        <div
-          class="absolute -inset-1 bg-purple-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
-        </div>
+    <div class="flex flex-col md:flex-row items-center gap-6 mb-10 border-b border-white/5 pb-8 relative z-10">
+      <div class="relative group mx-auto md:mx-0">
+        <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-500 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
         <% if (info.icon && info.icon.indexOf('null')===-1) { %>
-          <img src="<%= info.icon %>" alt="Ícone da guilda"
-            class="relative w-20 h-20 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
-          <% } else { %>
-            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão"
-              class="relative w-20 h-20 rounded-lg object-cover shadow-lg ring-2 ring-gray-700" />
-            <% } %>
+          <img src="<%= info.icon %>" alt="Ícone da guilda" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
+        <% } else { %>
+          <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
+        <% } %>
       </div>
-      <div class="flex-1">
-        <h3 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
-          <i class="fa-solid fa-gear text-gray-400"></i>
-          Configuração Geral (Twitch)
+      <div class="flex-1 text-center md:text-left">
+        <h3 class="text-3xl font-extrabold text-white mb-2 flex items-center justify-center md:justify-start gap-3 tracking-tight">
+          <i class="fa-solid fa-gear text-purple-500"></i>
+          Canal de Notificações
         </h3>
-        <p class="text-gray-400 text-sm max-w-2xl">Defina o canal padrão onde as notificações de lives serão postadas.
+        <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
+          Defina ou altere o canal de texto do Discord onde o bot enviará as notificações de lives da Twitch.
         </p>
       </div>
     </div>
 
     <!-- Config Card -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
 
       <!-- Current Status -->
-      <div class="md:col-span-1 space-y-4">
-        <div class="bg-gray-700/40 border border-gray-600/50 rounded-xl p-6">
-          <h4 class="text-gray-300 font-bold mb-4 flex items-center gap-2">
-            <i class="fa-solid fa-signal text-gray-500"></i> Estado Atual
+      <div class="lg:col-span-1 space-y-6">
+        <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-6 shadow-inner relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl"></div>
+          
+          <h4 class="text-white font-bold mb-6 flex items-center gap-3 relative z-10">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
+              <i class="fa-solid fa-tower-broadcast text-indigo-400 text-sm"></i>
+            </div>
+            Status do Módulo
           </h4>
 
-          <div class="flex justify-between items-center mb-3">
-            <span class="text-sm text-gray-400">Módulo Twitch</span>
-            <span
-              class="px-2 py-1 rounded text-xs font-bold <%= info5.twitchnotify ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30' %>">
-              <%= info5.twitchnotify ? 'ATIVO' : 'INATIVO' %>
-            </span>
+          <div class="flex justify-between items-center mb-6 relative z-10">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Módulo Twitch</span>
+            <% if(info5.twitchnotify) { %>
+              <span class="px-3 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold tracking-widest shadow-inner flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                ATIVO
+              </span>
+            <% } else { %>
+              <span class="px-3 py-1 rounded-md bg-red-500/10 text-red-400 border border-red-500/20 text-[10px] font-bold tracking-widest shadow-inner">
+                INATIVO
+              </span>
+            <% } %>
           </div>
 
-          <div class="mb-2">
-            <span class="text-sm text-gray-400 block mb-1">Canal Vinculado</span>
-            <div class="bg-gray-900/50 p-2 rounded border border-gray-700 font-mono text-indigo-400 text-sm break-all">
-              <i class="fa-solid fa-hashtag mr-1"></i>
-              <%= channeltch %>
+          <div class="relative z-10 border-t border-white/5 pt-4">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Canal Vinculado</span>
+            <div class="bg-black/40 p-3 rounded-xl border border-white/5 shadow-inner">
+              <div class="font-mono text-indigo-400 text-sm break-all font-bold flex items-center gap-2">
+                <i class="fa-solid fa-hashtag text-slate-500"></i>
+                <%= channeltch %>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-2 font-mono flex justify-between">
+                <span>ID: <%= info5.channeltch %></span>
+              </p>
             </div>
-            <p class="text-xs text-gray-600 mt-1 font-mono">ID: <%= info5.channeltch %>
-            </p>
           </div>
         </div>
       </div>
 
       <!-- Edit Form -->
-      <div class="md:col-span-2">
-        <div class="bg-gray-700/20 border border-gray-600/30 rounded-xl p-6">
-          <h4 class="text-white font-bold mb-4 flex items-center gap-2">
-            <i class="fa-solid fa-pen-to-square text-indigo-500"></i> Alterar Canal de Saída
+      <div class="lg:col-span-2">
+        <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-6 md:p-8 shadow-inner">
+          <h4 class="text-white font-bold mb-6 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center border border-purple-500/30">
+              <i class="fa-solid fa-pen text-purple-400 text-sm"></i>
+            </div>
+            Alterar Canal de Saída
           </h4>
 
-          <form id="updtfunctch" method="post" class="space-y-6">
+          <form id="updtchanneltch" method="post" class="space-y-6">
             <div>
-              <label for="channelId" class="block text-sm font-medium leading-6 text-gray-300 mb-2">ID do Canal de
-                Texto</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i class="fa-solid fa-hashtag text-gray-500"></i>
+              <label for="channelId" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">ID do Canal de Texto (Discord)</label>
+              <div class="relative group/input">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within/input:text-purple-500">
+                  <i class="fa-solid fa-hashtag text-slate-500 group-focus-within/input:text-purple-500 transition-colors"></i>
                 </div>
                 <input type="number" id="channelId" name="channelId" required
                   placeholder="Cole o ID do canal aqui (ex: 123456789...)"
-                  class="block w-full rounded-lg bg-gray-800 border-gray-600 pl-10 py-3 text-white placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all shadow-inner" />
+                  class="bg-black/40 border border-white/10 text-white text-sm rounded-xl focus:ring-1 focus:ring-purple-500 focus:border-purple-500 block w-full pl-11 py-3 transition-all shadow-inner font-mono placeholder-slate-600 outline-none" />
               </div>
-              <p class="mt-2 text-xs text-gray-500">Certifique-se de que o bot tem permissão para enviar mensagens neste
-                canal.</p>
+              <p class="mt-2 text-[11px] text-slate-500 flex items-center gap-1.5 font-medium">
+                <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                Certifique-se de que o bot possui permissão de "Enviar Mensagens" e "Ver Canal" neste canal.
+              </p>
             </div>
 
             <input type="hidden" id="guildId" name="guildId" value="<%= info.id %>" />
             <input type="hidden" id="func" name="func" value="updttwitch" />
 
-            <div class="flex justify-end pt-4">
+            <div class="flex justify-end pt-6 border-t border-white/5 mt-8">
               <button type="button" onclick="envdata()"
-                class="flex items-center gap-2 justify-center rounded-lg bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-indigo-500 hover:shadow-indigo-500/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all transform hover:-translate-y-0.5">
+                class="flex items-center gap-2 justify-center rounded-xl bg-purple-600 px-8 py-3.5 text-sm font-bold text-white shadow-lg hover:bg-purple-500 hover:shadow-purple-500/30 transition-all transform hover:-translate-y-0.5 border border-purple-500/50">
                 <i class="fa-solid fa-floppy-disk"></i>
-                Salvar Alterações
+                Salvar Configurações
               </button>
             </div>
           </form>
@@ -112,14 +129,23 @@
     </div>
   </div>
 
+  <style>
+      @keyframes fade-in-up {
+          0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .animate-fade-in-up {
+          animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+  </style>
+
   <script>
     function exibirMensagemErro(mensagem) {
       const popUp = document.getElementById('mensagemPopUp');
-
       popUp.innerHTML = `
-          <div class="flex items-center bg-red-500/90 text-white px-4 py-3 rounded-lg shadow-lg border border-red-400 backdrop-blur-sm">
-            <i class="fas fa-exclamation-circle mr-3"></i>
-            <p class="font-medium text-sm">${mensagem}</p>
+          <div class="flex items-center bg-red-500/90 text-white px-5 py-3.5 rounded-xl shadow-[0_10px_30px_rgba(239,68,68,0.3)] border border-red-400 backdrop-blur-md">
+            <i class="fas fa-exclamation-circle mr-3 text-lg"></i>
+            <p class="font-bold text-sm tracking-wide">${mensagem}</p>
           </div>
         `;
 
@@ -128,19 +154,17 @@
       setTimeout(() => {
         popUp.classList.add('translate-y-[-10px]', 'opacity-0');
         setTimeout(() => popUp.classList.add('hidden'), 300);
-      }, 3000);
+      }, 4000);
     }
 
     function envdata() {
-      var form = document.getElementById('updtfunctch');
-
+      var form = document.getElementById('updtchanneltch');
       if (!form.checkValidity()) {
-        exibirMensagemErro('Por favor, preencha todos os campos obrigatórios.');
+        exibirMensagemErro('Por favor, preencha o ID do canal do discord corretamente.');
         return;
       }
-
       var formData = new FormData(form);
-      var dadosFormulario = $("#updtfunctch").serializeArray();
+      var dadosFormulario = $("#updtchanneltch").serializeArray();
 
       if (parent && typeof parent.funcsReload === 'function') {
         parent.funcsReload(dadosFormulario);
@@ -150,5 +174,4 @@
     }
   </script>
 </body>
-
 </html>

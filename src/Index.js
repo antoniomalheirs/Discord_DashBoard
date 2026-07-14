@@ -3,12 +3,13 @@ const session = require("express-session");
 const passport = require("passport");
 const DiscordStrategy = require("passport-discord").Strategy, refresh = require("passport-oauth2-refresh");
 const authRoutes = require("./routes/auth");
-const getdata = require("./routes/getdata");
+const botRoutes = require("./routes/botRoutes");
+const AuthController = require("./controllers/AuthController");
 const discordBot = require("./Client");
 const mongoose = require("mongoose");
 const UsersAPIRepository = require("../src/database/mongoose/UsersAPIRepository");
 const UserAPISchema = require("../src/database/schemas/UserAPISchema");
-mongoose.model("APIUsers", UserAPISchema);
+if (!mongoose.models["APIUsers"]) mongoose.model("APIUsers", UserAPISchema);
 const bodyParser = require("body-parser");
 const http = require("http");
 require("dotenv").config();
@@ -38,7 +39,6 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-//app.use(express.urlencoded());
 
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
@@ -48,10 +48,9 @@ app.use(express.static(__dirname + "/public/css"));
 app.use(express.static(__dirname + "/public/res/sidebar"));
 
 app.use(helmet({
-  contentSecurityPolicy: false, // Disabled to avoid breaking external scripts (jQuery, FontAwesome) temporarily
+  contentSecurityPolicy: false, 
 }));
 
-// Rate Limiting: 100 requests per 15 minutes
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -66,13 +65,13 @@ app.use(
   session({
     secret: process.env.SECRET_KEY,
     name: "ManagerBot",
-    resave: false, // Changed to false (optimization)
-    saveUninitialized: false, // Changed to false (security: don't save empty sessions)
+    resave: false, 
+    saveUninitialized: false, 
     cookie: {
-      httpOnly: true, // Prevents JS access to cookie (XSS protection)
-      secure: process.env.AMBIENT === 'production', // Secure only in production (HTTPS)
-      sameSite: 'lax', // CSRF protection
-      maxAge: 3600000 // 1 hour
+      httpOnly: true, 
+      secure: process.env.AMBIENT === 'production', 
+      sameSite: 'lax', 
+      maxAge: 3600000 
     },
   })
 );
@@ -81,7 +80,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/auth", authRoutes);
-app.use("/bot", getdata);
+app.use("/bot", botRoutes);
+
+// Rotas raiz direcionadas para o AuthController
+app.get("/", AuthController.renderHome);
+app.get("/about", AuthController.renderAbout);
+app.get("/docs", AuthController.renderDocs);
+app.get("/devs", AuthController.renderDevs);
+app.get("/funcutils", AuthController.renderFuncUtils);
+app.get("/dashboard", AuthController.renderDashboard);
 
 var disc = new DiscordStrategy(
   {
@@ -92,7 +99,7 @@ var disc = new DiscordStrategy(
   },
   async (accessToken, refreshToken, profile, log) => {
     const userapischema = new UsersAPIRepository(mongoose, "APIUsers");
-    const user = await userapischema.findOne(profile.id); // Salve os detalhes do usuário no banco de dados se necessário
+    const user = await userapischema.findOne(profile.id);
 
     if (!user) {
       const newUser = {
@@ -101,20 +108,16 @@ var disc = new DiscordStrategy(
         acesstk: accessToken,
         refreshtk: refreshToken,
       };
-
       await userapischema.add(newUser);
-
       return log(null, profile);
-    } else if (user) {
+    } else {
       const uptUser = {
         codigouser: profile.id,
         username: profile.username,
         acesstk: accessToken,
         refreshtk: refreshToken,
       };
-
       await userapischema.update(profile.id, uptUser);
-
       return log(null, profile);
     }
   }
@@ -123,39 +126,24 @@ var disc = new DiscordStrategy(
 passport.use(disc);
 refresh.use(disc);
 
-app.get("/dashboard", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("dashboard.ejs", { user: req.user });
-  } else {
-    res.redirect("/");
-  }
-});
-
-app.get("/", (req, res) => {
-  console.log("[DEBUG] Root route hit");
-  res.render("home.ejs");
-});
-
 // Global Error Handler
 app.use((err, req, res, next) => {
   console.error("[ERROR] Unhandled Exception:", err);
   res.status(500).send("Something broke!");
 });
 
-if (process.env.AMBIENT == "developer") {
-  const PORT = process.env.PORT;
-
+if (process.env.AMBIENT == "developer" || process.env.AMBIENT == "dev") {
+  const PORT = process.env.PORT || 3006;
   app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
   });
 } else if (process.env.AMBIENT == "production") {
   const server = http.createServer(app);
-
-  const PORT = process.env.PORT;
-
+  const PORT = process.env.PORT || 3006;
   server.listen(PORT, () => {
     console.log(`Servidor rodando em Produção na porta ${PORT}`);
   });
 }
+
 
 

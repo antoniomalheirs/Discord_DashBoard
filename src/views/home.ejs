@@ -1,81 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="../css/cssdir/out.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-    <title>Home Page - Manager Bot</title>
-    <style>
-      body {
-        background: #666;
-      }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>Home - Manager Bot</title>
 </head>
 
-<body class="bg">
-    <div class="transition-overlay"></div>
-
-    <!-- Seu conteúdo HTML aqui -->
-     <div class="container mx-auto">
-         <header class="absolute inset-x-0 top-0 z-50">
-           <nav class="flex items-center justify-between p-2 lg:px-6" aria-label="Global">
-             <div class="flex lg:flex-1">
-               <a href="/" class="px-3 py-1">
-                 <img class="h-12 w-auto rounded-3xl" src="/res/serverIcon/boticon.jpg" href="/home">
-               </a>
-             </div>
-             <div class="hidden lg:flex lg:gap-x-12">
-               <a href="/auth/about" class="text-sm font-semibold leading-6 text-gray-300">Sobre</a>
-               <a href="/auth/docs" class="text-sm font-semibold leading-6 text-gray-200">Documentação</a>
-               <a href="/auth/funcutils" class="text-sm font-semibold leading-6 text-gray-300">Utilidades & Funções</a>
-               <a href="/auth/devs" class="text-sm font-semibold leading-6 text-gray-200">Devs</a>
-             </div>
-             <div class="hidden lg:flex lg:flex-1 lg:justify-end ">
-               <div class="hidden sm:my-4 sm:flex sm:justify-center ">
-                 <div class="relative cursor-pointer rounded-full px-3 py-1 text-sm leading-6 text-green-400 ring-1 ring-green-200 hover:ring-amber-500">
-                   <body class="container mx-auto bg-white "> <a href="/auth/discord"> <button class="cursor-pointer">Login com Discord</button> </a>
-                 </div>
-               </div>
-             </div>
-           </nav>
-         </header>
-        
-         <div class="relative isolate px-6 pt-20 lg:px-8">
-           <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-             <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-           </div>
-           <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-             <div class="text-center">
-               <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Manager Bot</h1>
-               <p class="mt-6 text-lg leading-8 text-gray-400">Um bot simples, e OpenSource desenvolvido e mantido por SentinelData.</p>
-               <div class="mt-10 flex items-center justify-center gap-x-6">
-                 <a href="https://discord.com/oauth2/authorize?client_id=1407885636135944342&permissions=2150755584&integration_type=0&scope=bot+applications.commands" class="rounded-md bg-green-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-100">Convidar</a>
-                 <a href="/auth/docs" class="text-sm font-semibold leading-6 text-gray-900">Documentação <span aria-hidden="true">→</span></a>
-               </div>
-             </div>
-           </div>
-           <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-             <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-           </div>
-         </div>
-     
+<body class="bg-[#0f1115] text-slate-200 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white antialiased overflow-x-hidden">
     
-     <div class="max-w-md mx-auto my-10 bg-purple-100 rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-       <div class="md:flex">
-         <div class="md:flex-shrink-0">
-           <img class="h-48 w-full object-cover md:h-full md:w-28" src="/res/serverIcon/boticon.jpg" alt="Man looking at item at a store">
-         </div>
-         <div class="p-6 ">
-           <div class="uppercase tracking-wide text-sm text-green-600 font-semibold">Manager Bot</div>
-           <a class="block mt-1 text-lg leading-tight font-medium text-black ">Invite-me to your server!</a>
-           <p class="mt-2 text-gray-600">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
-         </div>
-       </div>
-     </div>
+    <!-- Background Decorators -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-[#0f1115] to-[#0f1115]"></div>
+        <div class="absolute -top-[40%] -right-[10%] w-[70%] h-[70%] rounded-full bg-indigo-600/10 blur-[120px]"></div>
+        <div class="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-purple-600/10 blur-[100px]"></div>
     </div>
+
+    <!-- Navigation -->
+    <header class="fixed inset-x-0 top-0 z-50 bg-[#0f1115]/50 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+        <nav class="container mx-auto flex items-center justify-between p-4 lg:px-8" aria-label="Global">
+            <div class="flex items-center gap-3">
+                <div class="relative group">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-500"></div>
+                    <img class="relative h-10 w-10 rounded-2xl object-cover shadow-2xl" src="/res/serverIcon/boticon.jpg" alt="Bot Icon">
+                </div>
+                <span class="font-bold text-xl tracking-tight text-white/90">Manager Bot</span>
+            </div>
+            
+            <div class="hidden lg:flex lg:gap-x-10">
+                <a href="/auth/about" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200">Sobre</a>
+                <a href="/auth/docs" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200">Documentação</a>
+                <a href="/auth/funcutils" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200">Utilidades & Funções</a>
+                <a href="/auth/devs" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200">Devs</a>
+            </div>
+
+            <div class="flex flex-1 justify-end">
+                <a href="/auth/discord" class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white transition-all duration-200 bg-indigo-600/80 border border-indigo-500/50 rounded-full hover:bg-indigo-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#0f1115]">
+                    <span>Login com Discord</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="relative z-10 flex-grow flex flex-col items-center justify-center pt-32 pb-20 px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl text-center">
+            
+            <!-- Badge -->
+            <div class="mb-8 inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-sm backdrop-blur-sm animate-fade-in-up">
+                <span class="text-xs font-semibold tracking-wide text-indigo-300 uppercase">Apresentando v1.5.0</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 animate-fade-in-up" style="animation-delay: 100ms;">
+                O painel definitivo para o <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">seu servidor</span>
+            </h1>
+            
+            <p class="mt-6 text-lg md:text-xl leading-8 text-slate-400 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 200ms;">
+                Um bot open-source, simples e incrivelmente poderoso. 
+                Gerencie configurações, moderação, economia e muito mais com um painel web intuitivo e design premium.
+            </p>
+            
+            <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 animate-fade-in-up" style="animation-delay: 300ms;">
+                <a href="https://discord.com/oauth2/authorize?client_id=1407885636135944342&permissions=2150755584&integration_type=0&scope=bot+applications.commands" 
+                   class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white transition-all duration-300 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl hover:from-indigo-500 hover:to-purple-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] hover:-translate-y-1">
+                    Adicionar ao Servidor
+                </a>
+                <a href="/auth/docs" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white transition-all duration-300 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 hover:-translate-y-1">
+                    Ler Documentação <span aria-hidden="true" class="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Feature Highlights (Glassmorphism Cards) -->
+        <div class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto w-full animate-fade-in-up" style="animation-delay: 400ms;">
+            <!-- Card 1 -->
+            <div class="group relative p-8 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-500 backdrop-blur-md overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30 mb-6 group-hover:scale-110 transition-transform duration-500">
+                        <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Performance Extrema</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">Construído com tecnologias modernas para garantir resposta instantânea a todos os comandos do seu servidor.</p>
+                </div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="group relative p-8 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-500 backdrop-blur-md overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center border border-purple-500/30 mb-6 group-hover:scale-110 transition-transform duration-500">
+                        <svg class="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">100% Customizável</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">Ajuste perfeitamente o comportamento do bot. De mensagens de boas-vindas a logs detalhados, você no controle.</p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="group relative p-8 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-500 backdrop-blur-md overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center border border-pink-500/30 mb-6 group-hover:scale-110 transition-transform duration-500">
+                        <svg class="w-6 h-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Segurança Integrada</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">Filtros automáticos, sistemas antispam e backups rigorosos para proteger a integridade da sua comunidade.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+    </style>
 </body>
 
 </html>

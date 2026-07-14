@@ -1,71 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="../css/cssdir/out.css" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>Banco de Dados - Guilda</title>
 </head>
 
-<body class="bg-transparent min-h-full flex items-start justify-center pt-10">
-  <div
-    class="bg-gray-800/80 backdrop-blur-md border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-full animate-fade-in-up">
+<body class="bg-transparent min-h-full flex items-start justify-center pt-10 px-4">
+  <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
+
+    <!-- Background Decorators -->
+    <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
 
     <!-- Header da guilda -->
-    <div class="flex items-center gap-5 px-4 sm:px-0">
-      <div class="flex-shrink-0">
+    <div class="flex flex-col md:flex-row items-center gap-6 mb-10 border-b border-white/5 pb-8 relative z-10">
+      <div class="relative group mx-auto md:mx-0">
+        <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
         <% if (info.icon && info.icon.indexOf('null')===-1) { %>
-          <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-24 h-24 rounded-lg object-cover" />
-          <% } else { %>
-            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-24 h-24 rounded-lg object-cover" />
-            <% } %>
+          <img src="<%= info.icon %>" alt="Ícone da guilda" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
+        <% } else { %>
+          <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
+        <% } %>
       </div>
-      <div class="flex-1">
-        <h3 class="text-xl font-semibold text-white">Banco de Dados de Membros</h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-400">Guilda: <%= info.name %>
+      <div class="flex-1 text-center md:text-left">
+        <h3 class="text-3xl font-extrabold text-white mb-2 flex items-center justify-center md:justify-start gap-3">
+          <i class="fa-solid fa-users text-blue-500"></i>
+          Registro de Membros
+        </h3>
+        <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
+          Visualização das estatísticas individuais de cada membro da guilda <strong class="text-white"><%= info.name %></strong>.
         </p>
       </div>
     </div>
 
     <!-- Tabela de dados -->
-    <div class="flex max-w-6xl mt-8">
-      <table class="w-full table-fixed divide-y divide-white-700">
-        <thead>
-          <tr>
-            <th class="w-[20%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">Código do Usuário
-            </th>
-            <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">Nome de Usuário</th>
-            <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">Tempo em Voz (min)</th>
-            <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">Mensagens Enviadas</th>
-            <th class="w-[20%] px-3 py-3.5 text-left text-sm font-semibold text-white">ID da Guilda</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-white-700">
-          <% info1.forEach(item=> { %>
-            <tr>
-              <td class="truncate py-4 pl-4 pr-3 text-sm font-medium text-gray-300 sm:pl-0">
-                <%= item.codigouser %>
-              </td>
-              <td class="truncate px-3 py-4 text-sm text-gray-400">
-                <%= item.username %>
-              </td>
-              <td class="truncate px-3 py-4 text-sm text-gray-400">
-                <%= item.voiceTime %>
-              </td>
-              <td class="truncate px-3 py-4 text-sm text-gray-400">
-                <%= item.totalMessages %>
-              </td>
-              <td class="truncate px-3 py-4 text-sm text-gray-400">
-                <%= item.idguild %>
-              </td>
+    <div class="relative z-10 bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden shadow-inner">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left whitespace-nowrap">
+          <thead>
+            <tr class="bg-black/20 border-b border-white/5">
+              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Código</th>
+              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Membro</th>
+              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">Tempo em Voz</th>
+              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">Mensagens</th>
+              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-right">Guild ID</th>
             </tr>
+          </thead>
+          <tbody class="divide-y divide-white/[0.05]">
+            <% if (info1.length === 0) { %>
+              <tr>
+                <td colspan="5" class="px-6 py-12 text-center">
+                  <div class="flex flex-col items-center justify-center opacity-50">
+                    <i class="fa-solid fa-users-slash text-4xl mb-3 text-slate-500"></i>
+                    <p class="text-sm text-slate-400 font-medium">Nenhum membro registrado no banco de dados.</p>
+                  </div>
+                </td>
+              </tr>
+            <% } %>
+
+            <% info1.forEach(item => { %>
+              <tr class="hover:bg-white/[0.04] transition-colors duration-200">
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-400 text-[10px] font-mono font-medium">
+                    <%= item.codigouser %>
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="font-bold text-white text-sm flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20 text-blue-400 text-xs">
+                        <%= item.username.charAt(0).toUpperCase() %>
+                    </div>
+                    <%= item.username %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-medium shadow-inner">
+                    <i class="fa-solid fa-clock text-[10px]"></i>
+                    <%= item.voiceTime || 0 %> min
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono font-medium shadow-inner">
+                    <i class="fa-solid fa-comment-dots text-[10px]"></i>
+                    <%= item.totalMessages || 0 %>
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-xs text-slate-500 font-mono text-right">
+                  <%= item.idguild %>
+                </td>
+              </tr>
             <% }); %>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+  
+  <style>
+      @keyframes fade-in-up {
+          0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .animate-fade-in-up {
+          animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+  </style>
 </body>
-
 </html>
