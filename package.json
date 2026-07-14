@@ -34,7 +34,7 @@
     "passport-discord": "^0.1.4",
     "passport-oauth2-refresh": "^2.2.0",
     "transition-style": "^0.1.4",
-    "watch": "^1.0.2"
+    "watch": "^0.13.0"
   },
   "devDependencies": {
     "concurrently": "^10.0.3",
