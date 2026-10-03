@@ -5,41 +5,38 @@
   "main": "./src/Index.js",
   "scripts": {
     "start": "node ./src/Index.js",
-    "build": "npx @tailwindcss/cli -i ./src/public/css/main.css -o ./src/public/css/cssdir/out.css --watch",
-    "dev": "concurrently \"npm:build\" \"nodemon ./src/Index.js\""
+    "build": "npx @tailwindcss/cli -i ./src/public/css/main.css -o ./src/public/css/cssdir/out.css --minify",
+    "build:watch": "npx @tailwindcss/cli -i ./src/public/css/main.css -o ./src/public/css/cssdir/out.css --watch",
+    "dev": "concurrently \"npm:build:watch\" \"nodemon ./src/Index.js\""
   },
   "keywords": [],
   "overrides": {
-    "undici": "^6.23.0"
+    "undici": "^6.29.0"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.3.0",
     "autoprefixer": "^10.5.2",
     "axios": "^1.18.1",
-    "body-parser": "^2.3.0",
+    "connect-mongo": "^6.0.0",
     "discord.js": "^14.26.5",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
-    "express-handlebars": "^9.0.1",
     "express-rate-limit": "^8.5.2",
     "express-session": "^1.19.0",
-    "font-awesome": "^4.7.0",
     "googleapis": "^173.0.0",
     "helmet": "^8.3.0",
     "mongoose": "^9.7.4",
     "passport": "^0.7.0",
     "passport-discord": "^0.1.4",
     "passport-oauth2-refresh": "^2.2.0",
-    "transition-style": "^0.1.4",
-    "watch": "^0.13.0"
+    "transition-style": "^0.1.4"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
     "concurrently": "^10.0.3",
     "nodemon": "^3.1.14",
-    "rxjs": "^7.8.2",
     "tailwindcss": "^4.3.2"
   }
 }
