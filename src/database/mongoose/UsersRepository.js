@@ -32,16 +32,16 @@ module.exports = class UserRepository extends Repository {
   }
 
   findOne(codigouser, projection) {
-    return this.model.findOne({ codigouser: String(codigouser) }, projection).then(this.parse);
+    return this.model.findOne({ codigouser: { $eq: String(codigouser) } }, projection).then(this.parse);
   }
 
   findByUsername(username, projection) {
-    return this.model.findOne({ username: String(username) }, projection).then(this.parse);
+    return this.model.findOne({ username: { $eq: String(username) } }, projection).then(this.parse);
   }
 
   findByGuildId(idguild, projection) {
     return this.model
-      .findOne({ idguild: String(idguild) }, projection)
+      .findOne({ idguild: { $eq: String(idguild) } }, projection)
       .then((result) => (result ? this.parse(result) : false));
   }
 
@@ -50,18 +50,21 @@ module.exports = class UserRepository extends Repository {
   }
 
   get(codigouser, projection) {
+    const sanitizedCode = String(codigouser);
     return this.model
-      .findOne({ codigouser: String(codigouser) }, projection)
+      .findOne({ codigouser: { $eq: sanitizedCode } }, projection)
       .then((entity) =>
-        entity ? this.parse(entity) : this.add({ codigouser: String(codigouser) })
+        entity ? this.parse(entity) : this.add({ codigouser: sanitizedCode })
       );
   }
 
   getByUserIdAndGuildId(codigouser, idguild, projection) {
+    const sanitizedCode = String(codigouser);
+    const sanitizedGuild = String(idguild);
     return this.model
-      .findOne({ codigouser: String(codigouser), idguild: String(idguild) }, projection)
+      .findOne({ codigouser: { $eq: sanitizedCode }, idguild: { $eq: sanitizedGuild } }, projection)
       .then((entity) =>
-        entity ? this.parse(entity) : this.add({ codigouser: String(codigouser), idguild: String(idguild) })
+        entity ? this.parse(entity) : this.add({ codigouser: sanitizedCode, idguild: sanitizedGuild })
       );
   }
 
@@ -71,25 +74,25 @@ module.exports = class UserRepository extends Repository {
   }
 
   remove(codigouser) {
-    return this.model.findOneAndDelete({ codigouser: String(codigouser) }).then(this.parse);
+    return this.model.findOneAndDelete({ codigouser: { $eq: String(codigouser) } }).then(this.parse);
   }
 
   update(codigouser, entity, options = { upsert: true }) {
     const sanitizedId = String(codigouser);
     const safeUpdate = { $set: entity };
-    return this.model.updateOne({ codigouser: sanitizedId }, safeUpdate, options);
+    return this.model.updateOne({ codigouser: { $eq: sanitizedId } }, safeUpdate, options);
   }
 
   updateByUserIdAndGuildId(codigouser, idguild, entity, options = { upsert: true }) {
     const sanitizedUserId = String(codigouser);
     const sanitizedGuildId = String(idguild);
     const safeUpdate = { $set: entity };
-    return this.model.updateOne({ codigouser: sanitizedUserId, idguild: sanitizedGuildId }, safeUpdate, options);
+    return this.model.updateOne({ codigouser: { $eq: sanitizedUserId }, idguild: { $eq: sanitizedGuildId } }, safeUpdate, options);
   }
 
 
   async verify(codigouser) {
-    return !!(await this.model.findOne({ codigouser: String(codigouser) }));
+    return !!(await this.model.findOne({ codigouser: { $eq: String(codigouser) } }));
   }
 
   findAll(projection) {
@@ -98,7 +101,7 @@ module.exports = class UserRepository extends Repository {
 
   findAllByGuildId(guildId, projection) {
     return this.model
-      .find({ idguild: guildId }, projection)
+      .find({ idguild: { $eq: String(guildId) } }, projection)
       .then((results) => results.map(this.parse));
   }
 };

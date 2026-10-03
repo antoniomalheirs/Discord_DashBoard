@@ -389,19 +389,40 @@
                         type === 'warning' ? 'fa-circle-exclamation text-amber-400' :
                         'fa-circle-info text-indigo-400';
 
-      toast.innerHTML = `
-        <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 bg-white/[0.06]">
-          <i class="fa-solid ${iconClass} text-base"></i>
-        </div>
-        <div class="flex-1 min-w-0 pr-2">
-          <h5 class="text-xs font-bold text-white tracking-tight leading-snug">${title}</h5>
-          ${message ? `<p class="text-[11px] text-slate-300/80 mt-0.5 leading-relaxed break-words">${message}</p>` : ''}
-        </div>
-        <button onclick="this.parentElement.remove()" class="text-slate-500 hover:text-white p-1 transition-colors flex-shrink-0 cursor-pointer">
-          <i class="fa-solid fa-xmark text-xs"></i>
-        </button>
-        <div class="toast-progress-bar" style="animation-duration: 4s;"></div>
-      `;
+      const iconContainer = document.createElement('div');
+      iconContainer.className = 'w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 bg-white/[0.06]';
+      const iconEl = document.createElement('i');
+      iconEl.className = `fa-solid ${iconClass} text-base`;
+      iconContainer.appendChild(iconEl);
+
+      const textContainer = document.createElement('div');
+      textContainer.className = 'flex-1 min-w-0 pr-2';
+      const titleEl = document.createElement('h5');
+      titleEl.className = 'text-xs font-bold text-white tracking-tight leading-snug';
+      titleEl.textContent = title;
+      textContainer.appendChild(titleEl);
+
+      if (message) {
+        const msgEl = document.createElement('p');
+        msgEl.className = 'text-[11px] text-slate-300/80 mt-0.5 leading-relaxed break-words';
+        msgEl.textContent = message;
+        textContainer.appendChild(msgEl);
+      }
+
+      const closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.className = 'text-slate-500 hover:text-white p-1 transition-colors flex-shrink-0 cursor-pointer';
+      closeBtn.innerHTML = '<i class="fa-solid fa-xmark text-xs"></i>';
+      closeBtn.onclick = function () { toast.remove(); };
+
+      const progressBar = document.createElement('div');
+      progressBar.className = 'toast-progress-bar';
+      progressBar.style.animationDuration = '4s';
+
+      toast.appendChild(iconContainer);
+      toast.appendChild(textContainer);
+      toast.appendChild(closeBtn);
+      toast.appendChild(progressBar);
 
       container.appendChild(toast);
 

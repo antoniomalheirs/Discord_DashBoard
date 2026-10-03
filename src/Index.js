@@ -13,7 +13,7 @@ const config = require("./config/env");
 const authRoutes = require("./routes/auth");
 const botRoutes = require("./routes/botRoutes");
 const AuthController = require("./controllers/AuthController");
-const { globalLimiter } = require("./middlewares/securityMiddleware");
+const { globalLimiter, csrfProtection } = require("./middlewares/securityMiddleware");
 const { encrypt } = require("./utils/tokenEncryption");
 const discordBot = require("./Client");
 const UsersAPIRepository = require("./database/mongoose/UsersAPIRepository");
@@ -172,6 +172,9 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Proteção Anti-CSRF para todas as requisições autenticadas e rotas com estado
+app.use(csrfProtection);
 
 // Discord OAuth2 Strategy
 const discordStrategy = new DiscordStrategy(

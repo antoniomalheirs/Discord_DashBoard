@@ -339,7 +339,13 @@
 
         if (chanEl) chanEl.textContent = channelText;
         if (descEl) {
-          descEl.innerHTML = `${preview.desc} <span class="text-[#5865f2] font-semibold font-mono">${channelText}</span>.`;
+          descEl.textContent = '';
+          descEl.appendChild(document.createTextNode((preview.desc || '') + ' '));
+          const chanSpan = document.createElement('span');
+          chanSpan.className = 'text-[#5865f2] font-semibold font-mono';
+          chanSpan.textContent = channelText;
+          descEl.appendChild(chanSpan);
+          descEl.appendChild(document.createTextNode('.'));
         }
 
         if (modalSelectedState) {
@@ -439,10 +445,19 @@
 
         const channelTag = document.getElementById(`channel-tag-${key}`);
         if (channelTag) {
+          channelTag.textContent = '';
           if (state && channelId && channelId !== "0") {
-            channelTag.innerHTML = `<i class="fa-solid fa-hashtag text-indigo-400 mr-2 text-[10px]"></i><span>${channelName || channelId}</span>`;
+            const hashIcon = document.createElement('i');
+            hashIcon.className = 'fa-solid fa-hashtag text-indigo-400 mr-2 text-[10px]';
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = channelName || channelId;
+            channelTag.appendChild(hashIcon);
+            channelTag.appendChild(nameSpan);
           } else {
-            channelTag.innerHTML = `<span class="text-slate-500 italic flex items-center gap-1.5"><i class="fa-solid fa-ban text-[11px] text-slate-600"></i> Desativado</span>`;
+            const deactSpan = document.createElement('span');
+            deactSpan.className = 'text-slate-500 italic flex items-center gap-1.5';
+            deactSpan.innerHTML = '<i class="fa-solid fa-ban text-[11px] text-slate-600"></i> Desativado';
+            channelTag.appendChild(deactSpan);
           }
         }
 
