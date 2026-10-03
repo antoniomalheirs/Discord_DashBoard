@@ -1,6 +1,6 @@
 const { Schema } = require("mongoose");
 
-module.exports = new Schema({
+const TwitchSchema = new Schema({
   twitch: {
     type: String,
     required: true,
@@ -9,3 +9,8 @@ module.exports = new Schema({
   guildID: { type: String },
   isLive: { type: Boolean, default: false }, // Rastreia o estado da ultima verificação
 });
+
+// Índice composto para consultas O(1) de streamers por guilda
+TwitchSchema.index({ guildID: 1, twitch: 1 });
+
+module.exports = TwitchSchema;

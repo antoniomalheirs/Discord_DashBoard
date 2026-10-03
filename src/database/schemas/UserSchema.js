@@ -1,6 +1,6 @@
 const { Schema } = require("mongoose");
 
-module.exports = new Schema({
+const UserSchema = new Schema({
   codigouser: { type: String },
   username: { type: String }, // O ID do usuário
   voiceTime: { type: Number, default: 0 }, // Tempo total gasto em chamadas de voz (em minutos)
@@ -29,3 +29,8 @@ module.exports = new Schema({
   pets: { type: [String], default: [] }, // Pets owned
   activePet: { type: String, default: "" }, // Currently equipped pet
 });
+
+// Índice composto para lookups e updates rápidos de usuários da guilda
+UserSchema.index({ idguild: 1, codigouser: 1 });
+
+module.exports = UserSchema;

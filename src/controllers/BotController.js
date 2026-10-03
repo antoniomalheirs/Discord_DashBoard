@@ -7,13 +7,24 @@ const RegistradorYTBVideo = require("../utils/RegistradorYTBVideo.js");
 const TwitchToken = require("../utils/TwitchToken.js");
 const TwitchID = require("../utils/TwitchID.js");
 const discordBot = require("../Client");
+const config = require("../config/env");
+const {
+  isValidSnowflake,
+  isValidChannelParam,
+  isValidLogType,
+  sanitizeEconomyValue,
+  sanitizeString,
+} = require("../utils/securityValidators");
 
 class BotController {
   async getGuildIcon(req, res) {
     try {
       const guildId = req.params.guildId;
-      const guild = req.user.guilds.find((guild) => guild.id === guildId);
+      if (!isValidSnowflake(guildId)) {
+        return res.status(400).json({ error: "ID da Guilda inválido" });
+      }
 
+      const guild = req.user?.guilds?.find((g) => g.id === guildId);
       if (!guild) {
         return res.status(404).json({ error: "Guilda não encontrada" });
       }
@@ -24,78 +35,117 @@ class BotController {
       const iconURL = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
       res.send({ iconURL });
     } catch (error) {
-      console.error("Erro ao obter ícone da guilda:", error);
-      res.status(500).json({ error: "Erro ao obter ícone da guilda" });
+      console.error("[SECURITY] Erro ao obter ícone da guilda:", error);
+      res.status(500).json({ error: "Erro interno ao processar ícone." });
     }
   }
 
   async botInfo(req, res) {
     try {
-      const selectedGuildId = req.body.guilds;
-      const guildName = req.body.nameofGuild;
-      const botInfo = await DiscordService.getGuildData(selectedGuildId);
+      const selectedGuildId = req.guildId || req.params.guildId || req.body?.guilds || req.query?.guildId || req.session?.selectedGuildId;
       
+      if (!selectedGuildId) {
+        return res.redirect("/dashboard");
+      }
+
+      if (!isValidSnowflake(selectedGuildId)) {
+        return res.status(400).render("error.ejs", { error: "ID da Guilda inválido." });
+      }
+
+      const botInfo = await DiscordService.getGuildData(selectedGuildId);
+      const guildinfo = await DatabaseService.getGuilds(selectedGuildId);
+      const guildName = req.body?.nameofGuild || req.session?.guildName || botInfo.name;
+
+      if (req.session) {
+        req.session.selectedGuildId = selectedGuildId;
+        req.session.guildName = guildName;
+      }
+
       // Permissões já foram validadas pelo middleware hasGuildPermission
-      res.render("mainpage.ejs", { info: botInfo, user: req.user, guildName: guildName });
+      res.render("mainpage.ejs", { info: botInfo, user: req.user, guildName: guildName, guildinfo: guildinfo });
     } catch (error) {
-      res.render("error.ejs", { error: error.message });
+      console.error("[SECURITY] Erro em botInfo:", error);
+      res.status(500).render("error.ejs", { error: "Não foi possível carregar as informações do servidor." });
     }
   }
 
   async renderPage(req, res) {
-    const page = req.params.page;
-    const guildId = req.params.param2;
+    const page = String(req.params.page || "").replace(/[^a-zA-Z0-9_]/g, "");
+    const guildId = req.guildId || req.params.param2;
+
+    if (!isValidSnowflake(guildId)) {
+      return res.status(400).render("error.ejs", { error: "ID da Guilda inválido." });
+    }
+
+    // Se o usuário acessar a URL de sub-página diretamente na barra de endereços (navegação completa de documento),
+    // redireciona para a casca completa do dashboard com a sidebar e o hash correto
+    const isDirectBrowserNav = req.headers["sec-fetch-dest"] === "document" && !req.xhr && !req.headers["x-requested-with"];
+    if (isDirectBrowserNav) {
+      return res.redirect(`/bot/botinfo/${guildId}#${page || "server"}`);
+    }
     
     try {
       const botInfo = await DiscordService.getGuildData(guildId);
       const videoinfo = await DatabaseService.getVideos(guildId);
       const lives = await DatabaseService.getTwitch(guildId);
-      const guildinfo = await DatabaseService.getGuilds(guildId);
+      const guildinfo = (await DatabaseService.getGuilds(guildId)) || {
+        guildID: guildId, logging: {}, youtubenotify: false, twitchnotify: false,
+        channelytb: "", channeltch: "", poker: { channel: "", state: false }
+      };
       const userinfo = await DatabaseService.getUsers(guildId);
+      const channels = await DiscordService.getGuildChannels(guildId);
       
       let chanelytb = "";
       let chaneltch = "";
 
+      if (page.startsWith("actlog_") || page.startsWith("deactlog_")) {
+        return res.send(await ejs.renderFile(path.join(__dirname, "../views/serverfuncstate.ejs"), { info: botInfo, info4: guildinfo, channels }));
+      }
+
       switch (page) {
         case "server":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/serverinfo.ejs"), { info: botInfo }));
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/serverinfo.ejs"), { info: botInfo, guildinfo, videoinfo, lives, userinfo, channels }));
         case "status":
           return res.send(await ejs.renderFile(path.join(__dirname, "../views/botstatus.ejs"), { info: botInfo }));
-        case "funcyoutube":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/youtubefunc.ejs"), { info: botInfo, info2: videoinfo, info5: guildinfo }));
-        case "functwitch":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/twitchfunc.ejs"), { info: botInfo, info3: lives, info5: guildinfo }));
-        case "ytbchannelupdate":
-          chanelytb = await DiscordService.getChannelName(guildinfo.channelytb);
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/updatenotytb.ejs"), { info: botInfo, info5: guildinfo, channelytb: chanelytb }));
-        case "tchchannelupdate":
-          chaneltch = await DiscordService.getChannelName(guildinfo.channeltch);
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/updatenottch.ejs"), { info: botInfo, info5: guildinfo, channeltch: chaneltch }));
         case "statesinfo":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/serverfuncstate.ejs"), { info: botInfo, info4: guildinfo }));
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/serverfuncstate.ejs"), { info: botInfo, info4: guildinfo, channels }));
+        case "funcyoutube":
+        case "actyoutube":
+        case "deactyoutube":
+        case "ytbchannelupdate":
+        case "updtyoutube":
+        case "youtube":
         case "viewytbchannels":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/ytbviewinfo.ejs"), { info: botInfo, info2: videoinfo }));
         case "deleteytbchannels":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/ytbdeleteinfo.ejs"), { info: botInfo, info2: videoinfo }));
+        case "delytb":
+        case "delyoutubech":
         case "addytbchannel":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/addytbchannel.ejs"), { info: botInfo }));
+        case "addytb":
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/youtubefunc.ejs"), { info: botInfo, info2: videoinfo, info5: guildinfo, channels }));
+        case "functwitch":
+        case "acttwitch":
+        case "deacttwitch":
+        case "tchchannelupdate":
+        case "updttwitch":
         case "viewtchchannel":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/tchviewinfo.ejs"), { info: botInfo, info3: lives }));
         case "deletetchchannel":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/tchdeleteinfo.ejs"), { info: botInfo, info2: lives }));
+        case "deltch":
+        case "deltwitchch":
         case "addtchchannel":
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/addtchchannel.ejs"), { info: botInfo }));
+        case "addtch":
+        case "addtwitchch":
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/twitchfunc.ejs"), { info: botInfo, info3: lives, info5: guildinfo, channels }));
         case "memberinfo":
+        case "membersinfo":
           return res.send(await ejs.renderFile(path.join(__dirname, "../views/membersinfo.ejs"), { info: botInfo, info1: userinfo }));
         case "economyinfo":
           return res.send(await ejs.renderFile(path.join(__dirname, "../views/economyinfo.ejs"), { info: botInfo, info1: userinfo }));
         case "funcpoker":
+        case "actpoker":
+        case "deactpoker":
           const guildObj = discordBot.guilds.cache.get(guildId);
-          const channels = guildObj ? guildObj.channels.cache : [];
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/pokerfunc.ejs"), { info: guildinfo, info4: channels }));
-        case "youtube":
-          chanelytb = await DiscordService.getChannelName(guildinfo.channelytb);
-          return res.send(await ejs.renderFile(path.join(__dirname, "../views/updatenotytb.ejs"), { info: botInfo, info5: guildinfo, channelytb: chanelytb }));
+          const pokerChannels = channels.length > 0 ? channels : (guildObj ? Array.from(guildObj.channels.cache.values()) : []);
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/pokerfunc.ejs"), { info: botInfo, info4: pokerChannels, info5: guildinfo, botInfo: botInfo, guildinfo: guildinfo, channels: pokerChannels }));
         default:
           return res.status(404).send("Página não encontrada");
       }
@@ -106,20 +156,36 @@ class BotController {
   }
 
   async editFuncs(req, res) {
-    const page = req.params.page;
-    const guildId = req.params.guildId;
-    const channelin = req.params.channelin;
+    const isJson = Boolean(
+      req.xhr ||
+      req.query?.format === "json" ||
+      req.headers["accept"]?.includes("application/json") ||
+      req.headers["x-requested-with"] === "XMLHttpRequest"
+    );
+    const page = String(req.params.page || "").replace(/[^a-zA-Z0-9_]/g, "");
+    const guildId = req.guildId || req.params.guildId || req.body?.guildId;
+    const channelin = req.params.channelin || req.body?.channelin || req.query?.channelin || "0";
+
+    if (!isValidSnowflake(guildId) || !isValidChannelParam(channelin)) {
+      if (isJson) return res.status(400).json({ success: false, message: "Parâmetros inválidos para alteração de módulo." });
+      return res.status(400).render("error.ejs", { error: "Parâmetros inválidos para alteração de módulo." });
+    }
 
     try {
-      const ls = await DatabaseService.getGuilds(guildId);
-      if (!ls) throw new Error("Guilda não gerenciável no banco de dados.");
+      let ls = await DatabaseService.getGuilds(guildId);
+      if (!ls) {
+        ls = {
+          guildID: guildId, logging: {}, youtubenotify: false, twitchnotify: false,
+          channelytb: "", channeltch: "", poker: { channel: "", state: false }
+        };
+      }
 
       const guild = discordBot.guilds.cache.get(guildId) || await discordBot.guilds.fetch(guildId);
       if (!guild) throw new Error("Guilda não encontrada.");
 
       let channel = null;
       if (channelin && channelin !== "0") {
-        channel = guild.channels.cache.get(channelin);
+        channel = guild.channels.cache.get(channelin) || await guild.channels.fetch(channelin).catch(() => null);
       }
 
       const message = channel ? channel.name : "Nenhum/Desconhecido";
@@ -127,113 +193,206 @@ class BotController {
 
       if (page.startsWith("actlog_")) {
         const logType = page.replace("actlog_", "");
+        if (!isValidLogType(logType)) {
+          if (isJson) return res.status(400).json({ success: false, message: "Tipo de log inválido ou não suportado." });
+          return res.status(400).render("error.ejs", { error: "Tipo de log inválido ou não suportado." });
+        }
+
+        // Validação estrita: para ativar é obrigatório fornecer um canal de texto Discord válido
+        if (!channelin || channelin === "0" || !isValidSnowflake(channelin)) {
+          if (isJson) return res.status(400).json({ success: false, message: "Para ativar este log, é obrigatório selecionar um canal de texto do Discord." });
+          return res.status(400).render("error.ejs", { error: "Para ativar este log, é obrigatório selecionar um canal de texto do Discord." });
+        }
+
+        if (!channel) {
+          if (isJson) return res.status(404).json({ success: false, message: "O canal selecionado não foi encontrado no servidor." });
+          return res.status(404).render("error.ejs", { error: "O canal selecionado não foi encontrado no servidor." });
+        }
+
         if (!ls.logging || typeof ls.logging !== 'object') ls.logging = {};
         ls.logging = { ...ls.logging, [logType]: { channel: channelin, state: true } };
         await DatabaseService.saveGuildData(guildId, ls);
+        if (isJson) {
+          return res.json({ success: true, message: `Log "${logType}" ativado com sucesso no canal #${message}!`, logType, channel: channelin, state: true });
+        }
         const actLogView = await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Log Atualizado", info2: message2, info3: channelin, nome: "do Sistema de Logs" });
         return res.send(actLogView);
       }
 
       if (page.startsWith("deactlog_")) {
         const logType = page.replace("deactlog_", "");
-        if (!ls.logging) ls.logging = {};
-        if (ls.logging[logType]) {
-          ls.logging[logType].state = false;
-        } else {
-          ls.logging[logType] = { channel: "", state: false };
+        if (!isValidLogType(logType)) {
+          if (isJson) return res.status(400).json({ success: false, message: "Tipo de log inválido ou não suportado." });
+          return res.status(400).render("error.ejs", { error: "Tipo de log inválido ou não suportado." });
         }
+        if (!ls.logging || typeof ls.logging !== 'object') ls.logging = {};
+        // Desativação sem exigência de dados: desliga o evento e limpa o canal
+        ls.logging[logType] = { channel: "", state: false };
         await DatabaseService.saveGuildData(guildId, ls);
+        if (isJson) {
+          return res.json({ success: true, message: `Log "${logType}" desativado com sucesso!`, logType, channel: "", state: false });
+        }
         const deactLogView = await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Log Desativado", info2: message2, info3: "Nenhum", nome: "do Sistema de Logs" });
         return res.send(deactLogView);
       }
 
       switch (page) {
         case "actyoutube":
+          if (!channelin || channelin === "0" || !isValidSnowflake(channelin)) {
+            if (isJson) return res.status(400).json({ success: false, message: "Para ativar os alertas do YouTube, é obrigatório selecionar um canal de texto do Discord." });
+            return res.status(400).render("error.ejs", { error: "Para ativar os alertas do YouTube, é obrigatório selecionar um canal de texto do Discord." });
+          }
           ls.youtubenotify = true;
           ls.channelytb = channelin;
           await DatabaseService.saveGuildData(guildId, ls);
-          res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: message, info2: message2, info3: channelin, nome: "do Youtube" }));
-          break;
+          if (isJson) return res.json({ success: true, message: `Notificações do YouTube ativadas no canal #${message}!`, channel: channelin, state: true });
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: message, info2: message2, info3: channelin, nome: "do Youtube" }));
         case "acttwitch":
+          if (!channelin || channelin === "0" || !isValidSnowflake(channelin)) {
+            if (isJson) return res.status(400).json({ success: false, message: "Para ativar os alertas da Twitch, é obrigatório selecionar um canal de texto do Discord." });
+            return res.status(400).render("error.ejs", { error: "Para ativar os alertas da Twitch, é obrigatório selecionar um canal de texto do Discord." });
+          }
           ls.twitchnotify = true;
           ls.channeltch = channelin;
           await DatabaseService.saveGuildData(guildId, ls);
-          res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: message, info2: message2, info3: channelin, nome: "da Twitch" }));
-          break;
+          if (isJson) return res.json({ success: true, message: `Notificações da Twitch ativadas no canal #${message}!`, channel: channelin, state: true });
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: message, info2: message2, info3: channelin, nome: "da Twitch" }));
         case "updtyoutube":
+          if (!channelin || channelin === "0" || !isValidSnowflake(channelin)) {
+            if (isJson) return res.status(400).json({ success: false, message: "É obrigatório selecionar um canal de texto válido do Discord." });
+            return res.status(400).render("error.ejs", { error: "É obrigatório selecionar um canal de texto válido do Discord." });
+          }
           ls.channelytb = channelin;
           await DatabaseService.saveGuildData(guildId, ls);
-          res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: message, info2: message2, info3: channelin, nome: "do Youtube" }));
-          break;
+          if (isJson) return res.json({ success: true, message: `Canal de notificações do YouTube alterado para #${message}!`, channel: channelin });
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: message, info2: message2, info3: channelin, nome: "do Youtube" }));
         case "updttwitch":
+          if (!channelin || channelin === "0" || !isValidSnowflake(channelin)) {
+            if (isJson) return res.status(400).json({ success: false, message: "É obrigatório selecionar um canal de texto válido do Discord." });
+            return res.status(400).render("error.ejs", { error: "É obrigatório selecionar um canal de texto válido do Discord." });
+          }
           ls.channeltch = channelin;
           await DatabaseService.saveGuildData(guildId, ls);
-          res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: message, info2: message2, info3: channelin, nome: "da Twitch" }));
-          break;
+          if (isJson) return res.json({ success: true, message: `Canal de notificações da Twitch alterado para #${message}!`, channel: channelin });
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: message, info2: message2, info3: channelin, nome: "da Twitch" }));
         case "deactyoutube":
           ls.youtubenotify = false;
           await DatabaseService.saveGuildData(guildId, ls);
-          res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Módulo Desativado", info2: message2, info3: "Nenhum", nome: "do Youtube" }));
-          break;
+          if (isJson) return res.json({ success: true, message: "Notificações do YouTube desativadas!", state: false });
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Módulo Desativado", info2: message2, info3: "Nenhum", nome: "do Youtube" }));
         case "deacttwitch":
           ls.twitchnotify = false;
           await DatabaseService.saveGuildData(guildId, ls);
-          res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Módulo Desativado", info2: message2, info3: "Nenhum", nome: "da Twitch" }));
-          break;
+          if (isJson) return res.json({ success: true, message: "Notificações da Twitch desativadas!", state: false });
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Módulo Desativado", info2: message2, info3: "Nenhum", nome: "da Twitch" }));
         case "actpoker":
+          if (!channelin || channelin === "0" || !isValidSnowflake(channelin)) {
+            if (isJson) return res.status(400).json({ success: false, message: "Para ativar o Texas Hold'em, é obrigatório selecionar um canal de texto do Discord." });
+            return res.status(400).render("error.ejs", { error: "Para ativar o Texas Hold'em, é obrigatório selecionar um canal de texto do Discord." });
+          }
           await DatabaseService.saveGuildData(guildId, { poker: { channel: channelin, state: true } });
-          res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Módulo Ativado", info2: message2, info3: channelin, nome: "do Poker", backUrl: `/bot/pagina/funcpoker/${guildId}` }));
-          break;
+          if (isJson) return res.json({ success: true, message: `Mesa de Poker ativada no canal #${message}!`, channel: channelin, state: true });
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Módulo Ativado", info2: message2, info3: channelin, nome: "do Poker", backUrl: `/bot/pagina/funcpoker/${guildId}` }));
         case "deactpoker":
           await DatabaseService.saveGuildData(guildId, { poker: { channel: "", state: false } });
-          res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Módulo Desativado", info2: message2, info3: "Nenhum", nome: "do Poker", backUrl: `/bot/pagina/funcpoker/${guildId}` }));
-          break;
+          if (isJson) return res.json({ success: true, message: "Mesa de Poker desativada!", channel: "", state: false });
+          return res.send(await ejs.renderFile(path.join(__dirname, "../views/functionactivated.ejs"), { info: "Módulo Desativado", info2: message2, info3: "Nenhum", nome: "do Poker", backUrl: `/bot/pagina/funcpoker/${guildId}` }));
+        default:
+          if (isJson) return res.status(400).json({ success: false, message: "Ação de módulo não reconhecida." });
+          return res.status(400).render("error.ejs", { error: "Ação de módulo não reconhecida." });
       }
     } catch (error) {
-      console.error(error);
-      res.send(await ejs.renderFile(path.join(__dirname, "../views/activefuncerror.ejs")));
+      console.error("[SECURITY] Erro ao editar função:", error);
+      if (isJson) return res.status(500).json({ success: false, message: error.message || "Erro interno ao processar alteração." });
+      res.status(500).send(await ejs.renderFile(path.join(__dirname, "../views/activefuncerror.ejs")));
     }
   }
 
   async dbActions(req, res) {
-    const page = req.params.page;
-    const guildId = req.params.guildId;
-    const channelInput = req.params.channelin;
-    const botInfo = await DiscordService.getGuildData(guildId);
-    
+    const isJson = Boolean(
+      req.xhr ||
+      req.query?.format === "json" ||
+      req.headers["accept"]?.includes("application/json") ||
+      req.headers["x-requested-with"] === "XMLHttpRequest"
+    );
+    const page = String(req.params.page || "").replace(/[^a-zA-Z0-9_]/g, "");
+    const guildId = req.guildId || req.params.guildId || req.body?.guildId;
+    const rawInput = req.params.channelin || req.body?.channelin || req.query?.channelin || "";
+    const channelInput = sanitizeString(rawInput, 100);
+
+    if (!isValidSnowflake(guildId) || !channelInput) {
+      if (isJson) return res.status(400).json({ success: false, message: "Parâmetros inválidos para ação no banco de dados." });
+      return res.status(400).render("error.ejs", { error: "Parâmetros inválidos para ação no banco de dados." });
+    }
+
     try {
+      const botInfo = await DiscordService.getGuildData(guildId);
+
       if (page === "addyoutubech") {
         const videoRepository = new DatabaseService.videosRepository(require("mongoose"), "Videos");
-        const noBanco = await videoRepository.findByYoutubeAndGuildId(channelInput, guildId, { youtube: 1, channel: 1, lastVideo: 1, lastPublish: 1, message: 1, notifyGuild: 1 });
-        if (noBanco != null) {
-          return res.render("dataadderror.ejs", {});
-        } else {
-          // Requer um mock function contexto ou fix do bind
-          const result = await YTBCHANNELTOID(channelInput);
-          if (!result) return res.status(200).json({ success: false, message: "Nada encontrado." });
-          const guild = discordBot.guilds.cache.get(guildId);
-          result.notifyGuild = guildId;
-          await RegistradorYTBVideo(result);
-          return res.render("datafuncadd.ejs", { info: result.channel, info1: guild.name, info2: result.youtube, nome: channelInput });
+        
+        // 1. Resolução pelo ID ou Nome via YouTube API com tratamento resiliente
+        let result = null;
+        try {
+          result = await YTBCHANNELTOID(channelInput);
+        } catch (ytbErr) {
+          if (isJson) return res.status(404).json({ success: false, message: ytbErr.message || `Canal "${channelInput}" não foi encontrado no YouTube.` });
+          return res.status(404).render("error.ejs", { error: ytbErr.message || `Canal "${channelInput}" não foi encontrado no YouTube.` });
         }
+        if (!result || !result.youtube) {
+          if (isJson) return res.status(404).json({ success: false, message: `Canal "${channelInput}" não foi encontrado no YouTube.` });
+          return res.status(404).render("error.ejs", { error: `Canal "${channelInput}" não foi encontrado no YouTube.` });
+        }
+
+        // 2. Verificação canônica de duplicata pelo ID único do YouTube no servidor
+        const noBanco = await videoRepository.verifyByYoutubeAndGuildId(result.youtube, guildId, { youtube: 1, channel: 1 });
+        if (noBanco != null) {
+          if (isJson) return res.status(400).json({ success: false, message: `O canal "${result.channel || channelInput}" já está cadastrado neste servidor.` });
+          return res.render("dataadderror.ejs", {});
+        }
+
+        const guild = discordBot.guilds.cache.get(guildId);
+        result.notifyGuild = guildId;
+        await RegistradorYTBVideo(result);
+        if (isJson) return res.json({ success: true, message: `Canal "${result.channel || channelInput}" adicionado com sucesso!`, data: result });
+        return res.render("datafuncadd.ejs", { info: result.channel, info1: guild ? guild.name : "Servidor", info2: result.youtube, nome: channelInput });
       }
 
       if (page === "addtwitchch") {
         const twitchRepository = new DatabaseService.twitchsRepository(require("mongoose"), "Twitchs");
-        const clientId = process.env.TWITCH_CLIENTID;
-        const clientSecret = process.env.TWITCH_SECRETID;
+        const clientId = config.twitchClientId;
+        const clientSecret = config.twitchClientSecret;
+
+        if (!clientId || !clientSecret) {
+          if (isJson) return res.status(400).json({ success: false, message: "Credenciais da API da Twitch não configuradas no servidor." });
+          return res.status(400).render("error.ejs", { error: "Credenciais da API da Twitch não configuradas no servidor." });
+        }
+
         const accessToken = await TwitchToken(clientId, clientSecret);
-        const channelId = await TwitchID(accessToken, channelInput, clientId);
-        const guild = discordBot.guilds.cache.get(guildId);
+        const cleanLogin = channelInput.toLowerCase().replace(/[^a-z0-9_]/g, "");
+        if (!cleanLogin) {
+          if (isJson) return res.status(400).json({ success: false, message: "Nome de usuário da Twitch inválido." });
+          return res.status(400).render("error.ejs", { error: "Nome de usuário da Twitch inválido." });
+        }
+        const channelId = await TwitchID(accessToken, cleanLogin, clientId);
         
-        const projection = { twitch: channelId, channel: channelInput, guildID: guildId };
+        if (!channelId) {
+          if (isJson) return res.status(404).json({ success: false, message: `Streamer "${channelInput}" não foi encontrado na Twitch.` });
+          return res.status(404).render("error.ejs", { error: `Streamer "${channelInput}" não foi encontrado na Twitch.` });
+        }
+
+        const guild = discordBot.guilds.cache.get(guildId);
+        const projection = { twitch: channelId, channel: cleanLogin, guildID: guildId };
         const noBanco = await twitchRepository.findByTwitchAndGuildId(channelId, guildId, projection);
         
-        if (noBanco != null) return res.render("dataadderror.ejs", {});
-        if (channelId == null) return res.status(200).json({ success: false, message: "Dados do canal não encontrados." });
+        if (noBanco != null) {
+          if (isJson) return res.status(400).json({ success: false, message: `O streamer "${channelInput}" já está cadastrado neste servidor.` });
+          return res.render("dataadderror.ejs", {});
+        }
         
         await twitchRepository.add(projection);
-        return res.render("datafuncadd.ejs", { info: channelInput, info1: guild.name, info2: channelId, nome: channelInput });
+        if (isJson) return res.json({ success: true, message: `Streamer "${channelInput}" adicionado com sucesso!`, data: projection });
+        return res.render("datafuncadd.ejs", { info: channelInput, info1: guild ? guild.name : "Servidor", info2: channelId, nome: channelInput });
       }
 
       if (page === "delyoutubech") {
@@ -241,8 +400,10 @@ class BotController {
         const noBanco = await videoRepo.verifyByYoutubeAndGuildId(channelInput, guildId, { youtube: 1, channel: 1, notifyGuild: 1 });
         if (noBanco != null) {
           await videoRepo.deletar(channelInput, guildId);
-          return res.render("ytbdeleteinfo.ejs", { info: botInfo, info2: await DatabaseService.getVideos(guildId) });
+          if (isJson) return res.json({ success: true, message: "Canal do YouTube removido com sucesso." });
+          return res.redirect(`/bot/botinfo/${guildId}#funcyoutube`);
         }
+        if (isJson) return res.status(404).json({ success: false, message: "Canal não encontrado no banco de dados." });
         return res.render("dataadderror.ejs", {});
       }
 
@@ -251,31 +412,75 @@ class BotController {
         const noBanco = await twitchRepo.verifyByTwitchAndGuildId(channelInput, guildId, { twitch: 1, channel: 1, guildID: 1 });
         if (noBanco != null) {
           await twitchRepo.deletar(channelInput, guildId);
-          return res.render("tchdeleteinfo.ejs", { info: botInfo, info2: await DatabaseService.getTwitch(guildId) });
+          if (isJson) return res.json({ success: true, message: "Streamer da Twitch removido com sucesso." });
+          return res.redirect(`/bot/botinfo/${guildId}#functwitch`);
         }
+        if (isJson) return res.status(404).json({ success: false, message: "Streamer não encontrado no banco de dados." });
         return res.render("dataadderror.ejs", {});
       }
+
+      if (isJson) return res.status(400).json({ success: false, message: "Ação de dados inválida ou não reconhecida." });
+      return res.status(400).render("error.ejs", { error: "Ação de dados inválida ou não reconhecida." });
     } catch (error) {
-      console.error(error);
+      console.error("[SECURITY] Erro em dbActions:", error);
+      if (isJson) return res.status(500).json({ success: false, message: error.message || "Erro interno ao processar ação no banco." });
       res.render("dataadderror.ejs", {});
     }
   }
 
   async updateEconomy(req, res) {
+    const isJson = Boolean(
+      req.xhr ||
+      req.query?.format === "json" ||
+      req.headers["accept"]?.includes("application/json") ||
+      req.headers["x-requested-with"] === "XMLHttpRequest"
+    );
     try {
-      const { guildId, userId, money, bank } = req.body;
+      const targetGuildId = req.guildId || req.body?.guildId;
+      const { userId, money, bank } = req.body || {};
+
+      if (!isValidSnowflake(targetGuildId) || !isValidSnowflake(userId)) {
+        if (isJson) return res.status(400).json({ success: false, message: "Identificadores inválidos fornecidos." });
+        return res.status(400).render("error.ejs", { error: "Identificadores inválidos fornecidos." });
+      }
+
       const users = new DatabaseService.usersRepository(require("mongoose"), "Users");
       
       const updateData = {};
-      if (money !== "") updateData.money = parseInt(money);
-      if (bank !== "") updateData.bank = parseInt(bank);
-      if (Object.keys(updateData).length > 0) {
-        await users.update(userId, updateData);
+      if (money !== undefined && money !== null && money !== "") {
+        const sanitizedMoney = sanitizeEconomyValue(money);
+        if (sanitizedMoney === null) {
+          if (isJson) return res.status(400).json({ success: false, message: "Valor de dinheiro inválido (deve ser um número inteiro entre 0 e 1.000.000.000)." });
+          return res.status(400).render("error.ejs", { error: "Valor de dinheiro inválido (deve ser um número inteiro entre 0 e 1.000.000.000)." });
+        }
+        updateData.money = sanitizedMoney;
       }
-      res.redirect(`/bot/pagina/economyinfo/${guildId}`);
+      if (bank !== undefined && bank !== null && bank !== "") {
+        const sanitizedBank = sanitizeEconomyValue(bank);
+        if (sanitizedBank === null) {
+          if (isJson) return res.status(400).json({ success: false, message: "Valor de banco inválido (deve ser um número inteiro entre 0 e 1.000.000.000)." });
+          return res.status(400).render("error.ejs", { error: "Valor de banco inválido (deve ser um número inteiro entre 0 e 1.000.000.000)." });
+        }
+        updateData.bank = sanitizedBank;
+      }
+
+      if (Object.keys(updateData).length === 0) {
+        if (isJson) return res.status(400).json({ success: false, message: "Nenhum valor válido informado para atualização." });
+        return res.status(400).render("error.ejs", { error: "Nenhum valor válido informado para atualização." });
+      }
+
+      // IDOR FIX: Atualização restrita estritamente ao userId E targetGuildId validado
+      await users.updateByUserIdAndGuildId(userId, targetGuildId, updateData);
+
+      if (isJson) {
+        return res.json({ success: true, message: "Economia atualizada com sucesso." });
+      }
+
+      res.redirect(`/bot/botinfo/${targetGuildId}#economyinfo`);
     } catch (error) {
-      console.error("Erro ao atualizar economia:", error);
-      res.render("error.ejs", { error: "Erro ao atualizar economia." });
+      console.error("[SECURITY] Erro ao atualizar economia:", error);
+      if (isJson) return res.status(500).json({ success: false, message: "Erro interno ao processar atualização de economia." });
+      res.status(500).render("error.ejs", { error: "Erro interno ao processar atualização de economia." });
     }
   }
 }

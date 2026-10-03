@@ -5,181 +5,1069 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Server Config - Manager Bot</title>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <link href="../css/cssdir/out.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <link href="/css/cssdir/out.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
 </head>
 
-<body class="bg-[#0b0c10] text-slate-200 overflow-hidden h-screen w-screen selection:bg-indigo-500 selection:text-white antialiased">
+<body class="bg-hardware-grid text-slate-200 overflow-hidden h-screen w-screen selection:bg-indigo-500 selection:text-white antialiased flex flex-row">
     
-  <!-- Background Decorators -->
-  <div class="fixed inset-0 z-0 pointer-events-none">
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/10 via-[#0b0c10] to-[#0b0c10]"></div>
-      <div class="absolute top-[10%] left-[20%] w-[40%] h-[40%] rounded-full bg-indigo-600/5 blur-[120px]"></div>
-      <div class="absolute bottom-[10%] right-[20%] w-[40%] h-[40%] rounded-full bg-purple-600/5 blur-[120px]"></div>
-  </div>
+  <!-- Background Blueprint Texture with Ambient Studio Lighting -->
+  <div class="fixed inset-0 z-0 pointer-events-none bg-studio-ambient"></div>
 
-  <!-- Sidebar Container (Fixed Left) -->
-  <div id="sidebar-container" class="fixed top-0 left-0 z-50 h-full"></div>
+  <!-- Mobile & Tablet Sidebar Backdrop -->
+  <div id="sidebar-backdrop" onclick="closeSidebar()" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-40 hidden transition-opacity duration-300"></div>
+
+  <!-- Sidebar Container -->
+  <div id="sidebar-container" class="bg-[#0c0e14] flex flex-row overflow-hidden border-r border-slate-800/80"></div>
 
   <!-- Main Content Area -->
-  <div class="ml-[336px] w-[calc(100%-336px)] h-full overflow-y-auto relative z-10 scroll-smooth">
+  <div class="flex-1 w-full h-full overflow-y-auto relative z-10 scroll-smooth min-w-0 bg-transparent">
 
     <!-- Top Header -->
-    <div class="h-20 w-full sticky top-0 bg-[#0b0c10]/70 backdrop-blur-xl border-b border-white/5 z-40 flex items-center px-10 transition-all shadow-sm">
-        <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
-                <i class="fa-solid fa-server text-indigo-400"></i>
-            </div>
-            <div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Painel do Servidor</span>
-                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i>
-                    <span class="text-sm font-bold text-white tracking-wide truncate max-w-[200px]" id="current-page-title"><%- guildName %></span>
+    <div class="h-16 sm:h-20 w-full sticky top-0 bg-[#090b10]/85 backdrop-blur-xl border-b border-slate-800/80 z-30 flex items-center justify-between px-4 sm:px-6 lg:px-10 transition-all shadow-sm">
+        
+        <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+            <!-- Sidebar Toggle Button (aligned with rail icon style) -->
+            <button id="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Alternar Menu Lateral"
+                class="header-rail-btn h-10 w-10 sm:h-11 sm:w-11 rounded-xl flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-bars text-base"></i>
+            </button>
+
+            <!-- Unified Seamless Navigation Trail (No harsh white borders) -->
+            <div class="flex items-center gap-1.5 sm:gap-2 text-xs font-medium">
+                <!-- Dashboard Home Link -->
+                <a href="/dashboard" class="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors py-1 px-1.5 rounded-lg hover:bg-white/[0.04]" title="Voltar ao Dashboard de Servidores">
+                    <i class="fa-solid fa-layer-group text-slate-500 text-[11px]"></i>
+                    <span class="font-mono text-[11px] hidden sm:inline">Dashboard</span>
+                </a>
+
+                <span class="text-slate-600 select-none text-[11px]">/</span>
+
+                <!-- Interactive Server Switcher (Seamless Popover Trigger) -->
+                <div class="relative" id="server-switcher-area">
+                    <button onclick="toggleServerSwitcher()" class="flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-white/[0.04] text-slate-200 hover:text-white transition-colors cursor-pointer group" title="Alternar Servidor">
+                        <div class="w-5 h-5 rounded-md bg-black/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                            <% if (info && info.icon && info.icon.indexOf('null') === -1) { %>
+                                <img src="<%= info.icon %>" alt="Ícone" class="w-full h-full object-cover">
+                            <% } else { %>
+                                <i class="fa-solid fa-server text-indigo-400 text-[10px]"></i>
+                            <% } %>
+                        </div>
+                        <span class="font-semibold text-white tracking-tight truncate max-w-[120px] sm:max-w-[200px]" id="current-page-title"><%= guildName %></span>
+                        <i class="fa-solid fa-chevron-down text-[8px] text-slate-500 group-hover:text-slate-300 transition-transform duration-200" id="server-switcher-chevron"></i>
+                    </button>
+
+                    <!-- Server Switcher Dropdown Popover -->
+                    <div id="server-switcher-dropdown" class="hidden absolute top-[115%] left-0 w-72 bg-[#10131a] border border-indigo-500/25 rounded-2xl shadow-2xl z-50 overflow-hidden backdrop-blur-xl p-2 animate-studio-in">
+                        <div class="px-2.5 py-1.5 mb-1 flex items-center justify-between border-b border-slate-800/80 pb-2">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Alternar Servidor</span>
+                            <span class="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded"><%= (user && user.guilds) ? user.guilds.length : 0 %></span>
+                        </div>
+                        
+                        <div class="max-h-60 overflow-y-auto space-y-1 pr-1 custom-table-scroll">
+                            <% if (user && user.guilds) { %>
+                                <% user.guilds.forEach(g => { %>
+                                    <a href="/bot/botinfo/<%= g.id %>" class="flex items-center gap-2.5 p-2 rounded-xl text-xs font-medium transition-colors <%= g.id === info.id ? 'bg-indigo-500/15 text-white font-semibold' : 'text-slate-300 hover:bg-white/[0.04] hover:text-white' %>">
+                                        <div class="w-7 h-7 rounded-lg bg-black/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                            <% if (g.icon) { %>
+                                                <img src="https://cdn.discordapp.com/icons/<%= g.id %>/<%= g.icon %>.png" alt="<%= g.name %>" class="w-full h-full object-cover">
+                                            <% } else { %>
+                                                <span class="font-bold text-[10px] text-slate-400"><%= (g.name || '?').charAt(0).toUpperCase() %></span>
+                                            <% } %>
+                                        </div>
+                                        <span class="truncate flex-1"><%= g.name %></span>
+                                        <% if (g.id === info.id) { %>
+                                            <i class="fa-solid fa-check text-[10px] text-indigo-400 mr-1"></i>
+                                        <% } %>
+                                    </a>
+                                <% }); %>
+                            <% } %>
+                        </div>
+
+                        <div class="mt-2 pt-2 border-t border-slate-800/80">
+                            <a href="/dashboard" class="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] text-slate-300 hover:text-white text-xs font-semibold transition-colors">
+                                <i class="fa-solid fa-layer-group text-slate-400 text-xs"></i>
+                                <span>Todos os Servidores</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="text-slate-600 select-none text-[11px]">/</span>
+
+                <!-- Active Module Badge (Soft seamless pill without harsh border) -->
+                <div class="flex items-center gap-1.5 py-1 px-2.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-white text-xs font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+                    <span class="truncate max-w-[130px] sm:max-w-[200px]" id="current-module-title">Visão Geral</span>
                 </div>
             </div>
         </div>
-        
-        <div class="ml-auto flex items-center gap-6">
-            <a href="/dashboard" class="group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-sm font-semibold text-slate-300 hover:text-white">
-                <i class="fa-solid fa-layer-group text-indigo-400 group-hover:scale-110 transition-transform"></i>
-                Trocar Servidor
-            </a>
-            <div class="h-8 w-px bg-white/10"></div>
-            <div class="flex items-center gap-3">
-                <div class="text-right hidden md:block">
-                    <p class="text-sm font-bold text-white"><%=user.username%></p>
-                    <p class="text-xs text-slate-500 font-mono"><%=user.id%></p>
+
+        <!-- Center Telemetry & Fast Sync Capsule -->
+        <div class="hidden xl:flex items-center gap-2.5">
+            <div class="tonal-border-indigo bg-[#080a10]/85 rounded-xl inline-flex items-center gap-3 px-3.5 py-1.5 shadow-inner text-xs font-mono text-slate-300">
+                <!-- Live Clock Ticker -->
+                <div class="flex items-center gap-1.5 text-slate-400 border-r border-slate-800/80 pr-3">
+                    <i class="fa-regular fa-clock text-indigo-400 text-[11px]"></i>
+                    <span id="live-cockpit-clock" class="text-white font-semibold tabular-nums text-[11px]">--:--:-- BRT</span>
                 </div>
-                <div class="w-10 h-10 rounded-xl border border-white/10 overflow-hidden shadow-lg p-0.5 bg-gradient-to-br from-indigo-500 to-purple-500">
-                    <img src="https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png" alt="Avatar" class="w-full h-full rounded-lg object-cover">
+
+                <!-- Bot Status LED -->
+                <div class="flex items-center gap-1.5">
+                    <span class="led-online"></span>
+                    <span class="font-semibold text-white">Bot Online</span>
+                </div>
+                
+                <span class="text-slate-700 select-none">•</span>
+                
+                <!-- Latency VU-Meter -->
+                <div class="flex items-center gap-2" title="Latência com Discord Gateway">
+                    <span class="text-slate-400 text-[11px]">Ping: <strong class="text-emerald-400 font-bold tabular-nums"><%= info.ping || 18 %>ms</strong></span>
+                    <div class="vu-meter-row !h-3">
+                        <div class="vu-meter-segment lit-green !w-1"></div>
+                        <div class="vu-meter-segment lit-green !w-1"></div>
+                        <div class="vu-meter-segment lit-green !w-1"></div>
+                        <div class="vu-meter-segment lit-cyan !w-1"></div>
+                        <div class="vu-meter-segment !w-1"></div>
+                    </div>
+                </div>
+
+                <span class="text-slate-700 select-none">•</span>
+                
+                <span class="text-slate-400 text-[11px]"><%= info.uptime || 'Online' %></span>
+            </div>
+            <button type="button" onclick="refreshCurrentPanel()" class="h-9 w-9 rounded-xl bg-indigo-500/5 hover:bg-indigo-500/15 border border-indigo-500/20 hover:border-indigo-500/40 text-slate-400 hover:text-white transition-all flex items-center justify-center group cursor-pointer shadow-sm" title="Sincronizar dados do módulo">
+                <i class="fa-solid fa-arrows-rotate text-xs group-hover:rotate-180 transition-transform duration-500" id="header-refresh-icon"></i>
+            </button>
+        </div>
+        
+        <div class="flex items-center gap-2.5 sm:gap-4 flex-shrink-0">
+            <!-- Command Palette Trigger Button -->
+            <button type="button" onclick="openCommandPalette()" 
+              class="hidden md:inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-indigo-500/5 hover:bg-indigo-500/15 border border-indigo-500/20 hover:border-indigo-500/40 text-slate-400 hover:text-white transition-all cursor-pointer text-xs group"
+              title="Atalho: Ctrl + K ou Cmd + K">
+              <i class="fa-solid fa-magnifying-glass text-[11px] text-slate-500 group-hover:text-indigo-400 transition-colors"></i>
+              <span>Buscar...</span>
+              <kbd class="kbd-studio text-[10px]">Ctrl K</kbd>
+            </button>
+
+            <a href="/dashboard" class="btn-studio-secondary text-xs font-semibold !py-1.5 sm:!py-2 !px-3 sm:!px-4 rounded-xl flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-slate-400 text-xs"></i>
+                <span class="hidden sm:inline">Servidores</span>
+            </a>
+            
+            <div class="h-5 sm:h-6 w-px bg-slate-800/80"></div>
+            
+            <div class="flex items-center gap-2 sm:gap-3 relative" id="header-user-area">
+                <div class="text-right hidden md:block">
+                    <p class="text-xs font-bold text-white truncate max-w-[120px]"><%=user.username%></p>
+                    <p class="text-[10px] text-slate-500 font-mono"><%=user.id%></p>
+                </div>
+                <button onclick="toggleHeaderUserDropdown()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-indigo-500/30 overflow-hidden shadow-sm flex-shrink-0 hover:border-indigo-400 hover:scale-105 active:scale-95 cursor-pointer group"
+                    style="transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);">
+                    <img src="<%= user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://cdn.discordapp.com/embed/avatars/0.png' %>" alt="Avatar" class="w-full h-full object-cover group-hover:brightness-110 transition-all">
+                </button>
+                <!-- User Dropdown -->
+                <div id="header-user-dropdown"
+                    class="hidden absolute top-[120%] right-0 w-44 bg-[#11141d] border border-indigo-500/25 rounded-2xl shadow-2xl z-50 overflow-hidden transform origin-top-right backdrop-blur-xl p-1"
+                    style="animation: header-dropdown-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+                    <a href="/auth/logout" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors">
+                        <i class="fa-solid fa-power-off text-red-400"></i>
+                        <span>Desconectar</span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Dynamic Content Injection Point -->
-    <div id="sidebar-container2" class="p-8 md:p-12 w-full min-h-[calc(100vh-5rem)] max-w-[1600px] mx-auto animate-fade-in-up">
-      <!-- Premium Loading State -->
-      <div class="flex flex-col items-center justify-center h-[60vh]">
-        <div class="relative w-24 h-24 mb-8">
-            <!-- Pulsing background -->
-            <div class="absolute inset-0 bg-indigo-500/20 rounded-full animate-ping"></div>
-            <!-- Spinning rings -->
-            <div class="absolute inset-0 border-4 border-transparent border-t-indigo-500 rounded-full animate-spin"></div>
-            <div class="absolute inset-2 border-4 border-transparent border-b-purple-500 rounded-full animate-spin" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
-            <!-- Center Icon -->
-            <div class="absolute inset-0 flex items-center justify-center">
-                <i class="fa-solid fa-cube text-2xl text-white animate-pulse"></i>
-            </div>
+    <!-- Global Toast Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none max-w-sm w-full"></div>
+
+    <!-- Command Palette Modal (Ctrl + K) -->
+    <div id="command-palette-modal" class="hidden fixed inset-0 z-[110] flex items-start justify-center pt-20 sm:pt-28 px-4 backdrop-blur-md bg-black/75 animate-fade-in" onclick="if(event.target === this) closeCommandPalette()">
+      <div class="relative w-full max-w-xl bg-[#0e111a] border border-white/[0.12] rounded-2xl shadow-2xl overflow-hidden laser-edge-top" onclick="event.stopPropagation()">
+        
+        <!-- Search Header -->
+        <div class="p-3.5 border-b border-white/[0.08] flex items-center gap-3 bg-black/30">
+          <i class="fa-solid fa-magnifying-glass text-indigo-400 text-sm pl-2"></i>
+          <input 
+            type="text" 
+            id="command-palette-input" 
+            placeholder="Navegar para módulo, painel ou ação rápida..." 
+            class="w-full bg-transparent text-white text-sm focus:outline-none placeholder:text-slate-500 font-medium"
+            autocomplete="off"
+            oninput="filterCommandPalette(this.value)"
+            onkeydown="handleCommandPaletteKeydown(event)"
+          />
+          <kbd class="kbd-studio text-[10px] cursor-pointer" onclick="closeCommandPalette()">ESC</kbd>
         </div>
-        <h3 class="text-xl font-bold text-white mb-2 tracking-wide">Carregando Módulos</h3>
-        <p class="text-slate-500 text-sm font-medium">Estabelecendo conexão segura com o servidor...</p>
+
+        <!-- Palette Results -->
+        <div class="p-2 max-h-80 overflow-y-auto custom-table-scroll space-y-1" id="command-palette-results">
+        </div>
+
+        <!-- Palette Footer -->
+        <div class="px-4 py-2.5 bg-black/40 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-slate-500 font-mono">
+          <div class="flex items-center gap-3">
+            <span><kbd class="kbd-studio text-[9px]">↑</kbd> <kbd class="kbd-studio text-[9px]">↓</kbd> Navegar</span>
+            <span><kbd class="kbd-studio text-[9px]">↵</kbd> Selecionar</span>
+          </div>
+          <span>Manager Bot Studio</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Content Injection Point -->
+    <div id="sidebar-container2" class="p-4 sm:p-6 lg:p-10 w-full min-h-[calc(100vh-5rem)] max-w-[1600px] mx-auto animate-fade-in">
+      <!-- Modern Skeleton Loader (Linear / Vercel style) -->
+      <div class="animate-pulse space-y-6 max-w-5xl mx-auto pt-2 sm:pt-4">
+        <!-- Top bar skeleton -->
+        <div class="flex items-center justify-between pb-6 border-b border-white/[0.06]">
+          <div class="space-y-2">
+            <div class="h-6 w-48 bg-white/[0.06] rounded-xl"></div>
+            <div class="h-3.5 w-72 bg-white/[0.03] rounded-lg"></div>
+          </div>
+          <div class="h-10 w-28 bg-white/[0.05] rounded-xl"></div>
+        </div>
+        
+        <!-- Cards skeleton grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="h-28 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 flex flex-col justify-between">
+            <div class="h-3 w-20 bg-white/[0.06] rounded"></div>
+            <div class="h-7 w-24 bg-white/[0.08] rounded-lg"></div>
+          </div>
+          <div class="h-28 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 flex flex-col justify-between">
+            <div class="h-3 w-20 bg-white/[0.06] rounded"></div>
+            <div class="h-7 w-24 bg-white/[0.08] rounded-lg"></div>
+          </div>
+          <div class="h-28 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 flex flex-col justify-between">
+            <div class="h-3 w-20 bg-white/[0.06] rounded"></div>
+            <div class="h-7 w-24 bg-white/[0.08] rounded-lg"></div>
+          </div>
+          <div class="h-28 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 flex flex-col justify-between">
+            <div class="h-3 w-20 bg-white/[0.06] rounded"></div>
+            <div class="h-7 w-24 bg-white/[0.08] rounded-lg"></div>
+          </div>
+        </div>
+
+        <!-- Content area skeleton -->
+        <div class="h-64 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 space-y-4">
+          <div class="h-4 w-36 bg-white/[0.06] rounded"></div>
+          <div class="h-3 w-full bg-white/[0.03] rounded"></div>
+          <div class="h-3 w-5/6 bg-white/[0.03] rounded"></div>
+          <div class="h-3 w-2/3 bg-white/[0.03] rounded"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <style>
-      @keyframes fade-in-up {
-          0% { opacity: 0; transform: translateY(15px); }
-          100% { opacity: 1; transform: translateY(0); }
+      @keyframes fade-in {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
       }
-      .animate-fade-in-up {
-          animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      .animate-fade-in {
+          animation: fade-in 0.3s ease-out forwards;
+      }
+      @keyframes header-dropdown-in {
+          0% { opacity: 0; transform: scale(0.95) translateY(-4px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      /* Header Rail Button (sidebar toggle) */
+      .header-rail-btn {
+        background-color: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: #94a3b8;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .header-rail-btn:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.14);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 0 12px rgba(99, 102, 241, 0.15);
+      }
+      .header-rail-btn:active {
+        transform: scale(0.94);
+      }
+
+      /* Header Server Icon */
+      .header-server-icon {
+        background-color: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        flex-shrink: 0;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .header-server-icon:hover {
+        background-color: rgba(99, 102, 241, 0.2);
+        border-color: rgba(99, 102, 241, 0.4);
+        transform: scale(1.08);
+        box-shadow: 0 0 14px rgba(99, 102, 241, 0.25);
+      }
+      .header-server-icon:hover i {
+        color: #a5b4fc;
       }
       
       /* Premium Scrollbar */
       ::-webkit-scrollbar {
-          width: 8px;
-          height: 8px;
+          width: 6px;
+          height: 6px;
       }
       ::-webkit-scrollbar-track {
           background: #0b0c10;
           border-left: 1px solid rgba(255,255,255,0.02);
       }
       ::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.12);
           border-radius: 10px;
       }
       ::-webkit-scrollbar-thumb:hover {
           background: rgba(99, 102, 241, 0.8);
       }
+      /* Mobile & Tablet (< 1024px): Overlay Drawer off-screen by default */
+      @media (max-width: 1023px) {
+        #sidebar-container {
+          position: fixed !important;
+          top: 0 !important;
+          bottom: 0 !important;
+          left: 0 !important;
+          z-index: 50 !important;
+          height: 100% !important;
+          height: 100dvh !important;
+          width: 336px !important;
+          max-width: 85vw !important;
+          transform: translateX(-100%) !important;
+          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+        }
+        #sidebar-container.sidebar-open {
+          transform: translateX(0) !important;
+        }
+      }
+
+      /* Desktop (>= 1024px): Side Column with Collapse Capability */
+      @media (min-width: 1024px) {
+        #sidebar-container {
+          position: static !important;
+          transform: none !important;
+          width: 336px !important;
+          flex-shrink: 0 !important;
+          transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        #sidebar-container.sidebar-closed {
+          margin-left: -336px !important;
+        }
+      }
   </style>
 
   <script>
     // Functions exposed to child iframes/scripts
-    function user() { return "https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png"; }
-    function email() { return "<%=user.email%>"; }
-    function username() { return "<%=user.username%>"; }
-    function guildName() { return "<%- guildName %>"; }
+    function user() { return "<%= user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://cdn.discordapp.com/embed/avatars/0.png' %>"; }
+    function email() { return "<%= user.email || '' %>"; }
+    function username() { return "<%= user.username || '' %>"; }
+    function guildName() { return document.getElementById("current-page-title")?.textContent || ""; }
+    function getGuildId() { return "<%= info.id %>"; }
+    window.guildId = "<%= info.id %>";
 
-    function carregarConteudo(component) {
-      const guildId = `<%= info.id %>`;
-      console.log(`[ContentLoader] Loading: /bot/pagina/${component}/${guildId}`);
+    // Global Toast Notification System
+    window.showToast = function (type = 'success', title = 'Notificação', message = '') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
 
-      $("#sidebar-container2").fadeOut(250, function () {
-        $(this).load(`/bot/pagina/${component}/${guildId}`, function (response, status, xhr) {
-          if (status == "error") {
-            $(this).html(`
-                <div class="text-red-400 p-10 text-center bg-red-500/10 border border-red-500/20 rounded-[2rem] backdrop-blur-md mt-10 max-w-2xl mx-auto shadow-[0_10px_40px_rgba(239,68,68,0.2)]">
-                    <div class="w-20 h-20 bg-red-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-red-500/30">
-                        <i class="fa-solid fa-triangle-exclamation text-4xl text-red-500"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-white">Falha na Comunicação</h3>
-                    <p class="text-red-200/70 mb-6">Não foi possível carregar o módulo solicitado. O servidor retornou o seguinte código de erro:</p>
-                    <div class="bg-black/50 p-4 rounded-xl font-mono text-sm border border-red-500/30">
-                        Error ${xhr.status}: ${xhr.statusText}
-                    </div>
-                </div>`);
-          }
-          $(this).fadeIn(300);
-        });
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto relative overflow-hidden transform translate-y-[-10px] opacity-0 transition-all duration-300 ease-out flex items-start gap-3.5 p-4 rounded-2xl border backdrop-blur-xl shadow-2xl ${
+        type === 'success' ? 'bg-[#0f1b18]/95 border-emerald-500/30 text-emerald-200' :
+        type === 'error' ? 'bg-[#201015]/95 border-rose-500/30 text-rose-200' :
+        type === 'warning' ? 'bg-[#221a0c]/95 border-amber-500/30 text-amber-200' :
+        'bg-[#121624]/95 border-indigo-500/30 text-indigo-200'
+      }`;
+
+      const iconClass = type === 'success' ? 'fa-circle-check text-emerald-400' :
+                        type === 'error' ? 'fa-triangle-exclamation text-rose-400' :
+                        type === 'warning' ? 'fa-circle-exclamation text-amber-400' :
+                        'fa-circle-info text-indigo-400';
+
+      toast.innerHTML = `
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 bg-white/[0.06]">
+          <i class="fa-solid ${iconClass} text-base"></i>
+        </div>
+        <div class="flex-1 min-w-0 pr-2">
+          <h5 class="text-xs font-bold text-white tracking-tight leading-snug">${title}</h5>
+          ${message ? `<p class="text-[11px] text-slate-300/80 mt-0.5 leading-relaxed break-words">${message}</p>` : ''}
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-slate-500 hover:text-white p-1 transition-colors flex-shrink-0 cursor-pointer">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+        <div class="toast-progress-bar" style="animation-duration: 4s;"></div>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      });
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-[-10px]', 'opacity-0');
+        setTimeout(() => { toast.remove(); }, 300);
+      }, 4000);
+    };
+
+    // Header user dropdown
+    function toggleHeaderUserDropdown() {
+      const dd = document.getElementById('header-user-dropdown');
+      dd.classList.toggle('hidden');
+      closeServerSwitcher();
+    }
+
+    function toggleServerSwitcher() {
+      const dd = document.getElementById('server-switcher-dropdown');
+      const chev = document.getElementById('server-switcher-chevron');
+      if (!dd) return;
+      const willOpen = dd.classList.contains('hidden');
+      dd.classList.toggle('hidden');
+      if (chev) chev.style.transform = willOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+      
+      const userDd = document.getElementById('header-user-dropdown');
+      if (userDd) userDd.classList.add('hidden');
+    }
+
+    function closeServerSwitcher() {
+      const dd = document.getElementById('server-switcher-dropdown');
+      const chev = document.getElementById('server-switcher-chevron');
+      if (dd && !dd.classList.contains('hidden')) {
+        dd.classList.add('hidden');
+        if (chev) chev.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    document.addEventListener('click', function(e) {
+      const userArea = document.getElementById('header-user-area');
+      const userDd = document.getElementById('header-user-dropdown');
+      if (userArea && userDd && !userArea.contains(e.target)) userDd.classList.add('hidden');
+
+      const switcherArea = document.getElementById('server-switcher-area');
+      if (switcherArea && !switcherArea.contains(e.target)) closeServerSwitcher();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const dd = document.getElementById('header-user-dropdown');
+        if (dd && !dd.classList.contains('hidden')) dd.classList.add('hidden');
+        closeServerSwitcher();
+        closeSidebar();
+      }
+    });
+
+    // Responsive Sidebar Controller (Mobile Drawer & Desktop Collapse)
+    function isMobileOrTablet() {
+      return window.innerWidth < 1024;
+    }
+
+    let isClosingSidebarProgrammatically = false;
+    let lastBackTriggerTime = 0;
+    let currentPanelUrl = "";
+    let isHandlingPopState = false;
+
+    function toggleSidebar() {
+      const container = document.getElementById("sidebar-container");
+      const backdrop = document.getElementById("sidebar-backdrop");
+      if (!container) return;
+
+      if (isMobileOrTablet()) {
+        const isOpen = container.classList.contains("sidebar-open");
+        if (isOpen) {
+          closeSidebar(true);
+        } else {
+          container.classList.add("sidebar-open");
+          if (backdrop) backdrop.classList.remove("hidden");
+          
+          // Push state so Android/iOS back gesture closes the drawer instead of navigating away
+          const currentHash = window.location.hash || '#server';
+          const currentComp = currentHash.replace('#', '') || 'server';
+          history.pushState({ isSidebarOpen: true, url: currentPanelUrl, component: currentComp }, '', currentHash);
+        }
+      } else {
+        container.classList.toggle("sidebar-closed");
+      }
+    }
+
+    function closeSidebar(shouldPopHistory = true) {
+      const container = document.getElementById("sidebar-container");
+      const backdrop = document.getElementById("sidebar-backdrop");
+      if (!container) return;
+
+      if (isMobileOrTablet()) {
+        const wasOpen = container.classList.contains("sidebar-open");
+        container.classList.remove("sidebar-open");
+        if (backdrop) backdrop.classList.add("hidden");
+
+        // If sidebar was open and we want to pop the drawer history state (e.g. user clicked backdrop or X button)
+        if (wasOpen && shouldPopHistory && history.state && history.state.isSidebarOpen) {
+          isClosingSidebarProgrammatically = true;
+          history.back();
+          setTimeout(() => { isClosingSidebarProgrammatically = false; }, 200);
+        }
+      }
+    }
+
+    function closeMobileSidebar(shouldPopHistory = true) {
+      closeSidebar(shouldPopHistory);
+    }
+
+    window.toggleSidebar = toggleSidebar;
+    window.closeSidebar = closeSidebar;
+    window.toggleMobileSidebar = toggleSidebar;
+    window.closeMobileSidebar = closeMobileSidebar;
+
+    function loadPanelUrl(url, pushHistory = true, component = "") {
+      // Close sidebar without popping history because we are loading a new view
+      closeSidebar(false);
+
+      if (!component) {
+        const parts = url.split('/');
+        component = parts[parts.length - 2] || parts[parts.length - 1] || 'module';
+      }
+
+      const moduleTitles = {
+        'server': 'Visão Geral',
+        'status': 'Status da Infraestrutura',
+        'statesinfo': 'Central de Logs & Módulos',
+        'funcyoutube': 'YouTube Hub',
+        'functwitch': 'Twitch Hub',
+        'funcpoker': 'Texas Hold\'em Poker',
+        'addytbchannel': 'Adicionar Canal YouTube',
+        'viewytbchannels': 'Canais YouTube Monitorados',
+        'deleteytbchannels': 'Remover Canal YouTube',
+        'addtchchannel': 'Adicionar Streamer Twitch',
+        'viewtchchannel': 'Streamers Twitch Monitorados',
+        'deletetchchannel': 'Remover Streamer Twitch',
+        'memberinfo': 'Comunidade & Membros',
+        'economyinfo': 'Gestão Econômica',
+        'ytbchannelupdate': 'Destino de Avisos YouTube',
+        'tchchannelupdate': 'Destino de Avisos Twitch'
+      };
+      const titleElem = document.getElementById('current-module-title');
+      if (titleElem && moduleTitles[component]) {
+        titleElem.textContent = moduleTitles[component];
+      }
+
+      // Synchronize sidebar active state visual indicators (icon rail, submenu, active item)
+      if (typeof window.syncSidebarActiveState === 'function') {
+        window.syncSidebarActiveState(component);
+      }
+
+      try {
+        const guildId = `<%= info.id %>`;
+        if (component && component !== 'module') {
+          localStorage.setItem('discord_dashboard_last_topic_' + guildId, component);
+        }
+      } catch (e) {}
+
+      // If already at this exact URL and not a popstate reload, skip
+      if (currentPanelUrl === url && pushHistory) {
+        return;
+      }
+      currentPanelUrl = url;
+
+      if (pushHistory && !isHandlingPopState) {
+        const hash = `#${component}`;
+        // If sidebar drawer was open, replace that drawer entry so history doesn't grow with extra dummy states
+        if (history.state && history.state.isSidebarOpen) {
+          history.replaceState({ url: url, component: component }, '', hash);
+        } else {
+          history.pushState({ url: url, component: component }, '', hash);
+        }
+      }
+
+      const skeletonHtml = `
+        <div class="panel-tone-indigo p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-full animate-fade-in-up relative overflow-hidden laser-edge-indigo">
+          <div class="flex flex-col md:flex-row items-center gap-5 sm:gap-6 mb-8 sm:mb-10 border-b border-slate-800/80 pb-6 sm:pb-8">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl skeleton-radar border border-indigo-500/20 flex-shrink-0"></div>
+            <div class="flex-1 space-y-2.5 w-full text-center md:text-left">
+              <div class="w-28 h-5 rounded-full skeleton-radar mx-auto md:mx-0"></div>
+              <div class="w-64 h-8 rounded-xl skeleton-radar mx-auto md:mx-0"></div>
+              <div class="w-96 max-w-full h-4 rounded-lg skeleton-radar mx-auto md:mx-0"></div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-6">
+            <div class="h-28 rounded-2xl skeleton-radar border border-indigo-500/15"></div>
+            <div class="h-28 rounded-2xl skeleton-radar border border-indigo-500/15"></div>
+            <div class="h-28 rounded-2xl skeleton-radar border border-indigo-500/15"></div>
+            <div class="h-28 rounded-2xl skeleton-radar border border-indigo-500/15"></div>
+          </div>
+          <div class="h-48 rounded-2xl skeleton-radar border border-indigo-500/15 w-full"></div>
+        </div>
+      `;
+
+      const $container = $("#sidebar-container2");
+      $container.html(skeletonHtml);
+
+      $container.load(url, function (response, status, xhr) {
+        if (status == "error") {
+          $container.html(`
+              <div class="text-red-400 p-6 sm:p-8 border border-red-500/20 bg-red-500/10 rounded-2xl text-center mt-6 max-w-xl mx-auto shadow-lg animate-fade-in-up">
+                  <i class="fa-solid fa-bug text-2xl mb-3 text-red-500"></i>
+                  <h3 class="font-bold text-lg text-white mb-1">Falha na Requisição</h3>
+                  <p class="text-xs opacity-80">${xhr.statusText}</p>
+              </div>`);
+        }
       });
     }
 
-    $(document).ready(function () {
-      $("#sidebar-container").load("/layouts/sideBar.ejs", function () {
-        carregarConteudo('server');
-      });
-    });
+    function carregarConteudo(component, pushHistory = true) {
+      const guildId = `<%= info.id %>`;
+      const url = `/bot/pagina/${component}/${guildId}`;
+      loadPanelUrl(url, pushHistory, component);
+    }
+
+    function refreshCurrentPanel() {
+      const icon = document.getElementById('header-refresh-icon');
+      if (icon) icon.classList.add('animate-spin');
+      if (currentPanelUrl) {
+        loadPanelUrl(currentPanelUrl, false);
+      }
+      setTimeout(() => {
+        if (icon) icon.classList.remove('animate-spin');
+        if (typeof window.showToast === 'function') {
+          window.showToast('success', 'Painel Sincronizado', 'Os dados do módulo foram atualizados com sucesso.');
+        }
+      }, 500);
+    }
+
+    window.refreshCurrentPanel = refreshCurrentPanel;
+    window.carregarConteudo = carregarConteudo;
+    window.loadPanelUrl = loadPanelUrl;
+    window.selectTopic = carregarConteudo;
 
     // Sub-functions for Modules
+    const actionToTopicMap = {
+      // YouTube
+      'actyoutube': 'funcyoutube',
+      'deactyoutube': 'funcyoutube',
+      'updtyoutube': 'funcyoutube',
+      'delyoutubech': 'funcyoutube',
+      'addytb': 'funcyoutube',
+      'addyoutubech': 'funcyoutube',
+      'delytb': 'funcyoutube',
+      
+      // Twitch
+      'acttwitch': 'functwitch',
+      'deacttwitch': 'functwitch',
+      'updttwitch': 'functwitch',
+      'addtwitchch': 'functwitch',
+      'deltwitchch': 'functwitch',
+      'addtch': 'functwitch',
+      'deltch': 'functwitch',
+      
+      // Poker
+      'actpoker': 'funcpoker',
+      'deactpoker': 'funcpoker'
+    };
+
+    function resolveTopicFromAction(tipo) {
+      if (!tipo) return 'server';
+      if (tipo.startsWith('actlog_') || tipo.startsWith('deactlog_')) return 'statesinfo';
+      return actionToTopicMap[tipo] || tipo;
+    }
+
+    // Live Guild Status tracking for Sidebar and Hubs
+    <%
+      let initialActiveLogsCount = 0;
+      const initialTotalLogs = 11;
+      if (typeof guildinfo !== 'undefined' && guildinfo && guildinfo.logging) {
+        const logKeys = ['message_delete', 'message_update', 'voice_update', 'member_join', 'member_leave', 'member_ban', 'economy_log', 'channel_update', 'role_update', 'server_update', 'invite_update'];
+        logKeys.forEach(k => {
+          if (guildinfo.logging[k] && guildinfo.logging[k].state) initialActiveLogsCount++;
+        });
+      }
+      const initialYtbActive = !!(typeof guildinfo !== 'undefined' && guildinfo && guildinfo.youtubenotify);
+      const initialTchActive = !!(typeof guildinfo !== 'undefined' && guildinfo && guildinfo.twitchnotify);
+      const initialPokerActive = !!(typeof guildinfo !== 'undefined' && guildinfo && guildinfo.poker && guildinfo.poker.state);
+    %>
+    window.currentGuildStatus = {
+      activeLogs: <%= initialActiveLogsCount %>,
+      totalLogs: <%= initialTotalLogs %>,
+      youtubeActive: <%= initialYtbActive %>,
+      twitchActive: <%= initialTchActive %>,
+      pokerActive: <%= initialPokerActive %>
+    };
+
+    async function executeFuncAction(tipo, channelin) {
+      const guildId = window.guildId || `<%= info.id %>`;
+      try {
+        const res = await fetch(`/bot/pagina/funcs/${tipo}/${guildId}/${encodeURIComponent(channelin || '0')}`, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        const data = await res.json();
+        if (data.success) {
+          window.showToast('success', 'Configuração Salva', data.message || 'Módulo atualizado com sucesso!');
+          if (window.currentGuildStatus) {
+            if (tipo === 'actyoutube') window.currentGuildStatus.youtubeActive = true;
+            else if (tipo === 'deactyoutube') window.currentGuildStatus.youtubeActive = false;
+            else if (tipo === 'acttwitch') window.currentGuildStatus.twitchActive = true;
+            else if (tipo === 'deacttwitch') window.currentGuildStatus.twitchActive = false;
+            else if (tipo === 'actpoker') window.currentGuildStatus.pokerActive = true;
+            else if (tipo === 'deactpoker') window.currentGuildStatus.pokerActive = false;
+            else if (tipo.startsWith('actlog_')) window.currentGuildStatus.activeLogs = Math.min(window.currentGuildStatus.totalLogs, window.currentGuildStatus.activeLogs + 1);
+            else if (tipo.startsWith('deactlog_')) window.currentGuildStatus.activeLogs = Math.max(0, window.currentGuildStatus.activeLogs - 1);
+            if (typeof window.updateSidebarStatus === 'function') {
+              window.updateSidebarStatus(window.currentGuildStatus);
+            }
+          }
+        } else {
+          window.showToast('error', 'Atenção', data.message || 'Não foi possível atualizar o módulo.');
+        }
+        return data;
+      } catch (err) {
+        window.showToast('error', 'Erro na Requisição', 'Falha ao comunicar com o servidor.');
+        return { success: false, message: err.message };
+      }
+    }
+
+    async function executeDbAction(tipo, channelin) {
+      const guildId = window.guildId || `<%= info.id %>`;
+      try {
+        const res = await fetch(`/bot/pagina/dtbase/${tipo}/${guildId}/${encodeURIComponent(channelin || '0')}`, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        const data = await res.json();
+        if (data.success) {
+          window.showToast('success', 'Ação Concluída', data.message || 'Operação realizada com sucesso!');
+        } else {
+          window.showToast('error', 'Atenção', data.message || 'Não foi possível completar a operação.');
+        }
+        return data;
+      } catch (err) {
+        window.showToast('error', 'Erro na Requisição', 'Falha ao comunicar com o servidor.');
+        return { success: false, message: err.message };
+      }
+    }
+
     function funcsReload(dados) {
       const tipo = dados.find((item) => item.name === "func").value;
       const guildId = dados.find((item) => item.name === "guildId").value;
-      const channelin = dados.find((item) => item.name === "channelId").value;
-      loadPanelUrl(`/bot/pagina/funcs/${tipo}/${guildId}/${channelin}`);
+      const channelin = dados.find((item) => item.name === "channelId")?.value || "0";
+      const topic = resolveTopicFromAction(tipo);
+      loadPanelUrl(`/bot/pagina/funcs/${tipo}/${guildId}/${channelin}`, true, topic);
     }
 
     function dtbaseReload(dados) {
       const tipo = dados.find((item) => item.name === "func").value;
       const guildId = dados.find((item) => item.name === "guildId").value;
-      const channelin = dados.find((item) => item.name === "channelId").value;
-      loadPanelUrl(`/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`);
+      const channelin = dados.find((item) => item.name === "channelId")?.value || "0";
+      const topic = resolveTopicFromAction(tipo);
+      loadPanelUrl(`/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`, true, topic);
     }
 
     function dtbaseDelete(dados) {
       const tipo = dados.find((item) => item.name === "func").value;
-      const guildId = dados.find((item) => item.name === "channelId").value; // channelId is actually the guild in context sometimes, keep original logic
-      const channelin = dados.find((item) => item.name === "youtube")?.value || dados.find((item) => item.name === "twitch")?.value;
-      loadPanelUrl(`/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`);
+      const guildId = dados.find((item) => item.name === "channelId")?.value || `<%= info.id %>`;
+      const channelin = dados.find((item) => item.name === "youtube")?.value || dados.find((item) => item.name === "twitch")?.value || "0";
+      const topic = resolveTopicFromAction(tipo);
+      loadPanelUrl(`/bot/pagina/dtbase/${tipo}/${guildId}/${channelin}`, true, topic);
     }
 
-    function loadPanelUrl(url) {
-      $("#sidebar-container2").fadeOut(250, function () {
-        $(this).load(url, function (response, status, xhr) {
-          if (status == "error") {
-            $(this).html(`
-                <div class="text-red-400 p-8 border border-red-500/20 bg-red-500/10 rounded-[2rem] text-center mt-10 max-w-xl mx-auto shadow-lg">
-                    <i class="fa-solid fa-bug text-3xl mb-4 text-red-500"></i>
-                    <h3 class="font-bold text-xl text-white mb-2">Falha na Requisição</h3>
-                    <p class="text-sm opacity-80">${xhr.statusText}</p>
-                </div>`);
-          }
-          $(this).fadeIn(300);
-        });
+    window.executeFuncAction = executeFuncAction;
+    window.executeDbAction = executeDbAction;
+    window.funcsReload = funcsReload;
+    window.dtbaseReload = dtbaseReload;
+    window.dtbaseDelete = dtbaseDelete;
+    window.toggleServerSwitcher = toggleServerSwitcher;
+    window.closeServerSwitcher = closeServerSwitcher;
+
+    // Browser History (Popstate) Controller - Retorno Fácil Mobile
+    window.addEventListener('popstate', function (event) {
+      lastBackTriggerTime = Date.now();
+
+      if (isClosingSidebarProgrammatically) {
+        isClosingSidebarProgrammatically = false;
+        return;
+      }
+
+      // 1. If mobile drawer is open, close it!
+      const container = document.getElementById("sidebar-container");
+      const backdrop = document.getElementById("sidebar-backdrop");
+      if (container && container.classList.contains("sidebar-open")) {
+        container.classList.remove("sidebar-open");
+        if (backdrop) backdrop.classList.add("hidden");
+        return;
+      }
+
+      // 2. Load previous internal page state
+      if (event.state && event.state.url) {
+        isHandlingPopState = true;
+        loadPanelUrl(event.state.url, false, event.state.component);
+        isHandlingPopState = false;
+      } else {
+        // Returned to the initial entry of dashboard
+        const guildId = `<%= info.id %>`;
+        const initialUrl = `/bot/pagina/server/${guildId}`;
+        isHandlingPopState = true;
+        loadPanelUrl(initialUrl, false, 'server');
+        isHandlingPopState = false;
+      }
+    });
+
+    // Touch Edge Swipe Gesture Detection (Retorno Fácil na borda)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    let isEdgeSwipeGesture = false;
+
+    function triggerSafeHistoryBack() {
+      const now = Date.now();
+      if (now - lastBackTriggerTime < 450) return;
+      lastBackTriggerTime = now;
+      window.history.back();
+    }
+
+    window.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 1 && isMobileOrTablet()) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        // Started within 35px from left edge or right edge
+        const nearLeft = touchStartX <= 35;
+        const nearRight = touchStartX >= (window.innerWidth - 35);
+        isEdgeSwipeGesture = nearLeft || nearRight;
+      } else {
+        isEdgeSwipeGesture = false;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', function (e) {
+      if (!isEdgeSwipeGesture || e.changedTouches.length !== 1) return;
+
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = Math.abs(touchEndY - touchStartY);
+      const duration = Date.now() - touchStartTime;
+
+      const isLeftEdgeSwipe = (touchStartX <= 35 && deltaX > 55 && deltaY < 55 && duration < 500);
+      const isRightEdgeSwipe = (touchStartX >= (window.innerWidth - 35) && deltaX < -55 && deltaY < 55 && duration < 500);
+
+      if (isLeftEdgeSwipe || isRightEdgeSwipe) {
+        triggerSafeHistoryBack();
+      }
+      isEdgeSwipeGesture = false;
+    }, { passive: true });
+
+    // Command Palette Logic (Ctrl + K)
+    const COMMAND_PALETTE_ITEMS = [
+      { id: 'server', title: 'Estatísticas Gerais', category: 'Visão Geral', icon: 'fa-solid fa-chart-pie text-indigo-400' },
+      { id: 'statesinfo', title: 'Central de Logs & Auditoria', category: 'Segurança', icon: 'fa-solid fa-list-check text-blue-400' },
+      { id: 'status', title: 'Status do Bot & Infraestrutura', category: 'Telemetria', icon: 'fa-solid fa-server text-emerald-400' },
+      { id: 'membersinfo', title: 'Atividade & Membros', category: 'Comunidade', icon: 'fa-solid fa-users text-cyan-400' },
+      { id: 'economyinfo', title: 'Gestão Financeira & Economia', category: 'Comunidade', icon: 'fa-solid fa-wallet text-emerald-400' },
+      { id: 'funcyoutube', title: 'YouTube Hub (Alertas de Vídeos)', category: 'Módulos', icon: 'fa-brands fa-youtube text-red-500' },
+      { id: 'functwitch', title: 'Twitch Hub (Alertas de Lives)', category: 'Módulos', icon: 'fa-brands fa-twitch text-purple-400' },
+      { id: 'funcpoker', title: "Texas Hold'em Poker", category: 'Jogos', icon: 'fa-solid fa-dice text-amber-400' },
+      { id: 'action_copy_id', title: 'Copiar ID do Servidor', category: 'Ações Rápidas', icon: 'fa-regular fa-copy text-slate-300', isAction: true, run: () => {
+        const id = `<%= info.id %>`;
+        navigator.clipboard.writeText(id);
+        if (typeof window.showToast === 'function') window.showToast('success', 'ID Copiado', `ID ${id} copiado para a área de transferência.`);
+      }},
+      { id: 'action_refresh', title: 'Sincronizar Módulo Atual', category: 'Ações Rápidas', icon: 'fa-solid fa-arrows-rotate text-indigo-400', isAction: true, run: () => {
+        refreshCurrentPanel();
+      }},
+      { id: 'action_switch', title: 'Trocar de Servidor', category: 'Navegação', icon: 'fa-solid fa-layer-group text-slate-300', isAction: true, run: () => {
+        window.location.href = '/dashboard';
+      }}
+    ];
+
+    let paletteSelectedIndex = 0;
+    let filteredPaletteItems = [...COMMAND_PALETTE_ITEMS];
+
+    function openCommandPalette() {
+      const modal = document.getElementById('command-palette-modal');
+      const input = document.getElementById('command-palette-input');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      filterCommandPalette('');
+    }
+
+    function closeCommandPalette() {
+      const modal = document.getElementById('command-palette-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function renderCommandPalette() {
+      const container = document.getElementById('command-palette-results');
+      if (!container) return;
+
+      if (filteredPaletteItems.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center text-slate-500 text-xs">
+            <i class="fa-solid fa-magnifying-glass text-xl mb-2 text-slate-600 block"></i>
+            Nenhum módulo ou comando encontrado.
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      filteredPaletteItems.forEach((item, index) => {
+        const isSelected = index === paletteSelectedIndex;
+        html += `
+          <div class="command-palette-item ${isSelected ? 'selected' : ''}" 
+            onclick="executePaletteItem(${index})"
+            onmouseenter="paletteSelectedIndex = ${index}; highlightPaletteItem();">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-7 h-7 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center flex-shrink-0">
+                <i class="${item.icon} text-xs"></i>
+              </div>
+              <span class="truncate font-semibold text-xs text-white">${item.title}</span>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 bg-white/[0.03] px-2 py-0.5 rounded border border-white/[0.04]">${item.category}</span>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function highlightPaletteItem() {
+      const items = document.querySelectorAll('.command-palette-item');
+      items.forEach((el, idx) => {
+        if (idx === paletteSelectedIndex) {
+          el.classList.add('selected');
+          el.scrollIntoView({ block: 'nearest' });
+        } else {
+          el.classList.remove('selected');
+        }
       });
     }
+
+    function filterCommandPalette(q) {
+      const query = (q || '').toLowerCase().trim();
+      if (!query) {
+        filteredPaletteItems = [...COMMAND_PALETTE_ITEMS];
+      } else {
+        filteredPaletteItems = COMMAND_PALETTE_ITEMS.filter(it => 
+          it.title.toLowerCase().includes(query) || 
+          it.category.toLowerCase().includes(query) ||
+          it.id.toLowerCase().includes(query)
+        );
+      }
+      paletteSelectedIndex = 0;
+      renderCommandPalette();
+    }
+
+    function executePaletteItem(index) {
+      const item = filteredPaletteItems[index];
+      if (!item) return;
+      closeCommandPalette();
+
+      if (item.isAction && typeof item.run === 'function') {
+        item.run();
+      } else if (typeof carregarConteudo === 'function') {
+        carregarConteudo(item.id);
+        if (typeof window.syncSidebarActiveState === 'function') {
+          window.syncSidebarActiveState(item.id);
+        }
+      }
+    }
+
+    function handleCommandPaletteKeydown(e) {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (filteredPaletteItems.length > 0) {
+          paletteSelectedIndex = (paletteSelectedIndex + 1) % filteredPaletteItems.length;
+          highlightPaletteItem();
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (filteredPaletteItems.length > 0) {
+          paletteSelectedIndex = (paletteSelectedIndex - 1 + filteredPaletteItems.length) % filteredPaletteItems.length;
+          highlightPaletteItem();
+        }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        executePaletteItem(paletteSelectedIndex);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeCommandPalette();
+      }
+    }
+
+    // Global Key Listener for Ctrl+K or Cmd+K and Esc
+    document.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const modal = document.getElementById('command-palette-modal');
+        if (modal && !modal.classList.contains('hidden')) {
+          closeCommandPalette();
+        } else {
+          openCommandPalette();
+        }
+      } else if (e.key === 'Escape') {
+        const modal = document.getElementById('command-palette-modal');
+        if (modal && !modal.classList.contains('hidden')) {
+          closeCommandPalette();
+        }
+      }
+    });
+
+    window.openCommandPalette = openCommandPalette;
+    window.closeCommandPalette = closeCommandPalette;
+    // Live Cockpit Clock Ticker (BRT)
+    function updateCockpitClock() {
+      const el = document.getElementById('live-cockpit-clock');
+      if (!el) return;
+      const now = new Date();
+      const options = { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+      el.textContent = now.toLocaleTimeString('pt-BR', options) + ' BRT';
+    }
+    updateCockpitClock();
+    setInterval(updateCockpitClock, 1000);
+
+    // Initial Load setup
+    $(document).ready(function () {
+      const guildId = `<%= info.id %>`;
+      let hash = window.location.hash ? window.location.hash.replace(/^#+/, '').replace(/[^a-zA-Z0-9_]/g, '').trim() : '';
+      if (!hash) {
+        try {
+          hash = (localStorage.getItem('discord_dashboard_last_topic_' + guildId) || '').replace(/[^a-zA-Z0-9_]/g, '');
+        } catch (e) {}
+      }
+      const initialComponent = hash || 'server';
+      const initialUrl = `/bot/pagina/${initialComponent}/${guildId}`;
+
+      // Initialize root history entry without adding new page
+      history.replaceState({ url: initialUrl, component: initialComponent, isInitial: true }, '', `#${initialComponent}`);
+      currentPanelUrl = initialUrl;
+
+      $("#sidebar-container").load("/layouts/sideBar.ejs", function () {
+        if (typeof window.syncSidebarActiveState === 'function') {
+          window.syncSidebarActiveState(initialComponent);
+        }
+        if (typeof window.updateSidebarStatus === 'function') {
+          window.updateSidebarStatus(window.currentGuildStatus);
+        }
+        loadPanelUrl(initialUrl, false, initialComponent);
+
+        // Safety fallback: re-sync after sidebar DOM renders
+        setTimeout(function () {
+          if (typeof window.syncSidebarActiveState === 'function') {
+            window.syncSidebarActiveState(initialComponent);
+          }
+          if (typeof window.updateSidebarStatus === 'function') {
+            window.updateSidebarStatus(window.currentGuildStatus);
+          }
+        }, 80);
+      });
+    });
   </script>
 </body>
 </html>

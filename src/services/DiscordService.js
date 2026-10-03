@@ -51,6 +51,8 @@ const getGuildData = async (guildId) => {
       botStatus: discordBot.presence.status,
       uptime: getBotUptime(),
       icon: iconURL,
+      ping: Math.round(discordBot.ws.ping || 0),
+      nodeVersion: process.version,
     };
   } catch (error) {
     console.error("Erro ao obter dados da guilda:", error);
@@ -58,4 +60,40 @@ const getGuildData = async (guildId) => {
   }
 };
 
-module.exports = { getGuildData, getChannelName, getBotUptime };
+const getGuildChannels = async (guildId) => {
+  try {
+    let guild = discordBot.guilds.cache.get(guildId);
+    if (!guild) {
+      guild = await discordBot.guilds.fetch(guildId).catch(() => null);
+    }
+    if (!guild) return [];
+
+    if (guild.channels.cache.size === 0) {
+      await guild.channels.fetch().catch(() => null);
+    }
+
+    const allowedTypes = [ChannelType.GuildText, ChannelType.GuildAnnouncement];
+    const channels = guild.channels.cache
+      .filter((c) => allowedTypes.includes(c.type))
+      .map((c) => ({
+        id: c.id,
+        name: c.name,
+        type: c.type,
+        parentName: c.parent ? c.parent.name : null,
+        position: c.rawPosition || 0,
+      }))
+      .sort((a, b) => {
+        if (a.parentName && b.parentName && a.parentName !== b.parentName) {
+          return a.parentName.localeCompare(b.parentName);
+        }
+        return a.position - b.position || a.name.localeCompare(b.name);
+      });
+
+    return channels;
+  } catch (error) {
+    console.error("Erro ao obter canais da guilda:", error);
+    return [];
+  }
+};
+
+module.exports = { getGuildData, getChannelName, getGuildChannels, getBotUptime };

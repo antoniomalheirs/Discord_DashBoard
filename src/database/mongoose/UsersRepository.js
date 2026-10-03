@@ -32,16 +32,16 @@ module.exports = class UserRepository extends Repository {
   }
 
   findOne(codigouser, projection) {
-    return this.model.findOne({ codigouser }, projection).then(this.parse);
+    return this.model.findOne({ codigouser: String(codigouser) }, projection).then(this.parse);
   }
 
   findByUsername(username, projection) {
-    return this.model.findOne({ username }, projection).then(this.parse);
+    return this.model.findOne({ username: String(username) }, projection).then(this.parse);
   }
 
   findByGuildId(idguild, projection) {
     return this.model
-      .findOne({ idguild }, projection)
+      .findOne({ idguild: String(idguild) }, projection)
       .then((result) => (result ? this.parse(result) : false));
   }
 
@@ -51,17 +51,17 @@ module.exports = class UserRepository extends Repository {
 
   get(codigouser, projection) {
     return this.model
-      .findOne({ codigouser }, projection)
+      .findOne({ codigouser: String(codigouser) }, projection)
       .then((entity) =>
-        entity ? this.parse(entity) : this.add({ codigouser })
+        entity ? this.parse(entity) : this.add({ codigouser: String(codigouser) })
       );
   }
 
   getByUserIdAndGuildId(codigouser, idguild, projection) {
     return this.model
-      .findOne({ codigouser, idguild }, projection)
+      .findOne({ codigouser: String(codigouser), idguild: String(idguild) }, projection)
       .then((entity) =>
-        entity ? this.parse(entity) : this.add({ codigouser, idguild })
+        entity ? this.parse(entity) : this.add({ codigouser: String(codigouser), idguild: String(idguild) })
       );
   }
 
@@ -71,20 +71,25 @@ module.exports = class UserRepository extends Repository {
   }
 
   remove(codigouser) {
-    return this.model.findOneAndDelete({ codigouser }).then(this.parse);
+    return this.model.findOneAndDelete({ codigouser: String(codigouser) }).then(this.parse);
   }
 
   update(codigouser, entity, options = { upsert: true }) {
-    return this.model.updateOne({ codigouser }, entity, options);
+    const sanitizedId = String(codigouser);
+    const safeUpdate = { $set: entity };
+    return this.model.updateOne({ codigouser: sanitizedId }, safeUpdate, options);
   }
 
   updateByUserIdAndGuildId(codigouser, idguild, entity, options = { upsert: true }) {
-    return this.model.updateOne({ codigouser, idguild }, entity, options);
+    const sanitizedUserId = String(codigouser);
+    const sanitizedGuildId = String(idguild);
+    const safeUpdate = { $set: entity };
+    return this.model.updateOne({ codigouser: sanitizedUserId, idguild: sanitizedGuildId }, safeUpdate, options);
   }
 
 
   async verify(codigouser) {
-    return !!(await this.model.findOne({ codigouser }));
+    return !!(await this.model.findOne({ codigouser: String(codigouser) }));
   }
 
   findAll(projection) {

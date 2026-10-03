@@ -38,11 +38,11 @@ module.exports = class VideosRepository extends Repository {
 
   // Pesquisa por Data de Upoload
   findOne(lastVideo, projection) {
-    return this.model.findOne({ lastVideo }, projection).then(this.parse);
+    return this.model.findOne({ lastVideo: String(lastVideo) }, projection).then(this.parse);
   }
 
   findByChannel(channel, projection) {
-    return this.model.findOne({ channel }, projection).then(this.parse);
+    return this.model.findOne({ channel: String(channel) }, projection).then(this.parse);
   }
 
   getAllUniqueYoutubeAttributes() {
@@ -55,40 +55,36 @@ module.exports = class VideosRepository extends Repository {
 
   get(id, projection) {
     return this.model
-      .findById(id, projection)
-      .then((e) => (e && this.parse(e)) || this.add({ youtube: id }));
+      .findById(String(id), projection)
+      .then((e) => (e && this.parse(e)) || this.add({ youtube: String(id) }));
   }
 
   deletar(id, guildId) {
-    const query = { youtube: id, notifyGuild: guildId }; // Adicionando a condição do guildId
+    const query = { youtube: String(id), notifyGuild: String(guildId) };
     return this.model.deleteOne(query).then(result => {
       if (result.deletedCount === 1) {
-        // Documento removido com sucesso
         return { success: true };
       } else {
-        // Nenhum documento foi removido (possivelmente não encontrado)
         return { success: false, message: "Documento não encontrado" };
       }
     }).catch(error => {
       console.error("Erro ao deletar:", error);
-      throw error; // Rejeita a promessa com o erro
+      throw error;
     });
   }
-  
-  
 
   update(id, entity, options = { upsert: true }) {
-    return this.model.updateOne({ youtube: id }, entity, options);
+    return this.model.updateOne({ youtube: String(id) }, { $set: entity }, options);
   }
 
   updateByYoutubeIdAndGuildId(youtubeId, guildId, options = { new: true }) {
     return this.model
-      .findOneAndUpdate({ youtube: youtubeId, notifyGuild: guildId }, options)
+      .findOneAndUpdate({ youtube: String(youtubeId), notifyGuild: String(guildId) }, options)
       .then(this.parse);
   }
 
   async verify(id) {
-    return (await this.model.findOne({ youtube: id }).then((e) => {
+    return (await this.model.findOne({ youtube: String(id) }).then((e) => {
       return e;
     }))
       ? true
@@ -96,9 +92,8 @@ module.exports = class VideosRepository extends Repository {
   }
 
   verifyByYoutubeAndGuildId(youtubeId, guildId) {
-    return this.model.exists({ youtube: youtubeId, notifyGuild: guildId });
+    return this.model.exists({ youtube: String(youtubeId), notifyGuild: String(guildId) });
   }
-  
 
   findAll(projection) {
     return this.model.find({}, projection).then((e) => e.map(this.parse));
@@ -106,15 +101,14 @@ module.exports = class VideosRepository extends Repository {
 
   findAllByGuildId(guildId, projection) {
     return this.model
-      .find({ notifyGuild: guildId }, projection)
+      .find({ notifyGuild: String(guildId) }, projection)
       .then((results) => results.map(this.parse));
   }
 
   async getChannelsWithVideosByGuildId(guildId) {
     try {
-      const videos = await this.model.find({ notifyGuild: guildId });
+      const videos = await this.model.find({ notifyGuild: String(guildId) });
     
-      // Retorna um array de objetos contendo youtube e lastVideo
       return videos.map((video) => ({
         youtube: video.youtube,
         lastVideo: video.lastVideo,
@@ -124,17 +118,16 @@ module.exports = class VideosRepository extends Repository {
       throw error;
     }
   }
-  
 
   findByYoutubeAndGuildId(channelId, guildId, projection) {
     return this.model
-      .findOne({ channel: channelId, notifyGuild: guildId }, projection)
+      .findOne({ channel: String(channelId), notifyGuild: String(guildId) }, projection)
       .then(this.parse);
   }
 
   async findByLastVideoAndGuildId(lastVideo, guildId, projection) {
     try {
-      const video = await this.model.findOne({ lastVideo, notifyGuild: guildId }, projection);
+      const video = await this.model.findOne({ lastVideo: String(lastVideo), notifyGuild: String(guildId) }, projection);
       return video ? this.parse(video) : null;
     } catch (error) {
       console.error("Erro ao consultar dados por lastVideo e guildId:", error);

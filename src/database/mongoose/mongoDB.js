@@ -9,6 +9,8 @@ const {
   TwitchRepository,
 } = require("./repositories");
 
+const config = require("../../config/env");
+
 module.exports = class MongoDB extends DBWrapper {
   constructor(options = {}) {
     super(options);
@@ -16,8 +18,10 @@ module.exports = class MongoDB extends DBWrapper {
   }
 
   async connect() {
-
-    return mongoose.connect(process.env.MONGODB_URI).then((m) => {
+    if (!config.mongoUri) {
+      throw new Error("MONGODB_URI não foi definida nas variáveis de ambiente (.env)");
+    }
+    return mongoose.connect(config.mongoUri).then((m) => {
       this.guilds = new GuildRepository(m);
       this.users = new UserRepository(m);
       this.videos = new VideoRepository(m);

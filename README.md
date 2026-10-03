@@ -1,127 +1,128 @@
-# Dashboard Web para Bot do Discord
-
-![Node.js](https://img.shields.io/badge/Node.js-22.x+-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-5.1.x-000000?style=for-the-badge&logo=express&logoColor=white)
-![EJS](https://img.shields.io/badge/EJS-3.1.10-A91E50?style=for-the-badge&logo=javascript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-
-Uma interface web completa para gerenciar e configurar seu bot do Discord diretamente pelo navegador. Permite que administradores de servidores configurem funcionalidades como notificações, visualizem estatísticas e muito mais, sem a necessidade de usar comandos de texto.
-
-## ✨ Índice
-
-- [📹 Demonstração](#-demonstração)
-- [🚀 Funcionalidades](#-funcionalidades)
-- [💻 Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [📋 Pré-requisitos](#-pré-requisitos)
-- [⚙️ Instalação e Configuração](#️-instalação-e-configuração)
-- [▶️ Executando o Projeto](#️-executando-o-projeto)
-- [🤝 Como Contribuir](#-como-contribuir)
-- [📝 Licença](#-licença)
+<div align="center">
+  <p>
+    <a href="#english-version">🇺🇸 English</a> &nbsp; | &nbsp; <a href="#versão-em-português">🇧🇷 Português</a>
+  </p>
+</div>
 
 ---
 
-## 📹 Demonstração
+<a id="english-version"></a>
 
-Veja abaixo um vídeo demonstrando a interface e as funcionalidades do projeto:
+```
+==========================================================================================================================
+|                                     D I S C O R D   D A S H B O A R D                                                 |
+==========================================================================================================================
+```
 
-https://github.com/antoniomalheirs/Discord_DashBoard/assets/79883711/b956e75c-92fa-4d3b-8973-f83dddecfb6b
+<div align="center">
 
-## 🚀 Funcionalidades
+  <img src="https://img.shields.io/badge/Node.js-22+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/Express.js-5.1-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js">
+  <img src="https://img.shields.io/badge/EJS-3.1-A91E50?style=for-the-badge" alt="EJS">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
+  <br><br>
 
-- **Autenticação Segura:** Login integrado com a API do Discord usando Passport.js e OAuth2.
-- **Gerenciamento de Servidores:** O usuário pode selecionar para qual servidor deseja aplicar as configurações.
-- **Configuração do Bot:** Interface visual para ativar/desativar módulos e configurar canais de notificação (YouTube, Twitch, etc.).
-- **Visualização de Estatísticas:** Exibição de dados e estatísticas dos membros do servidor.
-- **Design Responsivo:** Interface amigável para desktops e dispositivos móveis, construída com Tailwind CSS.
+  <p><b>A full web interface to manage and configure your Discord bot from the browser.<br>
+  Allows server admins to configure notifications, view statistics, and manage modules<br>
+  without needing text commands.</b></p>
+</div>
 
-## 💻 Tecnologias Utilizadas
+<br>
 
-#### **Backend**
-- **[Node.js](https://nodejs.org/)**: Ambiente de execução JavaScript.
-- **[Express.js](https://expressjs.com/)**: Framework para construção do servidor web.
-- **[MongoDB](https://www.mongodb.com/)**: Banco de dados NoSQL para armazenar as configurações.
-- **[Mongoose](https://mongoosejs.com/)**: ODM para modelagem dos dados do MongoDB.
-- **[Passport.js](http://www.passportjs.org/)**: Middleware para autenticação de usuários (com estratégia para Discord).
-- **[Express Session](https://www.npmjs.com/package/express-session)**: Para gerenciamento de sessões de usuário.
+### 🛠️ Features
+- **Secure Authentication** — Discord OAuth2 login with Passport.js
+- **Server Management** — Select and configure settings per server
+- **Bot Configuration** — Visual interface to enable/disable modules and notification channels (YouTube, Twitch)
+- **Statistics Dashboard** — View server member data and stats
+- **Responsive Design** — Mobile-friendly with Tailwind CSS
 
-#### **Frontend**
-- **[EJS (Embedded JavaScript)](https://ejs.co/)**: Template engine para renderizar páginas HTML dinâmicas.
-- **[Tailwind CSS](https://tailwindcss.com/)**: Framework de CSS utility-first para estilização.
+### ⚙️ Technical Specifications
+- **Backend:** Node.js 22+, Express.js 5.1
+- **Database:** MongoDB with Mongoose
+- **Auth:** Passport.js (Discord OAuth2 strategy)
+- **Sessions:** Express Session
+- **Frontend:** EJS templates, Tailwind CSS 4.1
 
-## 📋 Pré-requisitos
+### 🚀 How to Install and Run
 
-Antes de começar, certifique-se de que você possui:
-
-- [Node.js](https://nodejs.org/) (versão 16.9.0 ou superior) e NPM.
-- Uma conta no [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) (ou uma instância local do MongoDB).
-- Um **Aplicativo Discord** criado no [Portal de Desenvolvedores do Discord](https://discord.com/developers/applications).
-- **O seu projeto de Bot do Discord**, já que este dashboard serve para controlá-lo.
-
-> **Importante:** No seu aplicativo no Portal de Desenvolvedores do Discord, vá para a seção **"OAuth2" -> "General"** e adicione uma **Redirect URI**. Para o ambiente de desenvolvimento local, adicione: `http://localhost:3000/auth/discord/callback`
-
-## ⚙️ Instalação e Configuração
-
-Siga os passos abaixo para rodar o projeto localmente.
-
-**1. Clone o repositório:**
 ```bash
-git clone [https://github.com/antoniomalheirs/Discord_DashBoard.git](https://github.com/antoniomalheirs/Discord_DashBoard.git)
+# 1. Clone the repository
+git clone https://github.com/antoniomalheirs/Discord_DashBoard.git
 cd Discord_DashBoard
-```
-**2. Instale as dependências:**
-Este comando instalará todos os pacotes listados no arquivo `package.json`.
-```bash
+
+# 2. Install dependencies
 npm install
+
+# 3. Configure environment variables
+cp .env.example .env
+# Edit .env with your Discord OAuth2 credentials and MongoDB URI
+
+# 4. Start the server
+npm start
 ```
-**3. Configure as variáveis de ambiente:**
-Crie um arquivo chamado .env na raiz do projeto. Preencha com as suas credenciais, seguindo o exemplo abaixo:
+
+### 👨‍💻 Author
+Made by **[Antônio Malheiros](https://github.com/antoniomalheirs)**.
+
+<br><br>
+
+---
+---
+
+<a id="versão-em-português"></a>
+
+```
+==========================================================================================================================
+|                                     D I S C O R D   D A S H B O A R D                                                 |
+==========================================================================================================================
+```
+
+<div align="center">
+
+  <img src="https://img.shields.io/badge/Node.js-22+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/Express.js-5.1-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js">
+  <img src="https://img.shields.io/badge/EJS-3.1-A91E50?style=for-the-badge" alt="EJS">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
+  <br><br>
+
+  <p><b>Uma interface web completa para gerenciar e configurar seu bot do Discord pelo navegador.<br>
+  Permite que administradores configurem notificações, visualizem estatísticas e gerenciem módulos<br>
+  sem precisar de comandos de texto.</b></p>
+</div>
+
+<br>
+
+### 🛠️ Funcionalidades
+- **Autenticação Segura** — Login com Discord OAuth2 via Passport.js
+- **Gerenciamento de Servidores** — Selecione e configure por servidor
+- **Configuração do Bot** — Interface visual para ativar/desativar módulos e canais de notificação (YouTube, Twitch)
+- **Dashboard de Estatísticas** — Visualize dados e estatísticas dos membros
+- **Design Responsivo** — Mobile-friendly com Tailwind CSS
+
+### ⚙️ Especificações Técnicas
+- **Backend:** Node.js 22+, Express.js 5.1
+- **Banco de Dados:** MongoDB com Mongoose
+- **Auth:** Passport.js (estratégia Discord OAuth2)
+- **Sessões:** Express Session
+- **Frontend:** Templates EJS, Tailwind CSS 4.1
+
+### 🚀 Como Instalar e Rodar
+
 ```bash
-# Credenciais do seu Aplicativo no Discord
-DISCORD_CLIENT_ID=SEU_CLIENT_ID_AQUI
-DISCORD_CLIENT_SECRET=SEU_CLIENT_SECRET_AQUI
-DISCORD_BOT_TOKEN=O_TOKEN_DO_SEU_BOT_AQUI
+# 1. Clone o repositório
+git clone https://github.com/antoniomalheirs/Discord_DashBoard.git
+cd Discord_DashBoard
 
-# URL de Callback (a mesma que você configurou no portal do Discord)
-CALLBACK_URL=http://localhost:3000/auth/discord/callback
+# 2. Instale as dependências
+npm install
 
-# Banco de Dados MongoDB
-MONGODB_URI=SUA_URI_DE_CONEXAO_DO_MONGODB_AQUI
+# 3. Configure as variáveis de ambiente
+cp .env.example .env
+# Edite o .env com suas credenciais Discord OAuth2 e URI do MongoDB
 
-# Chave secreta para a sessão de usuário (pode ser qualquer string aleatória)
-SESSION_SECRET=COLOQUE_UMA_STRING_SECRETA_E_ALEATORIA_AQUI
-
-# Porta em que o servidor irá rodar
-PORT=3000
+# 4. Inicie o servidor
+npm start
 ```
-- `DISCORD_TOKEN`: Encontrado no seu aplicativo no [Portal de Desenvolvedores do Discord](https://discord.com/developers/applications), na seção "Bot".
-- `MONGODB_URI`: Obtida ao criar um cluster no [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
-- `YOUTUBE_API_KEY`: Gerada no [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
-- `TWITCH_CLIENT_ID` e `TWITCH_CLIENT_SECRET`: Obtidos ao registrar uma nova aplicação no [Console de Desenvolvedores da Twitch](https://dev.twitch.tv/console/apps).
 
-## ▶️ Executando o Projeto
-Após a instalação e configuração, execute o seguinte comando no diretório raiz do projeto (onde está o package.json):
-```bash
-node src/index.js
-```
-Ou, caso tenha configurado o main no seu package.json:
-```bash
-node .
-```
-Seu site estará disponível em http://localhost:3000.
-- Dica de Desenvolvimento: Use o nodemon para que o servidor reinicie automaticamente a cada alteração no código. Para isso, instale-o (npm install -g nodemon) e rode com nodemon src/index.js.
-  
-## 🤝 Como Contribuir
-Contribuições são o que tornam a comunidade de código aberto um lugar incrível para aprender, inspirar e criar. Qualquer contribuição que você fizer será muito apreciada.
-
- 1º Faça um Fork do projeto.
-
- 2º Crie uma nova Branch (git checkout -b feature/sua-feature-incrivel).
-
- 3º Faça o Commit de suas alterações (git commit -m 'Adiciona sua-feature-incrivel').
-
- 4º Faça o Push para a Branch (git push origin feature/sua-feature-incrivel).
-
- 5º Abra um Pull Request.
-
-## 📝 Licença
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+### 👨‍💻 Autor
+Feito por **[Antônio Malheiros](https://github.com/antoniomalheirs)**.

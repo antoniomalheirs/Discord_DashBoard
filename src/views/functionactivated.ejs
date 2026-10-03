@@ -1,91 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="/css/cssdir/out.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <title>Sucesso | Configuração</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
+  <title>Configuração Atualizada</title>
 </head>
 
-<body class="bg-[#0b0c10] min-h-screen flex items-center justify-center relative overflow-hidden">
+<body class="bg-transparent min-h-full">
 
-  <!-- Animated Background -->
-  <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-green-600/10 rounded-full blur-[120px] animate-pulse"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] animate-pulse"
-      style="animation-delay: 1s;"></div>
-  </div>
+  <div class="min-h-[70vh] flex items-center justify-center w-full py-4 px-2">
+    <!-- Main Card -->
+    <div class="panel-elevated p-6 sm:p-8 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md animate-fade-in-up relative overflow-hidden mx-auto">
 
-  <!-- Main Card -->
-  <div class="relative z-10 w-full max-w-lg px-4">
-    <div
-      class="bg-gray-900/60 backdrop-blur-xl border border-gray-700/50 rounded-3xl p-8 shadow-2xl transform transition-all hover:scale-[1.01] duration-500">
+    <!-- Success Icon -->
+    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-5 shadow-lg">
+      <i class="fa-solid fa-check text-2xl"></i>
+    </div>
 
-      <!-- Success Icon -->
-      <div
-        class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-700 shadow-lg shadow-green-900/30 mb-6">
-        <i class="fa-solid fa-check text-3xl text-white drop-shadow-md"></i>
+    <!-- Title -->
+    <div class="text-center mb-6">
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Sucesso</span>
+      </div>
+      <h3 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">Módulo Atualizado</h3>
+      <p class="text-slate-400 text-xs sm:text-sm mt-1">
+        A configuração do recurso <strong class="text-white"><%=nome%></strong> foi salva com sucesso.
+      </p>
+    </div>
+
+    <!-- Details -->
+    <div class="panel-elevated p-4 sm:p-5 rounded-2xl space-y-3 mb-6 text-xs">
+
+      <div class="flex items-center justify-between py-1.5 border-b border-white/[0.04]">
+        <span class="font-medium text-slate-400">Status</span>
+        <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold uppercase tracking-wider text-[11px]">
+          <%=info%>
+        </span>
       </div>
 
-      <!-- Title -->
-      <div class="text-center mb-8">
-        <h3 class="text-3xl font-black text-white mb-2 tracking-tight">Sucesso!</h3>
-        <p class="text-gray-400">
-          A configuração do módulo <strong
-            class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-400">
-            <%=nome%>
-          </strong> foi atualizada.
-        </p>
+      <div class="flex items-center justify-between py-1.5 border-b border-white/[0.04]">
+        <span class="font-medium text-slate-400">Servidor</span>
+        <span class="font-semibold text-white truncate max-w-[180px]">
+          <%=info2%>
+        </span>
       </div>
 
-      <!-- Details Grid -->
-      <div class="bg-gray-800/40 rounded-2xl p-6 border border-gray-700/30 mb-8 space-y-4">
-
-        <div class="flex items-center justify-between border-b border-gray-700/30 pb-3">
-          <span class="text-sm font-medium text-gray-400">Status</span>
-          <span
-            class="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wider">
-            <%=info%>
-          </span>
+      <div class="flex items-center justify-between py-1.5">
+        <span class="font-medium text-slate-400">Canal Vinculado</span>
+        <div class="flex items-center gap-1.5 text-indigo-300 font-mono text-[11px] bg-black/30 py-1 px-2.5 rounded-lg border border-white/[0.06]">
+          <i class="fa-solid fa-hashtag text-slate-500 text-[10px]"></i>
+          <span><%=info3%></span>
         </div>
-
-        <div class="flex items-center justify-between border-b border-gray-700/30 pb-3">
-          <span class="text-sm font-medium text-gray-400">Servidor</span>
-          <span class="text-sm font-bold text-gray-200">
-            <%=info2%>
-          </span>
-        </div>
-
-        <div class="flex items-center justify-between">
-          <span class="text-sm font-medium text-gray-400">Canal Alvo</span>
-          <div
-            class="flex items-center gap-2 text-gray-300 font-mono text-xs bg-gray-900 py-1.5 px-3 rounded-lg border border-gray-800">
-            <i class="fa-solid fa-hashtag text-gray-600"></i>
-            <%=info3%>
-          </div>
-        </div>
-
       </div>
 
-      <!-- Actions -->
-      <div class="flex justify-center">
-        <button
-          onclick="<%= (typeof backUrl !== 'undefined' && backUrl) ? `window.location.href='${backUrl}'` : 'window.history.back()' %>"
-          class="group flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-8 rounded-xl transition-all border border-gray-700 hover:border-gray-600 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-          <i class="fa-solid fa-arrow-left text-gray-400 group-hover:text-white transition-colors"></i>
-          <span>Voltar ao Painel</span>
-        </button>
-      </div>
+    </div>
 
+    <!-- Return Button -->
+    <div class="flex justify-center mb-6">
+      <button onclick="voltarAoPainel()"
+        class="btn-studio-primary !py-2.5 !px-8 text-xs sm:text-sm font-semibold rounded-xl flex items-center gap-2">
+        <i class="fa-solid fa-arrow-left text-xs"></i>
+        <span>Voltar ao Painel</span>
+      </button>
     </div>
 
     <!-- Footer Decor -->
-    <div class="mt-8 text-center">
-      <p class="text-xs text-gray-600 font-medium tracking-widest uppercase">Discord Manager Bot • System</p>
+    <div class="text-center">
+      <p class="text-[10px] text-slate-500 font-medium tracking-widest uppercase">Discord Bot Manager • Sistema</p>
     </div>
   </div>
+  </div>
+
+  <script>
+    function voltarAoPainel() {
+      <% if (typeof backUrl !== 'undefined' && backUrl) { %>
+        if (parent && parent.loadPanelUrl) {
+          parent.loadPanelUrl('<%= backUrl %>', true);
+        } else {
+          window.location.href = '<%= backUrl %>';
+        }
+      <% } else { %>
+        if (window.history.length > 1) {
+          window.history.back();
+        } else if (parent && parent.selectTopic) {
+          parent.selectTopic('server');
+        }
+      <% } %>
+    }
+  </script>
+
+  <style>
+    @keyframes fade-in-up {
+      0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-fade-in-up {
+      animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
 
 </body>
 

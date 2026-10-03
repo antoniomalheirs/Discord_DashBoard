@@ -1,37 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="../css/cssdir/out.css"
-      rel="stylesheet"
-    />
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <title>Discord Bot Dashboard</title>
-  </head>
-  <body class="bg-yellow-100 min-h-screen flex items-center justify-center">
-    
-    <div class="bg-purple-300 p-8 rounded-lg shadow-md w-full max-w-lg">
-      
-      
-      <div class="text-center">
-        <p class="text-sm font-semibold text-red-400">404</p>
-        <h1
-          class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl"
-        >
-          Erro encontrado  
-        </h1>
-        <p class="mt-6 text-base leading-7 text-gray-600">
-          Erro ao adicionar os dados solicitados ao banco de dados, Quase certeza que o nome do STREAMER está errado
-        </p>
-        <div class="mt-8 flex items-center justify-center gap-x-6">
-          <a href="#" class="text-sm font-semibold text-gray-900"
-            >Contact support <span aria-hidden="true">&rarr;</span></a
-          >
-        </div>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/css/cssdir/out.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
+  <title>Erro ao Adicionar | Discord Bot</title>
+</head>
+
+<body class="bg-transparent min-h-full">
+  <div class="min-h-[70vh] flex items-center justify-center w-full py-4 px-2">
+    <div class="panel-elevated p-6 sm:p-8 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md text-center animate-fade-in-up relative overflow-hidden mx-auto">
+
+      <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mx-auto mb-5 shadow-lg">
+        <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
       </div>
- 
+
+      <div class="mb-5">
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">
+          <span>Não Encontrado</span>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">Falha no Cadastro</h3>
+        <p class="text-slate-400 text-xs sm:text-sm mt-1">
+          Não foi possível encontrar ou cadastrar os dados solicitados no banco.
+        </p>
+      </div>
+
+      <div class="panel-elevated p-4 rounded-xl text-left border border-amber-500/20 bg-amber-500/[0.04] mb-6">
+        <p class="text-xs text-amber-300 font-medium flex items-start gap-2.5 leading-relaxed">
+          <i class="fa-solid fa-circle-info text-amber-400 mt-0.5 flex-shrink-0"></i>
+          <span>Verifique se o nome do streamer ou o ID do canal foram digitados corretamente sem espaços extras.</span>
+        </p>
+      </div>
+
+      <div class="flex justify-center">
+        <button onclick="goBackSafe()"
+          class="btn-studio-secondary !py-2.5 !px-6 text-xs sm:text-sm font-semibold rounded-xl flex items-center gap-2">
+          <i class="fa-solid fa-arrow-left text-xs"></i>
+          <span>Tentar Novamente</span>
+        </button>
+      </div>
+
     </div>
-  </body>
+  </div>
+
+  <script>
+    function goBackSafe() {
+      if (window.parent && window.parent !== window && window.parent.selectTopic) {
+        window.parent.selectTopic('server');
+      } else if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = '/dashboard';
+      }
+    }
+  </script>
+
+  <style>
+    @keyframes fade-in-up {
+      0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-fade-in-up {
+      animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</body>
+
 </html>

@@ -4,115 +4,332 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../css/cssdir/out.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>Funcionalidades - Manager Bot</title>
+    <link href="/css/cssdir/out.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
+    <title>Módulos & Funções — Manager Bot</title>
 </head>
 
-<body class="bg-[#0f1115] text-slate-200 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white antialiased overflow-x-hidden">
+<body class="bg-[#090a0f] text-slate-200 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white antialiased overflow-x-hidden">
     
     <!-- Background Decorators -->
-    <div class="fixed inset-0 z-0 pointer-events-none">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-[#0f1115] to-[#0f1115]"></div>
-        <div class="absolute -top-[40%] -right-[10%] w-[70%] h-[70%] rounded-full bg-indigo-600/10 blur-[120px]"></div>
-        <div class="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-purple-600/10 blur-[100px]"></div>
+    <div class="fixed inset-0 z-0 pointer-events-none bg-[#090a0f] bg-blueprint"></div>
+    <div class="fixed inset-0 z-0 pointer-events-none opacity-40">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-[radial-gradient(ellipse_at_top,_rgba(88,101,242,0.12),_transparent_70%)]"></div>
     </div>
 
     <!-- Navigation -->
-    <header class="fixed inset-x-0 top-0 z-50 bg-[#0f1115]/50 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+    <header class="fixed inset-x-0 top-0 z-50 bg-[#090a0f]/80 backdrop-blur-xl border-b border-white/[0.08] transition-all duration-300">
         <nav class="container mx-auto flex items-center justify-between p-4 lg:px-8" aria-label="Global">
             <div class="flex items-center gap-3">
-                <a href="/" class="relative group">
-                    <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-500"></div>
-                    <img class="relative h-10 w-10 rounded-2xl object-cover shadow-2xl" src="/res/serverIcon/boticon.jpg" alt="Bot Icon">
+                <a href="/" class="flex items-center gap-3 group">
+                    <div class="relative w-9 h-9 rounded-xl overflow-hidden border border-white/10 shadow-sm group-hover:border-indigo-500/50 transition-colors">
+                        <img class="w-full h-full object-cover" src="/res/serverIcon/boticon.jpg" alt="Bot Icon">
+                    </div>
+                    <span class="font-bold text-base sm:text-lg tracking-tight text-white group-hover:text-slate-200 transition-colors">Manager Bot</span>
                 </a>
-                <span class="font-bold text-xl tracking-tight text-white/90">Manager Bot</span>
             </div>
             
-            <div class="hidden lg:flex lg:gap-x-10">
-                <a href="/auth/about" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 pb-1">Sobre</a>
-                <a href="/auth/docs" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 pb-1">Documentação</a>
-                <a href="/auth/funcutils" class="text-sm font-semibold text-white transition-colors duration-200 border-b-2 border-indigo-500 pb-1">Utilidades & Funções</a>
-                <a href="/auth/devs" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 pb-1">Devs</a>
+            <div class="hidden lg:flex items-center lg:gap-x-1 bg-white/[0.03] border border-white/[0.08] px-3 py-1.5 rounded-full">
+                <a href="/auth/docs" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.05] transition-all duration-150">Documentação</a>
+                <a href="/auth/funcutils" class="px-4 py-1.5 rounded-full text-xs font-semibold text-white bg-white/[0.08] transition-all duration-150">Módulos & Funções</a>
+                <a href="/auth/about" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.05] transition-all duration-150">Arquitetura</a>
+                <a href="/auth/devs" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.05] transition-all duration-150">Comunidade</a>
             </div>
 
-            <div class="flex flex-1 justify-end">
-                <a href="/auth/discord" class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white transition-all duration-200 bg-indigo-600/80 border border-indigo-500/50 rounded-full hover:bg-indigo-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#0f1115]">
-                    <span>Painel</span>
+            <div class="flex items-center gap-3">
+                <a href="/auth/discord" class="btn-studio-primary text-xs sm:text-sm !py-2 sm:!py-2.5 !px-4 sm:!px-5 rounded-xl">
+                    <i class="fa-brands fa-discord text-base"></i>
+                    <span>Acessar Painel</span>
                 </a>
+                <button type="button" onclick="toggleNavMenu()" class="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white" aria-label="Menu">
+                    <i id="nav-toggle-icon" class="fa-solid fa-bars text-lg"></i>
+                </button>
             </div>
         </nav>
+        <div id="mobile-nav-dropdown" class="hidden lg:hidden border-t border-white/5 bg-[#090a0f]/95 backdrop-blur-2xl px-6 py-5 space-y-2">
+            <a href="/auth/docs" class="block py-2.5 px-4 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all">Documentação</a>
+            <a href="/auth/funcutils" class="block py-2.5 px-4 rounded-xl text-sm font-medium text-white bg-white/[0.08] transition-all">Módulos & Funções</a>
+            <a href="/auth/about" class="block py-2.5 px-4 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all">Arquitetura</a>
+            <a href="/auth/devs" class="block py-2.5 px-4 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all">Comunidade</a>
+        </div>
     </header>
 
     <!-- Content -->
-    <main class="relative z-10 flex-grow pt-32 pb-20 px-6 lg:px-8">
-        <div class="mx-auto max-w-4xl animate-fade-in-up">
-            <div class="text-center mb-16">
-                <div class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-widest mb-6">
-                    A Divina Liricidade
+    <main class="relative z-10 flex-grow pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+        <div class="mb-12 border-b border-indigo-500/20 pb-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-slate-300 text-xs font-mono mb-4">
+                <i class="fa-solid fa-layer-group text-indigo-400"></i>
+                <span>Catálogo de Recursos & Módulos</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+                Funcionalidades & Automações
+            </h1>
+            <p class="text-sm sm:text-base text-slate-400 max-w-2xl leading-relaxed">
+                Explore as capacidades do bot para transmissões, auditoria granular de moderação e economia da comunidade.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- YouTube Hub -->
+            <div class="panel-tone-red laser-edge-red rounded-2xl p-6 sm:p-7 transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
+                        <i class="fa-brands fa-youtube text-base"></i>
+                    </div>
+                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-semibold uppercase tracking-wider">Ativo</span>
                 </div>
-                <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 mb-6">
-                    Funções & Utilidades
-                </h1>
-                <p class="text-xl text-slate-400 max-w-2xl mx-auto">
-                    Conheça o poder do nosso sistema.
+                <h3 class="text-base font-bold text-white mb-2">YouTube Hub</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                    Monitora múltiplos canais do YouTube sem recarregar a tela. Suporta adição direta por @handle ou Channel ID com consulta direta de 1 cota de API.
                 </p>
+                <div class="pt-3 border-t border-slate-800/80 flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+                    <i class="fa-solid fa-check text-indigo-400"></i>
+                    <span>Tabela com remoção instantânea em 1 clique</span>
+                </div>
             </div>
 
-            <div class="space-y-8">
-                <!-- Functions Section -->
-                <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-8 md:p-10 backdrop-blur-md shadow-2xl relative overflow-hidden group hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500">
-                    <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                        <i class="fa-solid fa-layer-group text-indigo-400"></i> Funções Principais
-                    </h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-black/30 border border-white/5 rounded-2xl p-6 shadow-inner relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-2xl"></div>
-                            <i class="fa-brands fa-youtube text-3xl text-red-500 mb-4 block relative z-10"></i>
-                            <h3 class="text-lg font-bold text-white mb-2 relative z-10">Notificações do YouTube</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed relative z-10">
-                                Nosso bot oferece a capacidade de notificar os usuários sobre novos vídeos publicados. Assim que um novo vídeo é detectado em um canal monitorado, uma notificação estruturada é enviada para o canal de texto designado em seu servidor Discord.
-                            </p>
-                        </div>
+            <!-- Twitch Hub -->
+            <div class="panel-tone-purple laser-edge-purple rounded-2xl p-6 sm:p-7 transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                        <i class="fa-brands fa-twitch text-base"></i>
+                    </div>
+                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-semibold uppercase tracking-wider">Ativo</span>
+                </div>
+                <h3 class="text-base font-bold text-white mb-2">Twitch Hub</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                    Avisos imediatos de transmissões ao vivo. Cadastre streamers por nome de usuário e selecione o canal de anúncios com preview em tempo real.
+                </p>
+                <div class="pt-3 border-t border-slate-800/80 flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+                    <i class="fa-solid fa-check text-indigo-400"></i>
+                    <span>Master toggle liga/desliga assíncrono</span>
+                </div>
+            </div>
 
-                        <div class="bg-black/30 border border-white/5 rounded-2xl p-6 shadow-inner relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"></div>
-                            <i class="fa-brands fa-twitch text-3xl text-purple-400 mb-4 block relative z-10"></i>
-                            <h3 class="text-lg font-bold text-white mb-2 relative z-10">Notificações da Twitch</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed relative z-10">
-                                Além de vídeos, nosso bot também informa sua comunidade sobre transmissões ao vivo na Twitch. Quando um streamer monitorado inicia uma live, enviamos o link e o título imediatamente para engajar sua audiência.
-                            </p>
-                        </div>
+            <!-- Central de Auditoria -->
+            <div class="panel-tone-indigo laser-edge-indigo rounded-2xl p-6 sm:p-7 transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                        <i class="fa-solid fa-shield-halved text-base"></i>
+                    </div>
+                    <span class="px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-semibold uppercase tracking-wider">11 Eventos</span>
+                </div>
+                <h3 class="text-base font-bold text-white mb-2">Central de Logs & Auditoria</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                    Rastreamento cirúrgico de atividades no servidor: deleção e edição de mensagens, movimentação em canais de voz, criação de cargos, bans e convites.
+                </p>
+                <div class="pt-3 border-t border-slate-800/80 flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+                    <i class="fa-solid fa-check text-indigo-400"></i>
+                    <span>Desativação limpa sem exigência de canal</span>
+                </div>
+            </div>
+
+            <!-- Economia & Comunidade -->
+            <div class="panel-tone-emerald laser-edge-emerald rounded-2xl p-6 sm:p-7 transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                        <i class="fa-solid fa-coins text-base"></i>
+                    </div>
+                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-semibold uppercase tracking-wider">Interativo</span>
+                </div>
+                <h3 class="text-base font-bold text-white mb-2">Comunidade & Economia</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                    Painel financeiro integrado com cálculo automático de Riqueza Total (Carteira + Banco), busca instantânea de membros e ranking de atividade.
+                </p>
+                <div class="pt-3 border-t border-slate-800/80 flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+                    <i class="fa-solid fa-check text-indigo-400"></i>
+                    <span>Edição in-place de saldos com Toasts</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Interactive Slash Commands Catalog -->
+        <div class="mt-16 pt-12 border-t border-white/[0.08] relative z-10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono mb-2">
+                        <i class="fa-solid fa-terminal text-[10px]"></i>
+                        <span>Slash Commands</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                        Catálogo de Comandos Integrados
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1">
+                        Comandos disponíveis no Discord para administradores e membros. Clique para copiar.
+                    </p>
+                </div>
+
+                <!-- Category Segmented Filters -->
+                <div class="hardware-segmented-control self-start sm:self-auto overflow-x-auto max-w-full" id="cmdCategoryControl">
+                    <button type="button" onclick="filterSlashCommands('all', this)" class="hardware-segmented-item active">
+                        <span>Todos (6)</span>
+                    </button>
+                    <button type="button" onclick="filterSlashCommands('economia', this)" class="hardware-segmented-item">
+                        <i class="fa-solid fa-coins text-[10px] text-emerald-400"></i>
+                        <span>Economia (2)</span>
+                    </button>
+                    <button type="button" onclick="filterSlashCommands('jogos', this)" class="hardware-segmented-item">
+                        <i class="fa-solid fa-dice text-[10px] text-amber-400"></i>
+                        <span>Jogos (1)</span>
+                    </button>
+                    <button type="button" onclick="filterSlashCommands('alertas', this)" class="hardware-segmented-item">
+                        <i class="fa-solid fa-bell text-[10px] text-rose-400"></i>
+                        <span>Alertas (1)</span>
+                    </button>
+                    <button type="button" onclick="filterSlashCommands('sistema', this)" class="hardware-segmented-item">
+                        <i class="fa-solid fa-sliders text-[10px] text-cyan-400"></i>
+                        <span>Geral & Sis (2)</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="commandsGrid">
+                
+                <!-- Cmd 1: /saldo -->
+                <div class="cmd-card panel-elevated p-4 rounded-xl flex flex-col justify-between group hover:border-white/[0.14] transition-all" data-category="economia">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <kbd class="kbd-studio text-xs text-white">/saldo</kbd>
+                        <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Economia</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4">Consulta o saldo da carteira, conta bancária e patrimônio líquido de qualquer usuário.</p>
+                    <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between mt-auto">
+                        <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono text-[9px] font-bold tracking-wider uppercase">EVERYONE</span>
+                        <button type="button" onclick="copySlashCommand('/saldo', this)" class="text-xs text-indigo-400 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer">
+                            <i class="fa-regular fa-copy text-[11px]"></i>
+                            <span>Copiar</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Utilities Section -->
-                <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-8 md:p-10 backdrop-blur-md shadow-2xl relative overflow-hidden group hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500">
-                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                        <i class="fa-solid fa-wrench text-indigo-400"></i> Utilidades e Comandos
-                    </h2>
-                    
-                    <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed text-lg">
-                        <p class="italic text-slate-500">
-                            Novas utilidades e módulos avançados estão em desenvolvimento. Fique de olho nas futuras atualizações!
-                        </p>
+                <!-- Cmd 2: /poker -->
+                <div class="cmd-card panel-elevated p-4 rounded-xl flex flex-col justify-between group hover:border-white/[0.14] transition-all" data-category="jogos">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <kbd class="kbd-studio text-xs text-white">/poker</kbd>
+                        <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">Jogos</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4">Inicia uma mesa de Texas Hold'em interativa no canal de texto com apostas em moedas.</p>
+                    <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between mt-auto">
+                        <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono text-[9px] font-bold tracking-wider uppercase">EVERYONE</span>
+                        <button type="button" onclick="copySlashCommand('/poker', this)" class="text-xs text-amber-400 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer">
+                            <i class="fa-regular fa-copy text-[11px]"></i>
+                            <span>Copiar</span>
+                        </button>
                     </div>
                 </div>
+
+                <!-- Cmd 3: /transferir -->
+                <div class="cmd-card panel-elevated p-4 rounded-xl flex flex-col justify-between group hover:border-white/[0.14] transition-all" data-category="economia">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <kbd class="kbd-studio text-xs text-white">/transferir</kbd>
+                        <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Economia</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4">Transfere moedas da sua carteira diretamente para outro membro do servidor.</p>
+                    <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between mt-auto">
+                        <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono text-[9px] font-bold tracking-wider uppercase">EVERYONE</span>
+                        <button type="button" onclick="copySlashCommand('/transferir @usuario valor', this)" class="text-xs text-indigo-400 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer">
+                            <i class="fa-regular fa-copy text-[11px]"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cmd 4: /status -->
+                <div class="cmd-card panel-elevated p-4 rounded-xl flex flex-col justify-between group hover:border-white/[0.14] transition-all" data-category="sistema">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <kbd class="kbd-studio text-xs text-white">/status</kbd>
+                        <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">Sistema</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4">Exibe métricas de telemetria, ping do WebSocket, uptime e versão do bot.</p>
+                    <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between mt-auto">
+                        <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono text-[9px] font-bold tracking-wider uppercase">EVERYONE</span>
+                        <button type="button" onclick="copySlashCommand('/status', this)" class="text-xs text-cyan-400 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer">
+                            <i class="fa-regular fa-copy text-[11px]"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cmd 5: /ajuda -->
+                <div class="cmd-card panel-elevated p-4 rounded-xl flex flex-col justify-between group hover:border-white/[0.14] transition-all" data-category="sistema">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <kbd class="kbd-studio text-xs text-white">/ajuda</kbd>
+                        <span class="text-[10px] font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">Geral</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4">Lista detalhada de instruções e recursos do bot com link para o dashboard.</p>
+                    <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between mt-auto">
+                        <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-mono text-[9px] font-bold tracking-wider uppercase">EVERYONE</span>
+                        <button type="button" onclick="copySlashCommand('/ajuda', this)" class="text-xs text-purple-400 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer">
+                            <i class="fa-regular fa-copy text-[11px]"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cmd 6: /notificar -->
+                <div class="cmd-card panel-elevated p-4 rounded-xl flex flex-col justify-between group hover:border-white/[0.14] transition-all" data-category="alertas">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <kbd class="kbd-studio text-xs text-white">/notificar</kbd>
+                        <span class="text-[10px] font-mono text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">Alertas</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4">Dispara teste de webhook ou reenvia último alerta dos Hubs de YouTube e Twitch.</p>
+                    <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between mt-auto">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 font-mono text-[9px] font-bold tracking-wider uppercase">ADMINISTRATOR</span>
+                        <button type="button" onclick="copySlashCommand('/notificar test', this)" class="text-xs text-rose-400 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer">
+                            <i class="fa-regular fa-copy text-[11px]"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
+
     </main>
 
-    <style>
-        @keyframes fade-in-up {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+    <!-- Footer -->
+    <footer class="border-t border-white/[0.06] py-8 text-center text-xs text-slate-500">
+        <p>Manager Bot © 2026 • Catálogo Oficial de Módulos</p>
+    </footer>
+
+    <script>
+        function toggleNavMenu() {
+            const menu = document.getElementById("mobile-nav-dropdown");
+            const icon = document.getElementById("nav-toggle-icon");
+            if (!menu || !icon) return;
+            const isHidden = menu.classList.contains("hidden");
+            if (isHidden) {
+                menu.classList.remove("hidden");
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-xmark");
+            } else {
+                menu.classList.add("hidden");
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
+            }
         }
-        .animate-fade-in-up {
-            animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
+
+        function filterSlashCommands(category, btn) {
+            document.querySelectorAll('#cmdCategoryControl .hardware-segmented-item').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            const cards = document.querySelectorAll('.cmd-card');
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-category');
+                card.style.display = (category === 'all' || cat === category) ? '' : 'none';
+            });
         }
-    </style>
+
+        function copySlashCommand(cmd, btn) {
+            navigator.clipboard.writeText(cmd).then(() => {
+                const span = btn.querySelector('span');
+                const orig = span ? span.textContent : '';
+                if (span) span.textContent = 'Copiado!';
+                setTimeout(() => {
+                    if (span) span.textContent = orig;
+                }, 1500);
+            }).catch(() => {});
+        }
+    </script>
 </body>
 </html>

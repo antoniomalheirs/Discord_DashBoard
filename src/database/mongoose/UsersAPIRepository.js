@@ -30,11 +30,11 @@ module.exports = class UserRepository extends Repository {
   }
 
   findOne(codigouser, projection) {
-    return this.model.findOne({ codigouser }, projection).then(this.parse);
+    return this.model.findOne({ codigouser: String(codigouser) }, projection).then(this.parse);
   }
 
   findByUsername(username, projection) {
-    return this.model.findOne({ username }, projection).then(this.parse);
+    return this.model.findOne({ username: String(username) }, projection).then(this.parse);
   }
 
   get size() {
@@ -43,8 +43,8 @@ module.exports = class UserRepository extends Repository {
 
   get(codigouser, projection) {
     return this.model
-      .findOne({ codigouser }, projection)
-      .then((entity) => entity ? this.parse(entity) : this.add({ codigouser }));
+      .findOne({ codigouser: String(codigouser) }, projection)
+      .then((entity) => entity ? this.parse(entity) : this.add({ codigouser: String(codigouser) }));
   }
   
 
@@ -53,16 +53,16 @@ module.exports = class UserRepository extends Repository {
   }
 
   remove(codigouser) {
-    return this.model.findOneAndDelete({ codigouser }).then(this.parse);
+    return this.model.findOneAndDelete({ codigouser: String(codigouser) }).then(this.parse);
   }
 
   update(codigouser, entity) {
-    return this.model.replaceOne({ codigouser }, entity);
+    return this.model.updateOne({ codigouser: String(codigouser) }, { $set: entity });
   }
   
 
   async verify(codigouser) {
-    return !!(await this.model.findOne({ codigouser }));
+    return !!(await this.model.findOne({ codigouser: String(codigouser) }));
   }
 
   findAll(projection) {

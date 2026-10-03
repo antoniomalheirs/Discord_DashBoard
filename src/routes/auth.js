@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const AuthController = require("../controllers/AuthController");
+const { authLimiter } = require("../middlewares/securityMiddleware");
 
 // =========================
 // 🔑 Rotas de Autenticação
 // =========================
-router.get("/discord", AuthController.login);
-router.get("/discord/callback", AuthController.callback);
+router.get("/discord", authLimiter, AuthController.login);
+router.get("/discord/callback", authLimiter, AuthController.callback);
 router.get("/logout", AuthController.logout);
 
 // =========================

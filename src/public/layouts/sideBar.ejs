@@ -3,88 +3,86 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link href="../css/cssdir/out.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="/css/cssdir/out.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sidebar</title>
 </head>
 
-<body class="bg-transparent font-sans text-gray-300">
+<body class="bg-transparent font-sans text-slate-300">
 
   <!-- MAIN CONTAINER -->
-  <div class="flex h-screen w-full">
+  <div class="flex h-full w-auto select-none bg-[#0c0e14]">
 
     <!-- 1. PRIMARY SIDEBAR (Icon Rail) -->
     <nav id="sidebar"
-      class="w-20 bg-[#0b0c10]/90 backdrop-blur-xl flex flex-col items-center py-6 border-r border-white/5 z-50 shadow-2xl h-screen fixed left-0 top-0 overflow-y-auto scrollbar-hide">
+      class="w-20 bg-[#08090d] flex flex-col items-center py-6 border-r border-slate-800/80 z-20 shadow-xl h-full overflow-y-auto scrollbar-hide flex-shrink-0">
       
       <!-- Home Icon -->
       <div class="relative group mb-6">
-        <div class="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-1 bg-indigo-500 rounded-r-md transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-[0_0_15px_rgba(99,102,241,0.8)]"></div>
         <div id="home" onclick="handleIconClick('home')"
-          class="h-12 w-12 rounded-[20px] group-hover:rounded-[14px] bg-white/5 group-hover:bg-gradient-to-br group-hover:from-indigo-500 group-hover:to-purple-600 transition-all duration-300 cursor-pointer flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] border border-white/10 group-hover:border-transparent transform group-hover:-translate-y-1">
-          <i class="fa-solid fa-house text-xl text-slate-300 group-hover:text-white transition-colors"></i>
+          class="rail-icon-btn rail-icon-cnc active h-11 w-11 rounded-xl cursor-pointer flex items-center justify-center shadow-sm active:scale-95">
+          <i class="fa-solid fa-house text-base"></i>
         </div>
         <!-- Tooltip -->
-        <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#1a1d24] text-white text-xs font-bold px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-white/10 whitespace-nowrap z-50 translate-x-2 group-hover:translate-x-0">
-          Início
+        <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#0d101a] text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none shadow-2xl border border-indigo-500/25 whitespace-nowrap z-50 translate-x-1 group-hover:translate-x-0">
+          Visão Geral
         </div>
       </div>
 
-      <div class="w-8 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6"></div>
+      <div class="w-8 h-[1px] bg-slate-800/80 mb-6"></div>
 
       <!-- Functions Group -->
-      <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-4">
         
         <!-- Modules Icon -->
         <div class="relative group">
-          <div class="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-1 bg-emerald-500 rounded-r-md transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-[0_0_15px_rgba(16,185,129,0.8)]"></div>
           <div id="functions" onclick="handleIconClick('functions')"
-            class="h-12 w-12 rounded-[20px] group-hover:rounded-[14px] bg-white/5 group-hover:bg-gradient-to-br group-hover:from-emerald-400 group-hover:to-teal-600 transition-all duration-300 cursor-pointer flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] border border-white/10 group-hover:border-transparent transform group-hover:-translate-y-1">
-            <i class="fa-solid fa-cube text-xl text-slate-300 group-hover:text-white transition-colors"></i>
+            class="rail-icon-btn rail-icon-cnc h-11 w-11 rounded-xl cursor-pointer flex items-center justify-center shadow-sm active:scale-95">
+            <i class="fa-solid fa-cube text-base"></i>
           </div>
-          <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#1a1d24] text-white text-xs font-bold px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-white/10 whitespace-nowrap z-50 translate-x-2 group-hover:translate-x-0">
-            Módulos
-          </div>
-        </div>
-
-        <!-- Database Icon -->
-        <div class="relative group">
-          <div class="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-1 bg-amber-500 rounded-r-md transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-[0_0_15px_rgba(245,158,11,0.8)]"></div>
-          <div id="guildDB" onclick="handleIconClick('guildDB')"
-            class="h-12 w-12 rounded-[20px] group-hover:rounded-[14px] bg-white/5 group-hover:bg-gradient-to-br group-hover:from-amber-400 group-hover:to-orange-600 transition-all duration-300 cursor-pointer flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(245,158,11,0.5)] border border-white/10 group-hover:border-transparent transform group-hover:-translate-y-1">
-            <i class="fa-solid fa-database text-xl text-slate-300 group-hover:text-white transition-colors"></i>
-          </div>
-          <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#1a1d24] text-white text-xs font-bold px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-white/10 whitespace-nowrap z-50 translate-x-2 group-hover:translate-x-0">
-            Banco de Dados
+          <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#0d101a] text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none shadow-2xl border border-indigo-500/25 whitespace-nowrap z-50 translate-x-1 group-hover:translate-x-0">
+            Módulos & Hubs
           </div>
         </div>
 
-        <!-- Server Info Icon -->
+        <!-- Server Info / Community Icon -->
         <div class="relative group">
-          <div class="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-1 bg-sky-500 rounded-r-md transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-[0_0_15px_rgba(14,165,233,0.8)]"></div>
           <div id="serverInfos" onclick="handleIconClick('serverInfos')"
-            class="h-12 w-12 rounded-[20px] group-hover:rounded-[14px] bg-white/5 group-hover:bg-gradient-to-br group-hover:from-sky-400 group-hover:to-blue-600 transition-all duration-300 cursor-pointer flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(14,165,233,0.5)] border border-white/10 group-hover:border-transparent transform group-hover:-translate-y-1">
-            <i class="fa-solid fa-users text-xl text-slate-300 group-hover:text-white transition-colors"></i>
+            class="rail-icon-btn rail-icon-cnc h-11 w-11 rounded-xl cursor-pointer flex items-center justify-center shadow-sm active:scale-95">
+            <i class="fa-solid fa-users text-base"></i>
           </div>
-          <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#1a1d24] text-white text-xs font-bold px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-white/10 whitespace-nowrap z-50 translate-x-2 group-hover:translate-x-0">
-            Comunidade
+          <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#0d101a] text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none shadow-2xl border border-indigo-500/25 whitespace-nowrap z-50 translate-x-1 group-hover:translate-x-0">
+            Comunidade & Economia
           </div>
         </div>
 
       </div>
 
-      <div class="w-8 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent my-6"></div>
-
-      <!-- Config Icon -->
-      <div class="relative group">
-        <div class="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-1 bg-slate-400 rounded-r-md transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-[0_0_15px_rgba(148,163,184,0.8)]"></div>
-        <div id="config" onclick="handleIconClick('config')"
-          class="h-12 w-12 rounded-[20px] group-hover:rounded-[14px] bg-white/5 group-hover:bg-gradient-to-br group-hover:from-slate-400 group-hover:to-slate-600 transition-all duration-300 cursor-pointer flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(148,163,184,0.5)] border border-white/10 group-hover:border-transparent transform group-hover:-translate-y-1">
-          <i class="fa-solid fa-gear text-xl text-slate-300 group-hover:text-white transition-colors group-hover:animate-spin-slow"></i>
+      <!-- Bottom Section with Guild Quick Switcher & Server List -->
+      <div class="mt-auto flex flex-col items-center gap-3 pt-4 border-t border-slate-800/80 w-full">
+        <!-- Quick Switch Guild Icon -->
+        <div class="relative group">
+          <button type="button" onclick="if(window.parent && window.parent.toggleServerSwitcher) window.parent.toggleServerSwitcher(); else if(window.toggleServerSwitcher) window.toggleServerSwitcher();"
+            class="rail-icon-btn rail-icon-cnc h-11 w-11 rounded-xl cursor-pointer flex items-center justify-center shadow-sm active:scale-95 text-indigo-400 hover:text-white"
+            title="Alternar Servidor">
+            <i class="fa-solid fa-server text-sm"></i>
+          </button>
+          <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#0d101a] text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none shadow-2xl border border-indigo-500/25 whitespace-nowrap z-50 translate-x-1 group-hover:translate-x-0">
+            Alternar Servidor (Quick Switch)
+          </div>
         </div>
-        <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#1a1d24] text-white text-xs font-bold px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-white/10 whitespace-nowrap z-50 translate-x-2 group-hover:translate-x-0">
-          Configurações
+
+        <!-- All Servers Dashboard Icon -->
+        <div class="relative group">
+          <a href="/dashboard" target="_top"
+            class="rail-icon-btn rail-icon-cnc h-11 w-11 rounded-xl cursor-pointer flex items-center justify-center shadow-sm active:scale-95 text-slate-400 hover:text-white"
+            title="Lista de Servidores">
+            <i class="fa-solid fa-layer-group text-sm"></i>
+          </a>
+          <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-[#0d101a] text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none shadow-2xl border border-indigo-500/25 whitespace-nowrap z-50 translate-x-1 group-hover:translate-x-0">
+            Todos os Servidores
+          </div>
         </div>
       </div>
 
@@ -93,43 +91,79 @@
 
     <!-- 2. SECONDARY SIDEBAR (Context Actions) -->
     <aside id="server-bar"
-      class="w-64 bg-[#0f1115]/95 backdrop-blur-3xl flex flex-col h-screen fixed left-20 top-0 border-r border-white/5 shadow-2xl z-40 overflow-y-auto">
+      class="w-64 max-w-[calc(100vw-5rem)] bg-[#0c0e14] flex flex-col h-full border-r border-slate-800/80 shadow-xl z-10 flex-shrink-0">
 
       <!-- Server Header -->
-      <div class="h-16 flex items-center px-5 border-b border-white/5 bg-gradient-to-r from-indigo-500/10 to-transparent sticky top-0 z-10 backdrop-blur-md">
-        <h5 id="server-name" class="text-white font-bold text-lg truncate drop-shadow-sm tracking-wide">
+      <div class="h-16 sm:h-20 flex items-center justify-between px-5 border-b border-slate-800/80 bg-[#0c0e14] flex-shrink-0">
+        <h5 id="server-name" class="text-white font-bold text-sm sm:text-base truncate tracking-tight">
           Carregando...
         </h5>
+        <button type="button" onclick="if(window.closeSidebar) window.closeSidebar(); else if(window.closeMobileSidebar) window.closeMobileSidebar();" 
+          class="lg:hidden p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-indigo-500/20 text-slate-400 hover:text-white transition-colors" aria-label="Fechar menu">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
       </div>
 
-      <!-- Dynamic Content Area -->
-      <div class="p-4 space-y-1">
+      <!-- Quick Submenu Filter -->
+      <div class="px-3.5 pt-3 pb-1 flex-shrink-0">
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-500">
+            <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+          </div>
+          <input type="text" id="sidebarSubmenuSearch" placeholder="Filtrar menu..." oninput="filterSidebarSubmenus(this.value)"
+            class="w-full bg-black/40 border border-indigo-500/20 focus:border-indigo-500/50 rounded-xl pl-8 pr-7 py-1.5 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none transition-colors font-medium">
+          <button type="button" id="sidebarSearchClear" onclick="clearSidebarSearch()" class="hidden absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-500 hover:text-white cursor-pointer">
+            <i class="fa-solid fa-xmark text-[10px]"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Content Area -->
+      <div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-3.5 pr-6 space-y-2 bg-[#0c0e14] scrollbar-hide" id="sidebar-scrollable-content">
 
         <!-- HOME SECTION -->
         <div id="home-sidebar" class="sidebar-section">
-          <div class="text-[10px] font-bold text-indigo-400/80 uppercase px-3 mb-2 tracking-widest mt-2">Visão Geral</div>
+          <div class="text-[10px] font-bold text-indigo-400/90 uppercase px-3 mb-2.5 tracking-wider mt-2 flex items-center justify-between">
+            <span>Visão Geral</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+          </div>
 
           <div class="menu-item-group mb-2">
             <div
-              class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 text-slate-300 hover:text-white group border border-transparent hover:border-white/10"
+              class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer text-slate-300 hover:text-white group"
               onclick="toggleDropdown('guild')">
-              <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center group-hover:bg-indigo-500/20 transition-colors">
-                  <i class="fa-solid fa-chart-line text-indigo-400 text-sm"></i>
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center group-hover:bg-indigo-500/20 group-hover:scale-105 transition-all">
+                  <i class="fa-solid fa-chart-pie text-indigo-400 text-xs"></i>
                 </div>
-                <span class="font-semibold text-sm">Estatísticas</span>
+                <span class="font-semibold text-xs sm:text-sm">Painel do Servidor</span>
               </div>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300 group-hover:text-slate-300" id="guild-chevron"></i>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200 group-hover:text-slate-300 dropdown-chevron" id="guild-chevron"></i>
             </div>
-            <div id="guild-dropdown" class="pl-5 mt-1 ml-3 border-l-2 border-indigo-500/20 space-y-1 overflow-hidden transition-all duration-300">
-              <div class="menu-subitem group" onclick="selectTopic('server')">
-                <span class="relative z-10">Dashboard</span>
+            <div id="guild-dropdown" class="pl-2 mt-1.5 ml-3 border-l border-indigo-500/20 space-y-1.5 overflow-hidden transition-all duration-200">
+              <div class="menu-subitem group" data-topic="server" onclick="selectTopic('server')">
+                <div class="subitem-icon text-indigo-400">
+                  <i class="fa-solid fa-server text-[11px]"></i>
+                </div>
+                <span class="truncate">Estatísticas Gerais</span>
+                <span class="active-indicator"></span>
               </div>
-              <div class="menu-subitem group" onclick="selectTopic('status')">
-                <span class="relative z-10">Status do Bot</span>
+              <div class="menu-subitem group" data-topic="statesinfo" onclick="selectTopic('statesinfo')">
+                <div class="subitem-icon text-blue-400">
+                  <i class="fa-solid fa-list-check text-[11px]"></i>
+                </div>
+                <span class="truncate">Central de Logs</span>
+                <div class="ml-auto flex items-center gap-1.5 flex-shrink-0">
+                  <span class="sidebar-badge-logs hidden text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20"></span>
+                  <span class="active-indicator !ml-0"></span>
+                </div>
               </div>
-              <div class="menu-subitem group" onclick="selectTopic('statesinfo')">
-                <span class="relative z-10">Módulos Ativos</span>
+              <div class="menu-subitem group" data-topic="status" onclick="selectTopic('status')">
+                <div class="subitem-icon text-emerald-400">
+                  <i class="fa-solid fa-heart-pulse text-[11px]"></i>
+                </div>
+                <span class="truncate">Status da Infra</span>
+                <span class="active-indicator"></span>
               </div>
             </div>
           </div>
@@ -137,241 +171,282 @@
 
         <!-- FUNCTIONS SECTION -->
         <div id="functions-sidebar" class="sidebar-section hidden">
-          <div class="text-[10px] font-bold text-emerald-400/80 uppercase px-3 mb-2 tracking-widest mt-2">Features</div>
+          <div class="text-[10px] font-bold text-emerald-400/90 uppercase px-3 mb-2.5 tracking-wider mt-2 flex items-center justify-between">
+            <span>Módulos do Servidor</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          </div>
 
-          <!-- Socials -->
+          <!-- Transmissões & Alertas -->
           <div class="menu-item-group mb-2">
-            <div class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 text-slate-300 hover:text-white group border border-transparent hover:border-white/10"
+            <div class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer text-slate-300 hover:text-white group"
               onclick="toggleDropdown('funcs')">
-              <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
-                  <i class="fa-solid fa-share-nodes text-emerald-400 text-sm"></i>
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500/20 group-hover:scale-105 transition-all">
+                  <i class="fa-solid fa-tower-broadcast text-emerald-400 text-xs"></i>
                 </div>
-                <span class="font-semibold text-sm">Notificações</span>
+                <span class="font-semibold text-xs sm:text-sm">Transmissões & Hubs</span>
               </div>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300 group-hover:text-slate-300" id="funcs-chevron"></i>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200 group-hover:text-slate-300 dropdown-chevron" id="funcs-chevron"></i>
             </div>
-            <div id="funcs-dropdown" class="pl-5 mt-1 ml-3 border-l-2 border-emerald-500/20 space-y-1 overflow-hidden transition-all duration-300">
-              <div class="menu-subitem group" onclick="selectTopic('funcyoutube')">
-                <span class="relative z-10 flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> YouTube</span>
+            <div id="funcs-dropdown" class="pl-2 mt-1.5 ml-3 border-l border-emerald-500/20 space-y-1.5 overflow-hidden transition-all duration-200">
+              <div class="menu-subitem group" data-topic="funcyoutube" onclick="selectTopic('funcyoutube')">
+                <div class="subitem-icon text-red-500">
+                  <i class="fa-brands fa-youtube text-[11px]"></i>
+                </div>
+                <span class="truncate">YouTube Hub</span>
+                <div class="ml-auto flex items-center gap-1.5 flex-shrink-0">
+                  <span class="sidebar-dot-youtube w-1.5 h-1.5 rounded-full bg-slate-600" title="Desativado"></span>
+                  <span class="active-indicator !ml-0"></span>
+                </div>
               </div>
-              <div class="menu-subitem group" onclick="selectTopic('functwitch')">
-                <span class="relative z-10 flex items-center gap-2"><i class="fa-brands fa-twitch text-purple-500"></i> Twitch</span>
+              <div class="menu-subitem group" data-topic="functwitch" onclick="selectTopic('functwitch')">
+                <div class="subitem-icon text-purple-400">
+                  <i class="fa-brands fa-twitch text-[11px]"></i>
+                </div>
+                <span class="truncate">Twitch Hub</span>
+                <div class="ml-auto flex items-center gap-1.5 flex-shrink-0">
+                  <span class="sidebar-dot-twitch w-1.5 h-1.5 rounded-full bg-slate-600" title="Desativado"></span>
+                  <span class="active-indicator !ml-0"></span>
+                </div>
+              </div>
+              <div class="menu-subitem group" data-topic="statesinfo" onclick="selectTopic('statesinfo')">
+                <div class="subitem-icon text-blue-400">
+                  <i class="fa-solid fa-list-check text-[11px]"></i>
+                </div>
+                <span class="truncate">Central de Logs</span>
+                <div class="ml-auto flex items-center gap-1.5 flex-shrink-0">
+                  <span class="sidebar-badge-logs hidden text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20"></span>
+                  <span class="active-indicator !ml-0"></span>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Entertainment -->
+          <!-- Casino & Jogos -->
           <div class="menu-item-group mb-2">
-            <div class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 text-slate-300 hover:text-white group border border-transparent hover:border-white/10"
+            <div class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer text-slate-300 hover:text-white group"
               onclick="toggleDropdown('fun')">
-              <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-lg bg-pink-500/10 flex items-center justify-center group-hover:bg-pink-500/20 transition-colors">
-                  <i class="fa-solid fa-gamepad text-pink-400 text-sm"></i>
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center group-hover:bg-amber-500/20 group-hover:scale-105 transition-all">
+                  <i class="fa-solid fa-gamepad text-amber-400 text-xs"></i>
                 </div>
-                <span class="font-semibold text-sm">Diversão</span>
+                <span class="font-semibold text-xs sm:text-sm">Casino & Jogos</span>
               </div>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300 group-hover:text-slate-300" id="fun-chevron"></i>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200 group-hover:text-slate-300 dropdown-chevron" id="fun-chevron"></i>
             </div>
-            <div id="fun-dropdown" class="pl-5 mt-1 ml-3 border-l-2 border-pink-500/20 space-y-1 overflow-hidden transition-all duration-300">
-              <div class="menu-subitem group" onclick="selectTopic('funcpoker')">
-                <span class="relative z-10 flex items-center gap-2"><i class="fa-solid fa-cards text-pink-400"></i> Poker</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- DATABASE SECTION -->
-        <div id="guildDB-sidebar" class="sidebar-section hidden">
-          <div class="text-[10px] font-bold text-amber-400/80 uppercase px-3 mb-2 tracking-widest mt-2">Dados</div>
-
-          <!-- Youtube DB -->
-          <div class="menu-item-group mb-2">
-            <div class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 text-slate-300 hover:text-white group border border-transparent hover:border-white/10"
-              onclick="toggleDropdown('guilddbyt')">
-              <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-lg bg-red-500/10 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
-                  <i class="fa-brands fa-youtube text-red-500 text-sm"></i>
+            <div id="fun-dropdown" class="pl-2 mt-1.5 ml-3 border-l border-amber-500/20 space-y-1.5 overflow-hidden transition-all duration-200">
+              <div class="menu-subitem group" data-topic="funcpoker" onclick="selectTopic('funcpoker')">
+                <div class="subitem-icon text-amber-400">
+                  <i class="fa-solid fa-diamond text-[11px]"></i>
                 </div>
-                <span class="font-semibold text-sm">Canais YouTube</span>
-              </div>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300 group-hover:text-slate-300" id="guilddbyt-chevron"></i>
-            </div>
-            <div id="guilddbyt-dropdown" class="pl-5 mt-1 ml-3 border-l-2 border-red-500/20 space-y-1 overflow-hidden transition-all duration-300">
-              <div class="menu-subitem group" onclick="selectTopic('addytbchannel')">Adicionar</div>
-              <div class="menu-subitem group" onclick="selectTopic('viewytbchannels')">Visualizar Lista</div>
-              <div class="menu-subitem group text-red-400 hover:text-red-300" onclick="selectTopic('deleteytbchannels')">Remover</div>
-            </div>
-          </div>
-
-          <!-- Twitch DB -->
-          <div class="menu-item-group mb-2">
-            <div class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 text-slate-300 hover:text-white group border border-transparent hover:border-white/10"
-              onclick="toggleDropdown('guilddbtwh')">
-              <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                  <i class="fa-brands fa-twitch text-purple-500 text-sm"></i>
+                <span class="truncate">Texas Hold'em</span>
+                <div class="ml-auto flex items-center gap-1.5 flex-shrink-0">
+                  <span class="sidebar-dot-poker w-1.5 h-1.5 rounded-full bg-slate-600" title="Desativado"></span>
+                  <span class="active-indicator !ml-0"></span>
                 </div>
-                <span class="font-semibold text-sm">Canais Twitch</span>
               </div>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300 group-hover:text-slate-300" id="guilddbtwh-chevron"></i>
-            </div>
-            <div id="guilddbtwh-dropdown" class="pl-5 mt-1 ml-3 border-l-2 border-purple-500/20 space-y-1 overflow-hidden transition-all duration-300">
-              <div class="menu-subitem group" onclick="selectTopic('addtchchannel')">Adicionar</div>
-              <div class="menu-subitem group" onclick="selectTopic('viewtchchannel')">Visualizar Lista</div>
-              <div class="menu-subitem group text-red-400 hover:text-red-300" onclick="selectTopic('deletetchchannel')">Remover</div>
             </div>
           </div>
         </div>
 
         <!-- SERVER INFO SECTION -->
         <div id="serverInfos-sidebar" class="sidebar-section hidden">
-          <div class="text-[10px] font-bold text-sky-400/80 uppercase px-3 mb-2 tracking-widest mt-2">Comunidade</div>
+          <div class="text-[10px] font-bold text-sky-400/90 uppercase px-3 mb-2.5 tracking-wider mt-2 flex items-center justify-between">
+            <span>Comunidade & Servidor</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+          </div>
           <div class="menu-item-group mb-2">
-            <div class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 text-slate-300 hover:text-white group border border-transparent hover:border-white/10"
+            <div class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer text-slate-300 hover:text-white group"
               onclick="toggleDropdown('users')">
-              <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-lg bg-sky-500/10 flex items-center justify-center group-hover:bg-sky-500/20 transition-colors">
-                  <i class="fa-solid fa-users text-sky-400 text-sm"></i>
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-sky-500/10 flex items-center justify-center group-hover:bg-sky-500/20 group-hover:scale-105 transition-all">
+                  <i class="fa-solid fa-users text-sky-400 text-xs"></i>
                 </div>
-                <span class="font-semibold text-sm">Usuários</span>
+                <span class="font-semibold text-xs sm:text-sm">Membros & Economia</span>
               </div>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300 group-hover:text-slate-300" id="users-chevron"></i>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200 group-hover:text-slate-300 dropdown-chevron" id="users-chevron"></i>
             </div>
-            <div id="users-dropdown" class="pl-5 mt-1 ml-3 border-l-2 border-sky-500/20 space-y-1 overflow-hidden transition-all duration-300">
-              <div class="menu-subitem group" onclick="selectTopic('memberinfo')">Classificações</div>
-              <div class="menu-subitem group text-amber-400 hover:text-amber-300" onclick="selectTopic('economyinfo')"><i class="fa-solid fa-coins mr-1"></i> Economia</div>
+            <div id="users-dropdown" class="pl-2 mt-1.5 ml-3 border-l border-sky-500/20 space-y-1.5 overflow-hidden transition-all duration-200">
+              <div class="menu-subitem group" data-topic="memberinfo" onclick="selectTopic('memberinfo')">
+                <div class="subitem-icon text-sky-400">
+                  <i class="fa-solid fa-ranking-star text-[11px]"></i>
+                </div>
+                <span class="truncate">Atividade & Membros</span>
+                <span class="active-indicator"></span>
+              </div>
+              <div class="menu-subitem group text-emerald-400 hover:text-emerald-300" data-topic="economyinfo" onclick="selectTopic('economyinfo')">
+                <div class="subitem-icon text-emerald-400">
+                  <i class="fa-solid fa-wallet text-[11px]"></i>
+                </div>
+                <span class="truncate">Gestão Financeira</span>
+                <span class="active-indicator"></span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- CONFIG SECTION -->
-        <div id="config-sidebar" class="sidebar-section hidden">
-          <div class="text-[10px] font-bold text-slate-400/80 uppercase px-3 mb-2 tracking-widest mt-2">Administração</div>
+      </div>
+
+      <!-- SIDEBAR FOOTER: TECHNICAL MINI-HUD (Seamlessly integrated into footer) -->
+      <div class="px-3.5 py-3 border-t border-slate-800/80 bg-[#07080c] flex-shrink-0">
+        <div class="py-1 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="led-online !w-2 !h-2"></span>
+              <span class="text-slate-200 text-xs font-semibold font-mono tracking-tight">DAEMON ACTIVE</span>
+            </div>
+            <a href="javascript:void(0)" onclick="selectTopic('status')" class="text-[10px] font-mono text-indigo-400/90 hover:text-indigo-300 transition-colors" title="Abrir Telemetria">
+              v1.5.0
+            </a>
+          </div>
           
-          <div class="menu-item-group mb-2">
-            <div class="menu-header flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300 text-slate-300 hover:text-white group border border-transparent hover:border-white/10"
-              onclick="toggleDropdown('config')">
-              <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-lg bg-slate-500/10 flex items-center justify-center group-hover:bg-slate-500/20 transition-colors">
-                  <i class="fa-solid fa-bullhorn text-slate-400 text-sm"></i>
-                </div>
-                <span class="font-semibold text-sm">Avisos e Canais</span>
-              </div>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300 group-hover:text-slate-300" id="config-chevron"></i>
+          <div class="grid grid-cols-2 gap-2 text-[10px] font-mono text-slate-400">
+            <div class="flex items-center gap-1.5">
+              <i class="fa-solid fa-memory text-cyan-400/80 text-[9px]"></i>
+              <span>RAM: <strong class="text-slate-300">142MB</strong></span>
             </div>
-            <div id="config-dropdown" class="pl-5 mt-1 ml-3 border-l-2 border-slate-500/20 space-y-1 overflow-hidden transition-all duration-300">
-              <div class="menu-subitem group" onclick="selectTopic('ytbchannelupdate')">Avisos do YouTube</div>
-              <div class="menu-subitem group" onclick="selectTopic('tchchannelupdate')">Avisos da Twitch</div>
+            <div class="flex items-center gap-1.5">
+              <i class="fa-solid fa-network-wired text-emerald-400/80 text-[9px]"></i>
+              <span>WS: <strong class="text-slate-300">100%</strong></span>
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- User Profile (Bottom Fixed) -->
-      <div class="mt-auto bg-[#0b0c10]/80 backdrop-blur-md border-t border-white/5 p-4">
-        <div class="flex items-center gap-3 hover:bg-white/5 p-2 rounded-xl cursor-pointer transition-all duration-300 relative group border border-transparent hover:border-white/10 shadow-lg"
-          onclick="togglebtnDropdown('minhaImagem')" id="minhaImagem">
-          <img class="h-10 w-10 rounded-full border-2 border-white/10 group-hover:border-indigo-500 transition-all shadow-[0_0_10px_rgba(0,0,0,0.3)] group-hover:shadow-[0_0_15px_rgba(99,102,241,0.5)]"
-            src="" alt="User" id="user-avatar-img">
-          <div class="flex flex-col overflow-hidden">
-            <span id="userpt"
-              class="text-sm font-bold text-white truncate group-hover:text-indigo-400 transition-colors">User</span>
-            <span id="email" class="text-xs text-slate-500 truncate">email@ex.com</span>
-          </div>
-
-          <!-- User Dropdown (Upwards) -->
-          <div id="minhaImagem-changeState"
-            class="hidden absolute bottom-[110%] left-0 w-56 mb-2 bg-[#1a1d24]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-50 overflow-hidden transform origin-bottom-left transition-all">
-            <a href="/dashboard" class="block px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors border-b border-white/5">
-              <i class="fa-solid fa-table-cells-large w-5"></i> Meus Servidores
-            </a>
-            <a href="/" class="block px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors">
-              <i class="fa-solid fa-power-off w-5"></i> Desconectar
-            </a>
-          </div>
-        </div>
-      </div>
     </aside>
-
-    <!-- TOP BAR (Breadcrumbs & Search) -->
-    <header
-      class="fixed top-0 left-84 right-0 h-16 bg-[#0f1115]/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-8 z-30 transition-all duration-300 shadow-sm"
-      style="left: 21.5rem;">
-      <!-- Breadcrumbs -->
-      <div class="flex items-center text-slate-400 text-sm font-medium bg-white/5 px-4 py-2 rounded-full border border-white/5 shadow-inner">
-        <i class="fa-solid fa-map-location-dot mr-3 text-indigo-400"></i>
-        <span id="hashtag-home" class="text-slate-300">Início</span>
-        <span id="hashtag-functions" class="hidden text-slate-300">Módulos</span>
-        <span id="hashtag-guildDB" class="hidden text-slate-300">Banco de Dados</span>
-        <span id="hashtag-serverInfos" class="hidden text-slate-300">Comunidade</span>
-        <span id="hashtag-config" class="hidden text-slate-300">Configurações</span>
-      </div>
-
-      <!-- Search -->
-      <div class="relative group">
-        <input type="text" placeholder="Buscar configurações..."
-          class="bg-[#1a1d24]/80 border border-white/10 text-white text-sm rounded-full px-5 py-2 pl-11 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 w-72 transition-all placeholder-slate-500 group-hover:border-white/20 shadow-inner">
-        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-400 transition-colors"></i>
-      </div>
-    </header>
 
   </div>
 
   <!-- STYLES FOR SUBITEMS -->
   <style>
+    .rail-icon-btn {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #94a3b8;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .rail-icon-btn:hover {
+      background-color: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .rail-icon-btn:active {
+      transform: scale(0.94);
+    }
+    .rail-icon-btn.active {
+      background-color: rgba(99, 102, 241, 0.16) !important;
+      border-color: rgba(99, 102, 241, 0.45) !important;
+      color: #ffffff !important;
+      box-shadow: inset 3px 0 0 #6366f1, 0 0 16px rgba(99, 102, 241, 0.25) !important;
+    }
+    .rail-pill {
+      opacity: 0;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .group:hover .rail-pill {
+      opacity: 0.6;
+    }
+    .rail-pill.active {
+      opacity: 1 !important;
+    }
+    .menu-header {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .menu-header:hover {
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.12) 0%, rgba(99, 102, 241, 0.03) 100%) !important;
+      border-color: rgba(99, 102, 241, 0.35) !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.15);
+      transform: translateY(-1px);
+    }
+    .dropdown-chevron {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
     .menu-subitem {
       position: relative;
-      padding: 0.5rem 1rem;
-      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
       color: #94a3b8;
-      border-radius: 0.5rem;
+      border-radius: 0.625rem;
       cursor: pointer;
-      transition: all 0.3s;
-      display: block;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       user-select: none;
-      overflow: hidden;
+      border: 1px solid transparent;
+      background-color: transparent;
     }
     .menu-subitem:hover {
       color: #ffffff;
-      padding-left: 1.5rem;
+      background-color: rgba(99, 102, 241, 0.08);
+      border-color: rgba(99, 102, 241, 0.2);
+      transform: translateX(2px);
     }
-    .menu-subitem::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 0;
-      background-color: rgba(255, 255, 255, 0.05);
-      transition: all 0.3s;
-      z-index: 0;
-      border-radius: 0.5rem;
+    .menu-subitem .subitem-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 0.375rem;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      flex-shrink: 0;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .menu-subitem:hover::before {
-      width: 100%;
+    .menu-subitem:hover .subitem-icon {
+      transform: scale(1.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      background-color: rgba(99, 102, 241, 0.15);
     }
-    .menu-subitem::after {
-      content: '';
-      position: absolute;
-      left: 0.5rem;
-      top: 50%;
-      transform: translateY(-50%);
+    .menu-subitem.active {
+      color: #ffffff !important;
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.16) 0%, rgba(99, 102, 241, 0.04) 100%) !important;
+      border-color: rgba(99, 102, 241, 0.35) !important;
+      border-left: 3px solid #6366f1 !important;
+      font-weight: 600;
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.15);
+      transform: none;
+    }
+    .menu-subitem.active .subitem-icon {
+      background-color: rgba(99, 102, 241, 0.25) !important;
+      border-color: rgba(99, 102, 241, 0.45) !important;
+      color: #ffffff !important;
+      transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.35);
+    }
+    .menu-subitem .active-indicator {
+      display: none;
+      margin-left: auto;
       width: 0.375rem;
       height: 0.375rem;
       border-radius: 9999px;
-      background-color: #475569;
-      transition: all 0.3s;
-      opacity: 0;
+      background-color: #818cf8;
+      box-shadow: 0 0 8px #818cf8;
+      flex-shrink: 0;
     }
-    .menu-subitem:hover::after {
-      opacity: 1;
-      background-color: currentColor;
-      box-shadow: 0 0 8px currentColor;
+    .menu-subitem.active .active-indicator {
+      display: block;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
-    .animate-spin-slow {
-      animation: spin 6s linear infinite;
+    @keyframes fade-in-up {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+      animation: fade-in-up 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 
@@ -379,42 +454,44 @@
   <script>
     // Load parent data
     try {
-      var img = parent.user();
-      var email = parent.email();
-      var user = parent.username();
       const serverName = parent.guildName();
-
       document.getElementById("server-name").textContent = serverName;
-      document.getElementById("email").textContent = email;
-      document.getElementById("userpt").textContent = user;
-      document.getElementById("user-avatar-img").src = img;
     } catch (e) {
       console.log("Not loaded inside parent frame or error fetching parent data");
     }
 
     function handleIconClick(btnId) {
-      // Hide all sections
-      const sections = ['home', 'functions', 'guildDB', 'serverInfos', 'config'];
+      if (!btnId) btnId = 'home';
+      const sections = ['home', 'functions', 'serverInfos'];
+
       sections.forEach(sec => {
         const sidebar = document.getElementById(`${sec}-sidebar`);
-        const hashtag = document.getElementById(`hashtag-${sec}`);
+        const btn = document.getElementById(sec);
+        const isActive = (sec === btnId);
+
         if (sidebar) {
+          if (isActive) {
+            sidebar.classList.remove('hidden');
+          } else {
             sidebar.classList.add('hidden');
             sidebar.classList.remove('animate-fade-in-up');
+          }
         }
-        if (hashtag) hashtag.classList.add('hidden');
+        if (btn) {
+          btn.classList.toggle('active', isActive);
+        }
       });
 
-      // Show selected with animation
       const selectedSidebar = document.getElementById(`${btnId}-sidebar`);
-      const selectedHashtag = document.getElementById(`hashtag-${btnId}`);
       if (selectedSidebar) {
-          selectedSidebar.classList.remove('hidden');
-          // Forçar reflow para reiniciar animação
-          void selectedSidebar.offsetWidth;
-          selectedSidebar.classList.add('animate-fade-in-up');
+        void selectedSidebar.offsetWidth;
+        selectedSidebar.classList.add('animate-fade-in-up');
       }
-      if (selectedHashtag) selectedHashtag.classList.remove('hidden');
+
+      try {
+        const gId = (parent && parent.getGuildId && parent.getGuildId()) || (parent && parent.guildId) || '';
+        if (gId) localStorage.setItem('discord_dashboard_last_rail_section_' + gId, btnId);
+      } catch (e) {}
     }
 
     function toggleDropdown(dropdownId) {
@@ -435,8 +512,104 @@
       dropdown.classList.toggle("hidden");
     }
 
+    const topicMapping = {
+      // Home / Visão Geral
+      'server': { section: 'home', dropdown: 'guild' },
+      'status': { section: 'home', dropdown: 'guild' },
+      'statesinfo': { section: 'functions', dropdown: 'funcs' },
+      
+      // Functions / Módulos (Unified Hubs)
+      'funcyoutube': { section: 'functions', dropdown: 'funcs' },
+      'actyoutube': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'deactyoutube': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'addytbchannel': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'addytb': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'viewytbchannels': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'deleteytbchannels': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'delytb': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'delyoutubech': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'ytbchannelupdate': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'updtyoutube': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      'youtube': { section: 'functions', dropdown: 'funcs', parentTopic: 'funcyoutube' },
+      
+      'functwitch': { section: 'functions', dropdown: 'funcs' },
+      'acttwitch': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'deacttwitch': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'addtchchannel': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'addtch': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'addtwitchch': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'viewtchchannel': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'deletetchchannel': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'deltch': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'deltwitchch': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'tchchannelupdate': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      'updttwitch': { section: 'functions', dropdown: 'funcs', parentTopic: 'functwitch' },
+      
+      'funcpoker': { section: 'functions', dropdown: 'fun' },
+      'actpoker': { section: 'functions', dropdown: 'fun', parentTopic: 'funcpoker' },
+      'deactpoker': { section: 'functions', dropdown: 'fun', parentTopic: 'funcpoker' },
+      
+      // Community / Comunidade & Economia
+      'memberinfo': { section: 'serverInfos', dropdown: 'users' },
+      'economyinfo': { section: 'serverInfos', dropdown: 'users' }
+    };
+
+    function syncSidebarActiveState(topic) {
+      if (!topic) topic = 'server';
+      topic = topic.toString().toLowerCase().trim().replace(/^#+/, '');
+
+      let meta = topicMapping[topic];
+      if (!meta) {
+        if (topic.startsWith('actlog_') || topic.startsWith('deactlog_')) {
+          meta = { section: 'home', dropdown: 'guild', parentTopic: 'statesinfo' };
+        } else {
+          meta = { section: 'home', dropdown: 'guild', parentTopic: 'server' };
+        }
+      }
+
+      // 1. Activate rail icon & secondary sidebar section
+      handleIconClick(meta.section);
+
+      // 2. Open corresponding dropdown
+      if (meta.dropdown) {
+        const dropdown = document.getElementById(meta.dropdown + "-dropdown");
+        const chevron = document.getElementById(meta.dropdown + "-chevron");
+        if (dropdown) {
+          dropdown.classList.remove('hidden');
+          if (chevron) chevron.style.transform = 'rotate(180deg)';
+        }
+      }
+
+      // 3. Highlight active subitem
+      document.querySelectorAll('.menu-subitem').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      const targetTopic = meta.parentTopic || topic;
+      const activeEl = document.querySelector(`.menu-subitem[data-topic="${targetTopic}"]`);
+      if (activeEl) {
+        activeEl.classList.add('active');
+      }
+
+      try {
+        const gId = (parent && parent.getGuildId && parent.getGuildId()) || (parent && parent.guildId) || '';
+        if (gId) localStorage.setItem('discord_dashboard_last_topic_' + gId, targetTopic);
+      } catch (e) {}
+    }
+
     function selectTopic(topic) {
       console.log("[Sidebar] Selecting topic:", topic);
+      syncSidebarActiveState(topic);
+
+      if (typeof closeSidebar === 'function') {
+        closeSidebar(false);
+      } else if (window.closeSidebar) {
+        window.closeSidebar(false);
+      } else if (typeof closeMobileSidebar === 'function') {
+        closeMobileSidebar(false);
+      } else if (window.closeMobileSidebar) {
+        window.closeMobileSidebar(false);
+      }
 
       if (typeof carregarConteudo === 'function') {
         carregarConteudo(topic);
@@ -448,6 +621,99 @@
         console.error("Critical Error: carregarConteudo function not found.");
       }
     }
+
+    window.syncSidebarActiveState = syncSidebarActiveState;
+
+    function updateSidebarStatus(status) {
+      if (!status) return;
+      const logBadges = document.querySelectorAll('.sidebar-badge-logs');
+      logBadges.forEach(badge => {
+        if (typeof status.activeLogs !== 'undefined') {
+          badge.textContent = `${status.activeLogs}/${status.totalLogs || 11}`;
+          badge.classList.remove('hidden');
+        }
+      });
+
+      const ytbDots = document.querySelectorAll('.sidebar-dot-youtube');
+      ytbDots.forEach(dot => {
+        if (status.youtubeActive) {
+          dot.className = 'sidebar-dot-youtube w-1.5 h-1.5 rounded-full bg-emerald-400 ring-2 ring-emerald-400/30 animate-pulse';
+          dot.title = 'Módulo Ativo';
+        } else {
+          dot.className = 'sidebar-dot-youtube w-1.5 h-1.5 rounded-full bg-slate-600';
+          dot.title = 'Módulo Inativo';
+        }
+      });
+
+      const tchDots = document.querySelectorAll('.sidebar-dot-twitch');
+      tchDots.forEach(dot => {
+        if (status.twitchActive) {
+          dot.className = 'sidebar-dot-twitch w-1.5 h-1.5 rounded-full bg-purple-400 ring-2 ring-purple-400/30 animate-pulse';
+          dot.title = 'Módulo Ativo';
+        } else {
+          dot.className = 'sidebar-dot-twitch w-1.5 h-1.5 rounded-full bg-slate-600';
+          dot.title = 'Módulo Inativo';
+        }
+      });
+
+      const pokerDots = document.querySelectorAll('.sidebar-dot-poker');
+      pokerDots.forEach(dot => {
+        if (status.pokerActive) {
+          dot.className = 'sidebar-dot-poker w-1.5 h-1.5 rounded-full bg-amber-400 ring-2 ring-amber-400/30 animate-pulse';
+          dot.title = 'Módulo Ativo';
+        } else {
+          dot.className = 'sidebar-dot-poker w-1.5 h-1.5 rounded-full bg-slate-600';
+          dot.title = 'Módulo Inativo';
+        }
+      });
+    }
+
+    window.updateSidebarStatus = updateSidebarStatus;
+    if (typeof parent !== 'undefined' && parent) {
+      parent.updateSidebarStatus = updateSidebarStatus;
+      if (parent.currentGuildStatus) updateSidebarStatus(parent.currentGuildStatus);
+    }
+    // Quick Submenu Filter Logic
+    function filterSidebarSubmenus(query) {
+      const q = (query || '').trim().toLowerCase();
+      const clearBtn = document.getElementById('sidebarSearchClear');
+      if (clearBtn) {
+        clearBtn.classList.toggle('hidden', q.length === 0);
+      }
+
+      const subitems = document.querySelectorAll('.menu-subitem');
+      subitems.forEach(item => {
+        const text = (item.textContent || '').toLowerCase();
+        const matches = !q || text.includes(q);
+        item.style.display = matches ? '' : 'none';
+      });
+
+      // If filtering, open parent dropdowns that contain matches
+      if (q.length > 0) {
+        const groups = document.querySelectorAll('.menu-item-group');
+        groups.forEach(group => {
+          const visibleChildren = group.querySelectorAll('.menu-subitem:not([style*="display: none"])');
+          const dropdown = group.querySelector('[id$="-dropdown"]');
+          const chevron = group.querySelector('.dropdown-chevron');
+          if (visibleChildren.length > 0 && dropdown) {
+            dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+            if (chevron) chevron.style.transform = 'rotate(180deg)';
+          }
+        });
+      }
+    }
+
+    function clearSidebarSearch() {
+      const input = document.getElementById('sidebarSubmenuSearch');
+      if (input) {
+        input.value = '';
+        filterSidebarSubmenus('');
+        input.focus();
+      }
+    }
+
+    window.filterSidebarSubmenus = filterSidebarSubmenus;
+    window.clearSidebarSearch = clearSidebarSearch;
   </script>
 </body>
 </html>

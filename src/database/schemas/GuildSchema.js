@@ -1,7 +1,7 @@
 const { Schema } = require("mongoose");
 
-module.exports = new Schema({
-  guildID: { type: String },
+const GuildSchema = new Schema({
+  guildID: { type: String, unique: true },
   guildName: { type: String },
   channelytb: { type: String, default: "" },
   channeltch: { type: String, default: "" },
@@ -23,3 +23,8 @@ module.exports = new Schema({
   },
   poker: { channel: { type: String, default: "" }, state: { type: Boolean, default: false } }, // Moved to Root
 });
+
+// Índice único para busca imediata de guildas
+GuildSchema.index({ guildID: 1 });
+
+module.exports = GuildSchema;

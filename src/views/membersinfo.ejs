@@ -3,56 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="../css/cssdir/out.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <title>Banco de Dados - Guilda</title>
+  <link href="/css/cssdir/out.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
+  <title>Banco de Dados - Membros</title>
 </head>
 
-<body class="bg-transparent min-h-full flex items-start justify-center pt-10 px-4">
-  <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
-
-    <!-- Background Decorators -->
-    <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+<body class="bg-transparent min-h-full flex items-start justify-center pt-2 sm:pt-6 px-1 sm:px-2">
+  <div class="panel-tone-indigo chassis-bevel bg-hardware-dots laser-edge-indigo p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-full animate-fade-in-up relative overflow-hidden">
 
     <!-- Header da guilda -->
-    <div class="flex flex-col md:flex-row items-center gap-6 mb-10 border-b border-white/5 pb-8 relative z-10">
-      <div class="relative group mx-auto md:mx-0">
-        <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
-        <% if (info.icon && info.icon.indexOf('null')===-1) { %>
-          <img src="<%= info.icon %>" alt="Ícone da guilda" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
-        <% } else { %>
-          <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
-        <% } %>
+    <div class="flex flex-col md:flex-row items-center gap-5 sm:gap-6 mb-8 sm:mb-10 border-b border-indigo-500/20 pb-6 sm:pb-8 relative z-10">
+      <div class="relative mx-auto md:mx-0 flex-shrink-0">
+        <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-indigo-500/30 shadow-lg">
+          <% if (info.icon && info.icon.indexOf('null')===-1) { %>
+            <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-full h-full object-cover" />
+          <% } else { %>
+            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-full h-full object-cover" />
+          <% } %>
+        </div>
       </div>
-      <div class="flex-1 text-center md:text-left">
-        <h3 class="text-3xl font-extrabold text-white mb-2 flex items-center justify-center md:justify-start gap-3">
-          <i class="fa-solid fa-users text-blue-500"></i>
+      <div class="flex-1 text-center md:text-left min-w-0">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-users text-[11px]"></i>
+          <span>Comunidade</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight truncate">
           Registro de Membros
         </h3>
-        <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
-          Visualização das estatísticas individuais de cada membro da guilda <strong class="text-white"><%= info.name %></strong>.
+        <p class="text-slate-400 text-xs sm:text-sm mt-1 max-w-2xl">
+          Visualização das estatísticas individuais de cada membro da guilda <strong class="text-white"><%= info.name %></strong>
         </p>
       </div>
     </div>
 
+    <!-- Search & Filter Controls with Hardware Segmented Strip -->
+    <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 mb-5 relative z-10">
+      <div class="relative flex-1 max-w-md">
+        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+          <i class="fa-solid fa-magnifying-glass text-xs"></i>
+        </div>
+        <input type="text" id="memberSearchInput" placeholder="Buscar por nome de usuário ou código..." 
+          oninput="filterMembers()"
+          class="input-studio !pl-10 !pr-10 !py-2 w-full text-xs sm:text-sm font-medium placeholder:text-slate-600" />
+        <kbd class="hidden sm:inline-flex absolute right-3 top-1/2 -translate-y-1/2 kbd-studio pointer-events-none" id="memberSearchKbd">/</kbd>
+        <button type="button" id="clearSearchBtn" onclick="clearMemberSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-white">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2.5">
+        <!-- Hardware Segmented Filter Strip -->
+        <div class="hardware-segmented-control" id="memberSegmentedControl">
+          <button type="button" onclick="setMemberSegment('all', this)" class="hardware-segmented-item active">
+            <i class="fa-solid fa-users text-[10px]"></i>
+            <span>Todos</span>
+          </button>
+          <button type="button" onclick="setMemberSegment('voice', this)" class="hardware-segmented-item">
+            <i class="fa-solid fa-microphone text-[10px]"></i>
+            <span>Em Voz</span>
+          </button>
+          <button type="button" onclick="setMemberSegment('active', this)" class="hardware-segmented-item">
+            <i class="fa-solid fa-fire text-[10px]"></i>
+            <span>Mais Ativos</span>
+          </button>
+        </div>
+
+        <!-- Sort Select -->
+        <div class="relative">
+          <select id="memberSortSelect" onchange="sortMembers()" class="input-studio !py-1.5 !px-3 text-xs appearance-none cursor-pointer pr-8 font-medium">
+            <option value="default">Ordenar: Padrão</option>
+            <option value="messages">Mais Mensagens</option>
+            <option value="voice">Mais Tempo em Voz</option>
+            <option value="name">Nome (A-Z)</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-slate-500">
+            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+          </div>
+        </div>
+
+        <!-- View Mode Segmented Control -->
+        <div class="hardware-segmented-control" id="memberViewModeControl">
+          <button type="button" onclick="setMemberViewMode('table', this)" class="hardware-segmented-item active" id="viewModeTableBtn" title="Visualização em Tabela">
+            <i class="fa-solid fa-table-list text-[10px]"></i>
+            <span class="hidden sm:inline">Tabela</span>
+          </button>
+          <button type="button" onclick="setMemberViewMode('cards', this)" class="hardware-segmented-item" id="viewModeCardsBtn" title="Visualização em Crachás">
+            <i class="fa-solid fa-address-card text-[10px]"></i>
+            <span class="hidden sm:inline">Crachás</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Header & Scroll Hint -->
+    <div class="flex items-center justify-between mb-3 px-1">
+      <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+        Membros (<span id="memberCountDisplay"><%= info1.length %></span> de <%= info1.length %>)
+      </span>
+      <span class="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/[0.06] lg:hidden">
+        <i class="fa-solid fa-arrows-left-right text-[10px]"></i>
+        <span>Deslize a tabela</span>
+      </span>
+    </div>
+
     <!-- Tabela de dados -->
-    <div class="relative z-10 bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden shadow-inner">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left whitespace-nowrap">
+    <div class="relative z-10 rounded-2xl overflow-hidden bg-[#090b10]/80 tonal-border-indigo" id="membersTableView">
+      <div class="overflow-x-auto w-full custom-table-scroll">
+        <table class="w-full min-w-[700px] table-seamless text-left whitespace-nowrap" id="membersTable">
           <thead>
-            <tr class="bg-black/20 border-b border-white/5">
-              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Código</th>
-              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Membro</th>
-              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">Tempo em Voz</th>
-              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">Mensagens</th>
-              <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-right">Guild ID</th>
+            <tr class="bg-black/40 border-b border-white/[0.04]">
+              <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Código</th>
+              <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Membro</th>
+              <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Tempo em Voz</th>
+              <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Mensagens</th>
+              <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Guild ID</th>
+              <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Dossiê</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-white/[0.05]">
+          <tbody class="divide-y divide-white/[0.02] bg-transparent" id="membersTableBody">
             <% if (info1.length === 0) { %>
-              <tr>
-                <td colspan="5" class="px-6 py-12 text-center">
+              <tr id="emptyDefaultRow">
+                <td colspan="6" class="px-6 py-12 text-center">
                   <div class="flex flex-col items-center justify-center opacity-50">
                     <i class="fa-solid fa-users-slash text-4xl mb-3 text-slate-500"></i>
                     <p class="text-sm text-slate-400 font-medium">Nenhum membro registrado no banco de dados.</p>
@@ -60,44 +132,597 @@
                 </td>
               </tr>
             <% } %>
+            <% 
+              const sortedMembers = [...info1].sort((a, b) => ((b.totalMessages || 0) + (b.voiceTime || 0)) - ((a.totalMessages || 0) + (a.voiceTime || 0)));
+              const memberRankMap = new Map();
+              sortedMembers.forEach((m, idx) => {
+                memberRankMap.set(m.codigouser, idx + 1);
+              });
 
-            <% info1.forEach(item => { %>
-              <tr class="hover:bg-white/[0.04] transition-colors duration-200">
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-400 text-[10px] font-mono font-medium">
-                    <%= item.codigouser %>
-                  </span>
+              let maxVoice = 1;
+              info1.forEach(m => {
+                if ((m.voiceTime || 0) > maxVoice) maxVoice = m.voiceTime;
+              });
+
+              const memberAvatarGradients = [
+                'from-indigo-600 to-blue-500',
+                'from-emerald-600 to-teal-500',
+                'from-purple-600 to-indigo-500',
+                'from-rose-600 to-pink-500',
+                'from-amber-600 to-orange-500',
+                'from-cyan-600 to-sky-500'
+              ];
+            %>
+            <% info1.forEach((item, index) => { %>
+              <% 
+                const rank = memberRankMap.get(item.codigouser) || (index + 1);
+                const charCode = (item.username || 'A').charCodeAt(0);
+                const grad = memberAvatarGradients[charCode % memberAvatarGradients.length];
+                const totalActivity = (item.totalMessages || 0) + (item.voiceTime || 0);
+
+                let activityBadge = '';
+                if (totalActivity >= 500) {
+                  activityBadge = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-300 border border-rose-500/20"><i class="fa-solid fa-fire text-[8px]"></i> Lendário</span>';
+                } else if (totalActivity >= 100) {
+                  activityBadge = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-300 border border-amber-500/20"><i class="fa-solid fa-bolt text-[8px]"></i> Muito Ativo</span>';
+                } else if (totalActivity >= 20) {
+                  activityBadge = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"><i class="fa-solid fa-comment text-[8px]"></i> Ativo</span>';
+                } else {
+                  activityBadge = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-medium tracking-wider bg-white/[0.04] text-slate-400 border border-white/[0.06]"><i class="fa-solid fa-moon text-[8px]"></i> Recente</span>';
+                }
+
+                let rankBadge = '';
+                let avatarRing = 'ring-1 ring-white/10';
+                let podiumClass = '';
+
+                if (rank === 1) {
+                  rankBadge = '<span class="badge-metallic-gold">#1</span>';
+                  avatarRing = 'ring-2 ring-yellow-400/60 shadow-lg';
+                  podiumClass = 'podium-gold';
+                } else if (rank === 2) {
+                  rankBadge = '<span class="badge-metallic-silver">#2</span>';
+                  avatarRing = 'ring-2 ring-slate-300/60';
+                  podiumClass = 'podium-silver';
+                } else if (rank === 3) {
+                  rankBadge = '<span class="badge-metallic-bronze">#3</span>';
+                  avatarRing = 'ring-2 ring-amber-600/60';
+                  podiumClass = 'podium-bronze';
+                } else {
+                  rankBadge = `<span class="text-xs font-mono font-semibold text-slate-500 w-6 text-center">${rank}º</span>`;
+                }
+
+                const vM = item.voiceTime || 0;
+                const vHours = Math.floor(vM / 60);
+                const vMins = vM % 60;
+                const vFormatted = vHours > 0 ? `${vHours}h ${vMins}m` : `${vM}m`;
+                const voicePercent = Math.min(100, Math.round((vM / maxVoice) * 100));
+              %>
+              <tr class="member-row hover:bg-white/[0.04] transition-colors duration-200 group <%= podiumClass %>" 
+                data-username="<%= (item.username || '').toLowerCase() %>"
+                data-code="<%= (item.codigouser || '').toLowerCase() %>"
+                data-messages="<%= item.totalMessages || 0 %>"
+                data-voice="<%= item.voiceTime || 0 %>"
+                data-original-index="<%= index %>">
+                <td class="px-5 py-3.5">
+                  <button type="button" onclick="copyMemberCode('<%= item.codigouser %>', this)" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white text-[10px] font-mono transition-colors group/copy cursor-pointer" title="Clique para copiar o ID">
+                    <span><%= item.codigouser %></span>
+                    <i class="fa-regular fa-copy text-[9px] text-slate-500 group-hover/copy:text-indigo-400"></i>
+                  </button>
                 </td>
-                <td class="px-6 py-4">
-                  <div class="font-bold text-white text-sm flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20 text-blue-400 text-xs">
-                        <%= item.username.charAt(0).toUpperCase() %>
+                <td class="px-5 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="flex-shrink-0 flex items-center justify-center">
+                      <%- rankBadge %>
                     </div>
-                    <%= item.username %>
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br <%= grad %> flex items-center justify-center text-white font-bold text-xs shadow-md <%= avatarRing %> flex-shrink-0 relative">
+                      <%= (item.username || '?').charAt(0).toUpperCase() %>
+                      <span class="absolute -bottom-0.5 -right-0.5 led-online !w-2 !h-2 border border-[#0c0e14]"></span>
+                    </div>
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2">
+                        <span class="font-bold text-white text-sm truncate"><%= item.username %></span>
+                        <%- activityBadge %>
+                      </div>
+                      <div class="text-[10px] text-slate-500 font-mono truncate"><%= item.codigouser %></div>
+                    </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-medium shadow-inner">
-                    <i class="fa-solid fa-clock text-[10px]"></i>
-                    <%= item.voiceTime || 0 %> min
-                  </span>
+                <td class="px-5 py-3.5 text-center">
+                  <div class="inline-flex flex-col items-center">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-semibold shadow-inner">
+                      <i class="fa-solid fa-clock text-[10px]"></i>
+                      <%= vFormatted %>
+                    </span>
+                    <% if (vM > 0) { %>
+                      <div class="w-16 h-1 rounded-full bg-white/[0.08] overflow-hidden mt-1.5" title="<%= voicePercent %>% em relação ao maior">
+                        <div class="h-full bg-gradient-to-r from-cyan-500 to-teal-400 rounded-full" style="width: <%= Math.max(10, voicePercent) %>%;"></div>
+                      </div>
+                    <% } %>
+                  </div>
                 </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono font-medium shadow-inner">
+                <td class="px-5 py-3.5 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono font-semibold shadow-inner">
                     <i class="fa-solid fa-comment-dots text-[10px]"></i>
                     <%= item.totalMessages || 0 %>
                   </span>
                 </td>
-                <td class="px-6 py-4 text-xs text-slate-500 font-mono text-right">
+                <td class="px-5 py-3.5 text-xs text-slate-500 font-mono text-right">
                   <%= item.idguild %>
+                </td>
+                <td class="px-5 py-3.5 text-right">
+                  <button type="button" 
+                    data-username="<%= item.username || 'Membro' %>" 
+                    data-code="<%= item.codigouser %>" 
+                    data-voice="<%= vFormatted %>" 
+                    data-messages="<%= item.totalMessages || 0 %>" 
+                    data-rank="<%= rank %>" 
+                    data-guild="<%= item.idguild %>" 
+                    onclick="handleDossierBtn(this)" 
+                    class="btn-studio-secondary !py-1 !px-2.5 text-[11px] rounded-lg inline-flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-id-card text-[10px] text-indigo-400"></i>
+                    <span>Dossiê</span>
+                  </button>
                 </td>
               </tr>
             <% }); %>
+
+            <tr id="noResultsRow" class="hidden">
+              <td colspan="6" class="px-6 py-12 text-center">
+                <div class="flex flex-col items-center justify-center opacity-50">
+                  <i class="fa-solid fa-magnifying-glass text-3xl mb-3 text-slate-500"></i>
+                  <p class="text-sm text-slate-400 font-medium">Nenhum membro encontrado com este termo.</p>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
+
+    <!-- Grid de Crachás (Card Mode) -->
+    <div id="membersCardsView" class="hidden relative z-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="membersCardsGrid">
+        <% info1.forEach((item, index) => { %>
+          <% 
+            const rank = memberRankMap.get(item.codigouser) || (index + 1);
+            const charCode = (item.username || 'A').charCodeAt(0);
+            const grad = memberAvatarGradients[charCode % memberAvatarGradients.length];
+            const totalActivity = (item.totalMessages || 0) + (item.voiceTime || 0);
+
+            let actBadgeText = 'Recente';
+            let actBadgeColor = 'bg-white/[0.04] text-slate-400 border-white/[0.06]';
+            if (totalActivity >= 500) {
+              actBadgeText = 'Lendário';
+              actBadgeColor = 'bg-rose-500/10 text-rose-300 border-rose-500/20';
+            } else if (totalActivity >= 100) {
+              actBadgeText = 'Muito Ativo';
+              actBadgeColor = 'bg-amber-500/10 text-amber-300 border-amber-500/20';
+            } else if (totalActivity >= 20) {
+              actBadgeText = 'Ativo';
+              actBadgeColor = 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20';
+            }
+
+            const vM = item.voiceTime || 0;
+            const vHours = Math.floor(vM / 60);
+            const vMins = vM % 60;
+            const vFormatted = vHours > 0 ? `${vHours}h ${vMins}m` : `${vM}m`;
+            const voicePercent = Math.min(100, Math.round((vM / maxVoice) * 100));
+          %>
+          <div class="member-card panel-chassis chassis-bevel tonal-border-indigo p-5 rounded-2xl flex flex-col justify-between group transition-all relative overflow-hidden"
+            data-username="<%= (item.username || '').toLowerCase() %>"
+            data-code="<%= (item.codigouser || '').toLowerCase() %>"
+            data-messages="<%= item.totalMessages || 0 %>"
+            data-voice="<%= item.voiceTime || 0 %>"
+            data-original-index="<%= index %>">
+            
+            <div class="flex items-start justify-between mb-4">
+              <div class="relative">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br <%= grad %> flex items-center justify-center text-white font-black text-base shadow-lg border border-white/20">
+                  <%= (item.username || '?').charAt(0).toUpperCase() %>
+                </div>
+                <span class="absolute -bottom-1 -right-1 led-machined">
+                  <span class="led-online !w-2.5 !h-2.5"></span>
+                </span>
+              </div>
+              <div class="flex flex-col items-end gap-1">
+                <% if (rank === 1) { %>
+                  <span class="badge-metallic-gold">🥇 #1 TOP</span>
+                <% } else if (rank === 2) { %>
+                  <span class="badge-metallic-silver">🥈 #2</span>
+                <% } else if (rank === 3) { %>
+                  <span class="badge-metallic-bronze">🥉 #3</span>
+                <% } else { %>
+                  <span class="text-[10px] font-mono font-semibold text-slate-500 bg-white/[0.03] px-2 py-0.5 rounded border border-white/[0.06]">#<%= rank %></span>
+                <% } %>
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border <%= actBadgeColor %>">
+                  <%= actBadgeText %>
+                </span>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <h4 class="font-bold text-white text-base truncate group-hover:text-indigo-400 transition-colors" title="<%= item.username %>">
+                <%= item.username %>
+              </h4>
+              <p class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5 truncate">
+                <span>ID: <%= item.codigouser %></span>
+              </p>
+            </div>
+
+            <!-- Mini telemetry bars -->
+            <div class="space-y-2 py-2.5 px-3 rounded-xl bg-black/30 border border-white/[0.04] mb-4 font-mono text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400 text-[11px] flex items-center gap-1.5">
+                  <i class="fa-solid fa-clock text-cyan-400 text-[10px]"></i>
+                  <span>Voz:</span>
+                </span>
+                <span class="font-bold text-cyan-400"><%= vFormatted %></span>
+              </div>
+              <% if (vM > 0) { %>
+                <div class="w-full h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyan-500 to-teal-400 rounded-full" style="width: <%= Math.max(10, voicePercent) %>%;"></div>
+                </div>
+              <% } %>
+              <div class="flex items-center justify-between pt-1 border-t border-white/[0.04]">
+                <span class="text-slate-400 text-[11px] flex items-center gap-1.5">
+                  <i class="fa-solid fa-comment-dots text-indigo-400 text-[10px]"></i>
+                  <span>Mensagens:</span>
+                </span>
+                <span class="font-bold text-indigo-400"><%= item.totalMessages || 0 %></span>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between">
+              <button type="button" onclick="copyMemberCode('<%= item.codigouser %>', this)" class="text-[11px] text-slate-400 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer font-mono">
+                <i class="fa-regular fa-copy text-[10px]"></i>
+                <span>Copiar ID</span>
+              </button>
+              <button type="button" 
+                data-username="<%= item.username || 'Membro' %>" 
+                data-code="<%= item.codigouser %>" 
+                data-voice="<%= vFormatted %>" 
+                data-messages="<%= item.totalMessages || 0 %>" 
+                data-rank="<%= rank %>" 
+                data-guild="<%= item.idguild %>" 
+                onclick="handleDossierBtn(this)" 
+                class="btn-studio-secondary !py-1.5 !px-3 text-xs rounded-lg flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-id-card text-[10px] text-indigo-400"></i>
+                <span>Dossiê</span>
+              </button>
+            </div>
+
+          </div>
+        <% }); %>
+      </div>
+      
+      <div id="noResultsCardsRow" class="hidden panel-elevated p-12 text-center rounded-2xl border border-white/[0.06]">
+        <div class="flex flex-col items-center justify-center opacity-50">
+          <i class="fa-solid fa-magnifying-glass text-3xl mb-3 text-slate-500"></i>
+          <p class="text-sm text-slate-400 font-medium">Nenhum membro encontrado com este termo.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
+
+  <!-- Dossiê do Membro Modal (fora do container animado para fix funcionar no viewport) -->
+  <div id="memberDossierModal" class="hidden fixed inset-0 z-[100] overflow-y-auto backdrop-blur-md flex items-center justify-center p-4" aria-labelledby="dossier-title" role="dialog" aria-modal="true">
+    <!-- Overlay -->
+    <div class="fixed inset-0 bg-black/80 transition-opacity" onclick="closeMemberDossier()"></div>
+
+    <div class="relative panel-elevated bg-[#11141d] border border-indigo-500/25 rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all max-w-md w-full mx-4 z-50 animate-fade-in">
+      <div class="p-6 sm:p-8">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-indigo-500/20">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400 font-bold text-lg" id="dossierAvatarLetter">
+              M
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white tracking-tight" id="dossierUsername">Membro</h3>
+              <p class="text-xs font-mono text-slate-400 flex items-center gap-1.5 mt-0.5">
+                <span>ID:</span>
+                <span id="dossierUserId" class="text-slate-300">0</span>
+                <button type="button" onclick="copyDossierId()" class="text-indigo-400 hover:text-white cursor-pointer" title="Copiar ID"><i class="fa-regular fa-copy text-[10px]"></i></button>
+              </p>
+            </div>
+          </div>
+          <button type="button" onclick="closeMemberDossier()" class="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-400 hover:text-white transition-colors cursor-pointer">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          <div class="panel-chassis p-3.5 rounded-xl bg-black/30 border border-white/[0.04]">
+            <div class="text-[10px] font-mono uppercase text-slate-500 mb-1">Ranking de Atividade</div>
+            <div class="text-lg font-bold text-amber-400 font-mono" id="dossierRank">#1</div>
+          </div>
+          <div class="panel-chassis p-3.5 rounded-xl bg-black/30 border border-white/[0.04]">
+            <div class="text-[10px] font-mono uppercase text-slate-500 mb-1">Total de Mensagens</div>
+            <div class="text-lg font-bold text-indigo-400 font-mono" id="dossierMessages">0</div>
+          </div>
+          <div class="panel-chassis p-3.5 rounded-xl bg-black/30 border border-white/[0.04]">
+            <div class="text-[10px] font-mono uppercase text-slate-500 mb-1">Tempo em Voz</div>
+            <div class="text-lg font-bold text-cyan-400 font-mono" id="dossierVoice">0m</div>
+          </div>
+          <div class="panel-chassis p-3.5 rounded-xl bg-black/30 border border-white/[0.04]">
+            <div class="text-[10px] font-mono uppercase text-slate-500 mb-1">Guild ID</div>
+            <div class="text-xs font-mono text-slate-300 truncate pt-1" id="dossierGuildId"><%= info.id %></div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-800/80">
+          <button type="button" onclick="closeMemberDossier()" class="btn-studio-secondary !py-2 !px-4 text-xs rounded-xl">
+            Fechar
+          </button>
+          <button type="button" onclick="goToMemberEconomy()" class="btn-studio-primary !py-2 !px-4 text-xs rounded-xl flex items-center gap-1.5">
+            <i class="fa-solid fa-coins text-xs"></i>
+            <span>Ver na Economia</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentMemberSegment = 'all';
+    let currentViewMode = 'table';
+    let currentDossierId = '';
+
+    function setMemberSegment(segment, btn) {
+      currentMemberSegment = segment;
+      const buttons = document.querySelectorAll('#memberSegmentedControl .hardware-segmented-item');
+      buttons.forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      filterMembers();
+    }
+
+    function setMemberViewMode(mode, btn) {
+      currentViewMode = mode;
+      document.querySelectorAll('#memberViewModeControl .hardware-segmented-item').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const tableView = document.getElementById('membersTableView');
+      const cardsView = document.getElementById('membersCardsView');
+
+      if (mode === 'cards') {
+        if (tableView) tableView.classList.add('hidden');
+        if (cardsView) cardsView.classList.remove('hidden');
+      } else {
+        if (cardsView) cardsView.classList.add('hidden');
+        if (tableView) tableView.classList.remove('hidden');
+      }
+    }
+
+    function handleDossierBtn(btn) {
+      if (!btn) return;
+      const d = btn.dataset;
+      openMemberDossier(d.username, d.code, d.voice, d.messages, d.rank, d.guild);
+    }
+
+    function openMemberDossier(username, code, voice, messages, rank, guildId) {
+      currentDossierId = code;
+      const modal = document.getElementById('memberDossierModal');
+      document.getElementById('dossierUsername').textContent = username || 'Membro';
+      document.getElementById('dossierUserId').textContent = code || '0';
+      document.getElementById('dossierVoice').textContent = voice || '0m';
+      document.getElementById('dossierMessages').textContent = messages || '0';
+      document.getElementById('dossierRank').textContent = '#' + rank;
+      document.getElementById('dossierGuildId').textContent = guildId || '';
+      document.getElementById('dossierAvatarLetter').textContent = (username || '?').charAt(0).toUpperCase();
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      }
+    }
+
+    function closeMemberDossier() {
+      const modal = document.getElementById('memberDossierModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    function fallbackMemberCopy(text, callback) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand("copy");
+        if (typeof callback === "function") callback();
+      } catch (e) {
+        console.error("Falha ao copiar:", e);
+      }
+      document.body.removeChild(ta);
+    }
+
+    function copyDossierId() {
+      if (!currentDossierId) return;
+      const onSuccess = () => {
+        const toast = window.showToast || (parent && parent.showToast);
+        if (toast) {
+          toast('success', 'ID Copiado', `ID ${currentDossierId} copiado para a área de transferência.`);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(currentDossierId).then(onSuccess).catch(() => {
+          fallbackMemberCopy(currentDossierId, onSuccess);
+        });
+      } else {
+        fallbackMemberCopy(currentDossierId, onSuccess);
+      }
+    }
+
+    function goToMemberEconomy() {
+      closeMemberDossier();
+      if (parent && typeof parent.selectTopic === 'function') {
+        parent.selectTopic('economyinfo');
+      } else if (parent && typeof parent.loadPanelUrl === 'function') {
+        parent.loadPanelUrl('/bot/pagina/economyinfo/<%= info.id %>', true, 'economyinfo');
+      } else {
+        window.location.href = '/bot/botinfo/<%= info.id %>#economyinfo';
+      }
+    }
+
+    function copyMemberCode(code, btn) {
+      if (!code) return;
+      const onSuccess = () => {
+        const icon = btn.querySelector('i');
+        if (icon) {
+          const originalClass = icon.className;
+          icon.className = 'fa-solid fa-check text-emerald-400 text-[9px]';
+          setTimeout(() => {
+            icon.className = originalClass;
+          }, 1500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(onSuccess).catch(() => {
+          fallbackMemberCopy(code, onSuccess);
+        });
+      } else {
+        fallbackMemberCopy(code, onSuccess);
+      }
+    }
+
+    function filterMembers() {
+      const query = (document.getElementById('memberSearchInput').value || '').trim().toLowerCase();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      const rows = document.querySelectorAll('.member-row');
+      const cards = document.querySelectorAll('.member-card');
+      const noResultsRow = document.getElementById('noResultsRow');
+      const noResultsCards = document.getElementById('noResultsCardsRow');
+      const countDisplay = document.getElementById('memberCountDisplay');
+      
+      const kbd = document.getElementById('memberSearchKbd');
+      if (clearBtn) {
+        clearBtn.classList.toggle('hidden', query.length === 0);
+      }
+      if (kbd) {
+        kbd.classList.toggle('hidden', query.length > 0);
+      }
+
+      let visibleCount = 0;
+
+      // Filter rows
+      rows.forEach(row => {
+        const username = row.getAttribute('data-username') || '';
+        const code = row.getAttribute('data-code') || '';
+        const voice = parseInt(row.getAttribute('data-voice') || '0');
+        const msgs = parseInt(row.getAttribute('data-messages') || '0');
+
+        let matchesSearch = !query || username.includes(query) || code.includes(query);
+        let matchesSegment = true;
+
+        if (currentMemberSegment === 'voice') {
+          matchesSegment = voice > 0;
+        } else if (currentMemberSegment === 'active') {
+          matchesSegment = (msgs >= 20 || voice >= 30);
+        }
+
+        const visible = matchesSearch && matchesSegment;
+        row.style.display = visible ? '' : 'none';
+        if (visible) visibleCount++;
+      });
+
+      // Filter cards
+      cards.forEach(card => {
+        const username = card.getAttribute('data-username') || '';
+        const code = card.getAttribute('data-code') || '';
+        const voice = parseInt(card.getAttribute('data-voice') || '0');
+        const msgs = parseInt(card.getAttribute('data-messages') || '0');
+
+        let matchesSearch = !query || username.includes(query) || code.includes(query);
+        let matchesSegment = true;
+
+        if (currentMemberSegment === 'voice') {
+          matchesSegment = voice > 0;
+        } else if (currentMemberSegment === 'active') {
+          matchesSegment = (msgs >= 20 || voice >= 30);
+        }
+
+        card.style.display = (matchesSearch && matchesSegment) ? '' : 'none';
+      });
+
+      if (countDisplay) {
+        countDisplay.textContent = visibleCount;
+      }
+
+      if (noResultsRow) {
+        noResultsRow.classList.toggle('hidden', visibleCount > 0 || rows.length === 0);
+      }
+      if (noResultsCards) {
+        noResultsCards.classList.toggle('hidden', visibleCount > 0 || cards.length === 0);
+      }
+    }
+
+    function clearMemberSearch() {
+      const input = document.getElementById('memberSearchInput');
+      if (input) {
+        input.value = '';
+        filterMembers();
+        input.focus();
+      }
+    }
+
+    function sortMembers() {
+      const sortType = document.getElementById('memberSortSelect').value;
+      const tbody = document.getElementById('membersTableBody');
+      const cardsGrid = document.getElementById('membersCardsGrid');
+      const rows = Array.from(document.querySelectorAll('.member-row'));
+      const cards = Array.from(document.querySelectorAll('.member-card'));
+      const noResultsRow = document.getElementById('noResultsRow');
+
+      const sortFn = (a, b) => {
+        if (sortType === 'messages') {
+          return parseInt(b.getAttribute('data-messages') || '0') - parseInt(a.getAttribute('data-messages') || '0');
+        } else if (sortType === 'voice') {
+          return parseInt(b.getAttribute('data-voice') || '0') - parseInt(a.getAttribute('data-voice') || '0');
+        } else if (sortType === 'name') {
+          return (a.getAttribute('data-username') || '').localeCompare(b.getAttribute('data-username') || '');
+        } else {
+          return parseInt(a.getAttribute('data-original-index') || '0') - parseInt(b.getAttribute('data-original-index') || '0');
+        }
+      };
+
+      rows.sort(sortFn);
+      cards.sort(sortFn);
+
+      rows.forEach(row => tbody.appendChild(row));
+      if (noResultsRow) tbody.appendChild(noResultsRow);
+
+      if (cardsGrid) {
+        cards.forEach(card => cardsGrid.appendChild(card));
+      }
+    }
+
+    // Atalhos globais do teclado
+    document.addEventListener('keydown', (e) => {
+      const searchInput = document.getElementById('memberSearchInput');
+      if (e.key === '/' && document.activeElement !== searchInput && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      } else if (e.key === 'Escape') {
+        const dossierModal = document.getElementById('memberDossierModal');
+        if (dossierModal && !dossierModal.classList.contains('hidden')) {
+          closeMemberDossier();
+          return;
+        }
+        if (searchInput && (document.activeElement === searchInput || searchInput.value)) {
+          clearMemberSearch();
+          searchInput.blur();
+        }
+      }
+    });
+  </script>
   
   <style>
       @keyframes fade-in-up {

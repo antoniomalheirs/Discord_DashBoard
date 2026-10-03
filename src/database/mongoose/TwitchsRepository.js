@@ -29,7 +29,7 @@ module.exports = class TwitchRepository extends Repository {
   }
 
   findOne(twitch, projection) {
-    return this.model.findOne({ twitch }, projection).then(this.parse);
+    return this.model.findOne({ twitch: String(twitch) }, projection).then(this.parse);
   }
 
   findByGuildName(channel, projection) {
@@ -56,15 +56,15 @@ module.exports = class TwitchRepository extends Repository {
   }
 
   remove(twitch) {
-    return this.model.findOneAndDelete({ twitch }).then(this.parse);
+    return this.model.findOneAndDelete({ twitch: String(twitch) }).then(this.parse);
   }
 
   update(twitch, entity, options = { upsert: true }) {
-    return this.model.updateOne({ twitch }, { $set: entity }, options);
+    return this.model.updateOne({ twitch: String(twitch) }, { $set: entity }, options);
   }
 
   async verify(twitch) {
-    return !!(await this.model.findOne({ twitch }));
+    return !!(await this.model.findOne({ twitch: String(twitch) }));
   }
 
   findAll(projection) {
@@ -72,34 +72,32 @@ module.exports = class TwitchRepository extends Repository {
   }
 
   verifyByTwitchAndGuildId(tchId, guildId) {
-    return this.model.exists({ twitch: tchId, guildID: guildId });
+    return this.model.exists({ twitch: String(tchId), guildID: String(guildId) });
   }
 
   deletar(id, guildId) {
-    const query = { twitch: id, guildID: guildId }; // Adicionando a condição do guildId
+    const query = { twitch: String(id), guildID: String(guildId) };
     return this.model.deleteOne(query).then(result => {
       if (result.deletedCount === 1) {
-        // Documento removido com sucesso
         return { success: true };
       } else {
-        // Nenhum documento foi removido (possivelmente não encontrado)
         return { success: false, message: "Documento não encontrado" };
       }
     }).catch(error => {
       console.error("Erro ao deletar:", error);
-      throw error; // Rejeita a promessa com o erro
+      throw error;
     });
   }
 
   findByTwitchAndGuildId(twitchId, guildId, projection) {
     return this.model
-      .findOne({ twitch: twitchId, guildID: guildId }, projection)
+      .findOne({ twitch: String(twitchId), guildID: String(guildId) }, projection)
       .then(this.parse);
   }
 
   findAllByGuildId(guildId, projection) {
     return this.model
-      .find({ guildID: guildId }, projection)
+      .find({ guildID: String(guildId) }, projection)
       .then((results) => results.map(this.parse));
   }
 };

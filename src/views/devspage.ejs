@@ -4,104 +4,150 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../css/cssdir/out.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>Desenvolvedores - Manager Bot</title>
+    <link href="/css/cssdir/out.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
+    <title>Engenharia & Comunidade — Manager Bot</title>
 </head>
 
-<body class="bg-[#0f1115] text-slate-200 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white antialiased overflow-x-hidden">
+<body class="bg-[#090a0f] text-slate-200 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white antialiased overflow-x-hidden">
     
     <!-- Background Decorators -->
-    <div class="fixed inset-0 z-0 pointer-events-none">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-[#0f1115] to-[#0f1115]"></div>
-        <div class="absolute -top-[40%] -right-[10%] w-[70%] h-[70%] rounded-full bg-indigo-600/10 blur-[120px]"></div>
-        <div class="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-purple-600/10 blur-[100px]"></div>
+    <div class="fixed inset-0 z-0 pointer-events-none bg-[#090a0f] bg-blueprint"></div>
+    <div class="fixed inset-0 z-0 pointer-events-none opacity-40">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-[radial-gradient(ellipse_at_top,_rgba(88,101,242,0.12),_transparent_70%)]"></div>
     </div>
 
     <!-- Navigation -->
-    <header class="fixed inset-x-0 top-0 z-50 bg-[#0f1115]/50 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+    <header class="fixed inset-x-0 top-0 z-50 bg-[#090a0f]/80 backdrop-blur-xl border-b border-white/[0.08] transition-all duration-300">
         <nav class="container mx-auto flex items-center justify-between p-4 lg:px-8" aria-label="Global">
             <div class="flex items-center gap-3">
-                <a href="/" class="relative group">
-                    <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-500"></div>
-                    <img class="relative h-10 w-10 rounded-2xl object-cover shadow-2xl" src="/res/serverIcon/boticon.jpg" alt="Bot Icon">
+                <a href="/" class="flex items-center gap-3 group">
+                    <div class="relative w-9 h-9 rounded-xl overflow-hidden border border-white/10 shadow-sm group-hover:border-indigo-500/50 transition-colors">
+                        <img class="w-full h-full object-cover" src="/res/serverIcon/boticon.jpg" alt="Bot Icon">
+                    </div>
+                    <span class="font-bold text-base sm:text-lg tracking-tight text-white group-hover:text-slate-200 transition-colors">Manager Bot</span>
                 </a>
-                <span class="font-bold text-xl tracking-tight text-white/90">Manager Bot</span>
             </div>
             
-            <div class="hidden lg:flex lg:gap-x-10">
-                <a href="/auth/about" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 pb-1">Sobre</a>
-                <a href="/auth/docs" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 pb-1">Documentação</a>
-                <a href="/auth/funcutils" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 pb-1">Utilidades & Funções</a>
-                <a href="/auth/devs" class="text-sm font-semibold text-white transition-colors duration-200 border-b-2 border-indigo-500 pb-1">Devs</a>
+            <div class="hidden lg:flex items-center lg:gap-x-1 bg-white/[0.03] border border-white/[0.08] px-3 py-1.5 rounded-full">
+                <a href="/auth/docs" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.05] transition-all duration-150">Documentação</a>
+                <a href="/auth/funcutils" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.05] transition-all duration-150">Módulos & Funções</a>
+                <a href="/auth/about" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.05] transition-all duration-150">Arquitetura</a>
+                <a href="/auth/devs" class="px-4 py-1.5 rounded-full text-xs font-semibold text-white bg-white/[0.08] transition-all duration-150">Comunidade</a>
             </div>
 
-            <div class="flex flex-1 justify-end">
-                <a href="/auth/discord" class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white transition-all duration-200 bg-indigo-600/80 border border-indigo-500/50 rounded-full hover:bg-indigo-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#0f1115]">
-                    <span>Painel</span>
+            <div class="flex items-center gap-3">
+                <a href="/auth/discord" class="btn-studio-primary text-xs sm:text-sm !py-2 sm:!py-2.5 !px-4 sm:!px-5 rounded-xl">
+                    <i class="fa-brands fa-discord text-base"></i>
+                    <span>Acessar Painel</span>
                 </a>
+                <button type="button" onclick="toggleNavMenu()" class="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white" aria-label="Menu">
+                    <i id="nav-toggle-icon" class="fa-solid fa-bars text-lg"></i>
+                </button>
             </div>
         </nav>
+        <div id="mobile-nav-dropdown" class="hidden lg:hidden border-t border-white/5 bg-[#090a0f]/95 backdrop-blur-2xl px-6 py-5 space-y-2">
+            <a href="/auth/docs" class="block py-2.5 px-4 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all">Documentação</a>
+            <a href="/auth/funcutils" class="block py-2.5 px-4 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all">Módulos & Funções</a>
+            <a href="/auth/about" class="block py-2.5 px-4 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all">Arquitetura</a>
+            <a href="/auth/devs" class="block py-2.5 px-4 rounded-xl text-sm font-medium text-white bg-white/[0.08] transition-all">Comunidade</a>
+        </div>
     </header>
 
     <!-- Content -->
-    <main class="relative z-10 flex-grow pt-32 pb-20 px-6 lg:px-8">
-        <div class="mx-auto max-w-4xl animate-fade-in-up">
-            <div class="text-center mb-16">
-                <div class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-widest mb-6">
-                    A Divina Liricidade
+    <main class="relative z-10 flex-grow pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+        <div class="mb-12 border-b border-white/[0.08] pb-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-slate-300 text-xs font-mono mb-4">
+                <i class="fa-solid fa-code text-indigo-400"></i>
+                <span>Open Source & Ecossistema</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+                Engenharia & Desenvolvimento
+            </h1>
+            <p class="text-sm sm:text-base text-slate-400 max-w-2xl leading-relaxed">
+                Conheça os padrões técnicos, bibliotecas e princípios adotados na construção do Manager Bot e de seu painel web.
+            </p>
+        </div>
+
+        <div class="space-y-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                
+                <div class="panel-elevated rounded-2xl p-6">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4">
+                        <i class="fa-solid fa-bolt text-base"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-1.5">Eficiência & Escala</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Consultas otimizadas com índices compostos no MongoDB e economia de cotas no YouTube para suportar centenas de servidores sem lentidão.
+                    </p>
                 </div>
-                <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 mb-6">
-                    Desenvolvedores
-                </h1>
-                <p class="text-xl text-slate-400 max-w-2xl mx-auto">
-                    Conheça quem constrói o nosso ecossistema
-                </p>
+
+                <div class="panel-elevated rounded-2xl p-6">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
+                        <i class="fa-solid fa-hand-pointer text-base"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-1.5">Ergonomia Web</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Ações imediatas no painel sem recarregar a tela: feedback em tempo real através de Toasts e requisições assíncronas JSON.
+                    </p>
+                </div>
+
+                <div class="panel-elevated rounded-2xl p-6">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4">
+                        <i class="fa-solid fa-lock text-base"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-1.5">Segurança Estrita</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Autenticação direta com a API do Discord, validação canônica de IDs contra injeção e proteção baseada nos cargos dos administradores.
+                    </p>
+                </div>
+
             </div>
 
-            <div class="space-y-8">
-                <!-- Card 1 -->
-                <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-8 md:p-10 backdrop-blur-md shadow-2xl relative overflow-hidden group hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500">
-                    <div class="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
-                        <i class="fa-solid fa-users text-9xl"></i>
-                    </div>
-                    
-                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                        <i class="fa-solid fa-code text-indigo-400"></i> Sobre Nós
-                    </h2>
-                    
-                    <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed text-lg space-y-6">
-                        <p>
-                            Se você está buscando um bot completo e altamente estruturado, saiba que nosso time de desenvolvimento é apaixonado por criar as melhores experiências possíveis, mas é importante notar que o produto final segue em constante maturação.
-                        </p>
-                        <p>
-                            Nosso bot foi inicialmente desenvolvido com o propósito simples de fornecer notificações sobre vídeos e transmissões ao vivo de canais do YouTube e Twitch, enviando alertas rápidos e customizáveis.
-                        </p>
-                        <p>
-                            No entanto, a equipe <strong>SentinelData</strong> está constantemente trabalhando para aprimorar, polir e expandir as funcionalidades da plataforma, visando oferecer uma suíte abrangente para administração e moderação.
-                        </p>
-                        <div class="bg-indigo-500/10 border border-indigo-500/20 p-6 rounded-2xl mt-8">
-                            <p class="m-0 text-indigo-200">
-                                Agradecemos seu interesse na construção do nosso projeto. Cada linha de código foi pensada para entregar valor para sua comunidade do Discord.<br><br>
-                                <strong class="text-indigo-400">Atenciosamente, SentinelData Team</strong>
-                            </p>
-                        </div>
-                    </div>
+            <!-- Contribuição & Suporte -->
+            <div class="panel-elevated rounded-2xl p-6 sm:p-8">
+                <h3 class="text-base font-bold text-white mb-3">Comunidade & Suporte</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+                    O Manager Bot é um projeto em contínua evolução técnica. Relate bugs, sugira melhorias na experiência de uso ou acompanhe os lançamentos diretamente com a equipe.
+                </p>
+                <div class="flex flex-wrap items-center gap-3">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1407885636135944342&permissions=2150755584&integration_type=0&scope=bot+applications.commands" 
+                       class="btn-studio-primary text-xs !py-2.5 !px-5 rounded-xl">
+                        <i class="fa-brands fa-discord"></i>
+                        <span>Adicionar Bot</span>
+                    </a>
+                    <a href="/auth/docs" class="btn-studio-secondary text-xs !py-2.5 !px-5 rounded-xl">
+                        <i class="fa-solid fa-book"></i>
+                        <span>Consultar Documentação</span>
+                    </a>
                 </div>
             </div>
+
         </div>
     </main>
 
-    <style>
-        @keyframes fade-in-up {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+    <!-- Footer -->
+    <footer class="border-t border-white/[0.06] py-8 text-center text-xs text-slate-500">
+        <p>Manager Bot © 2026 • Engenharia de Software</p>
+    </footer>
+
+    <script>
+        function toggleNavMenu() {
+            const menu = document.getElementById("mobile-nav-dropdown");
+            const icon = document.getElementById("nav-toggle-icon");
+            if (!menu || !icon) return;
+            const isHidden = menu.classList.contains("hidden");
+            if (isHidden) {
+                menu.classList.remove("hidden");
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-xmark");
+            } else {
+                menu.classList.add("hidden");
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
+            }
         }
-        .animate-fade-in-up {
-            animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-        }
-    </style>
+    </script>
 </body>
 </html>

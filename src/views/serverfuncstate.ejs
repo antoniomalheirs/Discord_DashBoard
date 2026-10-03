@@ -3,35 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="../css/cssdir/out.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="/css/cssdir/out.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
   <title>Gerenciador de Funções</title>
 </head>
-<body class="bg-transparent min-h-full flex items-start justify-center pt-10 px-4">
-  <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
-    
-    <!-- Background Decorators inside card -->
-    <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
-    <div class="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+<body class="bg-transparent min-h-full flex items-start justify-center pt-2 sm:pt-6 px-1 sm:px-2">
+  <div class="panel-tone-indigo chassis-bevel bg-hardware-dots p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-full animate-fade-in-up relative overflow-hidden laser-edge-indigo">
 
     <!-- Header -->
-    <div class="flex flex-col md:flex-row items-center gap-6 mb-10 border-b border-white/5 pb-8 relative z-10">
-      <div class="relative group mx-auto md:mx-0">
-        <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
-        <% if (info.icon && info.icon.indexOf('null')===-1) { %>
-          <img src="<%= info.icon %>" alt="Ícone da guilda" class="relative w-24 h-24 rounded-2xl object-cover shadow-2xl border border-white/20" />
-        <% } else { %>
-          <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="relative w-24 h-24 rounded-2xl object-cover shadow-2xl border border-white/20" />
-        <% } %>
+    <div class="flex flex-col md:flex-row items-center gap-5 sm:gap-6 mb-8 sm:mb-10 border-b border-indigo-500/20 pb-6 sm:pb-8 relative z-10">
+      <div class="relative mx-auto md:mx-0 flex-shrink-0">
+        <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-indigo-500/30 shadow-lg">
+          <% if (info.icon && info.icon.indexOf('null')===-1) { %>
+            <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-full h-full object-cover" />
+          <% } else { %>
+            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-full h-full object-cover" />
+          <% } %>
+        </div>
       </div>
-      <div class="flex-1 text-center md:text-left">
-        <h3 class="text-3xl font-extrabold text-white mb-2 flex items-center justify-center md:justify-start gap-3 bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-          <i class="fa-solid fa-toggle-on text-blue-500"></i>
-          Módulos Ativos
+      <div class="flex-1 text-center md:text-left min-w-0">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-toggle-on text-[10px]"></i>
+          <span>Gerenciador de Módulos</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight truncate">
+          Central de Logs & Módulos
         </h3>
-        <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
-          Visão geral e status em tempo real dos módulos de notificação para <strong><%= info.name %></strong>.
+        <p class="text-slate-400 text-xs sm:text-sm mt-1 max-w-2xl">
+          Visão geral e status em tempo real dos serviços para <strong class="text-white"><%= info.name %></strong>
         </p>
       </div>
     </div>
@@ -40,281 +40,736 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 relative z-10">
 
       <!-- Poker Manager -->
-      <div class="group bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 hover:bg-white/10 hover:border-red-500/50 hover:shadow-[0_0_30px_rgba(239,68,68,0.15)] transition-all duration-500 relative overflow-hidden flex flex-col justify-between">
-        <div class="absolute top-0 right-0 p-5 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">
-           <i class="fa-solid fa-cards text-7xl text-red-500"></i>
-        </div>
-        <div class="absolute top-0 right-0 p-5 z-20">
+      <div class="panel-elevated tonal-border-amber p-5 sm:p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group card-accent-poker">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-11 h-11 bg-amber-500/10 rounded-xl flex items-center justify-center border border-amber-500/20">
+            <i class="fa-solid fa-dice text-lg text-amber-400"></i>
+          </div>
           <% if (info4.poker && info4.poker.state) { %>
-            <div class="h-3.5 w-3.5 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)] animate-pulse border border-emerald-300"></div>
+            <span class="flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold tracking-wider rounded-full uppercase border border-emerald-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Ativo
+            </span>
           <% } else { %>
-            <div class="h-3.5 w-3.5 rounded-full bg-slate-600 border border-slate-500"></div>
+            <span class="px-2.5 py-0.5 bg-white/[0.04] text-slate-400 text-[10px] font-semibold tracking-wider rounded-full uppercase border border-white/[0.08]">Inativo</span>
           <% } %>
         </div>
 
         <div>
-            <div class="flex items-center justify-center w-14 h-14 bg-red-500/10 rounded-2xl mb-5 group-hover:scale-110 transition-transform duration-500 border border-red-500/20">
-                <i class="fa-solid fa-heart text-2xl text-red-500"></i>
-            </div>
-            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">Texas Hold'em</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6">Módulo de apostas e jogos de cartas para o servidor.</p>
+          <h3 class="text-base sm:text-lg font-bold text-white mb-1">Texas Hold'em</h3>
+          <p class="text-slate-400 text-xs leading-relaxed mb-5">Módulo interativo de apostas e jogos de cartas para servidores.</p>
         </div>
         
-        <div class="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
-             <span class="text-xs font-bold uppercase tracking-wider <%= (info4.poker && info4.poker.state) ? 'text-emerald-400' : 'text-slate-500' %>">
-                 <%= (info4.poker && info4.poker.state) ? 'ATIVO' : 'DESATIVADO' %>
-             </span>
-             <a href="javascript:void(0)" onclick="if(parent && parent.selectTopic) parent.selectTopic('funcpoker');" class="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-semibold group/link">
-                 Configurar <i class="fa-solid fa-arrow-right text-[10px] group-hover/link:translate-x-1 transition-transform"></i>
-             </a>
+        <div class="mt-auto flex items-center justify-between border-t border-white/[0.06] pt-3.5">
+          <span class="text-[11px] font-bold uppercase tracking-wider <%= (info4.poker && info4.poker.state) ? 'text-emerald-400' : 'text-slate-500' %>">
+            <%= (info4.poker && info4.poker.state) ? 'Ativo' : 'Desativado' %>
+          </span>
+          <a href="javascript:void(0)" onclick="if(parent && parent.selectTopic) parent.selectTopic('funcpoker');" class="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1.5 font-semibold">
+            <span>Configurar</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </a>
         </div>
       </div>
 
       <!-- Youtube Status Card -->
-      <div class="group bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 hover:bg-white/10 hover:border-red-500/50 hover:shadow-[0_0_30px_rgba(239,68,68,0.15)] transition-all duration-500 relative overflow-hidden flex flex-col justify-between">
-        <div class="absolute -right-4 -top-4 w-32 h-32 bg-red-500/10 rounded-full blur-2xl group-hover:bg-red-500/20 transition-all duration-700"></div>
-        
-        <div class="relative z-10 mb-4">
-          <div class="flex justify-between items-start mb-6">
-              <div class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform duration-500">
-                  <i class="fa-brands fa-youtube text-2xl text-red-500"></i>
-              </div>
-              <% if (info4.youtubenotify) { %>
-                  <span class="px-3 py-1 text-[10px] font-bold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.2)]">ATIVO</span>
-              <% } else { %>
-                  <span class="px-3 py-1 text-[10px] font-bold rounded-full bg-white/5 text-slate-400 border border-white/10">DESATIVADO</span>
-              <% } %>
+      <div class="panel-elevated tonal-border-red p-5 sm:p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group card-accent-youtube">
+        <div>
+          <div class="flex justify-between items-start mb-4">
+            <div class="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center border border-red-500/20">
+              <i class="fa-brands fa-youtube text-lg text-red-500"></i>
+            </div>
+            <% if (info4.youtubenotify) { %>
+              <span class="flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold tracking-wider rounded-full uppercase border border-emerald-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                Ativo
+              </span>
+            <% } else { %>
+              <span class="px-2.5 py-0.5 bg-white/[0.04] text-slate-400 text-[10px] font-semibold tracking-wider rounded-full uppercase border border-white/[0.08]">Inativo</span>
+            <% } %>
           </div>
-          <h4 class="text-xl font-bold text-white mb-1">YouTube</h4>
-          <p class="text-slate-400 text-sm">Notificações automáticas de vídeos novos.</p>
+          <h4 class="text-base sm:text-lg font-bold text-white mb-1">YouTube Hub</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">Notificações automáticas de vídeos recém-publicados.</p>
         </div>
         
-        <div class="relative z-10 border-t border-white/5 pt-4 mt-auto">
-          <p class="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-2">Canal de Destino</p>
-          <div class="bg-black/30 p-2.5 rounded-xl border border-white/5 font-mono text-slate-300 text-xs truncate flex items-center shadow-inner">
+        <div class="border-t border-white/[0.06] pt-3.5 mt-5">
+          <p class="text-slate-500 text-[10px] uppercase font-bold tracking-wider mb-1.5">Canal de Destino</p>
+          <div class="bg-black/30 px-3 py-1.5 rounded-lg border border-white/[0.06] font-mono text-slate-300 text-xs truncate flex items-center mb-3">
+            <% 
+              const foundYtbChan = (typeof channels !== 'undefined' && Array.isArray(channels)) ? channels.find(c => c.id === info4.channelytb) : null;
+              const ytbChanName = foundYtbChan ? foundYtbChan.name : info4.channelytb;
+            %>
             <% if (info4.channelytb) { %>
-              <i class="fa-solid fa-hashtag text-indigo-400 mr-2"></i><%= info4.channelytb %>
+              <i class="fa-solid fa-hashtag text-red-400 mr-2 text-[10px]"></i><%= ytbChanName %>
             <% } else { %>
-              <span class="text-slate-500 italic flex items-center gap-1"><i class="fa-solid fa-ban text-red-400/50"></i> Nenhum canal configurado</span>
+              <span class="text-slate-500 italic text-[11px] flex items-center gap-1"><i class="fa-solid fa-ban text-red-400/50"></i> Nenhum canal configurado</span>
             <% } %>
+          </div>
+          <div class="flex items-center justify-end">
+            <a href="javascript:void(0)" onclick="if(parent && parent.selectTopic) parent.selectTopic('funcyoutube');" class="text-xs text-red-400 hover:text-red-300 flex items-center gap-1.5 font-semibold">
+              <span>Abrir YouTube Hub</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
           </div>
         </div>
       </div>
 
       <!-- Twitch Status Card -->
-      <div class="group bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 hover:bg-white/10 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-500 relative overflow-hidden flex flex-col justify-between">
-        <div class="absolute -right-4 -top-4 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all duration-700"></div>
-        
-        <div class="relative z-10 mb-4">
-          <div class="flex justify-between items-start mb-6">
-              <div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center border border-purple-500/20 group-hover:scale-110 transition-transform duration-500">
-                  <i class="fa-brands fa-twitch text-2xl text-purple-400"></i>
-              </div>
-              <% if (info4.twitchnotify) { %>
-                  <span class="px-3 py-1 text-[10px] font-bold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.2)]">ATIVO</span>
-              <% } else { %>
-                  <span class="px-3 py-1 text-[10px] font-bold rounded-full bg-white/5 text-slate-400 border border-white/10">DESATIVADO</span>
-              <% } %>
+      <div class="panel-elevated tonal-border-purple p-5 sm:p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group card-accent-twitch">
+        <div>
+          <div class="flex justify-between items-start mb-4">
+            <div class="w-11 h-11 bg-purple-500/10 rounded-xl flex items-center justify-center border border-purple-500/20">
+              <i class="fa-brands fa-twitch text-lg text-purple-400"></i>
+            </div>
+            <% if (info4.twitchnotify) { %>
+              <span class="flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold tracking-wider rounded-full uppercase border border-emerald-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                Ativo
+              </span>
+            <% } else { %>
+              <span class="px-2.5 py-0.5 bg-white/[0.04] text-slate-400 text-[10px] font-semibold tracking-wider rounded-full uppercase border border-white/[0.08]">Inativo</span>
+            <% } %>
           </div>
-          <h4 class="text-xl font-bold text-white mb-1">Twitch</h4>
-          <p class="text-slate-400 text-sm">Notificações automáticas de livestreams.</p>
+          <h4 class="text-base sm:text-lg font-bold text-white mb-1">Twitch Hub</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">Notificações automáticas de transmissões ao vivo.</p>
         </div>
         
-        <div class="relative z-10 border-t border-white/5 pt-4 mt-auto">
-          <p class="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-2">Canal de Destino</p>
-          <div class="bg-black/30 p-2.5 rounded-xl border border-white/5 font-mono text-slate-300 text-xs truncate flex items-center shadow-inner">
+        <div class="border-t border-white/[0.06] pt-3.5 mt-5">
+          <p class="text-slate-500 text-[10px] uppercase font-bold tracking-wider mb-1.5">Canal de Destino</p>
+          <div class="bg-black/30 px-3 py-1.5 rounded-lg border border-white/[0.06] font-mono text-slate-300 text-xs truncate flex items-center mb-3">
+            <% 
+              const foundTchChan = (typeof channels !== 'undefined' && Array.isArray(channels)) ? channels.find(c => c.id === info4.channeltch) : null;
+              const tchChanName = foundTchChan ? foundTchChan.name : info4.channeltch;
+            %>
             <% if (info4.channeltch) { %>
-              <i class="fa-solid fa-hashtag text-indigo-400 mr-2"></i><%= info4.channeltch %>
+              <i class="fa-solid fa-hashtag text-purple-400 mr-2 text-[10px]"></i><%= tchChanName %>
             <% } else { %>
-              <span class="text-slate-500 italic flex items-center gap-1"><i class="fa-solid fa-ban text-red-400/50"></i> Nenhum canal configurado</span>
+              <span class="text-slate-500 italic text-[11px] flex items-center gap-1"><i class="fa-solid fa-ban text-red-400/50"></i> Nenhum canal configurado</span>
             <% } %>
+          </div>
+          <div class="flex items-center justify-end">
+            <a href="javascript:void(0)" onclick="if(parent && parent.selectTopic) parent.selectTopic('functwitch');" class="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1.5 font-semibold">
+              <span>Abrir Twitch Hub</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
           </div>
         </div>
       </div>
     </div>
     
-    <div class="flex items-center gap-3 mb-6 relative z-10 mt-12">
-        <i class="fa-solid fa-list-check text-indigo-400 text-xl"></i>
-        <h3 class="text-2xl font-bold text-white">Eventos de Log</h3>
+    <% 
+      const logModules=[ 
+        { key: 'message_delete' , label: 'Msg Deletada' , icon: 'fa-trash' , color: 'text-red-400', bg: 'bg-red-500/10', category: 'activity' }, 
+        { key: 'message_update' , label: 'Msg Editada' , icon: 'fa-pen-to-square' , color: 'text-blue-400', bg: 'bg-blue-500/10', category: 'activity' }, 
+        { key: 'voice_update' , label: 'Voz (Entrada/Saída)' , icon: 'fa-microphone' , color: 'text-emerald-400', bg: 'bg-emerald-500/10', category: 'activity' }, 
+        { key: 'member_join' , label: 'Entrada de Membro' , icon: 'fa-user-plus' , color: 'text-teal-400', bg: 'bg-teal-500/10', category: 'activity' }, 
+        { key: 'member_leave' , label: 'Saída de Membro' , icon: 'fa-user-minus' , color: 'text-orange-400', bg: 'bg-orange-500/10', category: 'activity' }, 
+        { key: 'member_ban' , label: 'Membro Banido' , icon: 'fa-gavel' , color: 'text-rose-500', bg: 'bg-rose-500/10', category: 'moderation' }, 
+        { key: 'economy_log' , label: 'Log de Economia' , icon: 'fa-coins' , color: 'text-amber-400', bg: 'bg-amber-500/10', category: 'moderation' }, 
+        { key: 'channel_update' , label: 'Canais' , icon: 'fa-server' , color: 'text-indigo-400', bg: 'bg-indigo-500/10', category: 'channels' }, 
+        { key: 'role_update' , label: 'Cargos' , icon: 'fa-id-badge' , color: 'text-pink-400', bg: 'bg-pink-500/10', category: 'channels' }, 
+        { key: 'server_update' , label: 'Updates do Servidor' , icon: 'fa-gear' , color: 'text-slate-300', bg: 'bg-slate-500/10', category: 'channels' }, 
+        { key: 'invite_update' , label: 'Convites' , icon: 'fa-envelope' , color: 'text-cyan-400', bg: 'bg-cyan-500/10', category: 'moderation' } 
+      ]; 
+      let initialActiveCount = 0;
+      logModules.forEach(mod => {
+        if (info4.logging && info4.logging[mod.key] && info4.logging[mod.key].state) initialActiveCount++;
+      });
+      let initialInactiveCount = logModules.length - initialActiveCount;
+    %>
+
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 relative z-10 mt-12">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400">
+                <i class="fa-solid fa-list-check text-sm"></i>
+            </div>
+            <div>
+                <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Central de Auditoria</h3>
+                <p class="text-xs text-slate-400">Auditoria e rastreamento de eventos em tempo real no Discord</p>
+            </div>
+        </div>
+
+        <!-- Status Filter Pills -->
+        <div class="inline-flex items-center p-1 rounded-xl bg-black/40 border border-white/[0.04] text-xs font-semibold self-start sm:self-auto shadow-inner">
+            <button type="button" onclick="setLogFilter('all')" id="btn-filter-all" class="log-tab-btn active px-3 py-1.5 rounded-lg text-white bg-white/[0.08] transition-all">
+                Todos (<span id="tab-count-all"><%= logModules.length %></span>)
+            </button>
+            <button type="button" onclick="setLogFilter('active')" id="btn-filter-active" class="log-tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                Ativos (<span id="tab-count-active"><%= initialActiveCount %></span>)
+            </button>
+            <button type="button" onclick="setLogFilter('inactive')" id="btn-filter-inactive" class="log-tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                Desativados (<span id="tab-count-inactive"><%= initialInactiveCount %></span>)
+            </button>
+        </div>
+    </div>
+
+    <!-- Category Hardware Segmented Strip -->
+    <div class="flex items-center gap-2 mb-6 relative z-10 overflow-x-auto pb-1">
+      <div class="hardware-segmented-control" id="logCategoryControl">
+        <button type="button" onclick="setLogCategory('all', this)" class="hardware-segmented-item active">
+          <span>Todas as Categorias (11)</span>
+        </button>
+        <button type="button" onclick="setLogCategory('moderation', this)" class="hardware-segmented-item">
+          <i class="fa-solid fa-gavel text-[10px]"></i>
+          <span>Moderação (3)</span>
+        </button>
+        <button type="button" onclick="setLogCategory('channels', this)" class="hardware-segmented-item">
+          <i class="fa-solid fa-server text-[10px]"></i>
+          <span>Canais & Cargos (3)</span>
+        </button>
+        <button type="button" onclick="setLogCategory('activity', this)" class="hardware-segmented-item">
+          <i class="fa-solid fa-bolt text-[10px]"></i>
+          <span>Atividade & Membros (5)</span>
+        </button>
+      </div>
     </div>
 
     <!-- Logs Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-      <% const logModules=[ 
-        { key: 'message_delete' , label: 'Msg Deletada' , icon: 'fa-trash' , color: 'text-red-400', bg: 'bg-red-500/10' }, 
-        { key: 'message_update' , label: 'Msg Editada' , icon: 'fa-pen-to-square' , color: 'text-blue-400', bg: 'bg-blue-500/10' }, 
-        { key: 'voice_update' , label: 'Voz (Entrada/Saída)' , icon: 'fa-microphone' , color: 'text-emerald-400', bg: 'bg-emerald-500/10' }, 
-        { key: 'member_join' , label: 'Entrada de Membro' , icon: 'fa-user-plus' , color: 'text-teal-400', bg: 'bg-teal-500/10' }, 
-        { key: 'member_leave' , label: 'Saída de Membro' , icon: 'fa-user-minus' , color: 'text-orange-400', bg: 'bg-orange-500/10' }, 
-        { key: 'member_ban' , label: 'Membro Banido' , icon: 'fa-gavel' , color: 'text-rose-500', bg: 'bg-rose-500/10' }, 
-        { key: 'economy_log' , label: 'Log de Economia' , icon: 'fa-coins' , color: 'text-amber-400', bg: 'bg-amber-500/10' }, 
-        { key: 'channel_update' , label: 'Canais' , icon: 'fa-server' , color: 'text-indigo-400', bg: 'bg-indigo-500/10' }, 
-        { key: 'role_update' , label: 'Cargos' , icon: 'fa-id-badge' , color: 'text-pink-400', bg: 'bg-pink-500/10' }, 
-        { key: 'server_update' , label: 'Updates do Servidor' , icon: 'fa-gear' , color: 'text-slate-300', bg: 'bg-slate-500/10' }, 
-        { key: 'invite_update' , label: 'Convites' , icon: 'fa-envelope' , color: 'text-cyan-400', bg: 'bg-cyan-500/10' } 
-      ]; %>
-
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10" id="logsGrid">
       <% logModules.forEach(mod=> { %>
-        <% const logData=info4.logging && info4.logging[mod.key] ? info4.logging[mod.key] : { state: false, channel: '' }; %>
-        <div class="group bg-white/[0.03] backdrop-blur-sm border border-white/[0.05] rounded-3xl p-6 relative overflow-hidden hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 flex flex-col justify-between">
-          <div class="absolute top-0 right-0 p-5 opacity-[0.03] group-hover:opacity-10 group-hover:scale-125 transition-all duration-500">
-            <i class="fa-solid <%= mod.icon %> text-8xl <%= mod.color %>"></i>
-          </div>
-          <div class="relative z-10 flex items-center justify-between mb-5">
+        <% 
+          const logData = info4.logging && info4.logging[mod.key] ? info4.logging[mod.key] : { state: false, channel: '' }; 
+          const foundChannel = (typeof channels !== 'undefined' && Array.isArray(channels)) ? channels.find(c => c.id === logData.channel) : null;
+          const channelDisplayName = foundChannel ? foundChannel.name : logData.channel;
+        %>
+        <div class="log-card panel-elevated p-5 rounded-2xl relative overflow-hidden transition-all duration-200 flex flex-col justify-between <%= logData.state ? 'card-accent-logs tonal-border-indigo' : '' %>" id="card-<%= mod.key %>" data-state="<%= logData.state ? 'active' : 'inactive' %>" data-category="<%= mod.category %>">
+          <div class="relative z-10 flex items-center justify-between mb-4">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center <%= mod.bg %>">
-                    <i class="fa-solid <%= mod.icon %> <%= mod.color %>"></i>
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center <%= mod.bg %> border border-white/[0.06]">
+                    <i class="fa-solid <%= mod.icon %> <%= mod.color %> text-xs"></i>
                 </div>
-                <h4 class="text-white font-semibold text-sm md:text-base tracking-tight"><%= mod.label %></h4>
+                <h4 class="text-white font-semibold text-sm tracking-tight"><%= mod.label %></h4>
             </div>
-            <% if (logData.state) { %>
-              <div class="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></div>
-            <% } else { %>
-              <div class="h-2.5 w-2.5 rounded-full bg-slate-600"></div>
-            <% } %>
+            <span id="badge-pill-<%= mod.key %>" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border <%= logData.state ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-slate-500/10 text-slate-400 border-slate-500/20' %>">
+              <%= logData.state ? 'Ativo' : 'Inativo' %>
+            </span>
           </div>
           
-          <div class="relative z-10 flex flex-col gap-4 mt-auto">
+          <div class="relative z-10 flex flex-col gap-3 mt-auto">
             <div>
-              <p class="text-slate-500 text-[9px] uppercase tracking-widest font-bold mb-1.5">Destino</p>
-              <div class="bg-black/30 p-2 rounded-lg border border-white/5 font-mono text-slate-300 text-xs truncate flex items-center h-8 shadow-inner">
-                <% if (logData.channel) { %>
-                  <i class="fa-solid fa-hashtag text-indigo-500 mr-2"></i>
-                  <span><%= logData.channel %></span>
+              <p class="text-slate-500 text-[10px] uppercase tracking-wider font-semibold mb-1">Canal de Destino</p>
+              <div id="channel-tag-<%= mod.key %>" class="bg-black/30 px-3 py-1.5 rounded-lg border border-white/[0.06] font-mono text-slate-300 text-xs truncate flex items-center h-8">
+                <% if (logData.state && logData.channel) { %>
+                  <i class="fa-solid fa-hashtag text-indigo-400 mr-2 text-[10px]"></i>
+                  <span><%= channelDisplayName %></span>
                 <% } else { %>
-                  <span class="text-slate-600 italic flex items-center gap-1"><i class="fa-solid fa-ban"></i> N/A</span>
+                  <span class="text-slate-500 italic flex items-center gap-1.5"><i class="fa-solid fa-ban text-[11px] text-slate-600"></i> Desativado</span>
                 <% } %>
               </div>
             </div>
 
-            <button onclick="openLogModal('<%= mod.key %>', '<%= mod.label %>', '<%= logData.channel %>', <%= logData.state %>)"
-              class="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-indigo-600 text-slate-300 hover:text-white text-xs font-semibold py-2.5 px-4 rounded-xl transition-all duration-300 border border-white/10 hover:border-indigo-500 shadow-lg hover:shadow-indigo-500/20">
-              <i class="fa-solid fa-sliders"></i> Ajustar
-            </button>
+            <div class="flex items-center gap-2">
+              <button id="adjust-btn-<%= mod.key %>" onclick="openLogModal('<%= mod.key %>', '<%= mod.label %>', '<%= logData.channel %>', <%= Boolean(logData.state) %>)"
+                class="btn-studio-secondary flex-1 !py-2 text-xs font-semibold rounded-xl flex items-center justify-center gap-2">
+                <i class="fa-solid fa-sliders text-slate-400 text-xs"></i>
+                <span>Configurar</span>
+              </button>
+              
+              <button id="quick-btn-<%= mod.key %>" onclick="quickToggleLog('<%= mod.key %>', '<%= mod.label %>', <%= Boolean(logData.state) %>, '<%= logData.channel %>')"
+                class="<%= logData.state ? 'btn-studio-danger' : 'hidden' %> !py-2 !px-3 text-xs font-semibold rounded-xl flex items-center justify-center gap-1"
+                title="Desligar este log agora">
+                <i class="fa-solid fa-power-off text-xs"></i>
+                <span class="text-[11px]">Desligar</span>
+              </button>
+            </div>
           </div>
         </div>
       <% }); %>
     </div>
 
-    <!-- Config Log Modal -->
-    <div id="logModal" class="hidden fixed inset-0 z-[100] overflow-y-auto backdrop-blur-sm" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-      <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <!-- Overlay -->
-        <div class="fixed inset-0 bg-[#0b0c10]/80 transition-opacity" onclick="closeLogModal()"></div>
-
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-        <div class="inline-block align-bottom bg-[#13151a] border border-white/10 rounded-3xl text-left overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full z-50 animate-fade-in-up relative">
-          
-          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
-
-          <div class="px-6 pt-8 pb-6 sm:px-8">
-            <div class="mb-8 text-center sm:text-left">
-              <div class="mx-auto sm:mx-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-4">
-                  <i class="fa-solid fa-gear text-xl text-indigo-400"></i>
-              </div>
-              <h3 class="text-2xl font-bold text-white mb-2" id="modalLogTitle">Configurar Log</h3>
-              <p class="text-slate-400 text-sm">Controle o envio e o destino das mensagens para este evento.</p>
-            </div>
-
-            <div class="space-y-6">
-              <!-- Custom Toggle Switch -->
-              <label for="logState" class="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center justify-between cursor-pointer group">
-                  <div>
-                      <h4 class="text-white font-medium text-sm group-hover:text-indigo-400 transition-colors">Habilitar Registro</h4>
-                      <p class="text-slate-500 text-xs mt-1">Bot enviará logs no momento do evento.</p>
-                  </div>
-                  <div class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" id="logState" class="sr-only peer">
-                    <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
-                  </div>
-              </label>
-
-              <!-- Channel Input -->
-              <div>
-                <label for="logChannelId" class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">ID do Canal Alvo</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <i class="fa-solid fa-hashtag text-slate-500"></i>
-                    </div>
-                    <input type="text" id="logChannelId" placeholder="Ex: 123456789012345678"
-                      class="bg-black/40 border border-white/10 text-white text-sm rounded-xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-11 py-3.5 placeholder-slate-600 transition-all shadow-inner" />
-                </div>
-                <p class="mt-2 text-[11px] text-slate-500 flex items-center gap-1"><i class="fa-solid fa-circle-info"></i> Certifique-se de que o bot possui permissão de escrita.</p>
-              </div>
-
-              <input type="hidden" id="logKey" />
-            </div>
-          </div>
-          
-          <div class="bg-white/[0.02] px-6 py-5 sm:px-8 sm:flex sm:flex-row-reverse border-t border-white/5 gap-3">
-            <button type="button" onclick="saveLogConfig()" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-lg px-6 py-3 bg-indigo-600 text-base font-semibold text-white hover:bg-indigo-500 hover:shadow-indigo-500/30 sm:w-auto sm:text-sm transition-all focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#13151a]">
-              Salvar
-            </button>
-            <button type="button" onclick="closeLogModal()" class="mt-3 w-full inline-flex justify-center rounded-xl border border-white/10 shadow-sm px-6 py-3 bg-transparent text-base font-medium text-slate-300 hover:bg-white/5 hover:text-white sm:mt-0 sm:w-auto sm:text-sm transition-colors">
-              Cancelar
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Referência -->
-    <div class="mt-12 pt-6 border-t border-white/5 relative z-10 flex items-center justify-center opacity-50">
+    <div class="mt-10 pt-6 border-t border-slate-800/80 relative z-10 flex items-center justify-center opacity-40">
       <p class="text-[10px] text-slate-500 font-mono tracking-widest uppercase flex items-center gap-2">
         <i class="fa-solid fa-fingerprint"></i> <%= info4.guildID %>
       </p>
     </div>
 
     <script>
+      const LOG_META = {
+        message_delete: { icon: 'fa-trash', color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' },
+        message_update: { icon: 'fa-pen-to-square', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+        voice_update: { icon: 'fa-microphone', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+        member_join: { icon: 'fa-user-plus', color: 'text-teal-400', bg: 'bg-teal-500/10', border: 'border-teal-500/20' },
+        member_leave: { icon: 'fa-user-minus', color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/20' },
+        member_ban: { icon: 'fa-gavel', color: 'text-rose-500', bg: 'bg-rose-500/10', border: 'border-rose-500/20' },
+        economy_log: { icon: 'fa-coins', color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' },
+        channel_update: { icon: 'fa-server', color: 'text-indigo-400', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' },
+        role_update: { icon: 'fa-id-badge', color: 'text-pink-400', bg: 'bg-pink-500/10', border: 'border-pink-500/20' },
+        server_update: { icon: 'fa-gear', color: 'text-slate-300', bg: 'bg-slate-500/10', border: 'border-slate-500/20' },
+        invite_update: { icon: 'fa-envelope', color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' }
+      };
+
+      let modalSelectedState = false;
+
+      const SIMULATOR_PREVIEWS = {
+        message_delete: { title: '🗑️ Mensagem Deletada', desc: 'Uma mensagem foi excluída no canal', color: '#ef4444' },
+        message_update: { title: '✏️ Mensagem Editada', desc: 'Uma mensagem foi editada no canal', color: '#3b82f6' },
+        voice_update: { title: '🎙️ Atividade de Voz', desc: 'Um membro entrou/saiu do canal de voz', color: '#10b981' },
+        member_join: { title: '👋 Novo Membro', desc: 'Um novo membro entrou no servidor', color: '#14b8a6' },
+        member_leave: { title: '🚪 Membro Saiu', desc: 'Um membro saiu do servidor', color: '#f97316' },
+        member_ban: { title: '🔨 Membro Banido', desc: 'Um usuário foi banido da comunidade', color: '#f43f5e' },
+        economy_log: { title: '💰 Transação Bancária', desc: 'Operação financeira registrada', color: '#f59e0b' },
+        channel_update: { title: '📁 Canal Alterado', desc: 'Estrutura ou permissões de canal modificadas', color: '#6366f1' },
+        role_update: { title: '🛡️ Cargo Modificado', desc: 'Alteração em cargos ou atribuições', color: '#ec4899' },
+        server_update: { title: '⚙️ Servidor Atualizado', desc: 'Configuração geral do servidor atualizada', color: '#94a3b8' },
+        invite_update: { title: '✉️ Convite Criado/Usado', desc: 'Novo link de convite gerado ou utilizado', color: '#06b6d4' }
+      };
+
+      function updateEmbedSimulator() {
+        const key = document.getElementById('logKey')?.value;
+        const embed = document.getElementById('discordSimEmbed');
+        const titleEl = document.getElementById('simEmbedTitle');
+        const descEl = document.getElementById('simEmbedDesc');
+        const chanEl = document.getElementById('simEmbedChannel');
+        const select = document.getElementById('logChannelId');
+        if (!embed || !titleEl) return;
+
+        const preview = SIMULATOR_PREVIEWS[key] || { title: '⚡ Evento Registrado', desc: 'Evento auditado no canal', color: '#6366f1' };
+        embed.style.borderLeftColor = preview.color;
+        titleEl.textContent = preview.title;
+
+        let channelText = '#geral';
+        if (select && select.value) {
+          const opt = select.querySelector(`option[value="${select.value}"]`);
+          if (opt && opt.text.trim()) {
+            channelText = opt.text.trim().split(' ')[0].replace(/^#\s*/, '#');
+          }
+        }
+
+        if (chanEl) chanEl.textContent = channelText;
+        if (descEl) {
+          descEl.innerHTML = `${preview.desc} <span class="text-[#5865f2] font-semibold font-mono">${channelText}</span>.`;
+        }
+
+        if (modalSelectedState) {
+          embed.style.opacity = '1';
+          embed.classList.remove('grayscale-[50%]');
+        } else {
+          embed.style.opacity = '0.5';
+          embed.classList.add('grayscale-[50%]');
+        }
+      }
+
+      function setModalState(state) {
+        modalSelectedState = Boolean(state);
+        const tabDeact = document.getElementById('tabDeactivated');
+        const tabAct = document.getElementById('tabActivated');
+        const channelWrapper = document.getElementById('channelInputWrapper');
+        const deactNotice = document.getElementById('channelDeactivatedNotice');
+        const saveBtn = document.getElementById('modalSaveBtn');
+        const saveText = document.getElementById('modalSaveBtnText');
+        const saveIcon = document.getElementById('modalSaveIcon');
+        const errorMsg = document.getElementById('channelErrorMsg');
+        const select = document.getElementById('logChannelId');
+
+        if (errorMsg) errorMsg.classList.add('hidden');
+        if (select) select.classList.remove('!border-rose-500');
+
+        if (modalSelectedState) {
+          tabAct.className = 'py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm shadow-emerald-500/10';
+          tabDeact.className = 'py-2 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition-all cursor-pointer text-slate-400 hover:text-slate-200 border border-transparent';
+
+          channelWrapper.classList.remove('hidden');
+          deactNotice.classList.add('hidden');
+
+          saveBtn.className = 'btn-studio-primary !py-2 !px-5 text-xs font-semibold rounded-xl flex items-center justify-center gap-2';
+          saveText.textContent = 'Ativar e Salvar';
+          if (saveIcon) saveIcon.className = 'fa-solid fa-check text-xs';
+        } else {
+          tabDeact.className = 'py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-sm shadow-rose-500/10';
+          tabAct.className = 'py-2 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition-all cursor-pointer text-slate-400 hover:text-slate-200 border border-transparent';
+
+          channelWrapper.classList.add('hidden');
+          deactNotice.classList.remove('hidden');
+
+          saveBtn.className = 'btn-studio-danger !py-2 !px-5 text-xs font-semibold rounded-xl flex items-center justify-center gap-2';
+          saveText.textContent = 'Desativar e Salvar';
+          if (saveIcon) saveIcon.className = 'fa-solid fa-power-off text-xs';
+        }
+        updateEmbedSimulator();
+      }
+
+      function clearChannelError() {
+        const errorMsg = document.getElementById('channelErrorMsg');
+        const select = document.getElementById('logChannelId');
+        if (errorMsg) errorMsg.classList.add('hidden');
+        if (select) select.classList.remove('!border-rose-500');
+      }
+
       function openLogModal(key, title, channel, state) {
-        document.getElementById('modalLogTitle').textContent = title;
+        document.getElementById('modalLogTitle').textContent = `Configurar: ${title}`;
         document.getElementById('logKey').value = key;
-        document.getElementById('logChannelId').value = channel || '';
-        document.getElementById('logState').checked = state;
-        document.getElementById('logModal').classList.remove('hidden');
+
+        // Customizar ícone e badge com base no evento
+        const meta = LOG_META[key] || { icon: 'fa-sliders', color: 'text-indigo-400', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' };
+        const iconBox = document.getElementById('modalIconBox');
+        const iconEl = document.getElementById('modalLogIcon');
+        if (iconBox) {
+          iconBox.className = `w-9 h-9 rounded-xl ${meta.bg} border ${meta.border} flex items-center justify-center shrink-0 transition-colors`;
+        }
+        if (iconEl) {
+          iconEl.className = `fa-solid ${meta.icon} ${meta.color} text-sm`;
+        }
+
+        const select = document.getElementById('logChannelId');
+        if (select) {
+          select.value = channel || '';
+        }
+        setModalState(Boolean(state));
+        updateEmbedSimulator();
+
+        const modal = document.getElementById('logModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
       }
 
       function closeLogModal() {
-        document.getElementById('logModal').classList.add('hidden');
+        const modal = document.getElementById('logModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
       }
 
-      function saveLogConfig() {
-        const key = document.getElementById('logKey').value;
-        const channelId = document.getElementById('logChannelId').value;
-        const state = document.getElementById('logState').checked;
-        const guildId = '<%= info4.guildID %>';
-
-        if (state && !channelId) {
-          alert("Para ativar, você deve fornecer um ID de canal válido.");
-          return;
+      function updateCardUI(key, state, channelId, channelName, title) {
+        const badgePill = document.getElementById(`badge-pill-${key}`);
+        if (badgePill) {
+          badgePill.className = `px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${state ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-slate-500/10 text-slate-400 border-slate-500/20'}`;
+          badgePill.textContent = state ? 'Ativo' : 'Inativo';
         }
 
-        let action = state ? 'actlog_' + key : 'deactlog_' + key;
+        const channelTag = document.getElementById(`channel-tag-${key}`);
+        if (channelTag) {
+          if (state && channelId && channelId !== "0") {
+            channelTag.innerHTML = `<i class="fa-solid fa-hashtag text-indigo-400 mr-2 text-[10px]"></i><span>${channelName || channelId}</span>`;
+          } else {
+            channelTag.innerHTML = `<span class="text-slate-500 italic flex items-center gap-1.5"><i class="fa-solid fa-ban text-[11px] text-slate-600"></i> Desativado</span>`;
+          }
+        }
+
+        const adjustBtn = document.getElementById(`adjust-btn-${key}`);
+        if (adjustBtn) {
+          adjustBtn.setAttribute('onclick', `openLogModal('${key}', '${title}', '${state ? channelId : ''}', ${state})`);
+        }
+
+        const quickBtn = document.getElementById(`quick-btn-${key}`);
+        if (quickBtn) {
+          if (state) {
+            quickBtn.classList.remove('hidden');
+            quickBtn.setAttribute('onclick', `quickToggleLog('${key}', '${title}', true, '${channelId}')`);
+          } else {
+            quickBtn.classList.add('hidden');
+          }
+        }
+
+        const card = document.getElementById(`card-${key}`);
+        if (card) {
+          card.setAttribute('data-state', state ? 'active' : 'inactive');
+          if (state) {
+            card.classList.add('card-accent-logs');
+          } else {
+            card.classList.remove('card-accent-logs');
+          }
+        }
+        recalculateLogFilterCounts();
+      }
+
+      let currentLogFilter = 'all';
+      let currentLogCategory = 'all';
+
+      function setLogFilter(filterType) {
+        currentLogFilter = filterType;
+        
+        document.querySelectorAll('.log-tab-btn').forEach(btn => {
+          btn.classList.remove('active', 'text-white', 'bg-white/[0.08]');
+          btn.classList.add('text-slate-400');
+        });
+        const activeBtn = document.getElementById(`btn-filter-${filterType}`);
+        if (activeBtn) {
+          activeBtn.classList.add('active', 'text-white', 'bg-white/[0.08]');
+          activeBtn.classList.remove('text-slate-400');
+        }
+        applyLogCombinedFilter();
+      }
+
+      function setLogCategory(category, btn) {
+        currentLogCategory = category;
+        document.querySelectorAll('#logCategoryControl .hardware-segmented-item').forEach(b => {
+          b.classList.remove('active');
+        });
+        if (btn) btn.classList.add('active');
+        applyLogCombinedFilter();
+      }
+
+      function applyLogCombinedFilter() {
+        const cards = document.querySelectorAll('.log-card');
+        cards.forEach(card => {
+          const state = card.getAttribute('data-state');
+          const cat = card.getAttribute('data-category');
+          const matchesState = (currentLogFilter === 'all') || (currentLogFilter === state);
+          const matchesCat = (currentLogCategory === 'all') || (currentLogCategory === cat);
+          card.style.display = (matchesState && matchesCat) ? '' : 'none';
+        });
+      }
+
+      function recalculateLogFilterCounts() {
+        const cards = document.querySelectorAll('.log-card');
+        let active = 0;
+        let inactive = 0;
+        cards.forEach(c => {
+          if (c.getAttribute('data-state') === 'active') active++;
+          else inactive++;
+        });
+        const countAll = document.getElementById('tab-count-all');
+        const countActive = document.getElementById('tab-count-active');
+        const countInactive = document.getElementById('tab-count-inactive');
+        if (countAll) countAll.textContent = cards.length;
+        if (countActive) countActive.textContent = active;
+        if (countInactive) countInactive.textContent = inactive;
+
+        applyLogCombinedFilter();
+      }
+
+      async function quickToggleLog(key, title, currentState, channelId) {
+        if (currentState) {
+          // Desativar rapidamente com 1 clique (SEM EXIGIR CANAL)
+          const executeAction = window.executeFuncAction || (parent && parent.executeFuncAction);
+          if (typeof executeAction === 'function') {
+            const res = await executeAction('deactlog_' + key, "0");
+            if (res && res.success) {
+              updateCardUI(key, false, "", "", title);
+            }
+          }
+        } else {
+          // Se estiver inativo, abre o modal já na aba Ativado para escolher o canal
+          openLogModal(key, title, channelId, true);
+        }
+      }
+
+      async function saveLogConfig() {
+        const key = document.getElementById('logKey').value;
+        const select = document.getElementById('logChannelId');
+        const channelId = select ? select.value : '';
+        const state = modalSelectedState;
+        const guildId = '<%= info4.guildID %>';
+        const title = document.getElementById('modalLogTitle').textContent.replace('Configurar: ', '');
+
+        // SE FOR ATIVAR: OBRIGATÓRIO TER CANAL VÁLIDO
+        if (state) {
+          if (!channelId || channelId === "" || channelId === "0") {
+            const errorMsg = document.getElementById('channelErrorMsg');
+            if (errorMsg) errorMsg.classList.remove('hidden');
+            if (select) {
+              select.classList.add('!border-rose-500');
+              select.focus();
+            }
+            const toast = window.showToast || (parent && parent.showToast);
+            if (toast) {
+              toast('warning', 'Canal Obrigatório', 'Selecione um canal de texto do Discord para poder ativar este log.');
+            }
+            return;
+          }
+        }
+
+        const action = state ? ('actlog_' + key) : ('deactlog_' + key);
+        const sendChannel = state ? channelId : "0";
+
+        const executeAction = window.executeFuncAction || (parent && parent.executeFuncAction);
+        if (typeof executeAction === 'function') {
+          const res = await executeAction(action, sendChannel);
+          if (res && res.success) {
+            const selectedOption = select ? select.querySelector(`option[value="${channelId}"]`) : null;
+            const channelName = selectedOption ? selectedOption.text.trim().replace(/^#\s*/, '') : channelId;
+            updateCardUI(key, state, channelId, channelName, title);
+            closeLogModal();
+            return;
+          }
+        }
+
+        // Fallback para form submit
         const dados = [
           { name: "guildId", value: guildId },
           { name: "func", value: action },
-          { name: "channelId", value: channelId || "0" }
+          { name: "channelId", value: sendChannel }
         ];
 
         if (parent && typeof parent.funcsReload === 'function') {
           parent.funcsReload(dados);
           closeLogModal();
-        } else {
-          console.error("Parent funcsReload not found");
         }
       }
+
+      // Atalhos globais de teclado
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const modal = document.getElementById('logModal');
+          if (modal && !modal.classList.contains('hidden')) {
+            closeLogModal();
+          }
+        }
+      });
     </script>
-    
-    <style>
-      @keyframes fade-in-up {
-          0% { opacity: 0; transform: translateY(20px) scale(0.98); }
-          100% { opacity: 1; transform: translateY(0) scale(1); }
-      }
-      .animate-fade-in-up {
-          animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      }
-    </style>
+  </div>
+
+  <!-- Modal de Configuração de Log Moderna e Intuitiva -->
+  <div id="logModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-black/75 transition-opacity" onclick="closeLogModal()"></div>
+
+    <div class="relative w-full max-w-xl bg-[#11141d] tonal-border-indigo rounded-2xl text-left overflow-hidden shadow-2xl z-10 m-auto animate-studio-in laser-edge-indigo">
+      
+      <!-- Header do Modal -->
+      <div class="px-5 py-4 border-b border-indigo-500/20 flex items-center justify-between">
+        <div class="flex items-center gap-3 min-w-0">
+          <div id="modalIconBox" class="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0 transition-colors">
+            <i id="modalLogIcon" class="fa-solid fa-sliders text-sm"></i>
+          </div>
+          <div class="min-w-0">
+            <h3 class="text-sm font-bold text-white tracking-tight truncate" id="modalLogTitle">Configurar Evento</h3>
+            <p class="text-[11px] text-slate-400 truncate">Gerencie o envio deste log no Discord</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeLogModal()" class="w-7 h-7 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all cursor-pointer shrink-0 ml-2">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+      </div>
+
+      <!-- Conteúdo do Modal -->
+      <div class="p-5 space-y-4">
+        <input type="hidden" id="logKey" />
+
+        <!-- 1. Segmented Tab Control (Status do Evento) -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Status do Evento</label>
+          <div class="p-1 rounded-xl bg-black/40 border border-white/[0.04] grid grid-cols-2 gap-1">
+            
+            <!-- Tab Desativado -->
+            <button type="button" id="tabDeactivated" onclick="setModalState(false)"
+              class="py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer">
+              <i class="fa-solid fa-power-off text-xs"></i>
+              <span>Desativado</span>
+            </button>
+
+            <!-- Tab Ativado -->
+            <button type="button" id="tabActivated" onclick="setModalState(true)"
+              class="py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer">
+              <i class="fa-solid fa-circle-check text-xs"></i>
+              <span>Ativado</span>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- 2. Área Dinâmica de Canal / Aviso -->
+        <div id="channelSection" class="transition-all duration-150 min-h-[90px] flex flex-col justify-center">
+          
+          <!-- Quando Ativado: Seleção obrigatória de canal -->
+          <div id="channelInputWrapper" class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label for="logChannelId" class="block text-xs font-semibold text-slate-200">
+                Canal de Destino <span class="text-rose-400 font-bold">* (Obrigatório)</span>
+              </label>
+              <span class="text-[10px] text-indigo-400/90 font-medium">Requer permissão de escrita</span>
+            </div>
+            
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <i class="fa-solid fa-hashtag text-xs"></i>
+              </div>
+              <select id="logChannelId" onchange="clearChannelError(); updateEmbedSimulator();"
+                class="input-studio !pl-10 !pr-9 !py-2.5 w-full text-xs text-slate-200 bg-[#0c0e14] border border-white/[0.1] rounded-xl focus:border-indigo-500 appearance-none cursor-pointer">
+                <option value="">-- Selecione o Canal de Logs --</option>
+                <% if (typeof channels !== 'undefined' && Array.isArray(channels)) { %>
+                  <% channels.forEach(function(c) { %>
+                    <option value="<%= c.id %>">
+                      # <%= c.name %> <%= c.parentName ? `(${c.parentName})` : '' %>
+                    </option>
+                  <% }); %>
+                <% } %>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </div>
+            </div>
+
+            <p id="channelErrorMsg" class="hidden text-[11px] text-rose-400 font-medium flex items-center gap-1.5 pt-0.5">
+              <i class="fa-solid fa-circle-exclamation text-xs"></i>
+              <span>Selecione um canal de texto para ativar este log.</span>
+            </p>
+          </div>
+
+          <!-- Quando Desativado: Banner claro com ícone visível -->
+          <div id="channelDeactivatedNotice" class="hidden p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-start gap-3">
+            <div class="w-8 h-8 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 shrink-0 mt-0.5">
+              <i class="fa-solid fa-shield-slash text-xs"></i>
+            </div>
+            <div class="min-w-0">
+              <p class="text-xs font-semibold text-slate-200">Nenhum canal necessário</p>
+              <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
+                Com o status desativado, o bot não enviará registros deste evento e nenhum canal é exigido.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Simulador de Embed Discord em Tempo Real -->
+        <div class="pt-3.5 border-t border-white/[0.06]">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <i class="fa-brands fa-discord text-indigo-400"></i>
+              <span>Simulador de Embed Discord (Ao Vivo)</span>
+            </span>
+            <span class="text-[10px] font-mono text-emerald-400/90 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">Preview Real</span>
+          </div>
+
+          <!-- Simulated Discord Message -->
+          <div class="bg-[#313338] p-3.5 rounded-xl border border-white/[0.06] shadow-inner font-sans text-xs">
+            <div class="flex items-center gap-2.5 mb-2">
+              <div class="w-7 h-7 rounded-full overflow-hidden bg-black/50 border border-white/10 shrink-0">
+                <img src="/res/serverIcon/boticon.jpg" alt="Bot" class="w-full h-full object-cover">
+              </div>
+              <div class="flex items-center gap-1.5 leading-none">
+                <span class="font-bold text-white text-xs">Manager Bot</span>
+                <span class="bg-[#5865f2] text-white text-[9px] font-bold px-1 py-0.5 rounded font-sans leading-none">BOT</span>
+                <span class="text-[10px] text-[#949ba4] font-normal ml-1">Hoje às 14:32</span>
+              </div>
+            </div>
+
+            <!-- Embed Box -->
+            <div id="discordSimEmbed" class="discord-embed-box border-l-[#ef4444] bg-[#2b2d31] transition-opacity">
+              <div class="discord-embed-title" id="simEmbedTitle">🗑️ Mensagem Deletada</div>
+              <div class="discord-embed-desc text-[11px] mb-2" id="simEmbedDesc">
+                Uma mensagem foi excluída no canal <span class="text-[#5865f2] font-semibold font-mono" id="simEmbedChannel">#geral</span>.
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[11px]">
+                <div class="discord-embed-field">
+                  <span class="text-[9px] text-[#949ba4] block uppercase font-bold font-mono">Autor</span>
+                  <span class="text-white font-medium" id="simEmbedAuthor">@membro#1337</span>
+                </div>
+                <div class="discord-embed-field">
+                  <span class="text-[9px] text-[#949ba4] block uppercase font-bold font-mono">Data / Hora</span>
+                  <span class="text-[#dbdee1] font-mono text-[10px]" id="simEmbedTime">Hoje • 14:32</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Rodapé de Ações do Modal (Lado a Lado Alinhado à Direita) -->
+      <div class="bg-black/20 px-5 py-3.5 border-t border-slate-800/80 flex items-center justify-end gap-2.5">
+        <button type="button" onclick="closeLogModal()" 
+          class="btn-studio-secondary !py-2 !px-4 text-xs font-medium rounded-xl">
+          Cancelar
+        </button>
+
+        <button type="button" id="modalSaveBtn" onclick="saveLogConfig()" 
+          class="btn-studio-primary !py-2 !px-5 text-xs font-semibold rounded-xl flex items-center justify-center gap-2">
+          <i id="modalSaveIcon" class="fa-solid fa-floppy-disk text-xs"></i>
+          <span id="modalSaveBtnText">Salvar Alterações</span>
+        </button>
+      </div>
+
+    </div>
   </div>
 </body>
 </html>

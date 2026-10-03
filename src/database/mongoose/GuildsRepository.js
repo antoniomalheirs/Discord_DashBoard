@@ -34,7 +34,7 @@ module.exports = class GuildRepository extends Repository {
   }
 
   findOne(guildID, projection) {
-    return this.model.findOne({ guildID }, projection).then(this.parse);
+    return this.model.findOne({ guildID: String(guildID) }, projection).then(this.parse);
   }
 
   async verifyTwitchNotify(query = {}) {
@@ -87,15 +87,15 @@ module.exports = class GuildRepository extends Repository {
   }
 
   remove(guildID) {
-    return this.model.findOneAndDelete({ guildID }).then(this.parse);
+    return this.model.findOneAndDelete({ guildID: String(guildID) }).then(this.parse);
   }
 
   async update(guildID, entity, options = { upsert: true }) {
-    return this.model.updateOne({ guildID }, { $set: entity }, options);
+    return this.model.updateOne({ guildID: String(guildID) }, { $set: entity }, options);
   }
 
   async verify(guildID) {
-    return !!(await this.model.findOne({ guildID }));
+    return !!(await this.model.findOne({ guildID: String(guildID) }));
   }
 
   findAll(projection) {

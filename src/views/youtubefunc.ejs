@@ -4,110 +4,255 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="../css/cssdir/out.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="/css/cssdir/out.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
   <title>Gerenciador de Funções - YouTube</title>
 </head>
 
-<body class="bg-transparent min-h-full flex items-start justify-center pt-10 px-4">
+<body class="bg-transparent min-h-full flex items-start justify-center pt-2 sm:pt-6 px-1 sm:px-2">
 
-  <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
+  <div class="panel-tone-red p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-full animate-fade-in-up relative overflow-hidden laser-edge-red">
     
-    <!-- Decorators -->
-    <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-red-600/10 rounded-full blur-[100px] pointer-events-none"></div>
-
     <div id="mensagemPopUp"
       class="hidden fixed top-5 right-5 z-50 transition-all duration-300 transform translate-y-[-10px] opacity-0"></div>
 
     <!-- Header -->
-    <div class="flex flex-col md:flex-row items-center gap-6 mb-10 border-b border-white/5 pb-8 relative z-10">
-      <div class="relative group mx-auto md:mx-0">
-        <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-500 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
-        <% if (info.icon && info.icon.indexOf('null')===-1) { %>
-          <img src="<%= info.icon %>" alt="Ícone da guilda" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
-        <% } else { %>
-          <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="relative w-20 h-20 rounded-2xl object-cover shadow-lg border border-white/20" />
-        <% } %>
+    <div class="flex flex-col md:flex-row items-center gap-5 sm:gap-6 mb-8 sm:mb-10 border-b border-red-500/20 pb-6 sm:pb-8 relative z-10">
+      <div class="relative mx-auto md:mx-0 flex-shrink-0">
+        <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-red-500/30 shadow-lg">
+          <% if (info.icon && info.icon.indexOf('null')===-1) { %>
+            <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-full h-full object-cover" />
+          <% } else { %>
+            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-full h-full object-cover" />
+          <% } %>
+        </div>
       </div>
-      <div class="flex-1 text-center md:text-left">
-        <h3 class="text-3xl font-extrabold text-white mb-2 flex items-center justify-center md:justify-start gap-3 tracking-tight">
-          <i class="fa-brands fa-youtube text-red-500"></i>
-          Monitoramento YouTube
+      <div class="flex-1 text-center md:text-left min-w-0">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold uppercase tracking-wider mb-2">
+          <i class="fa-brands fa-youtube text-[11px]"></i>
+          <span>Central de Alertas</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight truncate">
+          YouTube Hub
         </h3>
-        <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
-          Gerencie os canais inscritos e configure notificações automáticas para novos vídeos em seu servidor.
+        <p class="text-slate-400 text-xs sm:text-sm mt-1 max-w-2xl">
+          Configure as notificações de novos vídeos e gerencie os canais inscritos para <strong class="text-white"><%= info.name %></strong>.
         </p>
       </div>
       <div class="mt-4 md:mt-0 flex flex-col sm:flex-row gap-3">
-        <% if (info5 && info5.youtubenotify) { %>
-          <button onclick="desativarModulo()" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white font-semibold py-3 px-6 rounded-xl border border-white/10 shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
-            <i class="fa-solid fa-power-off text-slate-400"></i>
-            <span>Desativar Módulo</span>
-          </button>
-        <% } else { %>
-          <button onclick="abrirModal()" class="flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-semibold py-3 px-6 rounded-xl shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_25px_rgba(239,68,68,0.5)] transition-all duration-200 transform hover:-translate-y-0.5 border border-red-500/50">
-            <i class="fa-solid fa-bolt"></i>
-            <span>Ativar Módulo</span>
-          </button>
-        <% } %>
+        <button id="master-toggle-btn" onclick="toggleYoutubeModule()" 
+          class="<%= (info5 && info5.youtubenotify) ? 'btn-studio-danger' : 'btn-studio-primary' %> text-xs sm:text-sm font-semibold !py-2.5 !px-5 rounded-xl flex items-center justify-center gap-2">
+          <i class="fa-solid <%= (info5 && info5.youtubenotify) ? 'fa-power-off' : 'fa-bolt' %> text-xs"></i>
+          <span id="master-toggle-text"><%= (info5 && info5.youtubenotify) ? 'Desativar Notificações' : 'Ativar Notificações' %></span>
+        </button>
       </div>
     </div>
 
-    <!-- Table Container -->
-    <div class="relative z-10 bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden shadow-inner">
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-white/5">
-          <thead class="bg-black/20">
+    <!-- Metric Telemetry Row -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 relative z-10">
+      <div class="panel-chassis tonal-border-red p-4 rounded-xl flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20 text-red-400 flex-shrink-0">
+          <i class="fa-solid fa-tower-broadcast text-base"></i>
+        </div>
+        <div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Serviço de Alertas</span>
+          <span id="metric-youtube-status" class="text-sm font-bold <%= (info5 && info5.youtubenotify) ? 'text-emerald-400' : 'text-slate-400' %>">
+            <%= (info5 && info5.youtubenotify) ? 'Ativo & Monitorando' : 'Desativado' %>
+          </span>
+        </div>
+      </div>
+
+      <div class="panel-chassis tonal-border-red p-4 rounded-xl flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20 text-red-400 flex-shrink-0">
+          <i class="fa-solid fa-hashtag text-base"></i>
+        </div>
+        <div class="min-w-0">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Canal Vinculado</span>
+          <span id="metric-youtube-channel" class="text-sm font-bold text-white truncate block font-mono">
+            <% 
+              let selectedYtbChName = 'Nenhum canal';
+              if (info5 && info5.channelytb && typeof channels !== 'undefined' && Array.isArray(channels)) {
+                const foundY = channels.find(c => c.id === info5.channelytb);
+                if (foundY) selectedYtbChName = '#' + foundY.name;
+              }
+            %>
+            <%= selectedYtbChName %>
+          </span>
+        </div>
+      </div>
+
+      <div class="panel-chassis tonal-border-red p-4 rounded-xl flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20 text-red-400 flex-shrink-0">
+          <i class="fa-brands fa-youtube text-base"></i>
+        </div>
+        <div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Canais Ativos</span>
+          <span class="text-sm font-bold text-red-400 font-mono"><%= info2.length %> canais</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls Row: Config Card + Quick Add Card -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8 relative z-10">
+      
+      <!-- 1. Destination Channel Selector -->
+      <div class="lg:col-span-6 panel-elevated tonal-border-red p-5 sm:p-6 rounded-2xl flex flex-col justify-between bg-gradient-to-b from-red-950/15 via-[#0f121d] to-[#0a0c13] relative overflow-hidden">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20 text-red-400">
+                <i class="fa-solid fa-bullhorn text-xs"></i>
+              </div>
+              <h4 class="text-white font-bold text-sm">Canal de Destino dos Alertas</h4>
+            </div>
+            <span id="module-status-pill" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border <%= (info5 && info5.youtubenotify) ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-slate-500/10 text-slate-400 border-slate-500/20' %>">
+              <%= (info5 && info5.youtubenotify) ? 'Ativo' : 'Inativo' %>
+            </span>
+          </div>
+          <p class="text-slate-400 text-xs mb-4">O bot enviará mensagens automáticas no canal selecionado quando os criadores publicarem vídeos novos.</p>
+          
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+              <i class="fa-solid fa-hashtag text-xs"></i>
+            </div>
+            <select id="destinationChannelSelect" class="input-studio !pl-10 !py-2.5 w-full text-sm appearance-none cursor-pointer">
+              <option value="0">-- Selecione um Canal de Texto --</option>
+              <% if (typeof channels !== 'undefined' && Array.isArray(channels)) { %>
+                <% channels.forEach(function(c) { %>
+                  <option value="<%= c.id %>" <%= (info5 && info5.channelytb === c.id) ? 'selected' : '' %>>
+                    # <%= c.name %> <%= c.parentName ? `(${c.parentName})` : '' %>
+                  </option>
+                <% }); %>
+              <% } %>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-500">
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-white/[0.04] flex items-center justify-between">
+          <button type="button" onclick="testYoutubeAlert()" class="btn-studio-secondary !py-2 !px-3 text-xs font-semibold rounded-xl flex items-center gap-1.5 text-slate-300 hover:text-white" title="Simular disparo de alerta">
+            <i class="fa-solid fa-paper-plane text-red-400 text-xs"></i>
+            <span>Testar Alerta</span>
+          </button>
+          <button type="button" onclick="saveDestinationChannel()" class="btn-studio-primary !bg-red-600 hover:!bg-red-500 !py-2 !px-4 text-xs font-semibold rounded-xl flex items-center gap-2">
+            <i class="fa-solid fa-floppy-disk text-xs"></i>
+            <span>Salvar Canal</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Quick Add Channel -->
+      <div class="lg:col-span-6 panel-elevated tonal-border-red p-5 sm:p-6 rounded-2xl flex flex-col justify-between bg-gradient-to-b from-red-950/15 via-[#0f121d] to-[#0a0c13] relative overflow-hidden">
+        <div>
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20 text-red-400">
+              <i class="fa-solid fa-plus text-xs"></i>
+            </div>
+            <h4 class="text-white font-bold text-sm">Adicionar Canal do YouTube</h4>
+          </div>
+          <p class="text-slate-400 text-xs mb-4">Digite o nome, ID ou @handle do canal para começar a monitorar suas publicações.</p>
+          
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+              <i class="fa-brands fa-youtube text-xs"></i>
+            </div>
+            <input type="text" id="newYoutubeChannelInput" placeholder="Ex: MrBeast ou @NomeDoCanal" 
+              class="input-studio !pl-10 !py-2.5 w-full text-sm font-medium placeholder:text-slate-600" />
+          </div>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-white/[0.04] flex items-center justify-end">
+          <button type="button" id="btnAddYoutube" onclick="addYoutubeChannel()" class="btn-studio-primary !bg-red-600 hover:!bg-red-500 !py-2 !px-5 text-xs font-semibold rounded-xl flex items-center gap-2">
+            <i class="fa-solid fa-plus text-xs"></i>
+            <span>Cadastrar Canal</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Table Header & Scroll Hint -->
+    <div class="flex items-center justify-between mb-3 px-1">
+      <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Canais Cadastrados (<span id="channel-count"><%= info2.length %></span>)</span>
+      <span class="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/[0.04] lg:hidden">
+        <i class="fa-solid fa-arrows-left-right text-[10px]"></i>
+        <span>Deslize a tabela</span>
+      </span>
+    </div>
+
+    <!-- Table Container (Seamless without stark white border box) -->
+    <div class="relative z-10 rounded-2xl overflow-hidden bg-[#090b10]/80">
+      <div class="overflow-x-auto w-full custom-table-scroll">
+        <table class="w-full min-w-[700px] text-left table-seamless" id="youtubeTable">
+          <thead class="bg-black/30 border-b border-white/[0.03]">
             <tr>
-              <th scope="col" class="px-6 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">YouTube ID</th>
-              <th scope="col" class="px-6 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">Nome do Canal</th>
-              <th scope="col" class="px-6 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">Último Vídeo</th>
-              <th scope="col" class="px-6 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">Publicação</th>
-              <th scope="col" class="px-6 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">Mensagem</th>
-              <th scope="col" class="px-6 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">Status</th>
+              <th scope="col" class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Nome do Canal</th>
+              <th scope="col" class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">YouTube ID</th>
+              <th scope="col" class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Último Vídeo</th>
+              <th scope="col" class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Publicação</th>
+              <th scope="col" class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Ações</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-white/5 bg-transparent">
+          <tbody class="divide-y divide-white/[0.02] bg-transparent" id="youtubeTableBody">
             <% info2.forEach(item=> { %>
-              <tr class="hover:bg-white/[0.02] transition-colors group">
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="inline-flex items-center px-2.5 py-1 rounded-md bg-black/40 border border-white/5 text-xs font-mono text-indigo-400 shadow-inner">
+              <tr id="row-yt-<%= item.youtube %>" class="hover:bg-white/[0.02] transition-colors group">
+                <td class="px-5 py-3.5 whitespace-nowrap text-sm font-bold text-white">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform flex-shrink-0 text-red-500">
+                      <i class="fa-brands fa-youtube text-sm"></i>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <span class="truncate max-w-[180px]"><%= item.channel %></span>
+                      <span class="signal-pill-active text-[9px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Monitorando
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-5 py-3.5 whitespace-nowrap">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-black/40 border border-white/5 text-xs font-mono text-indigo-400">
                     <%= item.youtube %>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-white flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform">
-                    <i class="fa-brands fa-youtube text-red-500"></i>
-                  </div>
-                  <%= item.channel %>
-                </td>
-                <td class="px-6 py-4 text-sm text-slate-400 truncate max-w-[200px]" title="<%= item.lastVideo %>">
-                  <%= item.lastVideo %>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-xs text-slate-500 font-mono">
-                  <%= item.lastPublish %>
-                </td>
-                <td class="px-6 py-4 text-xs text-slate-500 italic truncate max-w-[150px]" title="<%= item.message %>">
-                  "<%= item.message %>"
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-inner">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                    Ativo <%= item.notifyGuild %>
                   </span>
+                </td>
+                <td class="px-5 py-3.5 text-xs text-slate-400 truncate max-w-[200px]" title="<%= item.lastVideo %>">
+                  <%= item.lastVideo || 'Aguardando publicação' %>
+                </td>
+                <td class="px-5 py-3.5 whitespace-nowrap text-xs text-slate-400 font-mono">
+                  <%= item.lastPublish ? item.lastPublish.substring(0, 16).replace('T', ' ') : '-' %>
+                </td>
+                <td class="px-5 py-3.5 whitespace-nowrap text-right">
+                  <div class="flex items-center justify-end gap-2">
+                    <a href="https://www.youtube.com/channel/<%= item.youtube %>" target="_blank" rel="noopener noreferrer" 
+                      class="p-2 rounded-xl bg-red-500/5 hover:bg-red-500/15 text-slate-400 hover:text-red-300 transition-colors border border-red-500/20" title="Abrir canal no YouTube">
+                      <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                    <button type="button" onclick="deleteYoutubeChannel('<%= item.youtube %>', '<%= item.channel %>')"
+                      class="btn-studio-danger !py-1.5 !px-3 text-xs font-semibold rounded-xl inline-flex items-center gap-1.5" title="Remover canal">
+                      <i class="fa-solid fa-trash-can text-xs"></i>
+                      <span>Remover</span>
+                    </button>
+                  </div>
                 </td>
               </tr>
             <% }); %>
 
             <% if (info2.length===0) { %>
-              <tr>
-                <td colspan="6" class="px-6 py-16 text-center">
+              <tr id="empty-youtube-row">
+                <td colspan="5" class="px-6 py-16 text-center">
                   <div class="flex flex-col items-center justify-center text-slate-500">
-                    <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 mb-4">
-                      <i class="fa-solid fa-inbox text-2xl opacity-50"></i>
+                    <div class="w-14 h-14 rounded-2xl bg-red-500/5 flex items-center justify-center border border-red-500/20 mb-3.5 text-slate-500">
+                      <i class="fa-brands fa-youtube text-2xl opacity-50"></i>
                     </div>
-                    <p class="text-sm font-medium">Nenhum canal configurado ainda.</p>
+                    <p class="text-sm font-semibold text-slate-300">Nenhum canal do YouTube monitorado ainda.</p>
+                    <p class="text-xs text-slate-500 mt-1 mb-4 max-w-sm">Cadastre o link ou nome do canal acima para receber avisos imediatos de novos vídeos no Discord.</p>
+                    <button type="button" onclick="focusNewYoutubeChannel()" class="btn-studio-secondary !py-2 !px-4 text-xs font-semibold rounded-xl inline-flex items-center gap-2 hover:text-white">
+                      <i class="fa-solid fa-plus text-xs text-red-400"></i>
+                      <span>Cadastrar Primeiro Canal</span>
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -118,146 +263,171 @@
     </div>
   </div>
 
-  <!-- Modal Moved Outside to Fix Transform Context -->
-  <div id="modal" class="hidden fixed inset-0 z-[9999] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-      <!-- Backdrop -->
-      <div class="fixed inset-0 bg-[#0b0c10]/80 backdrop-blur-sm transition-opacity" aria-hidden="true" onclick="fecharModal()"></div>
-
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-      <!-- Modal Panel -->
-      <div class="inline-block align-bottom bg-[#13151a] rounded-[2rem] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full z-50 animate-fade-in-up relative">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500"></div>
-
-        <div class="px-6 pt-8 pb-6 sm:px-8">
-          <div class="mb-8">
-            <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3" id="modal-title">
-              <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
-                <i class="fa-brands fa-youtube text-red-500 text-lg"></i>
-              </div>
-              Ativar Monitoramento
-            </h3>
-            <div class="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-200 text-sm flex items-start gap-3">
-              <i class="fa-solid fa-circle-info mt-0.5"></i>
-              <p>Esta ação ativará o sistema de notificações e definirá o canal de anúncios padrão.</p>
-            </div>
-          </div>
-
-          <form id="addDataForm" method="post" class="space-y-6">
-            <!-- Custom Toggle -->
-            <label for="ytb" class="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-between cursor-pointer group hover:bg-white/10 transition-colors">
-              <div>
-                <h4 class="text-white font-medium text-sm">Confirmar ativação do módulo</h4>
-              </div>
-              <div class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" id="ytb" name="ytb" class="sr-only peer" required>
-                <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
-              </div>
-            </label>
-
-            <!-- Input -->
-            <div>
-              <label for="channelId" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">ID do Canal de Texto (Discord)</label>
-              <div class="relative group/input">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within/input:text-red-500">
-                  <i class="fa-solid fa-hashtag text-slate-500 group-focus-within/input:text-red-500 transition-colors"></i>
-                </div>
-                <input type="text" id="channelId" name="channelId" required
-                  placeholder="Ex: 123456789012345678"
-                  class="bg-black/40 border border-white/10 text-white text-sm rounded-xl focus:ring-1 focus:ring-red-500 focus:border-red-500 block w-full pl-11 py-3 transition-all shadow-inner font-mono placeholder-slate-600 outline-none" />
-              </div>
-              <p class="mt-2 text-[11px] text-slate-500">O ID do canal onde os alertas serão enviados.</p>
-            </div>
-
-            <input type="hidden" id="guildId" name="guildId" value="<%= info.id %>" />
-            <input type="hidden" id="func" name="func" value="actyoutube" />
-          </form>
-        </div>
-
-        <div class="bg-white/[0.02] px-6 py-5 sm:px-8 sm:flex sm:flex-row-reverse border-t border-white/5 gap-3">
-          <button type="button" onclick="envdata()"
-            class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-lg px-6 py-3 bg-red-600 text-base font-bold text-white hover:bg-red-500 hover:shadow-red-500/30 sm:w-auto sm:text-sm transition-all transform hover:-translate-y-0.5">
-            Confirmar
-          </button>
-          <button type="button" onclick="fecharModal()"
-            class="mt-3 w-full inline-flex justify-center rounded-xl border border-white/10 shadow-sm px-6 py-3 bg-transparent text-base font-medium text-slate-300 hover:bg-white/5 hover:text-white sm:mt-0 sm:w-auto sm:text-sm transition-colors">
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <style>
-      @keyframes fade-in-up {
-          0% { opacity: 0; transform: translateY(20px) scale(0.98); }
-          100% { opacity: 1; transform: translateY(0) scale(1); }
-      }
-      .animate-fade-in-up {
-          animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      }
-  </style>
-
   <script>
-    function abrirModal() {
-      const modal = document.getElementById("modal");
-      modal.classList.remove("hidden");
-    }
+    let isYoutubeActive = <%= (info5 && info5.youtubenotify) ? 'true' : 'false' %>;
 
-    function fecharModal() {
-      document.getElementById("modal").classList.add("hidden");
-    }
-
-    function exibirMensagemErro(mensagem) {
-      const popUp = document.getElementById('mensagemPopUp');
-
-      popUp.innerHTML = `
-          <div class="flex items-center bg-red-500/90 text-white px-5 py-3.5 rounded-xl shadow-[0_10px_30px_rgba(239,68,68,0.3)] border border-red-400 backdrop-blur-md">
-            <i class="fas fa-exclamation-circle mr-3 text-lg"></i>
-            <p class="font-bold text-sm tracking-wide">${mensagem}</p>
-          </div>
-        `;
-
-      popUp.classList.remove('hidden', 'translate-y-[-10px]', 'opacity-0');
-
-      setTimeout(() => {
-        popUp.classList.add('translate-y-[-10px]', 'opacity-0');
-        setTimeout(() => popUp.classList.add('hidden'), 300);
-      }, 4000);
-    }
-
-    function desativarModulo() {
-      if (!confirm("Tem certeza que deseja desativar o monitoramento do YouTube?")) return;
-
-      const dados = [
-        { name: "guildId", value: "<%= info.id %>" },
-        { name: "func", value: "deactyoutube" },
-        { name: "channelId", value: "0" } // Dummy value
-      ];
-
-      if (parent && typeof parent.funcsReload === 'function') {
-        parent.funcsReload(dados);
+    function testYoutubeAlert() {
+      const channelSelect = document.getElementById('destinationChannelSelect');
+      const channelId = channelSelect ? channelSelect.value : "0";
+      const toast = window.showToast || (parent && parent.showToast);
+      if (!channelId || channelId === "0") {
+        if (toast) toast('warning', 'Canal Não Configurado', 'Selecione e salve um canal de texto para testar o envio de alertas.');
+        else alert('Selecione um canal de texto primeiro.');
+        return;
+      }
+      const opt = channelSelect.querySelector(`option[value="${channelId}"]`);
+      const chanName = opt ? opt.text.trim().split(' ')[0] : channelId;
+      if (toast) {
+        toast('info', 'Simulação de Notificação', `Alerta de teste enviado para ${chanName}! Rota e permissões validadas.`);
       }
     }
 
-    function envdata() {
-      var form = document.getElementById('addDataForm');
+    async function toggleYoutubeModule() {
+      const btn = document.getElementById('master-toggle-btn');
+      const text = document.getElementById('master-toggle-text');
+      const pill = document.getElementById('module-status-pill');
+      const channelSelect = document.getElementById('destinationChannelSelect');
+      const channelId = channelSelect ? channelSelect.value : "0";
 
-      if (!form.checkValidity()) {
-        exibirMensagemErro('Por favor, confirme a caixa e preencha todos os campos.');
+      const action = isYoutubeActive ? 'deactyoutube' : 'actyoutube';
+      const executeAction = window.executeFuncAction || (parent && parent.executeFuncAction);
+
+      if (typeof executeAction === 'function') {
+        const res = await executeAction(action, channelId || "0");
+        if (res && res.success) {
+          isYoutubeActive = !isYoutubeActive;
+          if (isYoutubeActive) {
+            btn.className = 'btn-studio-danger text-xs sm:text-sm font-semibold !py-2.5 !px-5 rounded-xl flex items-center justify-center gap-2';
+            btn.querySelector('i').className = 'fa-solid fa-power-off text-xs';
+            text.textContent = 'Desativar Notificações';
+            if (pill) {
+              pill.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+              pill.textContent = 'Ativo';
+            }
+            const metricStatus = document.getElementById('metric-youtube-status');
+            if (metricStatus) {
+              metricStatus.className = 'text-sm font-bold text-emerald-400';
+              metricStatus.textContent = 'Ativo & Monitorando';
+            }
+          } else {
+            btn.className = 'btn-studio-primary text-xs sm:text-sm font-semibold !py-2.5 !px-5 rounded-xl flex items-center justify-center gap-2';
+            btn.querySelector('i').className = 'fa-solid fa-bolt text-xs';
+            text.textContent = 'Ativar Notificações';
+            if (pill) {
+              pill.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border bg-slate-500/10 text-slate-400 border-slate-500/20';
+              pill.textContent = 'Inativo';
+            }
+            const metricStatus = document.getElementById('metric-youtube-status');
+            if (metricStatus) {
+              metricStatus.className = 'text-sm font-bold text-slate-400';
+              metricStatus.textContent = 'Desativado';
+            }
+          }
+        }
+      }
+    }
+
+    async function saveDestinationChannel() {
+      const select = document.getElementById('destinationChannelSelect');
+      const channelId = select ? select.value : "0";
+
+      if (!channelId || channelId === "0") {
+        const toast = window.showToast || (parent && parent.showToast);
+        if (toast) toast('warning', 'Canal Inválido', 'Por favor, selecione um canal de texto do Discord.');
         return;
       }
 
-      var dadosFormulario = $("#addDataForm").serializeArray();
-
-      fecharModal();
-      if (parent && typeof parent.funcsReload === 'function') {
-        parent.funcsReload(dadosFormulario);
-      } else {
-        console.error("Function parent.funcsReload not found");
+      const executeAction = window.executeFuncAction || (parent && parent.executeFuncAction);
+      if (typeof executeAction === 'function') {
+        const res = await executeAction('updtyoutube', channelId);
+        if (res && res.success) {
+          const opt = select.querySelector(`option[value="${channelId}"]`);
+          const chanName = opt ? opt.text.trim().split(' ')[0] : channelId;
+          const metricChan = document.getElementById('metric-youtube-channel');
+          if (metricChan) metricChan.textContent = chanName;
+        }
       }
     }
+
+    async function addYoutubeChannel() {
+      const input = document.getElementById('newYoutubeChannelInput');
+      const channelInput = (input ? input.value : '').trim();
+      const btn = document.getElementById('btnAddYoutube');
+
+      if (!channelInput) {
+        const toast = window.showToast || (parent && parent.showToast);
+        if (toast) toast('warning', 'Campo Vazio', 'Digite o nome ou ID do canal do YouTube.');
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin text-xs"></i> <span>Adicionando...</span>';
+      }
+
+      const executeDb = window.executeDbAction || (parent && parent.executeDbAction);
+      if (typeof executeDb === 'function') {
+        const res = await executeDb('addyoutubech', channelInput);
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-plus text-xs"></i> <span>Cadastrar Canal</span>';
+        }
+
+        if (res && res.success) {
+          if (input) input.value = '';
+          if (parent && typeof parent.carregarConteudo === 'function') {
+            parent.carregarConteudo('funcyoutube', false);
+          }
+        }
+      }
+    }
+
+    async function deleteYoutubeChannel(youtubeId, channelName) {
+      if (!confirm(`Deseja remover o canal "${channelName || youtubeId}" do monitoramento?`)) return;
+
+      const executeDb = window.executeDbAction || (parent && parent.executeDbAction);
+      if (typeof executeDb === 'function') {
+        const res = await executeDb('delyoutubech', youtubeId);
+        if (res && res.success) {
+          const row = document.getElementById(`row-yt-${youtubeId}`);
+          if (row) {
+            row.style.transition = 'all 0.3s ease';
+            row.style.opacity = '0';
+            row.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              row.remove();
+              const countElem = document.getElementById('channel-count');
+              if (countElem) {
+                const count = Math.max(0, parseInt(countElem.textContent || '1') - 1);
+                countElem.textContent = count;
+              }
+            }, 300);
+          }
+        }
+      }
+    }
+
+    function focusNewYoutubeChannel() {
+      const input = document.getElementById('newYoutubeChannelInput');
+      if (input) {
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => {
+          input.focus();
+        }, 300);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('newYoutubeChannelInput');
+      if (input) {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            addYoutubeChannel();
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>

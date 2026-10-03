@@ -1,5 +1,6 @@
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
-const  DatabaseLoader  = require("../src/loaders/DatabaseLoader");
+const DatabaseLoader = require("./loaders/DatabaseLoader");
+const config = require("./config/env");
 
 class DiscordBot extends Client {
   constructor() {
@@ -19,7 +20,11 @@ class DiscordBot extends Client {
   // Iniciando aplicação e outras funções no Servidor
   async start() {
     await new DatabaseLoader(this).call();
-    this.login(process.env.TOKEN);
+    if (config.token) {
+      this.login(config.token);
+    } else {
+      console.warn("[BOT WARNING] TOKEN do Discord não fornecido. O bot não inicializará o login.");
+    }
   }
   // Funções internas da aplicação
   setCommands(commands) {

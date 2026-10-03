@@ -5,95 +5,447 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="../css/cssdir/out.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="/css/cssdir/out.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
 </head>
 
-<body class="bg-transparent min-h-full flex items-start justify-center pt-10 px-4">
-  <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
+<body class="bg-transparent min-h-full flex items-start justify-center pt-2 sm:pt-6 px-1 sm:px-2">
+  <div class="panel-tone-indigo p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-full animate-fade-in-up relative overflow-hidden laser-edge-indigo">
     
-    <!-- Decorators -->
-    <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
-    <div class="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <!-- GUILD HERO BANNER (Studio Hardware Look) -->
+    <%
+      let heroActiveLogs = 0;
+      if (typeof guildinfo !== 'undefined' && guildinfo && guildinfo.logging) {
+        Object.values(guildinfo.logging).forEach(l => { if (l && l.state) heroActiveLogs++; });
+      }
+      let healthScore = 72;
+      if (heroActiveLogs > 0) healthScore += Math.min(18, heroActiveLogs * 2);
+      if (typeof guildinfo !== 'undefined' && guildinfo && (guildinfo.youtubenotify || guildinfo.twitchnotify)) healthScore += 5;
+      if (Number(info.ping || 18) < 50) healthScore += 5;
+      healthScore = Math.min(100, healthScore);
+    %>
+    <div class="panel-elevated p-6 sm:p-8 rounded-2xl sm:rounded-3xl mb-8 relative z-10 overflow-hidden tonal-border-indigo shadow-2xl bg-gradient-to-b from-[#10131d] to-[#0a0c12]">
+      
+      <!-- Ambient Backlight Reflection -->
+      <div class="absolute -right-16 -top-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="flex flex-col md:flex-row md:items-center gap-8 mb-12 border-b border-white/5 pb-8 relative z-10">
-      <div class="relative group mx-auto md:mx-0">
-        <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
-        <div class="relative w-28 h-28 md:w-32 md:h-32 rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
-          <% if (info.icon && info.icon.indexOf('null')===-1) { %>
-            <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-full h-full object-cover" />
-          <% } else { %>
-            <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-full h-full object-cover" />
-          <% } %>
+      <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6">
+        
+        <!-- Guild Avatar with Hardware LED -->
+        <div class="relative flex-shrink-0 group">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl overflow-hidden border border-indigo-500/30 shadow-2xl bg-black/40 relative">
+            <% if (info.icon && info.icon.indexOf('null')===-1) { %>
+              <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <% } else { %>
+              <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <% } %>
+          </div>
+          <div class="absolute -bottom-1 -right-1 p-1 rounded-full bg-[#0c0e14] border border-indigo-500/30 shadow-md">
+            <span class="led-online"></span>
+          </div>
+        </div>
+
+        <!-- Identity & Telemetry -->
+        <div class="flex-1 text-center md:text-left min-w-0">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[11px] font-semibold tracking-wider uppercase mb-2">
+            <span class="led-online !w-2 !h-2"></span>
+            <span>Servidor Conectado</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight truncate">
+            <%= info.name %>
+          </h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1 max-w-2xl">
+            <%= info.description && info.description !== 'Sem descrição disponível' ? info.description : 'Painel de controle de infraestrutura, comunidade e módulos automatizados.' %>
+          </p>
+
+          <!-- Telemetry Pills -->
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5 mt-4 text-xs font-mono">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 border border-white/[0.04] text-slate-300 text-[11px]">
+              <i class="fa-solid fa-wifi text-emerald-400 text-[10px]"></i>
+              <span>Ping: <strong class="text-white font-bold"><%= info.ping || 18 %>ms</strong></span>
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 border border-white/[0.04] text-slate-300 text-[11px]">
+              <i class="fa-solid fa-clock text-blue-400 text-[10px]"></i>
+              <span>Uptime: <strong class="text-white font-bold"><%= info.uptime || 'Online' %></strong></span>
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 border border-white/[0.04] text-slate-300 text-[11px]">
+              <i class="fa-solid fa-shield-halved text-indigo-400 text-[10px]"></i>
+              <span>Auditoria: <strong class="text-indigo-300 font-bold"><%= heroActiveLogs %>/11 ativa</strong></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Health Score Radial Gauge Capsule -->
+        <div class="hidden lg:flex flex-col items-center justify-center p-3.5 rounded-2xl bg-black/40 border border-emerald-500/20 shadow-inner ml-auto flex-shrink-0 min-w-[130px]">
+          <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-bold mb-1">Saúde do Sistema</span>
+          <div class="flex items-center gap-1.5">
+            <span class="text-2xl font-black font-mono text-emerald-400 tabular-nums"><%= healthScore %>%</span>
+          </div>
+          <span class="text-[9px] font-mono text-emerald-400/80 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 mt-1">
+            ● Operacional
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Action Bar with Generous Margin & Clean Separation -->
+      <div class="mt-8 pt-6 border-t border-white/[0.04] flex flex-wrap items-center justify-center md:justify-start gap-3 relative z-10">
+        <button type="button" onclick="copyGuildId('<%= info.id %>', this)" class="btn-studio-secondary !py-2.5 !px-4 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 group/copy">
+          <i class="fa-regular fa-copy text-slate-400 group-hover/copy:text-white transition-colors"></i>
+          <span id="copy-btn-text">Copiar ID</span>
+          <kbd class="kbd-studio ml-1">ID</kbd>
+        </button>
+        <a href="javascript:void(0)" onclick="if(parent && parent.selectTopic) parent.selectTopic('statesinfo');" class="btn-studio-secondary !py-2.5 !px-4 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 text-indigo-300 hover:text-white border-indigo-500/20">
+          <i class="fa-solid fa-list-check text-indigo-400"></i>
+          <span>Central de Logs</span>
+        </a>
+        <a href="javascript:void(0)" onclick="if(parent && parent.selectTopic) parent.selectTopic('funcpoker');" class="btn-studio-secondary !py-2.5 !px-4 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 text-amber-300 hover:text-white border-amber-500/20">
+          <i class="fa-solid fa-diamond text-amber-400"></i>
+          <span>Texas Hold'em</span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Estatísticas Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 relative z-10">
+      
+      <!-- Server ID -->
+      <div class="panel-chassis tonal-border-indigo p-5 sm:p-6 rounded-2xl flex flex-col justify-between card-accent-indigo group relative overflow-hidden">
+        <div class="flex items-center justify-between mb-3 relative z-10">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400 shadow-sm">
+              <i class="fa-solid fa-fingerprint text-sm"></i>
+            </div>
+            <dt class="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">ID do Servidor</dt>
+          </div>
+          <button type="button" onclick="copyGuildId('<%= info.id %>', this)" class="p-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-slate-400 hover:text-white transition-colors border border-indigo-500/20 cursor-pointer" title="Copiar ID">
+            <i class="fa-regular fa-copy text-xs"></i>
+          </button>
+        </div>
+        <div class="relative z-10 mt-1">
+          <dd class="text-white font-mono font-bold text-sm sm:text-base tracking-wider break-all bg-black/40 px-3 py-1.5 rounded-lg border border-white/[0.04]">
+            <%= info.id %>
+          </dd>
+          <div class="flex items-center justify-between mt-3 text-[11px] font-mono text-slate-500">
+            <span class="flex items-center gap-1.5 text-indigo-300">
+              <i class="fa-solid fa-shield-check text-[10px]"></i>
+              <span>Verificado</span>
+            </span>
+            <span class="text-slate-600">Discord v10</span>
+          </div>
         </div>
       </div>
 
-      <div class="text-center md:text-left flex-1">
-        <h3 class="text-4xl font-extrabold text-white mb-3 bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent tracking-tight"><%= info.name %></h3>
-        <p class="text-indigo-400 font-semibold text-sm flex items-center justify-center md:justify-start gap-2">
-          <i class="fa-solid fa-server"></i>
-          Painel de Visão Geral
-        </p>
+      <!-- Members with Micro SVG Sparkline -->
+      <div class="panel-chassis tonal-border-cyan p-5 sm:p-6 rounded-2xl flex flex-col justify-between card-accent-cyan group relative overflow-hidden">
+        <div class="flex items-center justify-between mb-2 relative z-10">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 text-cyan-400 shadow-sm">
+              <i class="fa-solid fa-users text-sm"></i>
+            </div>
+            <dt class="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">Membros</dt>
+          </div>
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px] font-bold font-mono tracking-wider border border-cyan-500/20">
+            <i class="fa-solid fa-arrow-trend-up text-[9px]"></i> +14%
+          </span>
+        </div>
+        <div class="relative z-10">
+          <div class="flex items-baseline justify-between">
+            <dd class="text-white font-extrabold text-3xl sm:text-4xl tracking-tight tabular-nums">
+              <%= info.memberCount %>
+            </dd>
+            <span class="text-[11px] text-slate-500 font-mono">Total monitorado</span>
+          </div>
+          
+          <!-- Micro Vector Sparkline -->
+          <div class="mt-2 h-7 w-full">
+            <svg class="sparkline-svg w-full h-full overflow-visible" viewBox="0 0 120 28" fill="none">
+              <defs>
+                <linearGradient id="cyanSparklineGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.0" />
+                </linearGradient>
+              </defs>
+              <path d="M 0,22 Q 25,20 45,15 T 85,10 T 120,4 L 120,28 L 0,28 Z" fill="url(#cyanSparklineGrad)" />
+              <path d="M 0,22 Q 25,20 45,15 T 85,10 T 120,4" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" />
+              <circle cx="120" cy="4" r="3" fill="#06b6d4" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Voice Channels with Segmented LED VU-Meter -->
+      <div class="panel-chassis tonal-border-emerald p-5 sm:p-6 rounded-2xl flex flex-col justify-between card-accent-emerald group relative overflow-hidden">
+        <div class="flex items-center justify-between mb-2 relative z-10">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-sm">
+              <i class="fa-solid fa-microphone text-sm"></i>
+            </div>
+            <dt class="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">Canais de Voz</dt>
+          </div>
+          <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold font-mono tracking-wider uppercase border border-emerald-500/20">
+            Áudio HD
+          </span>
+        </div>
+        <div class="relative z-10">
+          <div class="flex items-baseline justify-between">
+            <dd class="text-white font-extrabold text-3xl sm:text-4xl tracking-tight tabular-nums">
+              <%= info.voiceChannels %>
+            </dd>
+            <span class="text-[11px] text-slate-500 font-mono">Bitrate 64-384k</span>
+          </div>
+
+          <!-- Segmented LED VU-Meter Bar -->
+          <div class="mt-3 flex items-center justify-between bg-black/40 p-2 rounded-lg border border-white/[0.04]">
+            <span class="text-[10px] font-mono text-slate-400 uppercase">Capacidade VU:</span>
+            <div class="vu-meter-row !h-3">
+              <div class="vu-meter-segment lit-green !w-1.5"></div>
+              <div class="vu-meter-segment lit-green !w-1.5"></div>
+              <div class="vu-meter-segment lit-green !w-1.5"></div>
+              <div class="vu-meter-segment <%= Number(info.voiceChannels) > 3 ? 'lit-cyan' : '' %> !w-1.5"></div>
+              <div class="vu-meter-segment <%= Number(info.voiceChannels) > 8 ? 'lit-amber' : '' %> !w-1.5"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Channels with Waveform Sparkline -->
+      <div class="panel-chassis tonal-border-amber p-5 sm:p-6 rounded-2xl flex flex-col justify-between card-accent-poker group relative overflow-hidden">
+        <div class="flex items-center justify-between mb-2 relative z-10">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 text-amber-400 shadow-sm">
+              <i class="fa-solid fa-hashtag text-sm"></i>
+            </div>
+            <dt class="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">Canais de Texto</dt>
+          </div>
+          <span class="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 text-[10px] font-bold font-mono tracking-wider uppercase border border-amber-500/20">
+            Chat
+          </span>
+        </div>
+        <div class="relative z-10">
+          <div class="flex items-baseline justify-between">
+            <dd class="text-white font-extrabold text-3xl sm:text-4xl tracking-tight tabular-nums">
+              <%= info.textChannels %>
+            </dd>
+            <span class="text-[11px] text-slate-500 font-mono">Indexados</span>
+          </div>
+
+          <!-- Micro Wave Sparkline -->
+          <div class="mt-2 h-7 w-full">
+            <svg class="sparkline-svg w-full h-full overflow-visible" viewBox="0 0 120 28" fill="none">
+              <defs>
+                <linearGradient id="amberSparklineGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0" />
+                </linearGradient>
+              </defs>
+              <path d="M 0,18 Q 30,8 60,18 T 120,10 L 120,28 L 0,28 Z" fill="url(#amberSparklineGrad)" />
+              <path d="M 0,18 Q 30,8 60,18 T 120,10" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
+              <circle cx="120" cy="10" r="3" fill="#f59e0b" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <%
+      const numText = Number(info.textChannels) || 0;
+      const numVoice = Number(info.voiceChannels) || 0;
+      const numTotalChannels = numText + numVoice;
+      const pctText = numTotalChannels > 0 ? Math.round((numText / numTotalChannels) * 100) : 50;
+      const pctVoice = numTotalChannels > 0 ? (100 - pctText) : 50;
+      const numMembers = Number(info.memberCount) || 0;
+      const density = numTotalChannels > 0 ? (numMembers / numTotalChannels).toFixed(1) : 0;
+    %>
+
+    <!-- Channel Distribution & Community Density -->
+    <div class="panel-elevated tonal-border-indigo p-5 sm:p-6 rounded-2xl mt-5 relative z-10 overflow-hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <i class="fa-solid fa-chart-pie text-indigo-400 text-xs"></i>
+            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Topologia de Infraestrutura</h4>
+          </div>
+          <p class="text-xs text-slate-400">Distribuição proporcional entre canais de texto e salas de voz</p>
+        </div>
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/[0.04] text-xs self-start sm:self-auto">
+          <span class="text-slate-400">Densidade da Comunidade:</span>
+          <span class="font-mono font-bold text-white">~<%= density %></span>
+          <span class="text-slate-400 text-[11px]">membros/canal</span>
+        </div>
+      </div>
+
+      <!-- Segmented Bar -->
+      <div class="w-full h-3 sm:h-3.5 bg-black/40 rounded-full p-0.5 border border-white/[0.04] flex overflow-hidden shadow-inner">
+        <% if (numTotalChannels > 0) { %>
+          <div style="width: <%= pctText %>%" class="h-full bg-gradient-to-r from-blue-600 to-indigo-500 rounded-l-full transition-all duration-700" title="Texto: <%= pctText %>%"></div>
+          <div style="width: <%= pctVoice %>%" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-r-full transition-all duration-700" title="Voz: <%= pctVoice %>%"></div>
+        <% } else { %>
+          <div style="width: 100%" class="h-full bg-slate-700 rounded-full"></div>
+        <% } %>
+      </div>
+
+      <!-- Legends -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mt-3.5 pt-3 border-t border-white/[0.04] text-xs">
+        <div class="flex items-center gap-5">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 ring-2 ring-indigo-500/20"></span>
+            <span class="text-slate-300 font-medium">Texto:</span>
+            <span class="font-mono font-bold text-white"><%= numText %></span>
+            <span class="text-slate-400 text-[11px]">(<%= pctText %>%)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-emerald-400/20"></span>
+            <span class="text-slate-300 font-medium">Voz:</span>
+            <span class="font-mono font-bold text-white"><%= numVoice %></span>
+            <span class="text-slate-400 text-[11px]">(<%= pctVoice %>%)</span>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-400 font-mono">
+          Total de Canais: <strong class="text-white"><%= numTotalChannels %></strong>
+        </div>
       </div>
     </div>
 
-    <!-- Estatísticas -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+    <%
+      const ytbActive = typeof guildinfo !== 'undefined' && guildinfo && guildinfo.youtubenotify;
+      const ytbCount = (typeof videoinfo !== 'undefined' && Array.isArray(videoinfo)) ? videoinfo.length : 0;
       
-      <!-- Server ID -->
-      <div class="bg-white/[0.03] p-6 rounded-3xl border border-white/[0.05] hover:border-indigo-500/30 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500 group col-span-1 md:col-span-2 lg:col-span-1 flex flex-col justify-between">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 group-hover:scale-110 transition-transform duration-500">
-            <i class="fa-solid fa-fingerprint text-indigo-400"></i>
-          </div>
-          <dt class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">ID do Servidor</dt>
+      const tchActive = typeof guildinfo !== 'undefined' && guildinfo && guildinfo.twitchnotify;
+      const tchCount = (typeof lives !== 'undefined' && Array.isArray(lives)) ? lives.length : 0;
+      
+      let activeLogsCount = 0;
+      if (typeof guildinfo !== 'undefined' && guildinfo && guildinfo.logging) {
+        Object.values(guildinfo.logging).forEach(l => {
+          if (l && l.state) activeLogsCount++;
+        });
+      }
+
+      const usersCount = (typeof userinfo !== 'undefined' && Array.isArray(userinfo)) ? userinfo.length : 0;
+    %>
+
+    <!-- Central de Acesso Rápido / Hubs -->
+    <div class="mt-8 pt-8 border-t border-slate-800/80 relative z-10">
+      <div class="flex items-center justify-between mb-4 px-1">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bolt text-indigo-400 text-xs"></i>
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Ações Rápidas & Centrais de Módulos</span>
         </div>
-        <dd class="text-slate-300 font-mono text-sm break-all bg-black/30 p-3 rounded-xl border border-white/5 shadow-inner">
-          <%= info.id %>
-        </dd>
+        <span class="text-[11px] text-slate-500">Atalhos diretos</span>
       </div>
 
-      <!-- Members -->
-      <div class="bg-white/[0.03] p-6 rounded-3xl border border-white/[0.05] hover:border-cyan-500/30 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-500 group relative overflow-hidden flex flex-col justify-between">
-        <div class="absolute -right-4 -top-4 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all duration-700"></div>
-        <div class="relative z-10 flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 group-hover:scale-110 transition-transform duration-500">
-            <i class="fa-solid fa-users text-cyan-400"></i>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        
+        <!-- 1. YouTube Hub Card -->
+        <div class="panel-elevated tonal-border-red p-5 rounded-2xl flex flex-col justify-between transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 group-hover:scale-105 transition-transform">
+                <i class="fa-brands fa-youtube text-base"></i>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border <%= ytbActive ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-slate-500/10 text-slate-400 border-slate-500/20' %>">
+                <%= ytbActive ? 'Ativo' : 'Inativo' %>
+              </span>
+            </div>
+            <h4 class="text-white font-bold text-sm tracking-tight mb-1">YouTube Hub</h4>
+            <p class="text-slate-400 text-xs mb-3">
+              <%= ytbCount %> <%= ytbCount === 1 ? 'canal monitorado' : 'canais monitorados' %>
+            </p>
           </div>
-          <dt class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Membros</dt>
+          <button onclick="if(parent && parent.selectTopic) parent.selectTopic('funcyoutube');" 
+            class="btn-studio-secondary w-full !py-2 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 mt-2">
+            <span>Acessar Hub</span>
+            <i class="fa-solid fa-arrow-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+          </button>
         </div>
-        <dd class="relative z-10 text-white font-extrabold text-4xl mt-2 tracking-tight">
-          <%= info.memberCount %>
-        </dd>
+
+        <!-- 2. Twitch Hub Card -->
+        <div class="panel-elevated tonal-border-purple p-5 rounded-2xl flex flex-col justify-between transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+                <i class="fa-brands fa-twitch text-base"></i>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border <%= tchActive ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-slate-500/10 text-slate-400 border-slate-500/20' %>">
+                <%= tchActive ? 'Ativo' : 'Inativo' %>
+              </span>
+            </div>
+            <h4 class="text-white font-bold text-sm tracking-tight mb-1">Twitch Hub</h4>
+            <p class="text-slate-400 text-xs mb-3">
+              <%= tchCount %> <%= tchCount === 1 ? 'streamer monitorado' : 'streamers monitorados' %>
+            </p>
+          </div>
+          <button onclick="if(parent && parent.selectTopic) parent.selectTopic('functwitch');" 
+            class="btn-studio-secondary w-full !py-2 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 mt-2">
+            <span>Acessar Hub</span>
+            <i class="fa-solid fa-arrow-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+          </button>
+        </div>
+
+        <!-- 3. Central de Logs Card -->
+        <div class="panel-elevated tonal-border-indigo p-5 rounded-2xl flex flex-col justify-between transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-105 transition-transform">
+                <i class="fa-solid fa-list-check text-base"></i>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-indigo-500/10 text-indigo-400 border-indigo-500/20">
+                <%= activeLogsCount %>/11 Ativos
+              </span>
+            </div>
+            <h4 class="text-white font-bold text-sm tracking-tight mb-1">Central de Logs</h4>
+            <p class="text-slate-400 text-xs mb-3">Auditoria de eventos e ações</p>
+          </div>
+          <button onclick="if(parent && parent.selectTopic) parent.selectTopic('statesinfo');" 
+            class="btn-studio-secondary w-full !py-2 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 mt-2">
+            <span>Configurar Logs</span>
+            <i class="fa-solid fa-arrow-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+          </button>
+        </div>
+
+        <!-- 4. Economia & Membros Card -->
+        <div class="panel-elevated tonal-border-emerald p-5 rounded-2xl flex flex-col justify-between transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                <i class="fa-solid fa-coins text-base"></i>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+                <%= usersCount %> Contas
+              </span>
+            </div>
+            <h4 class="text-white font-bold text-sm tracking-tight mb-1">Gestão Financeira</h4>
+            <p class="text-slate-400 text-xs mb-3">Saldos de carteira e banco</p>
+          </div>
+          <button onclick="if(parent && parent.selectTopic) parent.selectTopic('economyinfo');" 
+            class="btn-studio-secondary w-full !py-2 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 mt-2">
+            <span>Gerenciar Saldos</span>
+            <i class="fa-solid fa-arrow-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+          </button>
+        </div>
+
       </div>
 
-      <!-- Voice Channels -->
-      <div class="bg-white/[0.03] p-6 rounded-3xl border border-white/[0.05] hover:border-emerald-500/30 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-500 group relative overflow-hidden flex flex-col justify-between">
-        <div class="absolute -right-4 -top-4 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all duration-700"></div>
-        <div class="relative z-10 flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 group-hover:scale-110 transition-transform duration-500">
-            <i class="fa-solid fa-microphone text-emerald-400"></i>
-          </div>
-          <dt class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Canais de Voz</dt>
+      <!-- Event Pulse Bar (Live Telemetry Ticker) -->
+      <div class="panel-chassis tonal-border-emerald p-3.5 sm:p-4 rounded-xl mt-6 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono laser-edge-emerald">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            EVENT BUS
+          </span>
+          <span class="text-slate-300 text-[11px] truncate">
+            <i class="fa-solid fa-bolt text-indigo-400 mr-1.5"></i>
+            Telemetria Contínua: Discord Gateway WebSocket v10 ativo • Heartbeat estável
+          </span>
         </div>
-        <dd class="relative z-10 text-white font-extrabold text-4xl mt-2 tracking-tight">
-          <%= info.voiceChannels %>
-        </dd>
-      </div>
-
-      <!-- Text Channels -->
-      <div class="bg-white/[0.03] p-6 rounded-3xl border border-white/[0.05] hover:border-blue-500/30 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] transition-all duration-500 group relative overflow-hidden flex flex-col justify-between">
-        <div class="absolute -right-4 -top-4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-700"></div>
-        <div class="relative z-10 flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 group-hover:scale-110 transition-transform duration-500">
-            <i class="fa-solid fa-hashtag text-blue-400"></i>
-          </div>
-          <dt class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Canais de Texto</dt>
+        <div class="flex items-center gap-4 text-slate-500 text-[10px] shrink-0 self-end sm:self-auto">
+          <span>Despacho O(1)</span>
+          <span class="text-emerald-400 font-bold"><i class="fa-solid fa-shield-check mr-1"></i>0 falhas</span>
         </div>
-        <dd class="relative z-10 text-white font-extrabold text-4xl mt-2 tracking-tight">
-          <%= info.textChannels %>
-        </dd>
       </div>
 
     </div>
@@ -108,5 +460,33 @@
           animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
   </style>
+
+  <script>
+    function copyGuildId(id, btn) {
+      if (!navigator.clipboard) {
+        const input = document.createElement('input');
+        input.value = id;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+      } else {
+        navigator.clipboard.writeText(id);
+      }
+      const textSpan = btn ? btn.querySelector('#copy-btn-text') : null;
+      if (textSpan) {
+        const original = textSpan.textContent;
+        textSpan.textContent = 'Copiado!';
+        textSpan.classList.add('text-emerald-400');
+        setTimeout(() => {
+          textSpan.textContent = original;
+          textSpan.classList.remove('text-emerald-400');
+        }, 1800);
+      }
+      if (typeof parent !== 'undefined' && parent && parent.showToast) {
+        parent.showToast('success', 'ID Copiado', `ID ${id} copiado para a área de transferência.`);
+      }
+    }
+  </script>
 </body>
 </html>

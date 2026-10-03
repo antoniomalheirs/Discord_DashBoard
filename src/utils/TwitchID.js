@@ -12,7 +12,7 @@ module.exports = async function (accessToken, channelName, client_Id) {
       },
     });
 
-    return response.data.data[0].id;
+    return response.data?.data?.[0]?.id || null;
   } catch (error) {
     console.error(`Erro ao buscar informações do canal: ${error.message}`);
     throw error;

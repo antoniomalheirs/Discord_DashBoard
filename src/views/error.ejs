@@ -1,107 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="..css/cssdir/out.css"
-      rel="stylesheet"
-    />
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <title>Discord Bot Dashboard</title>
-  </head>
-  <div class="transition-overlay_out_3"></div>
-  <body class="topbar-color min-h-screen flex items-center justify-center">
-    <div id="content_about" class="isolate px-6 pt-14 lg:px-8">
-      <div
-          class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-          aria-hidden="true"
-        >
-          <div
-            class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-            style="
-              clip-path: polygon(
-                74.1% 44.1%,
-                100% 61.6%,
-                97.5% 26.9%,
-                85.5% 0.1%,
-                80.7% 2%,
-                72.5% 32.5%,
-                60.2% 62.4%,
-                52.4% 68.1%,
-                47.5% 58.3%,
-                45.2% 34.5%,
-                27.5% 76.7%,
-                0.1% 64.9%,
-                17.9% 100%,
-                27.6% 76.8%,
-                76.1% 97.7%,
-                74.1% 44.1%
-              );
-            "
-          ></div>
-        </div>
-      
-      <div class="chanelbar-color p-8 rounded-lg shadow-md w-full max-w-lg">
-      
-        <div class="text-center">
-          <p class="text-base font-semibold text-gray-200">404</p>
-          <h1
-            class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl"
-          >
-            Page not found
-          </h1>
-          <p class="mt-6 text-base  text-gray-300">
-            <%= (typeof error !== 'undefined' && error) ? error : "Erro ao obter dados da guilda, você não tem permissão para acessar este servidor ou o bot talvez não esta neste Servidor!." %>
-          </p>
-          <div class="mt-10 flex items-center justify-center gap-x-6">
-            <a
-              onclick="voltarAoDashboard()"
-              class="rounded-md button-color px-3.5 py-2.5 cursor-pointer default: text-sm font-semibold text-white shadow-sm hover:button-color focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >Go Servers Page</a
-            >
-            <a href="#" class="text-sm font-semibold text-gray-900"
-              >Contact support <span aria-hidden="true">&rarr;</span></a
-            >
-          </div>
-        </div>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/css/cssdir/out.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
+  <title>Página de Erro | Discord Bot</title>
+</head>
+
+<body class="bg-[#090b10] min-h-screen">
+
+  <div class="min-h-[70vh] flex items-center justify-center w-full py-4 px-2">
+    <div class="panel-elevated p-8 sm:p-10 rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg text-center animate-fade-in-up relative overflow-hidden mx-auto">
+
+      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center mx-auto mb-6 shadow-lg">
+        <i class="fa-solid fa-triangle-exclamation text-2xl sm:text-3xl"></i>
       </div>
 
-      <div
-          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-          aria-hidden="true"
-        >
-          <div
-            class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-            style="
-              clip-path: polygon(
-                74.1% 44.1%,
-                100% 61.6%,
-                97.5% 26.9%,
-                85.5% 0.1%,
-                80.7% 2%,
-                72.5% 32.5%,
-                60.2% 62.4%,
-                52.4% 68.1%,
-                47.5% 58.3%,
-                45.2% 34.5%,
-                27.5% 76.7%,
-                0.1% 64.9%,
-                17.9% 100%,
-                27.6% 76.8%,
-                76.1% 97.7%,
-                74.1% 44.1%
-              );
-            "
-          ></div>
-        </div>
-    </div>
-    
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold uppercase tracking-wider mb-4">
+        <span>Erro 404 • Servidor Indisponível</span>
+      </div>
 
-    <script>
-      function voltarAoDashboard() {
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-3">
+        Acesso Não Autorizado ou Inexistente
+      </h1>
+
+      <div class="panel-elevated p-4 rounded-xl text-left border border-white/[0.06] mb-8">
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          <%= (typeof error !== 'undefined' && error) ? error : "Erro ao obter dados da guilda. Você não possui permissão para acessar este servidor ou o bot ainda não foi adicionado a ele." %>
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button onclick="voltarAoDashboard()"
+          class="btn-studio-primary !py-2.5 !px-6 text-xs sm:text-sm font-semibold rounded-xl w-full sm:w-auto flex items-center justify-center gap-2">
+          <i class="fa-solid fa-server text-xs"></i>
+          <span>Escolher Outro Servidor</span>
+        </button>
+
+        <a href="/" target="_top"
+          class="btn-studio-secondary !py-2.5 !px-6 text-xs sm:text-sm font-semibold rounded-xl w-full sm:w-auto flex items-center justify-center gap-2">
+          <i class="fa-solid fa-house text-xs"></i>
+          <span>Página Inicial</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <style>
+    @keyframes fade-in-up {
+      0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-fade-in-up {
+      animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+
+  <script>
+    function voltarAoDashboard() {
+      if (window.top && window.top !== window) {
+        window.top.location.href = '/dashboard';
+      } else if (window.history.length > 1) {
         window.history.back();
+      } else {
+        window.location.href = '/dashboard';
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>

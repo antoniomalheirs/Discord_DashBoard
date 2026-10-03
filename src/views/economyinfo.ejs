@@ -4,46 +4,364 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/cssdir/out.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
     <title>Admin - Economia</title>
 </head>
 
-<body class="bg-transparent min-h-full flex items-start justify-center pt-10 px-4">
-    <div class="bg-[#13151a]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-full max-w-full animate-fade-in-up relative overflow-hidden">
-        
-        <!-- Background Decorators -->
-        <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-emerald-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+<body class="bg-transparent min-h-full flex items-start justify-center pt-2 sm:pt-6 px-1 sm:px-2">
+    <div class="panel-tone-emerald chassis-bevel bg-hardware-dots laser-edge-emerald p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-full animate-fade-in-up relative overflow-hidden">
 
         <!-- Header -->
-        <div class="flex flex-col md:flex-row items-center gap-6 mb-10 border-b border-white/5 pb-8 relative z-10">
-            <div class="flex items-center justify-center w-16 h-16 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 shadow-lg">
-                <i class="fa-solid fa-coins text-3xl text-emerald-400"></i>
+        <div class="flex flex-col md:flex-row items-center gap-5 sm:gap-6 mb-8 sm:mb-10 border-b border-emerald-500/20 pb-6 sm:pb-8 relative z-10">
+            <div class="relative mx-auto md:mx-0 flex-shrink-0">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-emerald-500/30 shadow-lg">
+                    <% if (info.icon && info.icon.indexOf('null')===-1) { %>
+                        <img src="<%= info.icon %>" alt="Ícone da guilda" class="w-full h-full object-cover" />
+                    <% } else { %>
+                        <img src="/res/serverIcon/nonserverimg.jpg" alt="Ícone padrão" class="w-full h-full object-cover" />
+                    <% } %>
+                </div>
             </div>
-            <div class="text-center md:text-left flex-1">
-                <h3 class="text-3xl font-extrabold text-white mb-2 tracking-tight">Gestão Financeira</h3>
-                <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
-                    Gerencie o saldo em carteira e no banco dos membros da guilda <strong class="text-white"><%= info.name %></strong>.
+            <div class="text-center md:text-left flex-1 min-w-0">
+                <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
+                    <i class="fa-solid fa-coins text-[11px]"></i>
+                    <span>Economia</span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight truncate">Gestão Financeira</h3>
+                <p class="text-slate-400 text-xs sm:text-sm mt-1 max-w-2xl">
+                    Gerencie o saldo em carteira e no banco dos membros da guilda <strong class="text-white"><%= info.name %></strong>
                 </p>
             </div>
         </div>
 
+        <%
+          let totalGuildWealth = 0;
+          let totalWallet = 0;
+          let totalBank = 0;
+          let sortedUsers = [];
+
+          if (Array.isArray(info1) && info1.length > 0) {
+            sortedUsers = [...info1].map(u => {
+              const m = u.money || 0;
+              const b = u.bank || 0;
+              const w = m + b;
+              totalGuildWealth += w;
+              totalWallet += m;
+              totalBank += b;
+              return {
+                id: u.codigouser || u.id || '',
+                username: u.username || u.codigouser || 'Membro',
+                money: m,
+                bank: b,
+                total: w
+              };
+            }).sort((a, b) => b.total - a.total);
+          }
+          const topUser = sortedUsers[0] || { username: 'Ninguém', total: 0 };
+          const top2User = sortedUsers[1] || null;
+          const top3User = sortedUsers[2] || null;
+          const avgWealth = (Array.isArray(info1) && info1.length > 0) ? Math.round(totalGuildWealth / info1.length) : 0;
+        %>
+
+        <!-- Resumo Financeiro da Guilda (3 Cards Executivos) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-6 relative z-10">
+          
+          <!-- 1. Tesouro Total -->
+          <div class="panel-chassis tonal-border-amber p-5 rounded-2xl flex flex-col justify-between card-accent-poker relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3 relative z-10">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">Tesouro da Guilda</span>
+              <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 text-amber-400 shadow-sm">
+                <i class="fa-solid fa-vault text-xs"></i>
+              </div>
+            </div>
+            <div class="relative z-10">
+              <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight tabular-nums" id="summaryTotalWealth">
+                $<%= totalGuildWealth.toLocaleString() %>
+              </div>
+              <div class="flex items-center gap-3 text-[11px] text-slate-400 mt-2 font-mono">
+                <span class="inline-flex items-center gap-1">
+                  <i class="fa-solid fa-wallet text-emerald-400 text-[10px]"></i>
+                  $<%= totalWallet.toLocaleString() %>
+                </span>
+                <span class="text-slate-600 select-none">•</span>
+                <span class="inline-flex items-center gap-1">
+                  <i class="fa-solid fa-building-columns text-blue-400 text-[10px]"></i>
+                  $<%= totalBank.toLocaleString() %>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Maior Fortuna -->
+          <div class="panel-chassis tonal-border-emerald p-5 rounded-2xl flex flex-col justify-between card-accent-emerald relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3 relative z-10">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">Maior Fortuna</span>
+              <div class="w-8 h-8 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-sm">
+                <i class="fa-solid fa-crown text-xs"></i>
+              </div>
+            </div>
+            <div class="relative z-10">
+              <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono tracking-tight tabular-nums truncate" title="<%= topUser.username %>">
+                $<%= topUser.total.toLocaleString() %>
+              </div>
+              <div class="text-xs text-slate-300 font-medium mt-1 truncate flex items-center gap-1.5">
+                <span class="badge-metallic-gold">#1</span>
+                <span>@<%= topUser.username %></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Média por Membro -->
+          <div class="panel-chassis tonal-border-indigo p-5 rounded-2xl flex flex-col justify-between card-accent-indigo relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3 relative z-10">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">Média Per Capita</span>
+              <div class="w-8 h-8 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400 shadow-sm">
+                <i class="fa-solid fa-chart-line text-xs"></i>
+              </div>
+            </div>
+            <div class="relative z-10">
+              <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight tabular-nums">
+                $<%= avgWealth.toLocaleString() %>
+              </div>
+              <div class="text-xs text-slate-400 mt-1 font-mono">
+                Dividido entre <%= info1.length %> <%= info1.length === 1 ? 'conta ativa' : 'contas ativas' %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pódio dos Magnatas (Top 3 Titans - Wall of Wealth) -->
+        <% if (sortedUsers.length > 0 && topUser.total > 0) { %>
+        <div class="mb-6 relative z-10">
+          <div class="flex items-center justify-between mb-3 px-1">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-trophy text-amber-400 text-xs"></i>
+              <span class="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono">Pódio dos Magnatas da Guilda</span>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500">Ranking por patrimônio líquido total</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
+            <!-- 1º Lugar (Ouro Nobre) -->
+            <div class="panel-chassis chassis-bevel laser-edge-top p-4 sm:p-5 rounded-2xl flex flex-col justify-between relative overflow-hidden bg-gradient-to-b from-amber-500/[0.08] to-transparent border border-amber-500/20">
+              <div class="flex items-center justify-between mb-3">
+                <span class="badge-metallic-gold">
+                  <i class="fa-solid fa-crown text-[10px]"></i>
+                  <span>1º Magnata Supremo</span>
+                </span>
+                <span class="text-[10px] font-mono text-amber-400/90 font-bold">
+                  <%= totalGuildWealth > 0 ? ((topUser.total / totalGuildWealth) * 100).toFixed(1) : 0 %>% do Tesouro
+                </span>
+              </div>
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-base shadow-sm">
+                  🥇
+                </div>
+                <div class="min-w-0 flex-1">
+                  <h4 class="text-sm font-bold text-white truncate" title="<%= topUser.username %>">@<%= topUser.username %></h4>
+                  <p class="text-[10px] font-mono text-slate-400 truncate">ID: <%= topUser.id %></p>
+                </div>
+              </div>
+              <div class="pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-400">Patrimônio:</span>
+                <span class="font-extrabold text-amber-300 text-sm tabular-nums">$<%= topUser.total.toLocaleString() %></span>
+              </div>
+            </div>
+
+            <!-- 2º Lugar (Prata Cirúrgica) -->
+            <% if (top2User) { %>
+            <div class="panel-chassis chassis-bevel p-4 sm:p-5 rounded-2xl flex flex-col justify-between relative overflow-hidden bg-gradient-to-b from-slate-400/[0.05] to-transparent border border-slate-400/20">
+              <div class="flex items-center justify-between mb-3">
+                <span class="badge-metallic-silver">
+                  <i class="fa-solid fa-medal text-[10px]"></i>
+                  <span>2º Vice-Magnata</span>
+                </span>
+                <span class="text-[10px] font-mono text-slate-400 font-bold">
+                  <%= totalGuildWealth > 0 ? ((top2User.total / totalGuildWealth) * 100).toFixed(1) : 0 %>% do Tesouro
+                </span>
+              </div>
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-xl bg-slate-400/10 border border-slate-400/30 flex items-center justify-center text-slate-300 font-bold text-base shadow-sm">
+                  🥈
+                </div>
+                <div class="min-w-0 flex-1">
+                  <h4 class="text-sm font-bold text-white truncate" title="<%= top2User.username %>">@<%= top2User.username %></h4>
+                  <p class="text-[10px] font-mono text-slate-400 truncate">ID: <%= top2User.id %></p>
+                </div>
+              </div>
+              <div class="pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-400">Patrimônio:</span>
+                <span class="font-bold text-slate-200 text-sm tabular-nums">$<%= top2User.total.toLocaleString() %></span>
+              </div>
+            </div>
+            <% } else { %>
+            <div class="panel-chassis p-4 rounded-2xl flex items-center justify-center text-xs text-slate-500 font-mono border border-dashed border-white/[0.08]">
+              Vaga Aberta no Pódio (#2)
+            </div>
+            <% } %>
+
+            <!-- 3º Lugar (Bronze Patinado) -->
+            <% if (top3User) { %>
+            <div class="panel-chassis chassis-bevel p-4 sm:p-5 rounded-2xl flex flex-col justify-between relative overflow-hidden bg-gradient-to-b from-orange-600/[0.05] to-transparent border border-orange-600/20">
+              <div class="flex items-center justify-between mb-3">
+                <span class="badge-metallic-bronze">
+                  <i class="fa-solid fa-award text-[10px]"></i>
+                  <span>3º Conselheiro</span>
+                </span>
+                <span class="text-[10px] font-mono text-orange-400/90 font-bold">
+                  <%= totalGuildWealth > 0 ? ((top3User.total / totalGuildWealth) * 100).toFixed(1) : 0 %>% do Tesouro
+                </span>
+              </div>
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-xl bg-orange-600/10 border border-orange-600/30 flex items-center justify-center text-orange-300 font-bold text-base shadow-sm">
+                  🥉
+                </div>
+                <div class="min-w-0 flex-1">
+                  <h4 class="text-sm font-bold text-white truncate" title="<%= top3User.username %>">@<%= top3User.username %></h4>
+                  <p class="text-[10px] font-mono text-slate-400 truncate">ID: <%= top3User.id %></p>
+                </div>
+              </div>
+              <div class="pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-400">Patrimônio:</span>
+                <span class="font-bold text-orange-200 text-sm tabular-nums">$<%= top3User.total.toLocaleString() %></span>
+              </div>
+            </div>
+            <% } else { %>
+            <div class="panel-chassis p-4 rounded-2xl flex items-center justify-center text-xs text-slate-500 font-mono border border-dashed border-white/[0.08]">
+              Vaga Aberta no Pódio (#3)
+            </div>
+            <% } %>
+
+          </div>
+        </div>
+        <% } %>
+
+        <%
+          const totalWealthNum = Number(totalGuildWealth) || 0;
+          const pctWallet = totalWealthNum > 0 ? Math.round((totalWallet / totalWealthNum) * 100) : 50;
+          const pctBank = totalWealthNum > 0 ? (100 - pctWallet) : 50;
+
+          let membersWithBank = 0;
+          let membersTotal = Array.isArray(info1) ? info1.length : 0;
+          if (Array.isArray(info1)) {
+            info1.forEach(u => {
+              if (u.bank && u.bank > 0) membersWithBank++;
+            });
+          }
+          const bankedRate = membersTotal > 0 ? Math.round((membersWithBank / membersTotal) * 100) : 0;
+        %>
+
+        <!-- Liquidez & Distribuição Monetária -->
+        <div class="panel-elevated chassis-bevel tonal-border-amber p-5 sm:p-6 rounded-2xl mb-8 relative z-10 overflow-hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <i class="fa-solid fa-scale-balanced text-amber-400 text-xs"></i>
+                <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Liquidez & Distribuição de Capital</h4>
+              </div>
+              <p class="text-xs text-slate-400">Proporção entre capital em circulação (carteira) e patrimônio guardado (banco)</p>
+            </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/[0.04] text-xs self-start sm:self-auto font-mono">
+              <span class="text-slate-400">Taxa de Bancarização:</span>
+              <strong class="text-indigo-400"><%= bankedRate %>%</strong>
+              <span class="text-slate-500 text-[11px]">(<%= membersWithBank %>/<%= membersTotal %>)</span>
+            </div>
+          </div>
+
+          <!-- Segmented Proportional Bar -->
+          <div class="w-full h-3 sm:h-3.5 bg-black/40 rounded-full p-0.5 border border-white/[0.04] flex overflow-hidden shadow-inner">
+            <% if (totalWealthNum > 0) { %>
+              <div style="width: <%= pctWallet %>%" class="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-l-full transition-all duration-700" title="Carteira: <%= pctWallet %>%"></div>
+              <div style="width: <%= pctBank %>%" class="h-full bg-gradient-to-r from-blue-600 to-indigo-500 rounded-r-full transition-all duration-700" title="Banco: <%= pctBank %>%"></div>
+            <% } else { %>
+              <div style="width: 100%" class="h-full bg-slate-700 rounded-full"></div>
+            <% } %>
+          </div>
+
+          <!-- Legends -->
+          <div class="flex flex-wrap items-center justify-between gap-3 mt-3.5 pt-3 border-t border-white/[0.04] text-xs font-mono">
+            <div class="flex items-center gap-5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-amber-400/20"></span>
+                <span class="text-slate-300 font-sans font-medium">Líquido (Carteira):</span>
+                <span class="font-bold text-amber-400">$<%= totalWallet.toLocaleString() %></span>
+                <span class="text-slate-500 text-[11px]">(<%= pctWallet %>%)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 ring-2 ring-indigo-500/20"></span>
+                <span class="text-slate-300 font-sans font-medium">Entesourado (Banco):</span>
+                <span class="font-bold text-indigo-300">$<%= totalBank.toLocaleString() %></span>
+                <span class="text-slate-500 text-[11px]">(<%= pctBank %>%)</span>
+              </div>
+            </div>
+            <div class="text-[11px] text-slate-400">
+              Patrimônio Global: <strong class="text-white">$<%= totalGuildWealth.toLocaleString() %></strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-4 relative z-10">
+            <div class="relative flex-1 max-w-md">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </div>
+                <input type="text" id="economySearchInput" placeholder="Buscar por usuário ou código..." 
+                    oninput="filterEconomy()"
+                    class="input-studio !pl-10 !pr-10 !py-2 w-full text-xs sm:text-sm font-medium placeholder:text-slate-600" />
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center gap-1.5 pointer-events-none">
+                    <kbd class="hidden sm:inline-flex items-center kbd-studio" id="economySearchKbd">/</kbd>
+                </div>
+                <button type="button" id="clearEconomySearchBtn" onclick="clearEconomySearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-white">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2 self-end sm:self-auto">
+                <div class="relative">
+                    <select id="economySortSelect" onchange="sortEconomy()" class="input-studio !py-2 !px-3 text-xs appearance-none cursor-pointer pr-8">
+                        <option value="default">Ordenar por: Padrão</option>
+                        <option value="wealth">Maior Riqueza Total</option>
+                        <option value="money">Mais na Carteira</option>
+                        <option value="bank">Mais no Banco</option>
+                        <option value="name">Nome (A-Z)</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-slate-500">
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Header & Scroll Hint -->
+        <div class="flex items-center justify-between mb-3 px-1">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                Contas Ativas (<span id="economyCountDisplay"><%= info1.length %></span> de <%= info1.length %>)
+            </span>
+            <span class="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/[0.06] lg:hidden">
+                <i class="fa-solid fa-arrows-left-right text-[10px]"></i>
+                <span>Deslize a tabela</span>
+            </span>
+        </div>
+
         <!-- Tabela -->
-        <div class="relative z-10 bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden shadow-inner">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left whitespace-nowrap">
+        <div class="relative z-10 rounded-2xl overflow-hidden bg-[#090b10]/80 tonal-border-emerald">
+            <div class="overflow-x-auto w-full custom-table-scroll">
+                <table class="w-full min-w-[700px] table-seamless text-left whitespace-nowrap" id="economyTable">
                     <thead>
-                        <tr class="bg-black/20 border-b border-white/5">
-                            <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Usuário</th>
-                            <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Carteira</th>
-                            <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Banco</th>
-                            <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-right">Ações</th>
+                        <tr class="bg-black/40 border-b border-white/[0.04]">
+                            <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Usuário</th>
+                            <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Carteira</th>
+                            <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Banco</th>
+                            <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total</th>
+                            <th class="px-5 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Ações</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-white/[0.05]">
+                    <tbody class="divide-y divide-white/[0.02] bg-transparent" id="economyTableBody">
                         <% if (info1.length === 0) { %>
-                            <tr>
-                                <td colspan="4" class="px-6 py-12 text-center">
+                            <tr id="emptyDefaultEconomyRow">
+                                <td colspan="5" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center justify-center opacity-50">
                                         <i class="fa-solid fa-wallet text-4xl mb-3 text-slate-500"></i>
                                         <p class="text-sm text-slate-400 font-medium">Nenhum dado financeiro encontrado.</p>
@@ -51,39 +369,122 @@
                                 </td>
                             </tr>
                         <% } %>
-                        <% info1.forEach(item => { %>
-                            <tr class="hover:bg-white/[0.04] transition-colors duration-200 group">
+                        <% 
+                          const rankMap = new Map();
+                          sortedUsers.forEach((u, idx) => {
+                            rankMap.set(u.codigouser || u.id, idx + 1);
+                          });
+
+                          const avatarGradients = [
+                            'from-indigo-600 to-blue-500',
+                            'from-emerald-600 to-teal-500',
+                            'from-purple-600 to-indigo-500',
+                            'from-rose-600 to-pink-500',
+                            'from-amber-600 to-orange-500',
+                            'from-cyan-600 to-sky-500'
+                          ];
+                        %>
+                        <% info1.forEach((item, index) => { %>
+                            <% 
+                              const totalWealth = (item.money || 0) + (item.bank || 0); 
+                              const rank = rankMap.get(item.codigouser) || (index + 1);
+                              const charCode = (item.username || 'A').charCodeAt(0);
+                              const grad = avatarGradients[charCode % avatarGradients.length];
+
+                              let socialBadge = '';
+                              if (totalWealth >= 50000) {
+                                socialBadge = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-cyan-500/10 text-cyan-300 border border-cyan-500/20"><i class="fa-solid fa-gem text-[8px]"></i> Magnata</span>';
+                              } else if (totalWealth >= 10000) {
+                                socialBadge = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-300 border border-indigo-500/20"><i class="fa-solid fa-briefcase text-[8px]"></i> Nobre</span>';
+                              } else if (totalWealth >= 2000) {
+                                socialBadge = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"><i class="fa-solid fa-coins text-[8px]"></i> Próspero</span>';
+                              } else if (totalWealth > 0) {
+                                socialBadge = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-medium tracking-wider bg-white/[0.04] text-slate-400 border border-white/[0.06]"><i class="fa-solid fa-user text-[8px]"></i> Cidadão</span>';
+                              } else {
+                                socialBadge = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/20"><i class="fa-solid fa-triangle-exclamation text-[8px]"></i> Falido</span>';
+                              }
+
+                              let rankBadge = '';
+                              let avatarRing = 'ring-1 ring-white/10';
+                              let podiumClass = '';
+
+                              if (rank === 1) {
+                                rankBadge = '<span class="badge-metallic-gold">#1</span>';
+                                avatarRing = 'ring-2 ring-yellow-400/60 shadow-lg';
+                                podiumClass = 'podium-gold';
+                              } else if (rank === 2) {
+                                rankBadge = '<span class="badge-metallic-silver">#2</span>';
+                                avatarRing = 'ring-2 ring-slate-300/60';
+                                podiumClass = 'podium-silver';
+                              } else if (rank === 3) {
+                                rankBadge = '<span class="badge-metallic-bronze">#3</span>';
+                                avatarRing = 'ring-2 ring-amber-600/60';
+                                podiumClass = 'podium-bronze';
+                              } else {
+                                rankBadge = `<span class="text-xs font-mono font-semibold text-slate-500 w-6 text-center">${rank}º</span>`;
+                              }
+                            %>
+                            <tr id="row-user-<%= item.codigouser %>" class="economy-row hover:bg-white/[0.04] transition-colors duration-200 group <%= podiumClass %>"
+                                data-username="<%= (item.username || '').toLowerCase() %>"
+                                data-code="<%= (item.codigouser || '').toLowerCase() %>"
+                                data-money="<%= item.money || 0 %>"
+                                data-bank="<%= item.bank || 0 %>"
+                                data-total="<%= totalWealth %>"
+                                data-original-index="<%= index %>">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400 font-bold">
-                                            <%= item.username.charAt(0).toUpperCase() %>
+                                        <div class="flex-shrink-0 flex items-center justify-center">
+                                            <%- rankBadge %>
                                         </div>
-                                        <div>
-                                            <div class="font-bold text-white text-sm"><%= item.username %></div>
-                                            <div class="text-[10px] text-slate-500 font-mono"><%= item.codigouser %></div>
+                                        <div class="w-9 h-9 rounded-xl bg-gradient-to-br <%= grad %> flex items-center justify-center text-white font-bold text-xs shadow-md <%= avatarRing %> flex-shrink-0 relative">
+                                            <%= (item.username || '?').charAt(0).toUpperCase() %>
+                                            <span class="absolute -bottom-0.5 -right-0.5 led-online !w-2 !h-2 border border-[#0c0e14]"></span>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-bold text-white text-sm truncate"><%= item.username %></span>
+                                                <%- socialBadge %>
+                                            </div>
+                                            <div class="text-[10px] text-slate-500 font-mono truncate"><%= item.codigouser %></div>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-medium shadow-inner">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-medium shadow-inner cell-money">
                                         <i class="fa-solid fa-money-bill-wave text-[10px]"></i>
                                         $<%= (item.money || 0).toLocaleString() %>
                                     </span>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-medium shadow-inner">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-medium shadow-inner cell-bank">
                                         <i class="fa-solid fa-building-columns text-[10px]"></i>
                                         $<%= (item.bank || 0).toLocaleString() %>
                                     </span>
                                 </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-mono font-semibold shadow-inner cell-total">
+                                        <i class="fa-solid fa-sack-dollar text-[10px]"></i>
+                                        $<%= totalWealth.toLocaleString() %>
+                                    </span>
+                                </td>
                                 <td class="px-6 py-4 text-right">
                                     <button onclick="openEditModal('<%= item.codigouser %>', '<%= item.username %>', '<%= item.money || 0 %>', '<%= item.bank || 0 %>')"
-                                        class="opacity-0 group-hover:opacity-100 transition-all duration-300 inline-flex items-center justify-center gap-2 bg-indigo-600/80 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-lg hover:shadow-indigo-500/30 border border-indigo-500/50 hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-pen-to-square"></i> Editar
+                                        class="inline-flex items-center justify-center gap-1.5 btn-studio-secondary !py-1.5 !px-3 text-xs font-semibold rounded-xl edit-btn">
+                                        <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                                        <span>Editar</span>
                                     </button>
                                 </td>
                             </tr>
                         <% }); %>
+
+                        <tr id="noResultsEconomyRow" class="hidden">
+                            <td colspan="5" class="px-6 py-12 text-center">
+                                <div class="flex flex-col items-center justify-center opacity-50">
+                                    <i class="fa-solid fa-magnifying-glass text-3xl mb-3 text-slate-500"></i>
+                                    <p class="text-sm text-slate-400 font-medium">Nenhuma conta encontrada com este termo.</p>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -91,57 +492,90 @@
     </div>
 
     <!-- Modal de Edição -->
-    <div id="editModal" class="hidden fixed inset-0 z-[100] overflow-y-auto backdrop-blur-sm flex items-center justify-center" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div id="editModal" class="hidden fixed inset-0 z-[100] overflow-y-auto backdrop-blur-md flex items-center justify-center p-4" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <!-- Overlay -->
-        <div class="fixed inset-0 bg-[#0b0c10]/80 transition-opacity" onclick="closeEditModal()"></div>
+        <div class="fixed inset-0 bg-black/80 transition-opacity" onclick="closeEditModal()"></div>
 
-        <div class="relative bg-[#13151a] border border-white/10 rounded-3xl text-left overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] transform transition-all max-w-md w-full mx-4 z-50 animate-fade-in-up">
-            
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
-
-            <div class="p-8">
-                <div class="mb-6 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
-                        <i class="fa-solid fa-user-pen text-xl text-emerald-400"></i>
+        <div class="relative panel-elevated bg-[#11141d] border border-emerald-500/25 rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all max-w-md w-full mx-4 z-50 animate-fade-in">
+            <div class="p-6 sm:p-8">
+                <div class="mb-6 flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                        <i class="fa-solid fa-user-pen text-lg text-emerald-400"></i>
                     </div>
                     <div>
                         <h3 class="text-xl font-bold text-white">Editar Saldos</h3>
-                        <p class="text-sm text-indigo-400 font-medium mt-0.5" id="modalUsername"></p>
+                        <p class="text-xs text-indigo-400 font-medium mt-0.5" id="modalUsername"></p>
                     </div>
                 </div>
 
-                <form action="/bot/update-economy" method="POST" class="space-y-5">
+                <form id="economyForm" action="/bot/update-economy" method="POST" class="space-y-4" onsubmit="handleEconomySubmit(event)">
                     <input type="hidden" name="guildId" value="<%= info.id %>">
                     <input type="hidden" name="userId" id="modalUserId">
 
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Carteira ($)</label>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Carteira ($)</label>
+                            <button type="button" onclick="resetField('modalMoney')" class="text-[10px] text-rose-400 hover:text-rose-300 font-mono font-medium">Zerar</button>
+                        </div>
                         <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fa-solid fa-money-bill-wave text-emerald-500"></i>
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <i class="fa-solid fa-money-bill-wave text-emerald-400 text-xs"></i>
                             </div>
-                            <input type="number" name="money" id="modalMoney"
-                                class="bg-black/40 border border-white/10 text-white text-sm rounded-xl focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full pl-11 py-3 transition-all shadow-inner font-mono">
+                            <input type="number" name="money" id="modalMoney" min="0" max="1000000000" autocomplete="off"
+                                class="input-studio !pl-10 !py-2.5 w-full text-sm font-mono">
+                        </div>
+                        <!-- Quick Add Chips -->
+                        <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                            <button type="button" onclick="addPresetToField('modalMoney', 100)" class="chip-preset">+100</button>
+                            <button type="button" onclick="addPresetToField('modalMoney', 500)" class="chip-preset">+500</button>
+                            <button type="button" onclick="addPresetToField('modalMoney', 1000)" class="chip-preset">+1k</button>
+                            <button type="button" onclick="addPresetToField('modalMoney', 5000)" class="chip-preset">+5k</button>
+                            <button type="button" onclick="addPresetToField('modalMoney', 10000)" class="chip-preset">+10k</button>
+                            <button type="button" onclick="addPresetToField('modalMoney', 50000)" class="chip-preset">+50k</button>
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Banco ($)</label>
+                    <div class="pt-1">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Banco ($)</label>
+                            <button type="button" onclick="resetField('modalBank')" class="text-[10px] text-rose-400 hover:text-rose-300 font-mono font-medium">Zerar</button>
+                        </div>
                         <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fa-solid fa-building-columns text-blue-500"></i>
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <i class="fa-solid fa-building-columns text-blue-400 text-xs"></i>
                             </div>
-                            <input type="number" name="bank" id="modalBank"
-                                class="bg-black/40 border border-white/10 text-white text-sm rounded-xl focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block w-full pl-11 py-3 transition-all shadow-inner font-mono">
+                            <input type="number" name="bank" id="modalBank" min="0" max="1000000000" autocomplete="off"
+                                class="input-studio !pl-10 !py-2.5 w-full text-sm font-mono">
+                        </div>
+                        <!-- Quick Add Chips -->
+                        <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                            <button type="button" onclick="addPresetToField('modalBank', 100)" class="chip-preset">+100</button>
+                            <button type="button" onclick="addPresetToField('modalBank', 500)" class="chip-preset">+500</button>
+                            <button type="button" onclick="addPresetToField('modalBank', 1000)" class="chip-preset">+1k</button>
+                            <button type="button" onclick="addPresetToField('modalBank', 5000)" class="chip-preset">+5k</button>
+                            <button type="button" onclick="addPresetToField('modalBank', 10000)" class="chip-preset">+10k</button>
+                            <button type="button" onclick="addPresetToField('modalBank', 50000)" class="chip-preset">+50k</button>
                         </div>
                     </div>
 
-                    <div class="pt-4 flex items-center gap-3 border-t border-white/5 mt-6">
-                        <button type="button" onclick="closeEditModal()" class="flex-1 px-4 py-3 text-sm font-medium text-slate-300 bg-transparent hover:bg-white/5 rounded-xl border border-white/10 transition-colors">
-                            Cancelar
+                    <!-- Fast Transfer Actions -->
+                    <div class="flex items-center gap-2 p-2 rounded-xl bg-emerald-500/5 border border-emerald-500/20 text-xs">
+                        <button type="button" onclick="transferAllToBank()" class="flex-1 py-1.5 px-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white flex items-center justify-center gap-1.5 text-[11px] font-medium transition-colors cursor-pointer" title="Transfere todo o saldo da carteira para o banco">
+                            <i class="fa-solid fa-building-columns text-blue-400 text-[10px]"></i>
+                            <span>Tudo ao Banco</span>
                         </button>
-                        <button type="submit" class="flex-1 px-4 py-3 text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl shadow-lg hover:shadow-emerald-500/30 border border-emerald-500/50 transition-all focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-[#13151a]">
+                        <button type="button" onclick="transferAllToMoney()" class="flex-1 py-1.5 px-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white flex items-center justify-center gap-1.5 text-[11px] font-medium transition-colors cursor-pointer" title="Transfere todo o saldo do banco para a carteira">
+                            <i class="fa-solid fa-money-bill-wave text-emerald-400 text-[10px]"></i>
+                            <span>Tudo p/ Carteira</span>
+                        </button>
+                    </div>
+
+                    <div class="pt-3 flex items-center gap-3 border-t border-slate-800/80 mt-4">
+                        <button type="submit" class="flex-1 btn-studio-primary !py-2.5 text-xs font-semibold rounded-xl">
                             Salvar Alterações
+                        </button>
+                        <button type="button" onclick="closeEditModal()" class="btn-studio-secondary !py-2.5 px-4 text-xs font-medium rounded-xl">
+                            Cancelar
                         </button>
                     </div>
                 </form>
@@ -150,7 +584,10 @@
     </div>
 
     <script>
+        let currentTargetUsername = '';
+
         function openEditModal(id, username, money, bank) {
+            currentTargetUsername = username;
             document.getElementById('modalUserId').value = id;
             document.getElementById('modalUsername').textContent = '@' + username;
             document.getElementById('modalMoney').value = money;
@@ -161,6 +598,194 @@
         function closeEditModal() {
             document.getElementById('editModal').classList.add('hidden');
         }
+
+        function addPresetToField(fieldId, amount) {
+            const input = document.getElementById(fieldId);
+            if (!input) return;
+            const current = Number(input.value) || 0;
+            input.value = Math.max(0, current + amount);
+        }
+
+        function resetField(fieldId) {
+            const input = document.getElementById(fieldId);
+            if (!input) return;
+            input.value = 0;
+        }
+
+        function transferAllToBank() {
+            const m = document.getElementById('modalMoney');
+            const b = document.getElementById('modalBank');
+            if (!m || !b) return;
+            const mVal = Number(m.value) || 0;
+            const bVal = Number(b.value) || 0;
+            b.value = bVal + mVal;
+            m.value = 0;
+        }
+
+        function transferAllToMoney() {
+            const m = document.getElementById('modalMoney');
+            const b = document.getElementById('modalBank');
+            if (!m || !b) return;
+            const mVal = Number(m.value) || 0;
+            const bVal = Number(b.value) || 0;
+            m.value = mVal + bVal;
+            b.value = 0;
+        }
+
+        function filterEconomy() {
+            const query = (document.getElementById('economySearchInput').value || '').trim().toLowerCase();
+            const clearBtn = document.getElementById('clearEconomySearchBtn');
+            const kbd = document.getElementById('economySearchKbd');
+            const rows = document.querySelectorAll('.economy-row');
+            const noResults = document.getElementById('noResultsEconomyRow');
+            const countDisplay = document.getElementById('economyCountDisplay');
+            
+            if (clearBtn) {
+                clearBtn.classList.toggle('hidden', query.length === 0);
+            }
+            if (kbd) {
+                kbd.classList.toggle('hidden', query.length > 0);
+            }
+
+            let visibleCount = 0;
+            rows.forEach(row => {
+                const username = row.getAttribute('data-username') || '';
+                const code = row.getAttribute('data-code') || '';
+                const matches = !query || username.includes(query) || code.includes(query);
+                
+                row.style.display = matches ? '' : 'none';
+                if (matches) visibleCount++;
+            });
+
+            if (countDisplay) {
+                countDisplay.textContent = visibleCount;
+            }
+
+            if (noResults) {
+                noResults.classList.toggle('hidden', visibleCount > 0 || rows.length === 0);
+            }
+        }
+
+        function clearEconomySearch() {
+            const input = document.getElementById('economySearchInput');
+            if (input) {
+                input.value = '';
+                filterEconomy();
+                input.focus();
+            }
+        }
+
+        function sortEconomy() {
+            const sortType = document.getElementById('economySortSelect').value;
+            const tbody = document.getElementById('economyTableBody');
+            const rows = Array.from(document.querySelectorAll('.economy-row'));
+            const noResults = document.getElementById('noResultsEconomyRow');
+
+            rows.sort((a, b) => {
+                if (sortType === 'wealth') {
+                    return parseInt(b.getAttribute('data-total') || '0') - parseInt(a.getAttribute('data-total') || '0');
+                } else if (sortType === 'money') {
+                    return parseInt(b.getAttribute('data-money') || '0') - parseInt(a.getAttribute('data-money') || '0');
+                } else if (sortType === 'bank') {
+                    return parseInt(b.getAttribute('data-bank') || '0') - parseInt(a.getAttribute('data-bank') || '0');
+                } else if (sortType === 'name') {
+                    return (a.getAttribute('data-username') || '').localeCompare(b.getAttribute('data-username') || '');
+                } else {
+                    return parseInt(a.getAttribute('data-original-index') || '0') - parseInt(b.getAttribute('data-original-index') || '0');
+                }
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+            if (noResults) tbody.appendChild(noResults);
+        }
+
+        async function handleEconomySubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Salvando...';
+
+            const userId = document.getElementById('modalUserId').value;
+            const moneyVal = parseInt(document.getElementById('modalMoney').value) || 0;
+            const bankVal = parseInt(document.getElementById('modalBank').value) || 0;
+            const formData = new URLSearchParams(new FormData(form));
+
+            try {
+                const res = await fetch('/bot/update-economy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    body: formData.toString()
+                });
+
+                if (!res.ok) throw new Error('Falha ao atualizar saldos');
+
+                // Toast imediato
+                const toast = window.showToast || (parent && parent.showToast);
+                if (toast) {
+                    toast('success', 'Saldo Atualizado', `Saldos de @${currentTargetUsername} atualizados com sucesso.`);
+                }
+
+                // Atualização instantânea na tabela sem recarregar a tela
+                const row = document.getElementById(`row-user-${userId}`);
+                if (row) {
+                    row.setAttribute('data-money', moneyVal);
+                    row.setAttribute('data-bank', bankVal);
+                    row.setAttribute('data-total', moneyVal + bankVal);
+
+                    const moneyCell = row.querySelector('.cell-money');
+                    const bankCell = row.querySelector('.cell-bank');
+                    const totalCell = row.querySelector('.cell-total');
+                    const editBtn = row.querySelector('.edit-btn');
+
+                    if (moneyCell) moneyCell.innerHTML = `<i class="fa-solid fa-money-bill-wave text-[10px]"></i> $${moneyVal.toLocaleString()}`;
+                    if (bankCell) bankCell.innerHTML = `<i class="fa-solid fa-building-columns text-[10px]"></i> $${bankVal.toLocaleString()}`;
+                    if (totalCell) totalCell.innerHTML = `<i class="fa-solid fa-sack-dollar text-[10px]"></i> $${(moneyVal + bankVal).toLocaleString()}`;
+                    if (editBtn) editBtn.setAttribute('onclick', `openEditModal('${userId}', '${currentTargetUsername}', '${moneyVal}', '${bankVal}')`);
+                }
+
+                closeEditModal();
+            } catch (err) {
+                console.error(err);
+                const toast = window.showToast || (parent && parent.showToast);
+                if (toast) {
+                    toast('error', 'Erro ao Salvar', 'Não foi possível salvar os saldos.');
+                } else {
+                    alert('Erro ao salvar saldos.');
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+
+        // Atalhos globais do teclado
+        document.addEventListener('keydown', (e) => {
+            const editModal = document.getElementById('editModal');
+            const searchInput = document.getElementById('economySearchInput');
+
+            if (e.key === 'Escape') {
+                if (editModal && !editModal.classList.contains('hidden')) {
+                    closeEditModal();
+                } else if (searchInput && (document.activeElement === searchInput || searchInput.value)) {
+                    clearEconomySearch();
+                    searchInput.blur();
+                }
+            } else if (e.key === '/' && document.activeElement !== searchInput && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+                if (!editModal || editModal.classList.contains('hidden')) {
+                    e.preventDefault();
+                    if (searchInput) {
+                        searchInput.focus();
+                        searchInput.select();
+                    }
+                }
+            }
+        });
     </script>
     
     <style>
